@@ -2,7 +2,8 @@
 
 > *"Not just the highest rated. The one you'll actually want to return to."*
 
-**Live Deployment**: [https://cafe-finder-steel.vercel.app](https://cafe-finder-steel.vercel.app)
+**Live Deployment**: [https://caforacafe.vercel.app](https://caforacafe.vercel.app)  
+*(Also available at [https://cafora-app.vercel.app](https://cafora-app.vercel.app) & [https://cafora-chandigarh.vercel.app](https://cafora-chandigarh.vercel.app))*
 
 ---
 
