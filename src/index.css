@@ -1,13 +1,393 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ==========================================================================
+   CAFÉ FINDER — CHANDIGARH EDITORIAL CITY GUIDE & DISCOVERY JOURNAL
+   Brand Identity & Editorial Design System
+   ========================================================================== */
+
+:root {
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+
+  /* Color Palette — Deep Coffee, Warm Cream & Artisan Roaster Accents */
+  --bg-dark: #100b08;                  /* Warm Deep Espresso */
+  --bg-dark-alt: #160f0b;              /* Secondary dark background */
+  --bg-surface: #1d140e;               /* Rich coffee bean surface */
+  --bg-surface-elevated: #261b13;      /* Elevated cards & containers */
+  --bg-surface-translucent: rgba(24, 17, 12, 0.82);
+  --bg-card: rgba(34, 24, 17, 0.75);
+  --bg-card-hover: rgba(46, 32, 23, 0.92);
+
+  /* Cream Editorial Hierarchy */
+  --cream: #fcf8f2;                   /* Pure editorial cream text */
+  --cream-muted: #dcd0bf;             /* Subdued warm cream for body */
+  --cream-faint: #9e9080;             /* Muted metadata & timestamps */
+  --cream-paper: #f7efe4;             /* Journal background tint */
+
+  /* Curated Accent Colors (Used intentionally, never neon) */
+  --accent-orange: #e07a38;           /* Warm Orange — Primary interaction accent */
+  --accent-orange-hover: #f08945;
+  --terracotta: #c86142;              /* Terracotta — Secondary artisan accent */
+  --lavender: #a799b7;                /* Soft Lavender — Atmospheric touch */
+  --gold: #d4af37;                    /* Gold / Citrus — Ratings & stars */
+
+  /* Deterministic Trust Score Spectrum */
+  --trust-high: #2da473;              /* 90-100: Very Trusted */
+  --trust-high-bg: rgba(45, 164, 115, 0.15);
+  --trust-high-border: rgba(45, 164, 115, 0.35);
+
+  --trust-good: #e09422;              /* 80-89: Trusted */
+  --trust-good-bg: rgba(224, 148, 34, 0.15);
+  --trust-good-border: rgba(224, 148, 34, 0.35);
+
+  --trust-mixed: #d9622b;             /* 65-79: Mixed */
+  --trust-mixed-bg: rgba(217, 98, 43, 0.15);
+  --trust-mixed-border: rgba(217, 98, 43, 0.35);
+
+  --trust-low: #c93b3b;               /* <65: Think Twice */
+  --trust-low-bg: rgba(201, 59, 59, 0.15);
+  --trust-low-border: rgba(201, 59, 59, 0.35);
+
+  /* Editorial Borders & Shadows */
+  --border-subtle: rgba(252, 248, 242, 0.09);
+  --border-medium: rgba(252, 248, 242, 0.18);
+  --border-prominent: rgba(252, 248, 242, 0.28);
+  --border-accent: rgba(224, 122, 56, 0.38);
+
+  --shadow-card: 0 16px 36px rgba(0, 0, 0, 0.45);
+  --shadow-float: 0 24px 50px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 30px rgba(224, 122, 56, 0.16);
+
+  /* Layout & Geometry */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+  --header-height: 72px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--font-sans);
+  background-color: var(--bg-dark);
+  color: var(--cream);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  selection-background-color: var(--accent-orange);
+  selection-color: var(--bg-dark);
+}
+
+::selection {
+  background: rgba(224, 122, 56, 0.35);
+  color: #ffffff;
+}
+
+/* Editorial Atmospheric Shell (Deep Cafe at Night) */
+.app-shell {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  background-color: var(--bg-dark);
+  background-image: 
+    radial-gradient(at 10% 8%, rgba(224, 122, 56, 0.08) 0px, transparent 40%),
+    radial-gradient(at 90% 18%, rgba(200, 97, 66, 0.07) 0px, transparent 42%),
+    radial-gradient(at 50% 65%, rgba(167, 153, 183, 0.04) 0px, transparent 50%),
+    radial-gradient(at 20% 90%, rgba(212, 175, 55, 0.04) 0px, transparent 45%);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 15%, rgba(22, 15, 11, 0.5) 0%, rgba(16, 11, 8, 0.85) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app-content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container */
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, .serif-font {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+}
+
+.serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.sans-font {
+  font-family: var(--font-sans);
+}
+
+/* Small Uppercase Editorial Label */
+.label-editorial {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--accent-orange);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.label-editorial-muted {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--cream-faint);
+}
+
+/* Button & Interactive Tokens */
+.btn-editorial-primary {
+  background: var(--accent-orange);
+  color: #100b08;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(224, 122, 56, 0.35);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-editorial-primary:hover {
+  background: var(--accent-orange-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(224, 122, 56, 0.45);
+}
+
+.btn-editorial-secondary {
+  background: var(--bg-surface-elevated);
+  color: var(--cream);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-medium);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-editorial-secondary:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-prominent);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.btn-editorial-ghost {
+  background: transparent;
+  color: var(--cream-muted);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-editorial-ghost:hover {
+  color: var(--cream);
+  background: rgba(252, 248, 242, 0.06);
+}
+
+/* Legacy button fallbacks */
+.btn-primary {
+  background: var(--accent-orange);
+  color: #100b08;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+.btn-primary:hover {
+  background: var(--accent-orange-hover);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--bg-surface-elevated);
+  color: var(--cream);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-medium);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+.btn-secondary:hover {
+  background: var(--bg-card-hover);
+}
+
+/* Trust Badge Styling */
+.trust-badge-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.trust-badge-high {
+  background: var(--trust-high-bg);
+  border: 1px solid var(--trust-high-border);
+  color: #34d399;
+}
+
+.trust-badge-good {
+  background: var(--trust-good-bg);
+  border: 1px solid var(--trust-good-border);
+  color: #fbbf24;
+}
+
+.trust-badge-mixed {
+  background: var(--trust-mixed-bg);
+  border: 1px solid var(--trust-mixed-border);
+  color: #fb923c;
+}
+
+.trust-badge-low {
+  background: var(--trust-low-bg);
+  border: 1px solid var(--trust-low-border);
+  color: #f87171;
+}
+
+/* Editorial Postcard Grid (Replaces uniform masonry) */
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .editorial-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 680px) {
+  .editorial-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Horizontal Spotlight Row */
+.spotlight-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 16px;
+}
+
+/* Shimmer placeholder */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Subtle logo spin on hover */
+.brand-symbol-icon {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.brand-symbol-container:hover .brand-symbol-icon {
+  transform: rotate(15deg) scale(1.06);
+}
+
+/* Custom Leaflet Map Container styling */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  background: #15100c !important;
+}
+
+.custom-marker-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--bg-surface-elevated);
+  border: 2px solid var(--accent-orange);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.custom-marker-pin:hover {
+  transform: scale(1.15);
+  border-color: var(--cream);
 }
