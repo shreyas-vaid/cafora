@@ -6,7 +6,7 @@
  * Cafe Finder tells you which ones are worth your time."
  */
 
-import { calculateTrustScore } from "./trustScore";
+import { calculateTrustScore } from "./trustScore.js";
 
 export const LOW_TRUST_THRESHOLD = 65;
 export const HIGH_TRUST_THRESHOLD = 90;

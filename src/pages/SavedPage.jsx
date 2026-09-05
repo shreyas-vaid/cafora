@@ -15,6 +15,12 @@ export default function SavedPage() {
 
   useEffect(() => {
     loadSaved();
+    window.addEventListener("storage", loadSaved);
+    window.addEventListener("cafora_auth_change", loadSaved);
+    return () => {
+      window.removeEventListener("storage", loadSaved);
+      window.removeEventListener("cafora_auth_change", loadSaved);
+    };
   }, []);
 
   // Map saved items to full cafe objects
@@ -43,11 +49,22 @@ export default function SavedPage() {
       <Navbar />
 
       <main className="app-content" style={{ padding: "44px 0 70px 0" }}>
-        <div className="container" style={{ maxWidth: "1140px" }}>
-          {/* Editorial Header */}
+        <div className="container" style={{ maxWidth: "1160px" }}>
+          {/* Header */}
           <div style={{ marginBottom: "32px" }}>
-            <span className="label-editorial">
-              <span>❤️</span> PERSONAL CURATION
+            <span
+              style={{
+                background: "rgba(224, 122, 56, 0.15)",
+                color: "var(--accent-orange)",
+                padding: "3px 10px",
+                borderRadius: "var(--radius-pill)",
+                fontSize: "11px",
+                fontWeight: 800,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase"
+              }}
+            >
+              ✦ PERSONAL CURATION
             </span>
             <h1
               style={{
@@ -55,10 +72,10 @@ export default function SavedPage() {
                 fontFamily: "var(--font-serif)",
                 color: "var(--cream)",
                 lineHeight: 1.15,
-                marginTop: "6px"
+                marginTop: "8px"
               }}
             >
-              Your Little Coffee List
+              Your Coffee List
             </h1>
             <p
               style={{
@@ -69,8 +86,9 @@ export default function SavedPage() {
                 marginTop: "6px"
               }}
             >
-              "Places worth trying. Places worth returning to."
+              "Places you've got to try."
             </p>
+
           </div>
 
           {/* Collection Filter Tabs */}
@@ -109,7 +127,8 @@ export default function SavedPage() {
                     display: "flex",
                     alignItems: "center",
                     gap: "8px",
-                    transition: "all 0.2s ease"
+                    transition: "all 0.2s ease",
+                    boxShadow: isActive ? "0 4px 14px rgba(224, 122, 56, 0.3)" : "none"
                   }}
                 >
                   <span>{col.icon}</span>
@@ -119,9 +138,9 @@ export default function SavedPage() {
                       background: isActive ? "rgba(16, 11, 8, 0.2)" : "rgba(252, 248, 242, 0.12)",
                       color: isActive ? "#100b08" : "var(--cream)",
                       fontSize: "11px",
-                      padding: "1px 6px",
+                      padding: "1px 7px",
                       borderRadius: "10px",
-                      fontWeight: 700
+                      fontWeight: 800
                     }}
                   >
                     {count}
@@ -131,7 +150,7 @@ export default function SavedPage() {
             })}
           </div>
 
-          {/* Saved Items Postcard Grid */}
+          {/* Saved Items Grid */}
           {filteredSaved.length > 0 ? (
             <div className="editorial-grid">
               {filteredSaved.map((cafe) => (
@@ -164,13 +183,25 @@ export default function SavedPage() {
                   marginBottom: "8px"
                 }}
               >
-                Your coffee list is looking lonely.
+                Your cafe list is looking lonely.
               </h3>
               <p style={{ fontSize: "14.5px", color: "var(--cream-muted)", marginBottom: "24px", lineHeight: 1.5 }}>
-                Go find somewhere worth saving. Explore Chandigarh's specialty coffee roasters, quiet work corners, and date night spots.
+                Go find somewhere worth saving. Tell CAFORA your vibe and bookmark your next coffee run.
               </p>
-              <Link to="/" className="btn-editorial-primary">
-                Explore Discovery Feed
+              <Link
+                to="/"
+                style={{
+                  background: "var(--accent-orange)",
+                  color: "#100b08",
+                  fontWeight: 700,
+                  fontSize: "13.5px",
+                  padding: "11px 26px",
+                  borderRadius: "var(--radius-pill)",
+                  textDecoration: "none",
+                  display: "inline-block"
+                }}
+              >
+                Find my vibe →
               </Link>
             </div>
           )}

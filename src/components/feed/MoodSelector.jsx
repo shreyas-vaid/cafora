@@ -1,93 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { MOODS_LIST } from "../../utils/vibeEngine";
 
-export const MOODS = [
-  {
-    id: "good-coffee",
-    title: "GOOD COFFEE",
-    tagline: "I care about the coffee.",
-    icon: "☕",
-    category: "Specialty Coffee",
-    accent: "#e07a38",
-    rotation: -1.2
-  },
-  {
-    id: "work",
-    title: "GET WORK DONE",
-    tagline: "Give me a table and Wi-Fi.",
-    icon: "💻",
-    category: "Work Friendly",
-    accent: "#38bdf8",
-    rotation: 1.5
-  },
-  {
-    id: "date",
-    title: "DATE NIGHT",
-    tagline: "Something a little special.",
-    icon: "❤️",
-    category: "Date Spots",
-    accent: "#f43f5e",
-    rotation: -0.8
-  },
-  {
-    id: "quiet",
-    title: "QUIET CORNER",
-    tagline: "I want to disappear for a while.",
-    icon: "🌿",
-    category: "Quiet / Reading",
-    accent: "#34d399",
-    rotation: 1.2
-  },
-  {
-    id: "pretty",
-    title: "SOMEWHERE PRETTY",
-    tagline: "Yes, I am taking pictures.",
-    icon: "📸",
-    category: "Aesthetic & Photo Spots",
-    accent: "#a799b7",
-    rotation: -1.5
-  },
-  {
-    id: "sweet-tooth",
-    title: "SWEET TOOTH",
-    tagline: "Coffee is not enough.",
-    icon: "🍰",
-    category: "Bakery & Desserts",
-    accent: "#fbbf24",
-    rotation: 1.0
-  },
-  {
-    id: "gang",
-    title: "WITH THE GANG",
-    tagline: "Bring everyone.",
-    icon: "👯",
-    category: "Social & Lively",
-    accent: "#fb923c",
-    rotation: -1.0
-  },
-  {
-    id: "late-night",
-    title: "LATE NIGHT",
-    tagline: "I am not going home yet.",
-    icon: "🌙",
-    category: "Late Night",
-    accent: "#818cf8",
-    rotation: 1.4
-  }
-];
-
-export default function MoodSelector({ activeCategory, onSelectCategory }) {
-  const handleMoodClick = (mood) => {
-    if (activeCategory === mood.category) {
-      onSelectCategory("all"); // Toggle off
-    } else {
-      onSelectCategory(mood.category);
-    }
-  };
+/**
+ * "WHAT'S THE MOOD?"
+ * Personality-driven multi-vibe selection.
+ * Allows 1 or 2-3 compatible vibes, subtly animated, tactile, and clear.
+ */
+export default function MoodSelector({
+  activeMoods = [],
+  onToggleMood,
+  onResetMoods
+}) {
+  const isAnySelected = activeMoods.length > 0;
 
   return (
-    <div style={{ width: "100%", margin: "32px 0 20px" }}>
-      {/* Editorial Section Header */}
+    <div style={{ width: "100%", margin: "28px 0 20px" }}>
+      {/* Section Header */}
       <div
         style={{
           display: "flex",
@@ -95,16 +24,29 @@ export default function MoodSelector({ activeCategory, onSelectCategory }) {
           alignItems: "flex-end",
           marginBottom: "16px",
           flexWrap: "wrap",
-          gap: "8px"
+          gap: "10px"
         }}
       >
         <div>
-          <span className="label-editorial">
-            <span>●</span> WHAT'S THE MOOD?
-          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <span className="label-editorial">
+              <span>●</span> WHAT'S THE MOOD?
+            </span>
+            {isAnySelected && (
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "var(--accent-orange)",
+                  fontWeight: 700
+                }}
+              >
+                • {activeMoods.length} {activeMoods.length === 1 ? "vibe" : "vibes"} active
+              </span>
+            )}
+          </div>
           <h2
             style={{
-              fontSize: "clamp(20px, 3vw, 26px)",
+              fontSize: "clamp(22px, 3.2vw, 28px)",
               color: "var(--cream)",
               marginTop: "4px",
               fontFamily: "var(--font-serif)",
@@ -115,22 +57,36 @@ export default function MoodSelector({ activeCategory, onSelectCategory }) {
           </h2>
         </div>
 
-        {activeCategory !== "all" && (
+        {isAnySelected && (
           <button
+            id="reset-mood-btn"
             type="button"
-            onClick={() => onSelectCategory("all")}
+            onClick={onResetMoods}
             style={{
-              background: "transparent",
-              border: "none",
-              color: "var(--accent-orange)",
+              background: "rgba(252, 248, 242, 0.06)",
+              border: "1px solid var(--border-medium)",
+              color: "var(--cream)",
               fontSize: "12px",
               fontWeight: 600,
               cursor: "pointer",
-              textDecoration: "underline",
-              padding: "4px 8px"
+              padding: "6px 14px",
+              borderRadius: "var(--radius-pill)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              transition: "all 0.15s ease"
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "var(--accent-orange)";
+              e.currentTarget.style.color = "var(--accent-orange)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "var(--border-medium)";
+              e.currentTarget.style.color = "var(--cream)";
             }}
           >
-            Reset Mood (Show All)
+            <span>✕</span>
+            <span>Reset Mood (Show All)</span>
           </button>
         )}
       </div>
@@ -143,15 +99,24 @@ export default function MoodSelector({ activeCategory, onSelectCategory }) {
           gap: "14px"
         }}
       >
-        {MOODS.map((mood) => {
-          const isSelected = activeCategory === mood.category;
+        {MOODS_LIST.map((mood) => {
+          const isSelected = activeMoods.includes(mood.id);
 
           return (
             <motion.div
               key={mood.id}
-              whileHover={{ y: -4, scale: 1.02 }}
+              id={`mood-card-${mood.id}`}
+              whileHover={{ y: -3, scale: 1.015 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => handleMoodClick(mood)}
+              onClick={() => onToggleMood(mood.id)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  onToggleMood(mood.id);
+                }
+              }}
               style={{
                 cursor: "pointer",
                 padding: "16px 18px",
@@ -163,7 +128,7 @@ export default function MoodSelector({ activeCategory, onSelectCategory }) {
                   ? `1.5px solid ${mood.accent}`
                   : "1px solid var(--border-subtle)",
                 boxShadow: isSelected
-                  ? `0 10px 24px -6px ${mood.accent}33, var(--shadow-card)`
+                  ? `0 8px 24px -6px ${mood.accent}33, var(--shadow-card)`
                   : "0 4px 14px rgba(0,0,0,0.25)",
                 backdropFilter: "blur(12px)",
                 WebkitBackdropFilter: "blur(12px)",
@@ -174,8 +139,10 @@ export default function MoodSelector({ activeCategory, onSelectCategory }) {
                 overflow: "hidden",
                 transition: "border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease"
               }}
+              aria-pressed={isSelected}
+              aria-label={`Select vibe: ${mood.title}`}
             >
-              {/* Selected subtle glowing bar */}
+              {/* Selected subtle glowing indicator line */}
               {isSelected && (
                 <div
                   style={{
@@ -196,10 +163,10 @@ export default function MoodSelector({ activeCategory, onSelectCategory }) {
                   height: "44px",
                   borderRadius: "12px",
                   background: isSelected
-                    ? `${mood.accent}22`
+                    ? `${mood.accent}25`
                     : "rgba(252, 248, 242, 0.05)",
                   border: isSelected
-                    ? `1px solid ${mood.accent}55`
+                    ? `1px solid ${mood.accent}66`
                     : "1px solid var(--border-subtle)",
                   display: "flex",
                   alignItems: "center",
@@ -221,12 +188,20 @@ export default function MoodSelector({ activeCategory, onSelectCategory }) {
                     color: isSelected ? "#ffffff" : "var(--cream)",
                     display: "flex",
                     alignItems: "center",
-                    gap: "6px"
+                    justifyContent: "space-between"
                   }}
                 >
-                  {mood.title}
+                  <span>{mood.title}</span>
                   {isSelected && (
-                    <span style={{ color: mood.accent, fontSize: "11px" }}>✓</span>
+                    <span
+                      style={{
+                        color: mood.accent,
+                        fontSize: "12px",
+                        fontWeight: 900
+                      }}
+                    >
+                      ✓
+                    </span>
                   )}
                 </div>
                 <div

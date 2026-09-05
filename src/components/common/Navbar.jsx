@@ -2,21 +2,30 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import CafeFinderLogo from "../brand/CafeFinderLogo";
 import { getSavedCafes } from "../../utils/storage";
+import { getCurrentUser } from "../../utils/auth";
 
 export default function Navbar({ onOpenReviewModal }) {
   const location = useLocation();
   const [savedCount, setSavedCount] = useState(0);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(getCurrentUser());
 
   useEffect(() => {
-    const updateCount = () => {
+    const updateUserData = () => {
       const saved = getSavedCafes();
       setSavedCount(saved.length);
+      setCurrentUser(getCurrentUser());
     };
-    updateCount();
-    window.addEventListener("storage", updateCount);
-    return () => window.removeEventListener("storage", updateCount);
+
+    updateUserData();
+    window.addEventListener("storage", updateUserData);
+    window.addEventListener("cafora_auth_change", updateUserData);
+
+    return () => {
+      window.removeEventListener("storage", updateUserData);
+      window.removeEventListener("cafora_auth_change", updateUserData);
+    };
   }, [location.pathname]);
 
   useEffect(() => {
@@ -195,30 +204,71 @@ export default function Navbar({ onOpenReviewModal }) {
             <span style={{ color: "var(--accent-orange)", fontWeight: 800 }}>+</span> Add a Café
           </Link>
 
-          <Link
-            to="/login"
-            style={{
-              width: "38px",
-              height: "38px",
-              borderRadius: "50%",
-              background: "var(--bg-surface-elevated)",
-              border: "1px solid var(--border-medium)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "var(--cream-muted)",
-              textDecoration: "none",
-              fontSize: "15px",
-              transition: "all 0.2s ease"
-            }}
-            title="Profile & Preferences"
-            aria-label="Profile & Preferences"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
-          </Link>
+          {currentUser ? (
+            <Link
+              to="/login"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "4px 12px 4px 6px",
+                borderRadius: "var(--radius-pill)",
+                background: "var(--bg-surface-elevated)",
+                border: "1px solid var(--border-medium)",
+                textDecoration: "none",
+                color: "var(--cream)",
+                fontSize: "13px",
+                fontWeight: 600,
+                transition: "all 0.2s ease"
+              }}
+              title={`Curator Profile: ${currentUser.name}`}
+            >
+              <div
+                style={{
+                  width: "26px",
+                  height: "26px",
+                  borderRadius: "50%",
+                  background: currentUser.avatarColor || "var(--accent-orange)",
+                  color: "#ffffff",
+                  fontSize: "11px",
+                  fontWeight: 800,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                {(currentUser.name || "C").slice(0, 1).toUpperCase()}
+              </div>
+              <span style={{ maxWidth: "80px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {currentUser.name ? currentUser.name.split(" ")[0] : "Profile"}
+              </span>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "6px 14px",
+                borderRadius: "var(--radius-pill)",
+                background: "rgba(245, 237, 224, 0.06)",
+                border: "1px solid var(--border-subtle)",
+                color: "var(--cream)",
+                textDecoration: "none",
+                fontSize: "12.5px",
+                fontWeight: 600,
+                transition: "all 0.2s ease"
+              }}
+              title="Sign In or Register"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>Sign In</span>
+            </Link>
+          )}
 
           {/* Mobile hamburger toggle */}
           <button
@@ -258,6 +308,63 @@ export default function Navbar({ onOpenReviewModal }) {
             boxShadow: "var(--shadow-card)"
           }}
         >
+          {currentUser ? (
+            <Link
+              to="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                padding: "10px 14px",
+                borderRadius: "var(--radius-md)",
+                background: "rgba(224, 122, 95, 0.12)",
+                border: "1px solid rgba(224, 122, 95, 0.3)",
+                textDecoration: "none",
+                color: "var(--cream)"
+              }}
+            >
+              <div
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "50%",
+                  background: currentUser.avatarColor || "var(--accent-orange)",
+                  color: "#fff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 700,
+                  fontSize: "13px"
+                }}
+              >
+                {(currentUser.name || "C").slice(0, 1).toUpperCase()}
+              </div>
+              <div>
+                <div style={{ fontSize: "13.5px", fontWeight: 700 }}>{currentUser.name}</div>
+                <div style={{ fontSize: "11px", color: "var(--accent-orange)" }}>
+                  @{currentUser.username} • View Profile & Stats
+                </div>
+              </div>
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                textDecoration: "none",
+                color: "var(--accent-orange)",
+                fontSize: "15px",
+                fontWeight: 600
+              }}
+            >
+              <span>👤 Sign In / Create Curator Account</span>
+            </Link>
+          )}
+
           <Link
             to="/"
             onClick={() => setMobileMenuOpen(false)}

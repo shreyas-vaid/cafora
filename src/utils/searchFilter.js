@@ -10,8 +10,8 @@
  * - Sorting algorithms (Recommended, Highest Trust, Highest Rated, Most Reviewed, Nearest)
  */
 
-import { calculateTrustScore } from "./trustScore";
-import { getRecommendationScore, LOW_TRUST_THRESHOLD } from "./recommendation";
+import { calculateTrustScore } from "./trustScore.js";
+import { getRecommendationScore, LOW_TRUST_THRESHOLD } from "./recommendation.js";
 
 export function filterAndSortCafes(cafes, {
   searchQuery = "",
@@ -70,22 +70,36 @@ export function filterAndSortCafes(cafes, {
         if (cafe.approxCostForTwo > 1000) return false;
       }
 
-      // Check tokens
-      const searchTokens = query.split(/\s+/).filter(Boolean);
-      const searchableText = [
-        cafe.name,
-        cafe.sector,
-        cafe.address,
-        ...(cafe.categories || []),
-        ...(cafe.tags || []),
-        ...(cafe.strengths || []),
-        cafe.featuredQuote || "",
-        cafe.verdict?.headline || ""
-      ].join(" ").toLowerCase();
+      // Conversational stop words that shouldn't eliminate cafes
+      const STOP_WORDS = new Set([
+        "a", "an", "the", "in", "at", "for", "to", "and", "or", "of", "with",
+        "place", "places", "cafe", "café", "cafes", "spot", "spots", "looking",
+        "feels", "feel", "like", "that", "some", "i", "im", "i'm", "me", "want",
+        "need", "good", "great", "best", "very", "any", "where", "we", "are"
+      ]);
 
-      const matchesAllTokens = searchTokens.every((token) => searchableText.includes(token));
-      if (!matchesAllTokens) {
-        return false;
+      const searchTokens = query
+        .split(/\s+/)
+        .map((t) => t.replace(/[^a-z0-9]/g, ""))
+        .filter((t) => t && !STOP_WORDS.has(t));
+
+      if (searchTokens.length > 0) {
+        const searchableText = [
+          cafe.name,
+          cafe.sector,
+          cafe.address,
+          ...(cafe.categories || []),
+          ...(cafe.tags || []),
+          ...(cafe.strengths || []),
+          cafe.featuredQuote || "",
+          cafe.verdict?.headline || ""
+        ].join(" ").toLowerCase();
+
+        // Must match at least one significant token, or if vibes extracted, allow vibe matching
+        const matchesAnyToken = searchTokens.some((token) => searchableText.includes(token));
+        if (!matchesAnyToken) {
+          return false;
+        }
       }
     }
 

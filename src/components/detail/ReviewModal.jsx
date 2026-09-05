@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { saveUserReview } from "../../utils/storage";
+import { getCurrentUser } from "../../utils/auth";
 
 export default function ReviewModal({ cafe, isOpen, onClose, onReviewSubmitted }) {
+  const currentUser = getCurrentUser();
   const [rating, setRating] = useState(5);
   const [foodRating, setFoodRating] = useState(5);
   const [ambienceRating, setAmbienceRating] = useState(5);
@@ -9,7 +11,7 @@ export default function ReviewModal({ cafe, isOpen, onClose, onReviewSubmitted }
   const [valueRating, setValueRating] = useState(5);
   const [wouldRecommend, setWouldRecommend] = useState("yes");
   
-  const [author, setAuthor] = useState("");
+  const [author, setAuthor] = useState(currentUser ? currentUser.name : "");
   const [authorSector, setAuthorSector] = useState("Sector 8");
   const [order, setOrder] = useState("");
   const [whatWasGood, setWhatWasGood] = useState("");

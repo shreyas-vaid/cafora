@@ -1,111 +1,106 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { CAFES_DATA, CHANDIGARH_SECTORS } from "../data/cafesData";
 import { filterAndSortCafes } from "../utils/searchFilter";
+import { rankCafesByVibeAndSearch, getMoodResponseCopy } from "../utils/vibeEngine";
 import Navbar from "../components/common/Navbar";
 import MoodSelector from "../components/feed/MoodSelector";
 import EditorialGrid from "../components/feed/EditorialGrid";
 import ChandigarhGraphic from "../components/brand/ChandigarhGraphic";
 
 export default function Discover() {
+  const [activeMoods, setActiveMoods] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedSector, setSelectedSector] = useState("All Chandigarh");
   const [selectedPrice, setSelectedPrice] = useState("all");
   const [minTrust, setMinTrust] = useState("all");
   const [sortBy, setSortBy] = useState("recommended");
+  const [isThinking, setIsThinking] = useState(false);
 
-  // Filter & Sort Cafes with memoization
-  const filteredCafes = useMemo(() => {
-    return filterAndSortCafes(CAFES_DATA, {
-      searchQuery,
-      selectedCategory,
-      selectedSector,
-      selectedPrice,
-      minTrust,
-      sortBy
+  const moodSelectorRef = useRef(null);
+
+  // Toggle multi-vibe selection (unrestricted multi-mood selection)
+  const handleToggleMood = (moodId) => {
+    setIsThinking(true);
+    setActiveMoods((prev) => {
+      if (prev.includes(moodId)) {
+        return prev.filter((id) => id !== moodId);
+      } else {
+        return [...prev, moodId];
+      }
     });
-  }, [searchQuery, selectedCategory, selectedSector, selectedPrice, minTrust, sortBy]);
 
-  const handleResetFilters = () => {
+    // Brief subtle thinking transition (280ms)
+    setTimeout(() => {
+      setIsThinking(false);
+    }, 280);
+  };
+
+  const handleResetMoods = () => {
+    setIsThinking(true);
+    setActiveMoods([]);
+    setTimeout(() => {
+      setIsThinking(false);
+    }, 200);
+  };
+
+  const handleResetAllFilters = () => {
+    setActiveMoods([]);
     setSearchQuery("");
-    setSelectedCategory("all");
     setSelectedSector("All Chandigarh");
     setSelectedPrice("all");
     setMinTrust("all");
     setSortBy("recommended");
   };
 
-  // Conversational response derived truthfully from user intent and exact match count
+  const scrollToMood = () => {
+    const el = document.getElementById("whats-the-mood");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  // Filter & rank cafes based on multi-vibe selection and search intent
+  const filteredCafes = useMemo(() => {
+    const baseList = filterAndSortCafes(CAFES_DATA, {
+      searchQuery,
+      selectedCategory: "all",
+      selectedSector,
+      selectedPrice,
+      minTrust,
+      sortBy
+    });
+
+    // When vibes or search intent are active, rank by CAFORA MATCH score
+    if ((activeMoods.length > 0 || (searchQuery && searchQuery.trim())) && sortBy === "recommended") {
+      return rankCafesByVibeAndSearch(baseList, activeMoods, searchQuery);
+    }
+
+    return baseList;
+  }, [searchQuery, selectedSector, selectedPrice, minTrust, sortBy, activeMoods]);
+
+  // Conversational response bar derived from active intent
   const conversationalResponse = useMemo(() => {
-    if (!searchQuery && selectedCategory === "all" && selectedSector === "All Chandigarh" && selectedPrice === "all" && minTrust === "all") {
-      return null;
-    }
-
-    const q = searchQuery.toLowerCase();
-    const count = filteredCafes.length;
-
-    if (q.includes("quiet") || q.includes("study") || q.includes("work") || selectedCategory === "Work Friendly" || selectedCategory === "Quiet / Reading") {
+    if (activeMoods.length > 0 || (searchQuery && searchQuery.trim().length > 0)) {
+      const copy = getMoodResponseCopy(activeMoods, searchQuery);
       return {
-        lead: "Ah. You need a quiet corner.",
-        detail: `${count} ${count === 1 ? "café matches" : "cafés match"} your mood.`
+        lead: copy.lead,
+        detail: copy.sub
       };
     }
-    if (q.includes("date") || q.includes("romantic") || selectedCategory === "Date Spots") {
+    if (selectedSector !== "All Chandigarh") {
       return {
-        lead: "Okay, we see the assignment. ❤️",
-        detail: `Romantic + good ambience + ${count} verified ${count === 1 ? "recommendation" : "recommendations"}.`
+        lead: `Scanning ${selectedSector}`,
+        detail: `${filteredCafes.length} spots verified in this sector.`
       };
     }
-    if (q.includes("coffee") || q.includes("specialty") || q.includes("espresso") || selectedCategory === "Specialty Coffee") {
-      return {
-        lead: "Coffee first. We respect that.",
-        detail: `Here are the ${count} strongest specialty roasters in Chandigarh.`
-      };
-    }
-    if (q.includes("pretty") || q.includes("photo") || selectedCategory === "Aesthetic & Photo Spots") {
-      return {
-        lead: "Yes, you are taking pictures. 📸",
-        detail: `${count} photogenic spaces with great aesthetics & natural light.`
-      };
-    }
-    if (q.includes("sweet") || q.includes("dessert") || selectedCategory === "Bakery & Desserts") {
-      return {
-        lead: "Sugar rush incoming. 🍰",
-        detail: `${count} artisanal spots with standout pastries and desserts.`
-      };
-    }
-    if (q.includes("night") || selectedCategory === "Late Night") {
-      return {
-        lead: "Not going home yet? We got you. 🌙",
-        detail: `${count} late-night spots open for after-hours coffee.`
-      };
-    }
-    if (q.includes("under 1000") || q.includes("under 500") || selectedPrice !== "all") {
-      return {
-        lead: "Great coffee without the wallet burn.",
-        detail: `${count} high-value spots matching your budget.`
-      };
-    }
-    if (selectedSector !== "All Chandigarh" || q.includes("sector")) {
-      const sec = selectedSector !== "All Chandigarh" ? selectedSector : "your sector";
-      return {
-        lead: `Scanning ${sec}.`,
-        detail: `Found ${count} places worth leaving the house for.`
-      };
-    }
-
-    return {
-      lead: "Here's what we found for you:",
-      detail: `${count} ${count === 1 ? "café matches" : "cafés match"} your discovery search.`
-    };
-  }, [searchQuery, selectedCategory, selectedSector, selectedPrice, minTrust, filteredCafes.length]);
+    return null;
+  }, [activeMoods, searchQuery, selectedSector, filteredCafes.length]);
 
   const suggestionChips = [
     { label: "Quiet corner", query: "quiet" },
     { label: "Date night under 1000", query: "date night under 1000" },
-    { label: "Good coffee in Sector 17", query: "coffee Sector 17" },
     { label: "Specialty roasters", query: "specialty coffee" },
     { label: "Work for 3 hours", query: "work" }
   ];
@@ -116,7 +111,7 @@ export default function Discover() {
       <Navbar />
 
       <main className="app-content">
-        {/* HOMEPAGE HERO SECTION */}
+        {/* HOMEPAGE HERO */}
         <section
           style={{
             position: "relative",
@@ -138,7 +133,7 @@ export default function Discover() {
               zIndex: 0
             }}
           >
-            <ChandigarhGraphic opacity={0.14} height={200} />
+            <ChandigarhGraphic opacity={0.12} height={210} />
           </div>
 
           <div className="container" style={{ maxWidth: "860px", position: "relative", zIndex: 1 }}>
@@ -149,18 +144,18 @@ export default function Discover() {
               transition={{ duration: 0.4 }}
               style={{ marginBottom: "16px" }}
             >
-              <span className="label-editorial" style={{ letterSpacing: "0.22em" }}>
-                <span>✦</span> CHANDIGARH • ONE CUP AT A TIME
+              <span className="label-editorial" style={{ letterSpacing: "0.2em" }}>
+                <span>✦</span> CHANDIGARH • {CAFES_DATA.length} VERIFIED SPOTS
               </span>
             </motion.div>
 
-            {/* Main Editorial Headline */}
+            {/* Main Headline */}
             <motion.h1
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               style={{
-                fontSize: "clamp(38px, 6vw, 64px)",
+                fontSize: "clamp(38px, 6vw, 66px)",
                 fontFamily: "var(--font-serif)",
                 color: "var(--cream)",
                 lineHeight: 1.1,
@@ -168,8 +163,8 @@ export default function Discover() {
                 letterSpacing: "-0.02em"
               }}
             >
-              Where are we <br />
-              having <span className="serif-italic" style={{ color: "var(--accent-orange)" }}>coffee</span> today?
+              WHERE ARE WE <br />
+              HAVING <span className="serif-italic" style={{ color: "var(--accent-orange)" }}>coffee</span> TODAY?
             </motion.h1>
 
             {/* Supporting Core Philosophy */}
@@ -180,15 +175,34 @@ export default function Discover() {
               style={{
                 fontSize: "clamp(15px, 2.2vw, 19px)",
                 color: "var(--cream-muted)",
-                marginBottom: "32px",
+                marginBottom: "24px",
                 fontWeight: 400,
                 fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                lineHeight: 1.5
+                lineHeight: 1.5,
+                maxWidth: "600px",
+                margin: "0 auto 24px auto"
               }}
             >
-              "Not just the highest rated. The one you'll actually want to return to."
+              Chandigarh has way too many cafes. <br />
+              <span style={{ color: "var(--cream)", fontWeight: 600 }}>We narrowed it down.</span>
             </motion.p>
+
+            {/* Quick Action Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.25 }}
+              style={{ marginBottom: "28px" }}
+            >
+              <button
+                type="button"
+                onClick={scrollToMood}
+                className="btn-editorial-primary"
+                style={{ padding: "12px 28px", fontSize: "14px" }}
+              >
+                Find my cafe →
+              </button>
+            </motion.div>
 
             {/* Conversational Search Input */}
             <motion.div
@@ -198,8 +212,8 @@ export default function Discover() {
               style={{
                 position: "relative",
                 width: "100%",
-                maxWidth: "680px",
-                margin: "0 auto 16px auto"
+                maxWidth: "640px",
+                margin: "0 auto 14px auto"
               }}
             >
               <div
@@ -208,7 +222,7 @@ export default function Discover() {
                   left: "20px",
                   top: "50%",
                   transform: "translateY(-50%)",
-                  fontSize: "18px",
+                  fontSize: "16px",
                   color: "var(--accent-orange)",
                   pointerEvents: "none"
                 }}
@@ -223,20 +237,20 @@ export default function Discover() {
                 placeholder="I'm looking for a café that feels like..."
                 style={{
                   width: "100%",
-                  padding: "18px 56px 18px 52px",
-                  fontSize: "16px",
+                  padding: "16px 52px 16px 48px",
+                  fontSize: "15px",
                   fontFamily: "var(--font-sans)",
                   borderRadius: "var(--radius-pill)",
                   background: "var(--bg-surface-elevated)",
                   border: "1.5px solid var(--border-medium)",
                   color: "var(--cream)",
                   outline: "none",
-                  boxShadow: "var(--shadow-float)",
+                  boxShadow: "var(--shadow-card)",
                   transition: "border-color 0.2s ease, box-shadow 0.2s ease"
                 }}
                 onFocus={(e) => (e.target.style.borderColor = "var(--accent-orange)")}
                 onBlur={(e) => (e.target.style.borderColor = "var(--border-medium)")}
-                aria-label="Search cafés in Chandigarh by name, sector, vibe, or budget"
+                aria-label="Search cafes in Chandigarh"
               />
 
               {searchQuery && (
@@ -245,25 +259,25 @@ export default function Discover() {
                   onClick={() => setSearchQuery("")}
                   style={{
                     position: "absolute",
-                    right: "20px",
+                    right: "18px",
                     top: "50%",
                     transform: "translateY(-50%)",
                     background: "transparent",
                     border: "none",
                     color: "var(--cream-faint)",
                     cursor: "pointer",
-                    fontSize: "16px",
+                    fontSize: "15px",
                     padding: "4px"
                   }}
                   title="Clear search"
-                  aria-label="Clear search query"
+                  aria-label="Clear search"
                 >
                   ✕
                 </button>
               )}
             </motion.div>
 
-            {/* Quick Conversational Suggestions */}
+            {/* Suggestion Chips */}
             <div
               style={{
                 display: "flex",
@@ -314,24 +328,24 @@ export default function Discover() {
                   exit={{ opacity: 0, y: -8, height: 0 }}
                   transition={{ duration: 0.3 }}
                   style={{
-                    margin: "24px auto 0 auto",
-                    maxWidth: "540px",
+                    margin: "20px auto 0 auto",
+                    maxWidth: "520px",
                     background: "rgba(224, 122, 56, 0.12)",
                     border: "1px solid rgba(224, 122, 56, 0.35)",
                     borderRadius: "var(--radius-md)",
-                    padding: "12px 20px",
+                    padding: "11px 18px",
                     display: "flex",
                     alignItems: "center",
                     gap: "12px",
                     textAlign: "left"
                   }}
                 >
-                  <div style={{ fontSize: "20px" }}>☕</div>
+                  <div style={{ fontSize: "18px" }}>☕</div>
                   <div style={{ flex: 1 }}>
                     <div style={{ fontSize: "13px", fontWeight: 700, color: "var(--accent-orange)" }}>
                       {conversationalResponse.lead}
                     </div>
-                    <div style={{ fontSize: "12.5px", color: "var(--cream)", marginTop: "2px" }}>
+                    <div style={{ fontSize: "12px", color: "var(--cream)", marginTop: "2px" }}>
                       {conversationalResponse.detail}
                     </div>
                   </div>
@@ -341,18 +355,19 @@ export default function Discover() {
           </div>
         </section>
 
-        {/* "WHAT'S THE MOOD?" INTERACTIVE SECTION */}
-        <section>
+        {/* "WHAT'S THE MOOD?" SECTION */}
+        <section id="whats-the-mood" ref={moodSelectorRef}>
           <div className="container">
             <MoodSelector
-              activeCategory={selectedCategory}
-              onSelectCategory={setSelectedCategory}
+              activeMoods={activeMoods}
+              onToggleMood={handleToggleMood}
+              onResetMoods={handleResetMoods}
             />
           </div>
         </section>
 
         {/* EDITORIAL REFINEMENT BAR (Sector, Budget, Trust, Sort) */}
-        <section style={{ margin: "16px 0 28px 0" }}>
+        <section style={{ margin: "14px 0 24px 0" }}>
           <div className="container">
             <div
               style={{
@@ -361,7 +376,7 @@ export default function Discover() {
                 alignItems: "center",
                 flexWrap: "wrap",
                 gap: "14px",
-                padding: "14px 20px",
+                padding: "12px 18px",
                 background: "var(--bg-surface-elevated)",
                 border: "1px solid var(--border-subtle)",
                 borderRadius: "var(--radius-md)"
@@ -369,13 +384,13 @@ export default function Discover() {
             >
               {/* Left Filters */}
               <div style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
-                {/* Sector Selector */}
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                   <span className="label-editorial-muted">SECTOR:</span>
                   <select
                     value={selectedSector}
                     onChange={(e) => setSelectedSector(e.target.value)}
                     style={filterSelectStyle}
+                    aria-label="Filter by Sector"
                   >
                     {CHANDIGARH_SECTORS.map((sec) => (
                       <option key={sec} value={sec} style={{ background: "#160f0b", color: "#fcf8f2" }}>
@@ -385,32 +400,32 @@ export default function Discover() {
                   </select>
                 </div>
 
-                {/* Price Filter */}
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                   <span className="label-editorial-muted">PRICE:</span>
                   <select
                     value={selectedPrice}
                     onChange={(e) => setSelectedPrice(e.target.value)}
                     style={filterSelectStyle}
+                    aria-label="Filter by Price"
                   >
                     <option value="all" style={{ background: "#160f0b" }}>All Prices</option>
-                    <option value="₹" style={{ background: "#160f0b" }}>₹ (Budget &lt; ₹500)</option>
-                    <option value="₹₹" style={{ background: "#160f0b" }}>₹₹ (Moderate ₹500–₹1000)</option>
-                    <option value="₹₹₹" style={{ background: "#160f0b" }}>₹₹₹ (Premium &gt; ₹1000)</option>
+                    <option value="₹" style={{ background: "#160f0b" }}>₹ (&lt; ₹500)</option>
+                    <option value="₹₹" style={{ background: "#160f0b" }}>₹₹ (₹500–₹1000)</option>
+                    <option value="₹₹₹" style={{ background: "#160f0b" }}>₹₹₹ (&gt; ₹1000)</option>
                   </select>
                 </div>
 
-                {/* Trust Score Gate */}
                 <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
                   <span className="label-editorial-muted">TRUST:</span>
                   <select
                     value={minTrust}
                     onChange={(e) => setMinTrust(e.target.value)}
                     style={filterSelectStyle}
+                    aria-label="Filter by Trust"
                   >
                     <option value="all" style={{ background: "#160f0b" }}>All Scores</option>
                     <option value="80" style={{ background: "#160f0b" }}>80+ Trusted</option>
-                    <option value="90" style={{ background: "#160f0b" }}>90+ Highly Trusted</option>
+                    <option value="90" style={{ background: "#160f0b" }}>90+ Benchmark</option>
                   </select>
                 </div>
               </div>
@@ -423,19 +438,19 @@ export default function Discover() {
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value)}
                     style={filterSelectStyle}
+                    aria-label="Sort cafes"
                   >
-                    <option value="recommended" style={{ background: "#160f0b" }}>✦ Curated Recommendation</option>
-                    <option value="trust" style={{ background: "#160f0b" }}>🛡️ Highest Trust Score</option>
+                    <option value="recommended" style={{ background: "#160f0b" }}>✦ CAFORA Match</option>
+                    <option value="trust" style={{ background: "#160f0b" }}>🛡️ Highest Trust</option>
                     <option value="rating" style={{ background: "#160f0b" }}>★ Highest Rated</option>
                     <option value="reviews" style={{ background: "#160f0b" }}>💬 Most Reviewed</option>
-                    <option value="distance" style={{ background: "#160f0b" }}>📍 Nearest to Center</option>
                   </select>
                 </div>
 
-                {(searchQuery || selectedCategory !== "all" || selectedSector !== "All Chandigarh" || selectedPrice !== "all" || minTrust !== "all") && (
+                {(searchQuery || selectedSector !== "All Chandigarh" || selectedPrice !== "all" || minTrust !== "all" || activeMoods.length > 0) && (
                   <button
                     type="button"
-                    onClick={handleResetFilters}
+                    onClick={handleResetAllFilters}
                     style={{
                       background: "transparent",
                       border: "none",
@@ -455,24 +470,26 @@ export default function Discover() {
           </div>
         </section>
 
-        {/* EDITORIAL DISCOVERY CONTENT */}
+        {/* EDITORIAL RECOMMENDATION GRID */}
         <section>
           <div className="container">
             <EditorialGrid
               cafes={filteredCafes}
-              onResetFilters={handleResetFilters}
-              selectedMood={selectedCategory}
+              onResetFilters={handleResetAllFilters}
+              activeMoods={activeMoods}
+              searchQuery={searchQuery}
+              isThinking={isThinking}
             />
           </div>
         </section>
 
-        {/* EDITORIAL FOOTER */}
+        {/* FOOTER */}
         <footer
           style={{
             marginTop: "60px",
             borderTop: "1px solid var(--border-subtle)",
             padding: "48px 0 36px 0",
-            background: "rgba(16, 11, 8, 0.95)"
+            background: "rgba(16, 11, 8, 0.96)"
           }}
         >
           <div
@@ -500,12 +517,12 @@ export default function Discover() {
               <p style={{ fontSize: "13px", color: "var(--cream-muted)", fontStyle: "italic", marginTop: "4px" }}>
                 "Good cafes. Better reasons to leave the house."
               </p>
-              <div className="label-editorial-muted" style={{ marginTop: "8px" }}>
+              <div className="label-editorial-muted" style={{ marginTop: "6px" }}>
                 CHANDIGARH • ONE CUP AT A TIME
               </div>
             </div>
 
-            <div style={{ display: "flex", gap: "24px", fontSize: "13px" }}>
+            <div style={{ display: "flex", gap: "22px", fontSize: "13px", flexWrap: "wrap" }}>
               <Link to="/" style={{ color: "var(--cream-muted)", textDecoration: "none" }}>
                 Discover
               </Link>
@@ -513,7 +530,7 @@ export default function Discover() {
                 Explore Map
               </Link>
               <Link to="/saved" style={{ color: "var(--cream-muted)", textDecoration: "none" }}>
-                Your Little Coffee List
+                Your Coffee List
               </Link>
               <Link to="/add" style={{ color: "var(--accent-orange)", textDecoration: "none", fontWeight: 600 }}>
                 + Add a Café
@@ -530,7 +547,7 @@ const filterSelectStyle = {
   background: "rgba(252, 248, 242, 0.06)",
   border: "1px solid var(--border-subtle)",
   color: "var(--cream)",
-  padding: "6px 12px",
+  padding: "5px 10px",
   borderRadius: "var(--radius-sm)",
   fontSize: "12px",
   fontWeight: 500,

@@ -3,18 +3,33 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import TrustBadge from "../common/TrustBadge";
 import { isCafeSaved, toggleSaveCafe } from "../../utils/storage";
+import {
+  getCafePersonalityTagline,
+  calculateMatchPercentage,
+  getMatchLabel,
+  getWhyItMatches,
+  getCaforaSaysPhrase
+} from "../../utils/vibeEngine";
 
 /**
- * EDITORIAL CAFE POSTCARD
- * Visual hierarchy:
- * 1. Image with sector tag & save button
- * 2. Cafe Name
- * 3. Trust Score + Star Rating (separated)
- * 4. What it's good for (✓)
- * 5. One thing to know (⚠️ watch out)
- * 6. Price & Vibe tags
+ * STREAMLINED PERSONALITY CAFE CARD (3-5 Second Scannability)
+ * Priority Hierarchy:
+ * 1. Cafe image with sector pill & save heart
+ * 2. Cafe name
+ * 3. Short personality tagline (e.g. "Main character energy.")
+ * 4. Star rating + 97 TRUST ⓘ + CAFORA MATCH %
+ * 5. Top 2 key reasons (WHY IT MATCHES)
+ * 6. Compact tags
+ * 7. "CAFORA SAYS" editorial badge on top match
  */
-export default function CafeCard({ cafe, onToggleSave, layoutStyle = "standard" }) {
+export default function CafeCard({
+  cafe,
+  onToggleSave,
+  layoutStyle = "standard",
+  activeMoods = [],
+  searchQuery = "",
+  isTopPick = false
+}) {
   const [saved, setSaved] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -31,12 +46,16 @@ export default function CafeCard({ cafe, onToggleSave, layoutStyle = "standard" 
     if (onToggleSave) onToggleSave(cafe);
   };
 
-  const topPositive = cafe.strengths?.[0] || cafe.verdict?.loved?.[0] || "Great coffee";
-  const topNegative = cafe.weaknesses?.[0] || cafe.verdict?.disliked?.[0] || "Busy during peak hours";
+  const personalityTagline = getCafePersonalityTagline(cafe);
+  const matchPercentage = calculateMatchPercentage(cafe, activeMoods, searchQuery);
+  const matchLabel = getMatchLabel(matchPercentage);
+  const whyReasons = getWhyItMatches(cafe, activeMoods);
+  const caforaSays = isTopPick ? getCaforaSaysPhrase(cafe, activeMoods) : null;
+  const isVibeActive = activeMoods.length > 0 || (searchQuery && searchQuery.trim().length > 0);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
       whileHover={{ y: -5 }}
@@ -48,33 +67,39 @@ export default function CafeCard({ cafe, onToggleSave, layoutStyle = "standard" 
         height: "100%"
       }}
     >
-      <Link
-        to={`/cafe/${cafe.id}`}
+      <div
         style={{
           display: "flex",
           flexDirection: "column",
           height: "100%",
-          textDecoration: "none",
-          color: "inherit",
           background: "var(--bg-surface-elevated)",
           borderRadius: "var(--radius-lg)",
-          border: isHovered ? "1px solid var(--border-prominent)" : "1px solid var(--border-subtle)",
+          border: isHovered
+            ? "1px solid var(--accent-orange)"
+            : isTopPick && isVibeActive
+            ? "1px solid rgba(224, 122, 56, 0.45)"
+            : "1px solid var(--border-medium)",
           overflow: "hidden",
-          boxShadow: isHovered ? "var(--shadow-float)" : "var(--shadow-card)",
-          transition: "border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease"
+          boxShadow: isHovered
+            ? "var(--shadow-float), 0 0 20px rgba(224, 122, 56, 0.16)"
+            : "var(--shadow-card)",
+          transition: "border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease",
+          position: "relative"
         }}
       >
-        {/* POSTCARD IMAGE HEADER */}
-        <div
+        {/* 1. CAFE IMAGE HEADER */}
+        <Link
+          to={`/cafe/${cafe.id}?match=${matchPercentage}`}
           style={{
             position: "relative",
             width: "100%",
-            height: layoutStyle === "compact" ? "180px" : "220px",
+            height: layoutStyle === "compact" ? "180px" : "210px",
             backgroundColor: "#1b130e",
-            overflow: "hidden"
+            overflow: "hidden",
+            display: "block",
+            textDecoration: "none"
           }}
         >
-          {/* Skeleton placeholder */}
           {!imageLoaded && (
             <div
               style={{
@@ -107,17 +132,16 @@ export default function CafeCard({ cafe, onToggleSave, layoutStyle = "standard" 
             }}
           />
 
-          {/* Vignette shadow */}
           <div
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(to top, rgba(16, 11, 8, 0.8) 0%, rgba(16, 11, 8, 0.1) 40%, rgba(16, 11, 8, 0.4) 100%)",
+              background: "linear-gradient(to top, rgba(16, 11, 8, 0.85) 0%, rgba(16, 11, 8, 0.08) 50%, rgba(16, 11, 8, 0.45) 100%)",
               pointerEvents: "none"
             }}
           />
 
-          {/* Top Postcard Bar: Sector Badge & Save Button */}
+          {/* Top Bar: Sector & Save Heart */}
           <div
             style={{
               position: "absolute",
@@ -127,69 +151,68 @@ export default function CafeCard({ cafe, onToggleSave, layoutStyle = "standard" 
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              zIndex: 2
+              zIndex: 3
             }}
           >
             <span
               style={{
-                background: "rgba(16, 11, 8, 0.82)",
+                background: "rgba(16, 11, 8, 0.85)",
                 backdropFilter: "blur(8px)",
                 color: "var(--cream)",
-                padding: "3px 10px",
+                padding: "3px 9px",
                 borderRadius: "var(--radius-pill)",
                 fontSize: "11px",
                 fontWeight: 700,
-                letterSpacing: "0.04em",
+                letterSpacing: "0.03em",
                 border: "1px solid var(--border-subtle)"
               }}
             >
               📍 {cafe.sector}
             </span>
 
-            {/* Save Heart Button with Micro-Animation */}
             <motion.button
               type="button"
               onClick={handleSaveClick}
               whileTap={{ scale: 0.8 }}
               style={{
-                width: "34px",
-                height: "34px",
+                width: "32px",
+                height: "32px",
                 borderRadius: "50%",
-                background: saved ? "var(--terracotta)" : "rgba(16, 11, 8, 0.72)",
+                background: saved ? "var(--terracotta)" : "rgba(16, 11, 8, 0.75)",
                 backdropFilter: "blur(8px)",
                 border: "1px solid rgba(255, 255, 255, 0.2)",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "15px",
+                fontSize: "13px",
                 color: saved ? "#ffffff" : "var(--cream)",
-                transition: "background 0.2s ease, transform 0.2s ease",
-                boxShadow: "0 4px 10px rgba(0,0,0,0.35)"
+                transition: "background 0.2s ease",
+                boxShadow: "0 3px 8px rgba(0,0,0,0.3)"
               }}
-              title={saved ? "Remove from Little Coffee List" : "Save to Little Coffee List"}
-              aria-label={saved ? "Remove from Little Coffee List" : "Save to Little Coffee List"}
+              title={saved ? "Remove from coffee list" : "Save to coffee list"}
+              aria-label={saved ? "Remove from coffee list" : "Save to coffee list"}
             >
               {saved ? "❤️" : "🤍"}
             </motion.button>
           </div>
 
-          {/* Bottom Floating Pill: Price & Cost */}
+          {/* Price & Cost Tag */}
           <div
             style={{
               position: "absolute",
               bottom: "10px",
               left: "12px",
-              color: "var(--cream-muted)",
-              fontSize: "11.5px",
-              fontWeight: 500,
-              zIndex: 2
+              zIndex: 3
             }}
           >
             <span
               style={{
-                background: "rgba(16, 11, 8, 0.75)",
+                background: "rgba(16, 11, 8, 0.82)",
                 backdropFilter: "blur(6px)",
+                color: "var(--cream-muted)",
+                fontSize: "11px",
+                fontWeight: 600,
                 padding: "3px 8px",
                 borderRadius: "var(--radius-xs)",
                 border: "1px solid var(--border-subtle)"
@@ -198,12 +221,12 @@ export default function CafeCard({ cafe, onToggleSave, layoutStyle = "standard" 
               {cafe.priceRange} · ₹{cafe.approxCostForTwo} for 2
             </span>
           </div>
-        </div>
+        </Link>
 
-        {/* POSTCARD BODY */}
+        {/* 2. CARD BODY */}
         <div
           style={{
-            padding: "16px 16px 18px",
+            padding: "16px 18px 18px",
             display: "flex",
             flexDirection: "column",
             flex: 1,
@@ -211,155 +234,244 @@ export default function CafeCard({ cafe, onToggleSave, layoutStyle = "standard" 
           }}
         >
           <div>
-            {/* Header: Name + Star Rating */}
-            <div
+            {/* "CAFORA SAYS" SIGNATURE BADGE (Top recommendation only) */}
+            {caforaSays && (
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  background: "rgba(224, 122, 56, 0.14)",
+                  border: "1px solid rgba(224, 122, 56, 0.35)",
+                  padding: "3px 9px",
+                  borderRadius: "var(--radius-pill)",
+                  marginBottom: "8px"
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: "9.5px",
+                    fontWeight: 800,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "var(--accent-orange)"
+                  }}
+                >
+                  CAFORA SAYS:
+                </span>
+                <span style={{ fontSize: "11.5px", fontStyle: "italic", color: "var(--cream)", fontWeight: 600 }}>
+                  "{caforaSays}"
+                </span>
+              </div>
+            )}
+
+            {/* Cafe Name */}
+            <Link
+              to={`/cafe/${cafe.id}?match=${matchPercentage}`}
               style={{
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "space-between",
-                gap: "8px",
-                marginBottom: "6px"
+                textDecoration: "none",
+                color: "inherit"
               }}
             >
               <h3
                 style={{
-                  fontSize: "17px",
+                  fontSize: "18px",
                   fontWeight: 700,
                   fontFamily: "var(--font-serif)",
                   color: "var(--cream)",
-                  lineHeight: 1.25
+                  lineHeight: 1.25,
+                  marginBottom: "4px"
                 }}
               >
                 {cafe.name}
               </h3>
+            </Link>
 
+            {/* 3. Short Personality Tagline */}
+            <div
+              style={{
+                fontSize: "12.5px",
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                color: "var(--accent-orange)",
+                fontWeight: 500,
+                marginBottom: "10px",
+                lineHeight: 1.3
+              }}
+            >
+              "{personalityTagline}"
+            </div>
+
+            {/* 4. Hierarchy Row: Star Rating + 97 TRUST ⓘ + CAFORA MATCH % */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: "8px",
+                marginBottom: "12px"
+              }}
+            >
+              {/* Star Rating */}
               <div
                 style={{
                   fontSize: "11.5px",
-                  fontWeight: 700,
+                  fontWeight: 800,
                   color: "var(--gold)",
-                  flexShrink: 0,
                   display: "flex",
                   alignItems: "center",
-                  gap: "2px"
+                  gap: "2px",
+                  background: "rgba(212, 175, 55, 0.12)",
+                  padding: "2px 7px",
+                  borderRadius: "var(--radius-xs)",
+                  border: "1px solid rgba(212, 175, 55, 0.25)"
                 }}
               >
                 ★ {cafe.rating}
               </div>
-            </div>
 
-            {/* Trust Score Line */}
-            <div style={{ marginBottom: "12px" }}>
+              {/* Trust Badge with Info Icon */}
               <TrustBadge cafe={cafe} size="small" />
+
+              {/* CAFORA MATCH % (Highlighted when vibe active) */}
+              {isVibeActive && (
+                <div
+                  style={{
+                    fontSize: "11px",
+                    fontWeight: 800,
+                    letterSpacing: "0.04em",
+                    color: matchPercentage >= 90 ? "#34d399" : "var(--accent-orange)",
+                    background: matchPercentage >= 90 ? "rgba(52, 211, 153, 0.12)" : "rgba(224, 122, 56, 0.12)",
+                    border: matchPercentage >= 90 ? "1px solid rgba(52, 211, 153, 0.3)" : "1px solid rgba(224, 122, 56, 0.3)",
+                    padding: "2px 7px",
+                    borderRadius: "var(--radius-xs)"
+                  }}
+                >
+                  {matchPercentage}% MATCH · {matchLabel}
+                </div>
+              )}
             </div>
 
-            {/* Editorial Highlight Quote if available */}
-            {cafe.featuredQuote && (
-              <p
+            {/* 5. TOP 2 KEY REASONS (WHY IT MATCHES) */}
+            {whyReasons.length > 0 && (
+              <div
                 style={{
-                  fontSize: "12px",
-                  fontFamily: "var(--font-serif)",
-                  fontStyle: "italic",
-                  color: "var(--cream-muted)",
-                  lineHeight: 1.4,
+                  background: "rgba(16, 11, 8, 0.45)",
+                  borderRadius: "var(--radius-sm)",
+                  padding: "8px 10px",
                   marginBottom: "12px",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden"
+                  fontSize: "11.5px",
+                  border: "1px solid var(--border-subtle)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "4px"
                 }}
               >
-                "{cafe.featuredQuote}"
-              </p>
+                {whyReasons.slice(0, 2).map((reason, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "6px",
+                      color: "var(--cream)",
+                      lineHeight: 1.35
+                    }}
+                  >
+                    <span style={{ color: "var(--trust-high)", fontWeight: 800, flexShrink: 0 }}>✓</span>
+                    <span>{reason}</span>
+                  </div>
+                ))}
+              </div>
             )}
 
-            {/* WHAT IT'S GOOD FOR & ONE THING TO KNOW */}
-            <div
-              style={{
-                background: "rgba(16, 11, 8, 0.45)",
-                borderRadius: "var(--radius-sm)",
-                padding: "10px 11px",
-                marginBottom: "12px",
-                fontSize: "11.5px",
-                border: "1px solid var(--border-subtle)"
-              }}
-            >
-              {/* Positive */}
-              <div
-                style={{
-                  color: "var(--trust-high)",
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "6px",
-                  marginBottom: "4px",
-                  fontWeight: 500
-                }}
-              >
-                <span style={{ fontWeight: 700 }}>✓</span>
-                <span style={{ color: "var(--cream)" }}>{topPositive}</span>
-              </div>
-
-              {/* Negative / Watch out */}
-              <div
-                style={{
-                  color: "var(--accent-orange)",
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: "6px",
-                  fontWeight: 500
-                }}
-              >
-                <span style={{ fontWeight: 700 }}>⚠️</span>
-                <span style={{ color: "var(--cream-muted)" }}>{topNegative}</span>
-              </div>
+            {/* 6. Tags (Max 2 for scannability) */}
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
+              {cafe.tags?.slice(0, 2).map((tag, idx) => (
+                <span
+                  key={idx}
+                  style={{
+                    fontSize: "10.5px",
+                    background: "rgba(252, 248, 242, 0.05)",
+                    color: "var(--cream-faint)",
+                    padding: "2px 7px",
+                    borderRadius: "var(--radius-xs)",
+                    fontWeight: 500
+                  }}
+                >
+                  {tag}
+                </span>
+              ))}
             </div>
           </div>
 
-          {/* Vibe Tags Footer */}
+          {/* 7. Action Bar: Profile & Get Directions */}
           <div
             style={{
               display: "flex",
-              flexWrap: "wrap",
-              gap: "6px",
-              paddingTop: "6px",
+              alignItems: "center",
+              gap: "8px",
+              marginTop: "14px",
+              paddingTop: "12px",
               borderTop: "1px solid var(--border-subtle)"
             }}
           >
-            {cafe.categories?.slice(0, 1).map((cat, idx) => (
-              <span
-                key={idx}
-                style={{
-                  fontSize: "10.5px",
-                  background: "rgba(224, 122, 56, 0.12)",
-                  color: "var(--accent-orange)",
-                  padding: "2px 7px",
-                  borderRadius: "var(--radius-xs)",
-                  fontWeight: 600,
-                  letterSpacing: "0.02em"
-                }}
-              >
-                {cat}
-              </span>
-            ))}
+            <Link
+              to={`/cafe/${cafe.id}?match=${matchPercentage}`}
+              style={{
+                flex: 1,
+                textDecoration: "none",
+                textAlign: "center",
+                fontSize: "12px",
+                fontWeight: 600,
+                color: "var(--cream-muted)",
+                background: "rgba(252, 248, 242, 0.05)",
+                border: "1px solid var(--border-subtle)",
+                padding: "7px 10px",
+                borderRadius: "var(--radius-pill)",
+                transition: "all 0.2s ease"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "var(--cream)";
+                e.currentTarget.style.borderColor = "var(--border-prominent)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = "var(--cream-muted)";
+                e.currentTarget.style.borderColor = "var(--border-subtle)";
+              }}
+            >
+              Explore profile →
+            </Link>
 
-            {cafe.tags?.slice(0, 2).map((tag, idx) => (
-              <span
-                key={idx}
-                style={{
-                  fontSize: "10.5px",
-                  background: "rgba(252, 248, 242, 0.05)",
-                  color: "var(--cream-faint)",
-                  padding: "2px 7px",
-                  borderRadius: "var(--radius-xs)",
-                  fontWeight: 500
-                }}
-              >
-                {tag}
-              </span>
-            ))}
+            <a
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cafe.name + " " + cafe.address)}`}
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                flex: 1,
+                textDecoration: "none",
+                textAlign: "center",
+                fontSize: "12px",
+                fontWeight: 700,
+                color: "#100b08",
+                background: "var(--accent-orange)",
+                padding: "7px 10px",
+                borderRadius: "var(--radius-pill)",
+                transition: "all 0.2s ease",
+                boxShadow: "0 2px 10px rgba(224, 122, 56, 0.28)"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "var(--accent-orange-hover)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "var(--accent-orange)";
+              }}
+            >
+              Take me there
+            </a>
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }

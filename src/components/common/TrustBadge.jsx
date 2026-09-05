@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { calculateTrustScore } from "../../utils/trustScore";
 
 /**
  * Animated Viewport Trust Badge
- * Counts from 0 to actual trust score on mount.
- * 90-100: VERY TRUSTED
- * 80-89: TRUSTED
- * 65-79: MIXED
- * <65: THINK TWICE
+ * Features:
+ * - Deterministic Trust Score (97 TRUST)
+ * - Interactive ⓘ icon with concise tooltip popover
+ * - Respects hierarchy: supports rating without dominating cafe name
  */
 export default function TrustBadge({ cafe, scoreOverride, size = "normal" }) {
   const trust = scoreOverride !== undefined 
@@ -20,16 +19,18 @@ export default function TrustBadge({ cafe, scoreOverride, size = "normal" }) {
     : calculateTrustScore(cafe);
 
   const [displayScore, setDisplayScore] = useState(0);
+  const [showTooltip, setShowTooltip] = useState(false);
+  const tooltipRef = useRef(null);
 
   useEffect(() => {
     let start = 0;
     const end = trust.score;
     if (end === 0) return;
-    const duration = 650;
+    const duration = 500;
     const stepTime = Math.max(16, Math.floor(duration / end));
 
     const timer = setInterval(() => {
-      start += 2;
+      start += 3;
       if (start >= end) {
         setDisplayScore(end);
         clearInterval(timer);
@@ -41,10 +42,22 @@ export default function TrustBadge({ cafe, scoreOverride, size = "normal" }) {
     return () => clearInterval(timer);
   }, [trust.score]);
 
+  // Close tooltip on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(e.target)) {
+        setShowTooltip(false);
+      }
+    };
+    if (showTooltip) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [showTooltip]);
+
   const isSmall = size === "small";
   const isLarge = size === "large";
 
-  // Label formatting
   let tierLabel = "TRUSTED";
   if (trust.score >= 90) tierLabel = "VERY TRUSTED";
   else if (trust.score >= 80) tierLabel = "TRUSTED";
@@ -52,42 +65,108 @@ export default function TrustBadge({ cafe, scoreOverride, size = "normal" }) {
   else tierLabel = "THINK TWICE";
 
   return (
-    <div 
-      className={`trust-badge-container ${trust.badgeClass}`}
+    <div
+      ref={tooltipRef}
       style={{
-        padding: isSmall ? "3px 8px" : isLarge ? "6px 14px" : "4px 10px",
-        fontSize: isSmall ? "11px" : isLarge ? "14px" : "12px",
-        borderRadius: "var(--radius-sm)",
+        position: "relative",
         display: "inline-flex",
-        alignItems: "center",
-        gap: "6px"
+        alignItems: "center"
       }}
-      title={`Trust Score: ${trust.score}/100 • ${tierLabel} based on review veracity`}
     >
-      <span style={{ fontSize: isSmall ? "11px" : "13px" }}>
-        {trust.score >= 80 ? "🛡️" : "⚠️"}
-      </span>
-      <span style={{ fontFamily: "var(--font-sans)", letterSpacing: "0.02em" }}>
-        <strong style={{ fontSize: isLarge ? "16px" : "13px" }}>{displayScore}</strong>
-        <span style={{ opacity: 0.8, fontSize: "0.85em", marginLeft: "3px", fontWeight: 700 }}>
-          TRUST
+      <div 
+        className={`trust-badge-container ${trust.badgeClass}`}
+        style={{
+          padding: isSmall ? "3px 8px" : isLarge ? "5px 12px" : "4px 10px",
+          fontSize: isSmall ? "11px" : isLarge ? "13px" : "12px",
+          borderRadius: "var(--radius-sm)",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "5px",
+          position: "relative"
+        }}
+      >
+        <span style={{ fontSize: isSmall ? "11px" : "12.5px" }}>
+          {trust.score >= 80 ? "🛡️" : "⚠️"}
         </span>
-      </span>
+        <span style={{ fontFamily: "var(--font-sans)", letterSpacing: "0.02em" }}>
+          <strong style={{ fontSize: isLarge ? "14px" : "12px" }}>{displayScore}</strong>
+          <span style={{ opacity: 0.85, fontSize: "0.85em", marginLeft: "3px", fontWeight: 700 }}>
+            TRUST
+          </span>
+        </span>
 
-      {isLarge && (
-        <span
+        {/* Subtle Info Icon */}
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setShowTooltip(!showTooltip);
+          }}
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
           style={{
+            background: "transparent",
+            border: "none",
+            color: "currentColor",
+            opacity: 0.7,
+            cursor: "pointer",
             fontSize: "11px",
-            opacity: 0.9,
-            marginLeft: "4px",
-            borderLeft: "1px solid rgba(255,255,255,0.2)",
-            paddingLeft: "8px",
-            fontWeight: 700,
-            letterSpacing: "0.05em"
+            padding: "0 2px",
+            lineHeight: 1,
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
+          aria-label="What does CAFORA Trust mean?"
+        >
+          ⓘ
+        </button>
+
+        {isLarge && (
+          <span
+            style={{
+              fontSize: "10.5px",
+              opacity: 0.9,
+              marginLeft: "4px",
+              borderLeft: "1px solid rgba(255,255,255,0.2)",
+              paddingLeft: "7px",
+              fontWeight: 700,
+              letterSpacing: "0.04em"
+            }}
+          >
+            {tierLabel}
+          </span>
+        )}
+      </div>
+
+      {/* Trust Tooltip Popover */}
+      {showTooltip && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: "calc(100% + 8px)",
+            left: "0",
+            zIndex: 100,
+            width: "240px",
+            background: "rgba(22, 15, 11, 0.98)",
+            backdropFilter: "blur(14px)",
+            WebkitBackdropFilter: "blur(14px)",
+            border: "1px solid var(--border-prominent)",
+            borderRadius: "var(--radius-sm)",
+            padding: "10px 12px",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
+            fontSize: "11px",
+            color: "var(--cream)",
+            lineHeight: 1.45,
+            pointerEvents: "none"
           }}
         >
-          {tierLabel}
-        </span>
+          <div style={{ fontWeight: 700, color: "var(--accent-orange)", marginBottom: "4px" }}>
+            🛡️ CAFORA Trust ({trust.score}/100)
+          </div>
+          CAFORA Trust measures how confidently we can recommend this place based on review consistency, source agreement, recency and available verification.
+        </div>
       )}
     </div>
   );

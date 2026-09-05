@@ -391,3 +391,28 @@ h1, h2, h3, h4, .serif-font {
   transform: scale(1.15);
   border-color: var(--cream);
 }
+
+/* Scroll margin anchor for smooth scroll to What's the plan */
+#whats-the-plan {
+  scroll-margin-top: calc(var(--header-height) + 20px);
+}
+
+/* Mobile Navigation rules */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: block !important;
+  }
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

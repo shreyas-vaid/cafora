@@ -1,9 +1,19 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { CAFES_DATA } from "../data/cafesData";
 import { getSavedCafes, toggleSaveCafe, getUserReviews } from "../utils/storage";
+import {
+  getCafeVibeScores,
+  getCafePersonalityTagline,
+  getWhyPickedReasons,
+  getWhyItMatches,
+  getBestForBadges,
+  calculateMatchPercentage
+} from "../utils/vibeEngine";
 import Navbar from "../components/common/Navbar";
 import TrustBadge from "../components/common/TrustBadge";
+import VibeScoreBar from "../components/common/VibeScoreBar";
+import WhyThisCafe from "../components/feed/WhyThisCafe";
 import VerdictCard from "../components/detail/VerdictCard";
 import SourceSnapshot from "../components/detail/SourceSnapshot";
 import ReviewList from "../components/detail/ReviewList";
@@ -13,6 +23,8 @@ import CafeCard from "../components/feed/CafeCard";
 
 export default function CafeDetail() {
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const matchParam = searchParams.get("match");
 
   // Find cafe from dataset
   const cafe = useMemo(() => {
@@ -60,14 +72,14 @@ export default function CafeDetail() {
         <div className="container" style={{ textAlign: "center", padding: "100px 24px" }}>
           <div style={{ fontSize: "52px", marginBottom: "16px" }}>☕</div>
           <span className="label-editorial" style={{ letterSpacing: "0.2em" }}>
-            <span>✦</span> 404 • SPOT NOT FOUND
+            <span>✦</span> SPOT NOT FOUND
           </span>
           <h1
             style={{
               fontSize: "clamp(28px, 4vw, 40px)",
               fontFamily: "var(--font-serif)",
               color: "var(--cream)",
-              marginTop: "8px",
+              marginTop: "12px",
               marginBottom: "12px"
             }}
           >
@@ -84,7 +96,10 @@ export default function CafeDetail() {
           >
             We couldn't find a Chandigarh café matching this URL. It might have relocated or the link might be misspelled.
           </p>
-          <Link to="/" className="btn-editorial-primary">
+          <Link
+            to="/"
+            className="btn-editorial-primary"
+          >
             Back to discovery →
           </Link>
         </div>
@@ -92,12 +107,27 @@ export default function CafeDetail() {
     );
   }
 
-  const galleryImages = cafe.gallery && cafe.gallery.length > 0 ? cafe.gallery : [cafe.heroImage];
+  const galleryImages = cafe.images && cafe.images.length > 0 ? cafe.images : [cafe.heroImage];
+  const vibeScores = getCafeVibeScores(cafe);
+  const personalityTagline = getCafePersonalityTagline(cafe);
+  const whyPickedReasons = getWhyPickedReasons(cafe);
+  const whyItMatches = getWhyItMatches(cafe);
+  const bestForBadges = getBestForBadges(cafe);
+  const matchScore = matchParam ? Number(matchParam) : calculateMatchPercentage(cafe);
 
-  // Derive "What to know before you go" practical facts strictly from existing cafe data
-  const isWorkFriendly = cafe.categories?.includes("Work Friendly") || cafe.tags?.some((t) => t.toLowerCase().includes("work") || t.toLowerCase().includes("wifi"));
-  const isQuiet = cafe.categories?.includes("Quiet / Reading") || cafe.tags?.some((t) => t.toLowerCase().includes("quiet"));
-  const isLateNight = cafe.categories?.includes("Late Night") || cafe.tags?.some((t) => t.toLowerCase().includes("late"));
+  // Practical facts
+  const isWorkFriendly = cafe.categories?.includes("study") || cafe.tags?.some((t) => t.toLowerCase().includes("work") || t.toLowerCase().includes("wifi") || t.toLowerCase().includes("laptop"));
+  const isQuiet = cafe.categories?.includes("quiet") || cafe.tags?.some((t) => t.toLowerCase().includes("quiet"));
+  const isLateNight = cafe.categories?.includes("latenight") || cafe.openingHours?.toLowerCase().includes("11:") || cafe.openingHours?.toLowerCase().includes("12:") || cafe.openingHours?.toLowerCase().includes("midnight");
+
+  const vibeItems = [
+    { label: "Coffee", icon: "☕", score: vibeScores.coffee, color: "#e07a38" },
+    { label: "Aesthetic", icon: "📸", score: vibeScores.aesthetic, color: "#c084fc" },
+    { label: "Work", icon: "💻", score: vibeScores.work, color: "#38bdf8" },
+    { label: "Conversation", icon: "💬", score: vibeScores.conversation, color: "#fb923c" },
+    { label: "Night vibe", icon: "🌙", score: vibeScores.night, color: "#818cf8" },
+    { label: "Food", icon: "🍔", score: vibeScores.food, color: "#fbbf24" }
+  ];
 
   return (
     <div className="app-shell">
@@ -106,7 +136,7 @@ export default function CafeDetail() {
 
       <main className="app-content" style={{ paddingBottom: "80px" }}>
         <div className="container" style={{ maxWidth: "1080px" }}>
-          {/* BACK TO DISCOVERY / BREADCRUMB */}
+          {/* BREADCRUMB */}
           <div
             style={{
               display: "flex",
@@ -117,7 +147,7 @@ export default function CafeDetail() {
               margin: "24px 0 16px"
             }}
           >
-            <Link to="/" style={{ color: "var(--accent-orange)", textDecoration: "none", fontWeight: 600 }}>
+            <Link to="/" style={{ color: "var(--accent-orange)", textDecoration: "none", fontWeight: 700 }}>
               ← Back to Discovery
             </Link>
             <span>/</span>
@@ -126,21 +156,63 @@ export default function CafeDetail() {
             <span style={{ color: "var(--cream)", fontWeight: 600 }}>{cafe.name}</span>
           </div>
 
-          {/* EDITORIAL PROFILE HERO */}
+          {/* RECOMMENDATION CONTEXT BANNER (If arrived via vibe match) */}
+          {matchParam && (
+            <div
+              style={{
+                background: "rgba(224, 122, 56, 0.12)",
+                border: "1px solid rgba(224, 122, 56, 0.35)",
+                borderRadius: "var(--radius-md)",
+                padding: "14px 20px",
+                marginBottom: "24px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                flexWrap: "wrap",
+                gap: "12px"
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                <span style={{ fontSize: "20px" }}>✦</span>
+                <div>
+                  <div style={{ fontSize: "14px", fontWeight: 800, color: "var(--accent-orange)" }}>
+                    {matchScore}% CAFORA MATCH — Why we sent you here
+                  </div>
+                  <div style={{ fontSize: "12.5px", color: "var(--cream)", marginTop: "3px" }}>
+                    {whyItMatches.join(" • ")}
+                  </div>
+                </div>
+              </div>
+
+              <span
+                style={{
+                  fontSize: "11px",
+                  fontWeight: 700,
+                  color: "var(--cream-faint)",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em"
+                }}
+              >
+                RECOMMENDED SPOT
+              </span>
+            </div>
+          )}
+
+          {/* 1. CAFE HERO SECTION */}
           <section
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
               gap: "36px",
-              marginBottom: "40px"
+              marginBottom: "36px"
             }}
           >
-            {/* Gallery Column */}
+            {/* Gallery / Image Column */}
             <div>
               <div
                 style={{
                   width: "100%",
-                  height: "380px",
+                  height: "390px",
                   borderRadius: "var(--radius-xl)",
                   overflow: "hidden",
                   position: "relative",
@@ -163,11 +235,13 @@ export default function CafeDetail() {
                     transition: "opacity 0.3s ease"
                   }}
                 />
+
+                {/* Save Heart Button */}
                 <div
                   style={{
                     position: "absolute",
-                    top: "14px",
-                    right: "14px"
+                    top: "16px",
+                    right: "16px"
                   }}
                 >
                   <button
@@ -176,58 +250,63 @@ export default function CafeDetail() {
                     className="btn-editorial-secondary"
                     style={{
                       background: saved ? "var(--terracotta)" : "rgba(16, 11, 8, 0.8)",
+                      backdropFilter: "blur(8px)",
                       color: "#ffffff",
                       fontSize: "12.5px",
                       padding: "8px 16px"
                     }}
                   >
-                    {saved ? "❤️ Saved to List" : "🤍 Save to Coffee List"}
+                    <span>{saved ? "❤️" : "🤍"}</span>
+                    <span>{saved ? "Saved in your list" : "Save to list"}</span>
                   </button>
                 </div>
               </div>
 
-              {/* Gallery Thumbnails */}
-              <div style={{ display: "flex", gap: "10px", overflowX: "auto" }}>
-                {galleryImages.map((imgUrl, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    onClick={() => setActiveImage(imgUrl)}
-                    style={{
-                      width: "76px",
-                      height: "58px",
-                      borderRadius: "8px",
-                      overflow: "hidden",
-                      border: activeImage === imgUrl ? "2px solid var(--accent-orange)" : "1px solid var(--border-subtle)",
-                      padding: 0,
-                      cursor: "pointer",
-                      opacity: activeImage === imgUrl ? 1 : 0.6,
-                      transition: "all 0.2s ease",
-                      flexShrink: 0
-                    }}
-                  >
-                    <img
-                      src={imgUrl}
-                      alt={`Thumbnail ${i}`}
-                      onError={(e) => {
-                        e.currentTarget.src = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80";
+              {/* Thumbnails */}
+              {galleryImages.length > 1 && (
+                <div style={{ display: "flex", gap: "10px", overflowX: "auto", paddingBottom: "4px" }}>
+                  {galleryImages.map((imgUrl, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setActiveImage(imgUrl)}
+                      style={{
+                        width: "76px",
+                        height: "58px",
+                        borderRadius: "8px",
+                        overflow: "hidden",
+                        border: activeImage === imgUrl ? "2px solid var(--accent-orange)" : "1px solid var(--border-subtle)",
+                        padding: 0,
+                        cursor: "pointer",
+                        opacity: activeImage === imgUrl ? 1 : 0.6,
+                        transition: "all 0.2s ease",
+                        flexShrink: 0
                       }}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                    />
-                  </button>
-                ))}
-              </div>
+                    >
+                      <img
+                        src={imgUrl}
+                        alt={`Thumbnail ${i}`}
+                        onError={(e) => {
+                          e.currentTarget.src = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&q=80";
+                        }}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Profile Info Column */}
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
               <div>
+                {/* Sector & Distance */}
                 <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "8px" }}>
                   <span
                     style={{
                       background: "rgba(224, 122, 56, 0.15)",
                       color: "var(--accent-orange)",
-                      padding: "3px 10px",
+                      padding: "4px 12px",
                       borderRadius: "var(--radius-pill)",
                       fontSize: "12px",
                       fontWeight: 700,
@@ -241,23 +320,38 @@ export default function CafeDetail() {
                   </span>
                 </div>
 
+                {/* Cafe Name */}
                 <h1
                   style={{
-                    fontSize: "clamp(32px, 4.5vw, 44px)",
+                    fontSize: "clamp(32px, 4.5vw, 46px)",
                     fontFamily: "var(--font-serif)",
                     color: "var(--cream)",
-                    lineHeight: 1.15,
-                    marginBottom: "12px"
+                    lineHeight: 1.12,
+                    marginBottom: "8px"
                   }}
                 >
                   {cafe.name}
                 </h1>
 
+                {/* Personality Tagline */}
+                <div
+                  style={{
+                    fontSize: "18px",
+                    fontFamily: "var(--font-serif)",
+                    fontStyle: "italic",
+                    color: "var(--accent-orange)",
+                    fontWeight: 500,
+                    marginBottom: "14px"
+                  }}
+                >
+                  "{personalityTagline}"
+                </div>
+
                 <p style={{ color: "var(--cream-muted)", fontSize: "14px", lineHeight: 1.5, marginBottom: "20px" }}>
                   {cafe.address}
                 </p>
 
-                {/* Score & Rating Bar */}
+                {/* Metrics Pill Bar: Rating + Trust Score + Price */}
                 <div
                   style={{
                     display: "flex",
@@ -275,16 +369,16 @@ export default function CafeDetail() {
 
                   <div style={{ borderLeft: "1px solid var(--border-medium)", paddingLeft: "16px" }}>
                     <div style={{ fontSize: "11px", color: "var(--cream-faint)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                      Visitor Rating
+                      Rating
                     </div>
-                    <div style={{ fontSize: "17px", fontWeight: 700, color: "var(--gold)" }}>
+                    <div style={{ fontSize: "17px", fontWeight: 800, color: "var(--gold)" }}>
                       ★ {cafe.rating} <span style={{ fontSize: "12px", color: "var(--cream-faint)", fontWeight: 400 }}>({cafe.reviewCount} reviews)</span>
                     </div>
                   </div>
 
                   <div style={{ borderLeft: "1px solid var(--border-medium)", paddingLeft: "16px" }}>
                     <div style={{ fontSize: "11px", color: "var(--cream-faint)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                      Approx Cost
+                      Price Range
                     </div>
                     <div style={{ fontSize: "16px", fontWeight: 700, color: "var(--cream)" }}>
                       {cafe.priceRange} (₹{cafe.approxCostForTwo} for 2)
@@ -303,7 +397,7 @@ export default function CafeDetail() {
                         padding: "5px 12px",
                         borderRadius: "var(--radius-pill)",
                         fontSize: "12px",
-                        fontWeight: 500,
+                        fontWeight: 600,
                         border: "1px solid var(--border-subtle)"
                       }}
                     >
@@ -313,36 +407,176 @@ export default function CafeDetail() {
                 </div>
               </div>
 
-              {/* Action Buttons */}
+              {/* PRIMARY CTAS */}
               <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cafe.name + " " + cafe.address)}`}
                   target="_blank"
                   rel="noreferrer"
                   className="btn-editorial-primary"
-                  style={{ flex: 1, textAlign: "center" }}
+                  style={{
+                    flex: 1,
+                    textAlign: "center",
+                    fontSize: "14px",
+                    padding: "13px 24px"
+                  }}
                 >
-                  📍 Get Directions
+                  <span>📍</span>
+                  <span>Take me there →</span>
                 </a>
 
                 <button
                   type="button"
                   onClick={() => setIsReviewModalOpen(true)}
                   className="btn-editorial-secondary"
-                  style={{ padding: "11px 22px" }}
+                  style={{ padding: "12px 22px", fontSize: "13.5px" }}
                 >
-                  ✍️ Write Review
+                  <span>✍️</span>
+                  <span>Write Review</span>
                 </button>
               </div>
             </div>
           </section>
 
-          {/* THE VERDICT (Core Product Differentiator) */}
-          <section>
-            <VerdictCard cafe={cafe} />
+          {/* 2. BEST FOR SECTION (Requirement 21) */}
+          <section
+            style={{
+              background: "var(--bg-surface-elevated)",
+              border: "1px solid var(--border-medium)",
+              borderRadius: "var(--radius-xl)",
+              padding: "24px 28px",
+              marginBottom: "32px",
+              boxShadow: "var(--shadow-card)"
+            }}
+          >
+            <span className="label-editorial" style={{ marginBottom: "8px" }}>
+              <span>✦</span> BEST FOR
+            </span>
+            <h3
+              style={{
+                fontSize: "22px",
+                fontFamily: "var(--font-serif)",
+                color: "var(--cream)",
+                marginBottom: "16px"
+              }}
+            >
+              When to come here
+            </h3>
+
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+              {bestForBadges.map((badge, idx) => (
+                <div
+                  key={idx}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    background: "rgba(224, 122, 56, 0.12)",
+                    border: "1px solid rgba(224, 122, 56, 0.3)",
+                    color: "var(--cream)",
+                    fontWeight: 700,
+                    fontSize: "13.5px",
+                    padding: "7px 16px",
+                    borderRadius: "var(--radius-pill)"
+                  }}
+                >
+                  <span style={{ color: "var(--accent-orange)" }}>✓</span>
+                  <span>{badge}</span>
+                </div>
+              ))}
+            </div>
           </section>
 
-          {/* WHAT TO KNOW BEFORE YOU GO (Practical Editorial Summary) */}
+          {/* 3. CAFORA VIBE SECTION */}
+          <section
+            style={{
+              background: "var(--bg-surface-elevated)",
+              border: "1px solid var(--border-medium)",
+              borderRadius: "var(--radius-xl)",
+              padding: "28px 32px",
+              marginBottom: "32px",
+              boxShadow: "var(--shadow-card)"
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+                gap: "10px",
+                marginBottom: "20px"
+              }}
+            >
+              <div>
+                <span className="label-editorial">
+                  <span>✦</span> SIGNATURE METRICS
+                </span>
+                <h2
+                  style={{
+                    fontSize: "24px",
+                    fontFamily: "var(--font-serif)",
+                    color: "var(--cream)",
+                    marginTop: "6px"
+                  }}
+                >
+                  CAFORA VIBE
+                </h2>
+              </div>
+              <div style={{ fontSize: "12px", color: "var(--cream-faint)" }}>
+                Scores rated out of 10
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+                gap: "18px"
+              }}
+            >
+              {vibeItems.map((vibe, idx) => (
+                <VibeScoreBar
+                  key={idx}
+                  label={vibe.label}
+                  icon={vibe.icon}
+                  score={vibe.score}
+                  color={vibe.color}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* 4. WHY CAFORA LIKES IT */}
+          <section style={{ marginBottom: "32px" }}>
+            <div
+              style={{
+                background: "var(--bg-surface-elevated)",
+                border: "1px solid var(--border-medium)",
+                borderRadius: "var(--radius-xl)",
+                padding: "26px 30px",
+                boxShadow: "var(--shadow-card)"
+              }}
+            >
+              <span className="label-editorial" style={{ marginBottom: "8px" }}>
+                <span>✦</span> WHY CAFORA LIKES IT
+              </span>
+              <h3
+                style={{
+                  fontSize: "22px",
+                  fontFamily: "var(--font-serif)",
+                  color: "var(--cream)",
+                  marginBottom: "14px"
+                }}
+              >
+                Curator reasons
+              </h3>
+
+              <WhyThisCafe reasons={whyPickedReasons} compact={false} />
+            </div>
+          </section>
+
+          {/* 5. PRACTICAL INFO */}
           <section
             style={{
               background: "var(--bg-surface-elevated)",
@@ -353,8 +587,8 @@ export default function CafeDetail() {
               boxShadow: "var(--shadow-card)"
             }}
           >
-            <span className="label-editorial" style={{ marginBottom: "12px" }}>
-              <span>✦</span> WHAT TO KNOW BEFORE YOU GO
+            <span className="label-editorial" style={{ marginBottom: "8px" }}>
+              <span>✦</span> ESSENTIALS
             </span>
             <h3
               style={{
@@ -364,7 +598,7 @@ export default function CafeDetail() {
                 marginBottom: "20px"
               }}
             >
-              Practical tips for your visit.
+              Practical info
             </h3>
 
             <div
@@ -374,6 +608,13 @@ export default function CafeDetail() {
                 gap: "18px"
               }}
             >
+              <div style={{ padding: "14px", background: "rgba(16, 11, 8, 0.45)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
+                <div style={{ fontSize: "11px", color: "var(--cream-faint)", fontWeight: 700, textTransform: "uppercase" }}>Opening Hours</div>
+                <div style={{ fontSize: "14px", color: "var(--cream)", marginTop: "4px", fontWeight: 600 }}>
+                  🕒 {cafe.openingHours || "10:00 AM – 11:00 PM"}
+                </div>
+              </div>
+
               <div style={{ padding: "14px", background: "rgba(16, 11, 8, 0.45)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
                 <div style={{ fontSize: "11px", color: "var(--cream-faint)", fontWeight: 700, textTransform: "uppercase" }}>Work Suitability</div>
                 <div style={{ fontSize: "14px", color: "var(--cream)", marginTop: "4px", fontWeight: 600 }}>
@@ -389,43 +630,41 @@ export default function CafeDetail() {
               </div>
 
               <div style={{ padding: "14px", background: "rgba(16, 11, 8, 0.45)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
-                <div style={{ fontSize: "11px", color: "var(--cream-faint)", fontWeight: 700, textTransform: "uppercase" }}>Crowd Timing</div>
+                <div style={{ fontSize: "11px", color: "var(--cream-faint)", fontWeight: 700, textTransform: "uppercase" }}>Late Night</div>
                 <div style={{ fontSize: "14px", color: "var(--cream)", marginTop: "4px", fontWeight: 600 }}>
-                  {isLateNight ? "🌙 Great for late evenings" : "☀️ Calmer before 5 PM"}
-                </div>
-              </div>
-
-              <div style={{ padding: "14px", background: "rgba(16, 11, 8, 0.45)", borderRadius: "var(--radius-md)", border: "1px solid var(--border-subtle)" }}>
-                <div style={{ fontSize: "11px", color: "var(--cream-faint)", fontWeight: 700, textTransform: "uppercase" }}>Budget Indicator</div>
-                <div style={{ fontSize: "14px", color: "var(--cream)", marginTop: "4px", fontWeight: 600 }}>
-                  {cafe.priceRange} (₹{cafe.approxCostForTwo} for 2 people)
+                  {isLateNight ? "🌙 Great for late evenings" : "☀️ Closes by evening"}
                 </div>
               </div>
             </div>
           </section>
 
-          {/* MULTI-SOURCE SNAPSHOT (Transparent Data Integrity) */}
+          {/* VERDICT CARD (Preserved) */}
+          <section>
+            <VerdictCard cafe={cafe} />
+          </section>
+
+          {/* MULTI-SOURCE RATINGS SNAPSHOT (Preserved) */}
           <section>
             <SourceSnapshot sources={cafe.sources} />
           </section>
 
-          {/* WHAT PEOPLE ACTUALLY SAY (Notebook Reviews) */}
+          {/* VERIFIED REVIEWS & USER REVIEWS LIST (Preserved) */}
           <section>
             <ReviewList
-              reviews={cafe.reviews}
+              reviews={cafe.sampleReviews || []}
               userReviews={userReviews}
               onOpenReviewModal={() => setIsReviewModalOpen(true)}
             />
           </section>
 
-          {/* LOCATION & NEIGHBORHOOD MAP */}
+          {/* NEIGHBORHOOD MAP GUIDE (Preserved) */}
           <section style={{ marginBottom: "48px" }}>
             <div style={{ marginBottom: "14px" }}>
               <span className="label-editorial">
                 <span>📍</span> NEIGHBORHOOD GUIDE
               </span>
               <h3 style={{ fontSize: "22px", fontFamily: "var(--font-serif)", color: "var(--cream)", marginTop: "4px" }}>
-                Location: {cafe.sector}
+                {cafe.sector}, Chandigarh
               </h3>
             </div>
             <div style={{ height: "340px", borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--border-medium)" }}>
@@ -437,15 +676,15 @@ export default function CafeDetail() {
             </div>
           </section>
 
-          {/* SIMILAR RECOMMENDED CAFES */}
+          {/* SIMILAR CAFES */}
           {similarCafes.length > 0 && (
             <section>
               <div style={{ marginBottom: "18px" }}>
                 <span className="label-editorial">
-                  <span>✦</span> MORE IN THE NEIGHBORHOOD
+                  <span>✦</span> MORE IN CHANDIGARH
                 </span>
                 <h3 style={{ fontSize: "22px", fontFamily: "var(--font-serif)", color: "var(--cream)", marginTop: "4px" }}>
-                  Cafés in Chandigarh you might also like.
+                  Cafés with similar vibes
                 </h3>
               </div>
               <div className="editorial-grid">
@@ -458,7 +697,7 @@ export default function CafeDetail() {
         </div>
       </main>
 
-      {/* Review Submission Modal */}
+      {/* Review Submission Modal (Preserved) */}
       <ReviewModal
         cafe={cafe}
         isOpen={isReviewModalOpen}

@@ -3,8 +3,19 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import TrustBadge from "../common/TrustBadge";
 import { isCafeSaved, toggleSaveCafe } from "../../utils/storage";
+import {
+  calculateMatchPercentage,
+  getWhyItMatches,
+  getCafePersonalityTagline,
+  MOODS_LIST
+} from "../../utils/vibeEngine";
 
-export default function FeaturedCafe({ cafe, onToggleSave }) {
+export default function FeaturedCafe({
+  cafe,
+  onToggleSave,
+  activeMoods = [],
+  searchQuery = ""
+}) {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
@@ -23,49 +34,65 @@ export default function FeaturedCafe({ cafe, onToggleSave }) {
     if (onToggleSave) onToggleSave(cafe);
   };
 
-  const topPositives = cafe.strengths?.slice(0, 3) || cafe.verdict?.loved?.slice(0, 3) || [];
-  const topNegative = cafe.weaknesses?.[0] || cafe.verdict?.disliked?.[0] || "Can be busy on weekends";
+  const isVibeActive = activeMoods.length > 0 || (searchQuery && searchQuery.trim().length > 0);
+  const matchPercentage = calculateMatchPercentage(cafe, activeMoods, searchQuery);
+  const whyReasons = getWhyItMatches(cafe, activeMoods);
+  const personalityTagline = getCafePersonalityTagline(cafe);
+
+  // Dynamic editorial headline
+  let spotlightEyebrow = "★ CAFÉ OF THE MOMENT";
+  let spotlightSub = `EDITOR'S SPOTLIGHT • ${cafe.sector}`;
+
+  if (activeMoods.length > 0) {
+    const matchedMood = MOODS_LIST.find((m) => m.id === activeMoods[0]);
+    if (matchedMood) {
+      spotlightEyebrow = `★ CAFORA'S PICK FOR ${matchedMood.title}`;
+      spotlightSub = `${matchPercentage}% VIBE MATCH • ${cafe.sector}`;
+    } else {
+      spotlightEyebrow = `★ YOUR BEST MATCH (${matchPercentage}%)`;
+    }
+  }
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
       style={{
         width: "100%",
-        marginBottom: "36px"
+        marginBottom: "32px"
       }}
     >
-      <div style={{ marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span className="label-editorial">
-          <span>★</span> CAFÉ OF THE MOMENT
+      <div style={{ marginBottom: "12px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" }}>
+        <span className="label-editorial" style={{ color: isVibeActive ? "var(--accent-orange)" : "var(--accent-orange)" }}>
+          <span>★</span> {spotlightEyebrow}
         </span>
         <span className="label-editorial-muted">
-          EDITOR'S SPOTLIGHT • {cafe.sector}
+          {spotlightSub}
         </span>
       </div>
 
       <Link
-        to={`/cafe/${cafe.id}`}
+        to={`/cafe/${cafe.id}?match=${matchPercentage}`}
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
           gap: "0",
           background: "var(--bg-surface-elevated)",
           borderRadius: "var(--radius-xl)",
-          border: "1px solid var(--border-medium)",
+          border: isVibeActive ? "1.5px solid rgba(224, 122, 56, 0.4)" : "1px solid var(--border-medium)",
           overflow: "hidden",
           textDecoration: "none",
           color: "inherit",
-          boxShadow: "var(--shadow-float)",
+          boxShadow: isVibeActive ? "var(--shadow-float), 0 0 30px rgba(224, 122, 56, 0.16)" : "var(--shadow-float)",
           transition: "border-color 0.25s ease, transform 0.25s ease"
         }}
       >
-        {/* Left / Top: Editorial Large Image */}
+        {/* Left: Editorial Large Image */}
         <div
           style={{
             position: "relative",
-            minHeight: "360px",
+            minHeight: "340px",
             height: "100%",
             backgroundColor: "#17100b",
             overflow: "hidden"
@@ -99,9 +126,9 @@ export default function FeaturedCafe({ cafe, onToggleSave }) {
           <div
             style={{
               position: "absolute",
-              top: "18px",
-              left: "18px",
-              right: "18px",
+              top: "16px",
+              left: "16px",
+              right: "16px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -113,9 +140,9 @@ export default function FeaturedCafe({ cafe, onToggleSave }) {
                 background: "rgba(16, 11, 8, 0.85)",
                 backdropFilter: "blur(10px)",
                 color: "var(--cream)",
-                padding: "6px 14px",
+                padding: "5px 12px",
                 borderRadius: "var(--radius-pill)",
-                fontSize: "12px",
+                fontSize: "11.5px",
                 fontWeight: 700,
                 letterSpacing: "0.04em",
                 border: "1px solid var(--border-medium)"
@@ -129,8 +156,8 @@ export default function FeaturedCafe({ cafe, onToggleSave }) {
               onClick={handleSaveClick}
               whileTap={{ scale: 0.85 }}
               style={{
-                width: "40px",
-                height: "40px",
+                width: "38px",
+                height: "38px",
                 borderRadius: "50%",
                 background: saved ? "var(--terracotta)" : "rgba(16, 11, 8, 0.75)",
                 backdropFilter: "blur(10px)",
@@ -139,176 +166,188 @@ export default function FeaturedCafe({ cafe, onToggleSave }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "17px",
+                fontSize: "16px",
                 color: saved ? "#ffffff" : "var(--cream)",
-                transition: "all 0.2s ease"
+                transition: "background 0.2s ease",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.35)"
               }}
-              title={saved ? "Remove from Saved" : "Save to Little Coffee List"}
-              aria-label={saved ? "Remove from Saved" : "Save to Little Coffee List"}
+              title={saved ? "Remove from coffee list" : "Save to coffee list"}
+              aria-label={saved ? "Remove from coffee list" : "Save to coffee list"}
             >
               {saved ? "❤️" : "🤍"}
             </motion.button>
           </div>
 
-          {/* Bottom highlight label */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: "18px",
-              left: "18px",
-              color: "var(--cream-muted)",
-              fontSize: "12px"
-            }}
-          >
-            <span style={{ background: "rgba(16, 11, 8, 0.8)", padding: "4px 10px", borderRadius: "6px" }}>
-              Approx ₹{cafe.approxCostForTwo} for two · {cafe.priceRange}
-            </span>
-          </div>
+          {/* Match badge on bottom left of hero if active */}
+          {isVibeActive && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: "14px",
+                left: "16px",
+                background: "rgba(16, 11, 8, 0.9)",
+                backdropFilter: "blur(8px)",
+                border: "1px solid rgba(52, 211, 153, 0.4)",
+                padding: "4px 12px",
+                borderRadius: "var(--radius-pill)",
+                color: "#34d399",
+                fontSize: "12px",
+                fontWeight: 800,
+                zIndex: 3,
+                display: "flex",
+                alignItems: "center",
+                gap: "5px"
+              }}
+            >
+              <span>✦</span>
+              <span>{matchPercentage}% CAFORA MATCH</span>
+            </div>
+          )}
         </div>
 
-        {/* Right: Editorial Information & Truth Layer */}
+        {/* Right: Editorial Profile Details */}
         <div
           style={{
-            padding: "36px 32px",
+            padding: "28px 32px",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
-            background: "linear-gradient(145deg, var(--bg-surface-elevated) 0%, #1a120c 100%)"
+            justifyContent: "space-between"
           }}
         >
           <div>
+            {/* Hierarchy: Name + Rating + Trust */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                gap: "12px",
+                marginBottom: "6px"
+              }}
+            >
+              <div>
+                <h3
+                  style={{
+                    fontSize: "clamp(22px, 3.2vw, 30px)",
+                    fontFamily: "var(--font-serif)",
+                    color: "var(--cream)",
+                    lineHeight: 1.15
+                  }}
+                >
+                  {cafe.name}
+                </h3>
+                <div
+                  style={{
+                    fontSize: "13.5px",
+                    fontFamily: "var(--font-serif)",
+                    fontStyle: "italic",
+                    color: "var(--accent-orange)",
+                    fontWeight: 500,
+                    marginTop: "3px"
+                  }}
+                >
+                  "{personalityTagline}"
+                </div>
+              </div>
+            </div>
+
+            {/* Score line: Stars + Trust */}
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "space-between",
-                gap: "12px",
-                marginBottom: "8px",
-                flexWrap: "wrap"
+                gap: "10px",
+                margin: "12px 0 16px"
               }}
             >
-              <span className="label-editorial" style={{ color: "var(--terracotta)" }}>
-                {cafe.categories?.[0] || "Specialty Coffee"}
-              </span>
-
-              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <TrustBadge cafe={cafe} size="normal" />
-                <span
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: 700,
-                    color: "var(--gold)",
-                    background: "rgba(212, 175, 55, 0.12)",
-                    padding: "4px 10px",
-                    borderRadius: "var(--radius-sm)",
-                    border: "1px solid rgba(212, 175, 55, 0.25)"
-                  }}
-                >
-                  ★ {cafe.rating}
-                </span>
+              <div
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 800,
+                  color: "var(--gold)",
+                  background: "rgba(212, 175, 55, 0.12)",
+                  padding: "3px 8px",
+                  borderRadius: "var(--radius-xs)",
+                  border: "1px solid rgba(212, 175, 55, 0.25)"
+                }}
+              >
+                ★ {cafe.rating}
               </div>
+              <TrustBadge cafe={cafe} size="normal" />
+              <span style={{ fontSize: "12px", color: "var(--cream-faint)" }}>
+                {cafe.priceRange} · ₹{cafe.approxCostForTwo} for 2
+              </span>
             </div>
 
-            <h2
-              style={{
-                fontSize: "clamp(26px, 3.5vw, 36px)",
-                fontFamily: "var(--font-serif)",
-                color: "var(--cream)",
-                lineHeight: 1.15,
-                marginBottom: "14px"
-              }}
-            >
-              {cafe.name}
-            </h2>
-
-            {/* Editorial Quote */}
-            <p
-              style={{
-                fontSize: "15px",
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                lineHeight: 1.6,
-                color: "var(--cream-muted)",
-                marginBottom: "24px",
-                paddingLeft: "14px",
-                borderLeft: "2px solid var(--accent-orange)"
-              }}
-            >
-              "{cafe.featuredQuote || cafe.verdict?.headline || 'Great coffee, calm mornings and enough space to actually sit for a while.'}"
-            </p>
-
-            {/* Good For & Watch Out Attributes */}
+            {/* WHY IT MATCHES */}
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "16px",
                 background: "rgba(16, 11, 8, 0.5)",
                 borderRadius: "var(--radius-md)",
-                padding: "16px",
-                border: "1px solid var(--border-subtle)",
-                marginBottom: "24px"
+                padding: "12px 14px",
+                marginBottom: "16px",
+                border: "1px solid var(--border-subtle)"
               }}
             >
-              <div>
-                <div
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: 800,
-                    letterSpacing: "0.1em",
-                    color: "var(--trust-high)",
-                    marginBottom: "8px",
-                    textTransform: "uppercase"
-                  }}
-                >
-                  ✓ GOOD FOR
-                </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-                  {topPositives.map((pos, idx) => (
-                    <span key={idx} style={{ fontSize: "12.5px", color: "var(--cream)" }}>
-                      • {pos}
-                    </span>
-                  ))}
-                </div>
+              <div
+                style={{
+                  fontSize: "10.5px",
+                  fontWeight: 800,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "var(--accent-orange)",
+                  marginBottom: "6px"
+                }}
+              >
+                {isVibeActive ? "WHY IT MATCHES" : "WHY WE LOVE IT"}
               </div>
 
-              <div>
-                <div
-                  style={{
-                    fontSize: "11px",
-                    fontWeight: 800,
-                    letterSpacing: "0.1em",
-                    color: "var(--accent-orange)",
-                    marginBottom: "8px",
-                    textTransform: "uppercase"
-                  }}
-                >
-                  ⚠️ WATCH OUT
-                </div>
-                <div style={{ fontSize: "12.5px", color: "var(--cream-muted)", lineHeight: 1.4 }}>
-                  {topNegative}
-                </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
+                {whyReasons.slice(0, 3).map((reason, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      fontSize: "12.5px",
+                      color: "var(--cream)",
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "6px",
+                      lineHeight: 1.35
+                    }}
+                  >
+                    <span style={{ color: "var(--trust-high)", fontWeight: 800 }}>✓</span>
+                    <span>{reason}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          {/* Card Footer Button */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "12px", borderTop: "1px solid var(--border-subtle)" }}>
-            <span style={{ fontSize: "12px", color: "var(--cream-faint)" }}>
-              Based on {cafe.reviewCount} verified visits & multi-source ratings
+          {/* Action CTA */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              paddingTop: "14px",
+              borderTop: "1px solid var(--border-subtle)"
+            }}
+          >
+            <span style={{ fontSize: "12px", color: "var(--cream-muted)" }}>
+              {cafe.openingHours}
             </span>
 
             <span
               style={{
                 color: "var(--accent-orange)",
-                fontSize: "13px",
                 fontWeight: 700,
+                fontSize: "13px",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "6px"
+                gap: "4px"
               }}
             >
-              Explore Profile <span>→</span>
+              View full profile →
             </span>
           </div>
         </div>
