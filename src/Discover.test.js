@@ -11,6 +11,9 @@ jest.mock('react-router-dom', () => ({
 }), { virtual: true });
 
 import Discover from './pages/Discover';
+import CafeDetail from './pages/CafeDetail';
+import { getCafeCoords } from './components/map/InteractiveMap';
+import { CAFES_DATA } from './data/cafesData';
 
 test('renders Discover hero, 12-mood selection, and recommendations without zero results', async () => {
   render(<Discover />);
@@ -46,4 +49,25 @@ test('renders Discover hero, 12-mood selection, and recommendations without zero
   await waitFor(() => {
     expect(screen.getByText(/The places we'd actually recommend to a friend\./i)).toBeInTheDocument();
   });
+});
+
+test('InteractiveMap getCafeCoords resolves valid coordinates for all 87 cafes without (undefined, undefined)', () => {
+  CAFES_DATA.forEach((cafe) => {
+    const coords = getCafeCoords(cafe);
+    expect(coords).not.toBeNull();
+    expect(Array.isArray(coords)).toBe(true);
+    expect(coords.length).toBe(2);
+    expect(typeof coords[0]).toBe('number');
+    expect(typeof coords[1]).toBe('number');
+    expect(isNaN(coords[0])).toBe(false);
+    expect(isNaN(coords[1])).toBe(false);
+    expect(coords[0]).toBeGreaterThan(30.0);
+    expect(coords[1]).toBeGreaterThan(76.0);
+  });
+});
+
+test('renders CafeDetail without throwing Invalid LatLng errors', () => {
+  render(<CafeDetail />);
+  // Verifies the cafe detail page renders without crashing
+  expect(document.body).toBeInTheDocument();
 });

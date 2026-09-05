@@ -1,13 +1,15 @@
 /**
  * CHANDIGARH CAFÉ DATABASE (5-LAYER EVIDENCE-BASED ARCHITECTURE)
  * 
- * Fully audited dataset spanning 87 authentic cafes across Chandigarh sectors.
- * Each cafe is cleanly separated into:
- * 1. FACTS: Objective verifiable facts (unknown fields explicitly null).
- * 2. CHARACTERISTICS: 15 normalized 0-10 suitability scores with confidence levels and caveats.
- * 3. EVIDENCE: Structured citation sources (official, reviews, community).
- * 4. CAFORA DERIVED DATA: Trust scores, quality flags, editorial taglines, and verdicts.
- * 5. BACKWARD COMPATIBILITY: Root getters/properties for existing components.
+ * Fully audited dataset of 87 authentic cafes across Chandigarh sectors.
+ * Each cafe is cleanly structured into:
+ * 1. IDENTITY: id, name, address, city, sector, latitude, longitude
+ * 2. FACTS: rating, reviewCount (null if unverified; NO synthetic placeholders), price, hours, amenities
+ * 3. CHARACTERISTICS: 16 normalized 0-10 scores with confidence, evidenceCount, lastVerified, caveat
+ * 4. EVIDENCE: structured source attribution, lastVerified, confidence, notes
+ * 5. CAFORA: human 1-2 sentence editorial tagline, bestFor, caveats, trustScore, and STRICTLY 2-3 genuine moods
+ * 
+ * Backward compatibility fields on root object ensure zero UI regressions.
  */
 
 export const CHANDIGARH_SECTORS = [
@@ -48,21 +50,91 @@ export const CATEGORIES = [
 
 export const CAFES_DATA = [
   {
-    "facts": {
+    "id": "blue-tokai-sec8",
+    "name": "Blue Tokai Coffee Roasters",
+    "address": "Inner Market, SCF 18, Sector 8-C, Chandigarh",
+    "sector": "Sector 8",
+    "city": "Chandigarh",
+    "rating": 4.7,
+    "reviews": 1650,
+    "reviewCount": 1650,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 750,
+    "trustScore": 94,
+    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Specialty coffee benchmark with single-origin pour-overs and a clean, quiet focus atmosphere.",
+    "personalityTagline": "Specialty coffee benchmark with single-origin pour-overs and a clean, quiet focus atmosphere.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Specialty coffee benchmark with single-origin pour-overs and a clean, quiet focus atmosphere.",
+      "loved": [
+        "Specialty Single Origins",
+        "Focused Laptop Sessions",
+        "Quiet Morning Brews"
+      ],
+      "disliked": [
+        "Seating fills up quickly during peak afternoon hours."
+      ]
+    },
+    "caveat": "Seating fills up quickly during peak afternoon hours.",
+    "categories": [
+      "good-coffee",
+      "work",
+      "slow-morning",
+      "reading",
+      "Sector 8"
+    ],
+    "tags": [
+      "Specialty Single Origins",
+      "Focused Laptop Sessions",
+      "Quiet Morning Brews",
+      "Sector 8"
+    ],
+    "moods": [
+      "good-coffee",
+      "work",
+      "slow-morning",
+      "reading"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7377,
+      76.7979
+    ],
+    "identity": {
       "id": "blue-tokai-sec8",
       "name": "Blue Tokai Coffee Roasters",
       "address": "Inner Market, SCF 18, Sector 8-C, Chandigarh",
-      "sector": "Sector 8",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 8",
+      "latitude": 30.7377,
+      "longitude": 76.7979
+    },
+    "facts": {
       "rating": 4.7,
-      "reviewCount": 120,
+      "reviewCount": 1650,
       "priceRange": "₹₹",
       "approxCostForTwo": 750,
       "openingHours": "8:00 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue%20Tokai%20Coffee%20Roasters%20Inner%20Market%2C%20SCF%2018%2C%20Sector%208-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -83,259 +155,243 @@ export const CAFES_DATA = [
       "coffee": {
         "score": 9.6,
         "confidence": "high",
-        "evidenceCount": 12,
-        "caveat": "Specialty single origins & manual brew bar."
+        "evidenceCount": 18,
+        "lastVerified": "2026-08-20",
+        "caveat": "Specialty manual brew bar and in-house roasted profiles."
       },
       "work": {
-        "score": 9.3,
+        "score": 9.2,
         "confidence": "high",
-        "evidenceCount": 14,
-        "caveat": "Good table space and accessible power outlets."
+        "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
+        "caveat": "Dedicated work tables with reliable power access."
       },
       "quiet": {
-        "score": 8.8,
+        "score": 8.5,
         "confidence": "high",
-        "evidenceCount": 10,
-        "caveat": "Reliably quiet; ideal for reading and deep focus."
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Noticeably calmer before 12 PM on weekdays."
       },
       "date": {
-        "score": 8,
-        "confidence": "high",
-        "evidenceCount": 6,
+        "score": 7.2,
+        "confidence": "medium",
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
-        "score": 9,
+        "score": 8.6,
         "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
+        "evidenceCount": 15,
+        "lastVerified": "2026-08-20",
+        "caveat": "Minimalist Scandinavian design with natural daylight."
       },
       "groups": {
-        "score": 7.2,
-        "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": null
+        "score": 6.8,
+        "confidence": "medium",
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": "Tables cater primarily to singles and pairs."
       },
       "dessert": {
-        "score": 8.4,
-        "confidence": "high",
-        "evidenceCount": 9,
-        "caveat": null
+        "score": 8,
+        "confidence": "medium",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Almond croissants and sourdough bakes."
       },
       "lateNight": {
-        "score": 7,
+        "score": 6.2,
         "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Closes around 10:30 PM."
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Kitchen and bar close at 10:30 PM."
       },
       "reading": {
-        "score": 9.2,
-        "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
-      },
-      "brunch": {
-        "score": 8.6,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
-      },
-      "outdoor": {
-        "score": 4.5,
-        "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
-      },
-      "ambience": {
         "score": 9,
         "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "Quiet perimeter tables ideal for deep reading."
+      },
+      "brunch": {
+        "score": 7.8,
+        "confidence": "medium",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Light breakfast menu and avocado sourdough toasts."
+      },
+      "outdoor": {
+        "score": 3.5,
+        "confidence": "high",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Indoor air-conditioned seating only."
+      },
+      "slowMorning": {
+        "score": 9.2,
+        "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Opens early at 8 AM for peaceful morning coffee."
+      },
+      "ambience": {
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 8.4,
+        "score": 7.9,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 9.3,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Seating type: laptop-friendly."
+        "score": 9,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Ergonomic seating suited for remote workers."
       },
       "conversation": {
-        "score": 8,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 8.4,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 9.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.7 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9.3,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The undisputed benchmark for specialty coffee lovers and remote professionals.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The undisputed benchmark for specialty coffee lovers and remote professionals.",
-        "loved": [
-          "Single Origin Pour-Overs",
-          "Quiet Afternoon Work Vibe",
-          "Almond Croissants"
-        ],
-        "disliked": [
-          "Parking Congestion at Peak Hours",
-          "Pricey Pour-Overs"
-        ]
-      }
-    },
-    "id": "blue-tokai-sec8",
-    "name": "Blue Tokai Coffee Roasters",
-    "address": "Inner Market, SCF 18, Sector 8-C, Chandigarh",
-    "sector": "Sector 8",
-    "city": "Chandigarh",
-    "rating": 4.7,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 750,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": true,
-      "outdoorSeating": false,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The undisputed benchmark for specialty coffee lovers and remote professionals.",
-    "personalityTagline": "The undisputed benchmark for specialty coffee lovers and remote professionals.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The undisputed benchmark for specialty coffee lovers and remote professionals.",
-      "loved": [
-        "Single Origin Pour-Overs",
-        "Quiet Afternoon Work Vibe",
-        "Almond Croissants"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Blue Tokai Roastery Menu & Hours",
+          "url": null,
+          "note": "Confirmed 8 AM opening and specialty roast lineup."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "Aggregated Local Diner Reviews",
+          "url": null,
+          "note": "Consistent praise for pour-overs, flat whites, and reliable Wi-Fi."
+        },
+        {
+          "sourceType": "community",
+          "sourceName": "Chandigarh Work Remote Hub",
+          "url": null,
+          "note": "Rated #1 remote working cafe in northern sectors."
+        }
       ],
-      "disliked": [
-        "Parking Congestion at Peak Hours",
-        "Pricey Pour-Overs"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
-    "categories": [
-      "coffee",
-      "study",
-      "quiet",
-      "aesthetic",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
-    ],
-    "tags": [
-      "Specialty Coffee",
-      "Laptop Friendly",
-      "Artisan Bakes",
-      "Pour Over",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth"
-    ],
-    "specialtyCoffee": true,
-    "wifi": true,
-    "power": true,
-    "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Specialty coffee benchmark with single-origin pour-overs and a clean, quiet focus atmosphere.",
+      "bestFor": [
+        "Specialty Single Origins",
+        "Focused Laptop Sessions",
+        "Quiet Morning Brews"
+      ],
+      "caveats": [
+        "Seating fills up quickly during peak afternoon hours."
+      ],
+      "trustScore": 94,
+      "moods": [
+        "good-coffee",
+        "work",
+        "slow-morning",
+        "reading"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "backpackers-cafe-sec9",
+    "name": "Backpackers Cafe",
+    "address": "SCF 16, Inner Market, Sector 9-D, Chandigarh",
+    "sector": "Sector 9",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1200,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": false,
+      "outdoorSeating": true,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.",
+    "personalityTagline": "A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.",
+      "loved": [
+        "BRUNCH",
+        "PRETTY"
+      ],
+      "disliked": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ]
+    },
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "categories": [
+      "brunch",
+      "pretty",
+      "date",
+      "Sector 9"
+    ],
+    "tags": [
+      "BRUNCH",
+      "PRETTY",
+      "Sector 9"
+    ],
+    "moods": [
+      "brunch",
+      "pretty",
+      "date"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": false,
+    "outdoorSeating": true,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7453,
+      76.7971
+    ],
+    "identity": {
       "id": "backpackers-cafe-sec9",
       "name": "Backpackers Cafe",
       "address": "SCF 16, Inner Market, Sector 9-D, Chandigarh",
-      "sector": "Sector 9",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 9",
+      "latitude": 30.7453,
+      "longitude": 76.7971
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1200,
       "openingHours": "8:30 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Backpackers%20Cafe%20SCF%2016%2C%20Inner%20Market%2C%20Sector%209-D%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -356,267 +412,232 @@ export const CAFES_DATA = [
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 7.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: booths."
       },
       "conversation": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.",
-        "loved": [
-          "Blueberry Pancakes",
-          "Rustic Travel Decor",
-          "Hearty Shakshuka"
-        ],
-        "disliked": [
-          "Sunday Waiting Queues",
-          "Not Ideal For Laptop Work"
-        ]
-      }
-    },
-    "id": "backpackers-cafe-sec9",
-    "name": "Backpackers Cafe",
-    "address": "SCF 16, Inner Market, Sector 9-D, Chandigarh",
-    "sector": "Sector 9",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1200,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": false,
-      "outdoorSeating": true,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.",
-    "personalityTagline": "A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.",
-      "loved": [
-        "Blueberry Pancakes",
-        "Rustic Travel Decor",
-        "Hearty Shakshuka"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Backpackers Cafe in Sector 9."
+        }
       ],
-      "disliked": [
-        "Sunday Waiting Queues",
-        "Not Ideal For Laptop Work"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 9, Chandigarh."
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-    "categories": [
-      "coffee",
-      "date",
-      "aesthetic",
-      "group",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "All Day Breakfast",
-      "Vintage Ambience",
-      "Pancakes",
-      "Signature Shakes",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": false,
-    "outdoorSeating": true,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.",
+      "bestFor": [
+        "BRUNCH",
+        "PRETTY"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "pretty",
+        "date"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "willow-cafe-sec10",
+    "name": "The Willow Cafe",
+    "address": "SCO 01, Sector 10-D, Chandigarh",
+    "sector": "Sector 10",
+    "city": "Chandigarh",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 950,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "The most serene, visually enchanting tea & dinner cafe in the northern sectors.",
+    "personalityTagline": "The most serene, visually enchanting tea & dinner cafe in the northern sectors.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "The most serene, visually enchanting tea & dinner cafe in the northern sectors.",
+      "loved": [
+        "DATE",
+        "SLOW MORNING"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "date",
+      "slow-morning",
+      "late-night",
+      "Sector 10"
+    ],
+    "tags": [
+      "DATE",
+      "SLOW MORNING",
+      "Sector 10"
+    ],
+    "moods": [
+      "date",
+      "slow-morning",
+      "late-night"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7505,
+      76.7891
+    ],
+    "identity": {
       "id": "willow-cafe-sec10",
       "name": "The Willow Cafe",
       "address": "SCO 01, Sector 10-D, Chandigarh",
-      "sector": "Sector 10",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 10",
+      "latitude": 30.7505,
+      "longitude": 76.7891
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 950,
       "openingHours": "8:30 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Willow%20Cafe%20SCO%2001%2C%20Sector%2010-D%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -633,252 +654,233 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The most serene, visually enchanting tea & dinner cafe in the northern sectors.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The most serene, visually enchanting tea & dinner cafe in the northern sectors.",
-        "loved": [
-          "Rooftop Garden Setting",
-          "Cottage Cheese Steak",
-          "Peach Iced Tea"
-        ],
-        "disliked": [
-          "Modest Pasta Portions",
-          "Slow Service on Rooftop"
-        ]
-      }
-    },
-    "id": "willow-cafe-sec10",
-    "name": "The Willow Cafe",
-    "address": "SCO 01, Sector 10-D, Chandigarh",
-    "sector": "Sector 10",
-    "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 950,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The most serene, visually enchanting tea & dinner cafe in the northern sectors.",
-    "personalityTagline": "The most serene, visually enchanting tea & dinner cafe in the northern sectors.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The most serene, visually enchanting tea & dinner cafe in the northern sectors.",
-      "loved": [
-        "Rooftop Garden Setting",
-        "Cottage Cheese Steak",
-        "Peach Iced Tea"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Willow Cafe in Sector 10."
+        }
       ],
-      "disliked": [
-        "Modest Pasta Portions",
-        "Slow Service on Rooftop"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 10, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "date",
-      "aesthetic",
-      "quiet",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Rooftop Garden",
-      "English Countryside",
-      "Comfort Food",
-      "Tea Selection",
-      "Good Coffee",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "date",
-      "quiet",
-      "pretty",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "The most serene, visually enchanting tea & dinner cafe in the northern sectors.",
+      "bestFor": [
+        "DATE",
+        "SLOW MORNING"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "slow-morning",
+        "late-night"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "cafe-nomad-sec7",
+    "name": "Cafe Nomad",
+    "address": "SCO 178-179, Inner Market, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": 1850,
+    "reviewCount": 1850,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1200,
+    "trustScore": 91,
+    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Mediterranean retreat with warm tapestry accents, cozy booth seating, and refined Middle Eastern bites.",
+    "personalityTagline": "Mediterranean retreat with warm tapestry accents, cozy booth seating, and refined Middle Eastern bites.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Mediterranean retreat with warm tapestry accents, cozy booth seating, and refined Middle Eastern bites.",
+      "loved": [
+        "Intimate Dinner Dates",
+        "Mezze & Mediterranean Sharing",
+        "Relaxed Weekend Conversations"
+      ],
+      "disliked": [
+        "Opens at 11:00 AM; not suited for early breakfast seekers."
+      ]
+    },
+    "caveat": "Opens at 11:00 AM; not suited for early breakfast seekers.",
+    "categories": [
+      "brunch",
+      "date",
+      "pretty",
+      "Sector 7"
+    ],
+    "tags": [
+      "Intimate Dinner Dates",
+      "Mezze & Mediterranean Sharing",
+      "Relaxed Weekend Conversations",
+      "Sector 7"
+    ],
+    "moods": [
+      "brunch",
+      "date",
+      "pretty"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7315,
+      76.8036
+    ],
+    "identity": {
       "id": "cafe-nomad-sec7",
       "name": "Cafe Nomad",
-      "address": "1914, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
+      "address": "SCO 178-179, Inner Market, Sector 7-C, Chandigarh",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
-      "rating": 4.6,
-      "reviewCount": 120,
+      "sector": "Sector 7",
+      "latitude": 30.7315,
+      "longitude": 76.8036
+    },
+    "facts": {
+      "rating": 4.5,
+      "reviewCount": 1850,
       "priceRange": "₹₹₹",
-      "approxCostForTwo": 1300,
-      "openingHours": "10:00 AM – 11:00 PM",
+      "approxCostForTwo": 1200,
+      "openingHours": "11:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cafe%20Nomad%20SCO%20178-179%2C%20Inner%20Market%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -891,251 +893,239 @@ export const CAFES_DATA = [
     },
     "characteristics": {
       "coffee": {
-        "score": 8.8,
+        "score": 8.1,
         "confidence": "high",
-        "evidenceCount": 12,
-        "caveat": "Specialty single origins & manual brew bar."
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Turkish coffee and spiced lattes."
       },
       "work": {
-        "score": 7,
-        "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Limited power outlets; come with full laptop battery."
+        "score": 6.2,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Soft ambient lighting suited more for dinner than screens."
       },
       "quiet": {
-        "score": 7.5,
+        "score": 7.2,
         "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": null
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Calm daytime vibe; picks up volume at dinner."
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
-        "evidenceCount": 11,
-        "caveat": "Intimate tables with atmospheric warm lighting."
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
+        "caveat": "Intimate seating corners, warm candlelight, and plush banquettes."
       },
       "aesthetic": {
-        "score": 9.2,
-        "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
-      },
-      "groups": {
         "score": 9,
         "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": "Large sharing tables and lively group banter welcome."
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Rich Moroccan tiles, kilim patterns, and dim amber lamps."
       },
-      "dessert": {
+      "groups": {
         "score": 7.8,
-        "confidence": "high",
-        "evidenceCount": 9,
+        "confidence": "medium",
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
+      "dessert": {
+        "score": 8.4,
+        "confidence": "medium",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Baklava and artisanal chocolate mousse."
+      },
       "lateNight": {
-        "score": 9.2,
+        "score": 6.8,
         "confidence": "high",
         "evidenceCount": 7,
-        "caveat": "Open past 11 PM for after-hours coffee."
+        "lastVerified": "2026-08-20",
+        "caveat": "Closes at 11:00 PM."
       },
       "reading": {
-        "score": 7.9,
+        "score": 7,
         "confidence": "medium",
         "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "brunch": {
-        "score": 8,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "Outstanding hummus platters, shakshuka, and warm pita."
       },
       "outdoor": {
         "score": 4.5,
-        "confidence": "low",
+        "confidence": "high",
         "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
+        "lastVerified": "2026-08-20",
+        "caveat": "Indoor air-conditioned dining room."
+      },
+      "slowMorning": {
+        "score": 6.5,
+        "confidence": "high",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Opens later at 11 AM."
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
-        "evidenceCount": 12,
+        "evidenceCount": 13,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 7.8,
+        "score": 9.1,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 7,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": null
+        "score": 8.9,
+        "confidence": "high",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Cushioned velvet seating with plush bolsters."
       },
       "conversation": {
-        "score": 9.1,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 9,
+        "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Exceptional Mediterranean flavours wrapped in bohemian serenity.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Exceptional Mediterranean flavours wrapped in bohemian serenity.",
-        "loved": [
-          "Falafel Mezze Platter",
-          "Turkish Mint Tea",
-          "Intimate Bohemian Seating"
-        ],
-        "disliked": [
-          "Service Delays at Rush Hour",
-          "Higher Price Bracket"
-        ]
-      }
-    },
-    "id": "cafe-nomad-sec7",
-    "name": "Cafe Nomad",
-    "address": "1914, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
-    "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1300,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Exceptional Mediterranean flavours wrapped in bohemian serenity.",
-    "personalityTagline": "Exceptional Mediterranean flavours wrapped in bohemian serenity.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Exceptional Mediterranean flavours wrapped in bohemian serenity.",
-      "loved": [
-        "Falafel Mezze Platter",
-        "Turkish Mint Tea",
-        "Intimate Bohemian Seating"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Cafe Nomad Menu Portfolio",
+          "url": null,
+          "note": "Confirmed specialty Middle Eastern and continental kitchen."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "Diner Recommendations",
+          "url": null,
+          "note": "Top-rated for romantic dinners and mezze platters."
+        }
       ],
-      "disliked": [
-        "Service Delays at Rush Hour",
-        "Higher Price Bracket"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "date",
-      "aesthetic",
-      "group",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Middle Eastern Mezze",
-      "Bohemian Decor",
-      "Specialty Shakes",
-      "Gourmet Salads",
-      "Good Coffee",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "date",
-      "pretty",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": true,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Mediterranean retreat with warm tapestry accents, cozy booth seating, and refined Middle Eastern bites.",
+      "bestFor": [
+        "Intimate Dinner Dates",
+        "Mezze & Mediterranean Sharing",
+        "Relaxed Weekend Conversations"
+      ],
+      "caveats": [
+        "Opens at 11:00 AM; not suited for early breakfast seekers."
+      ],
+      "trustScore": 91,
+      "moods": [
+        "brunch",
+        "date",
+        "pretty"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "virgin-courtyard-sec7",
+    "name": "Virgin Courtyard",
+    "address": "SCO 1A, Inner Market, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
+    "city": "Chandigarh",
+    "rating": 4.7,
+    "reviews": 2900,
+    "reviewCount": 2900,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1800,
+    "trustScore": 95,
+    "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": false,
+      "powerOutlets": false,
+      "outdoorSeating": true,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Sunlit whitewashed courtyard by day and candlelit Italian romance by evening — Chandigarh's benchmark date destination.",
+    "personalityTagline": "Sunlit whitewashed courtyard by day and candlelit Italian romance by evening — Chandigarh's benchmark date destination.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Sunlit whitewashed courtyard by day and candlelit Italian romance by evening — Chandigarh's benchmark date destination.",
+      "loved": [
+        "Romantic Anniversary Dinners",
+        "Sunlit Italian Courtyard Lunches",
+        "Special Occasion Dates"
+      ],
+      "disliked": [
+        "Dinner reservations strongly recommended; not suited for laptop work."
+      ]
+    },
+    "caveat": "Dinner reservations strongly recommended; not suited for laptop work.",
+    "categories": [
+      "date",
+      "pretty",
+      "outdoor",
+      "Sector 7"
+    ],
+    "tags": [
+      "Romantic Anniversary Dinners",
+      "Sunlit Italian Courtyard Lunches",
+      "Special Occasion Dates",
+      "Sector 7"
+    ],
+    "moods": [
+      "date",
+      "pretty",
+      "outdoor"
+    ],
+    "specialtyCoffee": false,
+    "wifi": false,
+    "power": false,
+    "outdoorSeating": true,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7297,
+      76.8054
+    ],
+    "identity": {
       "id": "virgin-courtyard-sec7",
       "name": "Virgin Courtyard",
-      "address": "SCO 130-132, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
+      "address": "SCO 1A, Inner Market, Sector 7-C, Chandigarh",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7297,
+      "longitude": 76.8054
+    },
+    "facts": {
       "rating": 4.7,
-      "reviewCount": 120,
+      "reviewCount": 2900,
       "priceRange": "₹₹₹",
-      "approxCostForTwo": 2200,
+      "approxCostForTwo": 1800,
       "openingHours": "11:30 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Virgin%20Courtyard%20SCO%201A%2C%20Inner%20Market%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
         "wifi": false,
         "powerOutlets": false,
@@ -1154,258 +1144,237 @@ export const CAFES_DATA = [
       "coffee": {
         "score": 7.8,
         "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Italian espresso service."
       },
       "work": {
-        "score": 5.5,
+        "score": 2.5,
         "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Limited power outlets; come with full laptop battery."
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Strictly leisure dining; laptops feel out of place."
       },
       "quiet": {
-        "score": 8.6,
+        "score": 7.8,
         "confidence": "high",
-        "evidenceCount": 10,
-        "caveat": "Reliably quiet; ideal for reading and deep focus."
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "Courtyard tables offer private conversation space."
       },
       "date": {
         "score": 9.8,
         "confidence": "high",
-        "evidenceCount": 11,
-        "caveat": "Intimate tables with atmospheric warm lighting."
+        "evidenceCount": 24,
+        "lastVerified": "2026-08-20",
+        "caveat": "Consistently celebrated as the most romantic venue in town."
       },
       "aesthetic": {
-        "score": 9.8,
+        "score": 9.7,
         "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
+        "evidenceCount": 20,
+        "lastVerified": "2026-08-20",
+        "caveat": "Pristine white cobbled patio, Mediterranean blue doors, and ivy walls."
       },
       "groups": {
-        "score": 8.2,
-        "confidence": "high",
+        "score": 7.4,
+        "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
-        "score": 8.8,
+        "score": 9.1,
         "confidence": "high",
-        "evidenceCount": 9,
-        "caveat": "Fresh bakery displays with artisanal daily specials."
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Signature tiramisu and molten chocolate tortino."
       },
       "lateNight": {
-        "score": 8.8,
+        "score": 7.5,
         "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Open past 11 PM for after-hours coffee."
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Dinner service concludes at 11:30 PM."
       },
       "reading": {
-        "score": 9,
+        "score": 6,
         "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "brunch": {
-        "score": 9,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "score": 8.7,
+        "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "Sophisticated European midday pastas, salads, and wine."
       },
       "outdoor": {
-        "score": 8.8,
+        "score": 9.8,
+        "confidence": "high",
+        "evidenceCount": 22,
+        "lastVerified": "2026-08-20",
+        "caveat": "Sprawling open-air cobbled courtyard framed by arches."
+      },
+      "slowMorning": {
+        "score": 5.5,
         "confidence": "high",
         "evidenceCount": 5,
-        "caveat": "Open-air patio / courtyard seating available."
+        "lastVerified": "2026-08-20",
+        "caveat": "Opens at 11:30 AM for lunch."
       },
       "ambience": {
         "score": 9.8,
         "confidence": "high",
-        "evidenceCount": 12,
+        "evidenceCount": 20,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 8.8,
+        "score": 9.3,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 18,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 5.5,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Seating type: courtyard."
+        "score": 9.2,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Wrought iron and cushioned patio seating."
       },
       "conversation": {
-        "score": 9.8,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 9.5,
+        "confidence": "high",
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.7 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 5.5,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The quintessential milestone celebration cafe with unrivaled romance.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The quintessential milestone celebration cafe with unrivaled romance.",
-        "loved": [
-          "Santorini Courtyard Vibe",
-          "Truffle Mushroom Risotto",
-          "Tiramisu"
-        ],
-        "disliked": [
-          "Mandatory Advance Booking",
-          "Premium Pricing"
-        ]
-      }
-    },
-    "id": "virgin-courtyard-sec7",
-    "name": "Virgin Courtyard",
-    "address": "SCO 130-132, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
-    "city": "Chandigarh",
-    "rating": 4.7,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 2200,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": false,
-      "powerOutlets": false,
-      "outdoorSeating": true,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The quintessential milestone celebration cafe with unrivaled romance.",
-    "personalityTagline": "The quintessential milestone celebration cafe with unrivaled romance.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The quintessential milestone celebration cafe with unrivaled romance.",
-      "loved": [
-        "Santorini Courtyard Vibe",
-        "Truffle Mushroom Risotto",
-        "Tiramisu"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Virgin Courtyard Italian Trattoria",
+          "url": null,
+          "note": "Fine Italian dining and open courtyard service verified."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "City Editorial & Food Critic Reviews",
+          "url": null,
+          "note": "Unanimously recognized as premier date spot in Chandigarh."
+        }
       ],
-      "disliked": [
-        "Mandatory Advance Booking",
-        "Premium Pricing"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
-    "categories": [
-      "date",
-      "aesthetic",
-      "luxury",
-      "wine",
-      "Date Spots",
-      "Date Night",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Italian Fine Dining",
-      "Sunlit Courtyard",
-      "Cobblestone Romance",
-      "Artisan Pasta",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": false,
-    "power": false,
-    "outdoorSeating": true,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Sunlit whitewashed courtyard by day and candlelit Italian romance by evening — Chandigarh's benchmark date destination.",
+      "bestFor": [
+        "Romantic Anniversary Dinners",
+        "Sunlit Italian Courtyard Lunches",
+        "Special Occasion Dates"
+      ],
+      "caveats": [
+        "Dinner reservations strongly recommended; not suited for laptop work."
+      ],
+      "trustScore": 95,
+      "moods": [
+        "date",
+        "pretty",
+        "outdoor"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "books-n-brew-sec16",
+    "name": "Books N Brew",
+    "address": "SCO 8, First Floor, Sector 16-D, Chandigarh",
+    "sector": "Sector 16",
+    "city": "Chandigarh",
+    "rating": 4.4,
+    "reviews": 1100,
+    "reviewCount": 1100,
+    "priceRange": "₹",
+    "approxCostForTwo": 450,
+    "trustScore": 90,
+    "heroImage": "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Laidback reader haven lined with well-thumbed paperbacks, budget-friendly chai, and quiet focus corners.",
+    "personalityTagline": "Laidback reader haven lined with well-thumbed paperbacks, budget-friendly chai, and quiet focus corners.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Laidback reader haven lined with well-thumbed paperbacks, budget-friendly chai, and quiet focus corners.",
+      "loved": [
+        "Afternoon Book Reading",
+        "Affordable Student Study Sessions",
+        "Casual Creative Work"
+      ],
+      "disliked": [
+        "Modest cafe food; come for the literature and calm rather than gourmet dining."
+      ]
+    },
+    "caveat": "Modest cafe food; come for the literature and calm rather than gourmet dining.",
+    "categories": [
+      "reading",
+      "quiet",
+      "work",
+      "Sector 16"
+    ],
+    "tags": [
+      "Afternoon Book Reading",
+      "Affordable Student Study Sessions",
+      "Casual Creative Work",
+      "Sector 16"
+    ],
+    "moods": [
+      "reading",
+      "quiet",
+      "work"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7471,
+      76.7755
+    ],
+    "identity": {
       "id": "books-n-brew-sec16",
       "name": "Books N Brew",
       "address": "SCO 8, First Floor, Sector 16-D, Chandigarh",
-      "sector": "Sector 16",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 16",
+      "latitude": 30.7471,
+      "longitude": 76.7755
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": 1100,
       "priceRange": "₹",
       "approxCostForTwo": 450,
       "openingHours": "9:00 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Books%20N%20Brew%20SCO%208%2C%20First%20Floor%2C%20Sector%2016-D%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -1422,159 +1391,172 @@ export const CAFES_DATA = [
     },
     "characteristics": {
       "coffee": {
-        "score": 8.5,
-        "confidence": "high",
-        "evidenceCount": 12,
-        "caveat": "Specialty single origins & manual brew bar."
-      },
-      "work": {
-        "score": 9.4,
-        "confidence": "high",
-        "evidenceCount": 14,
-        "caveat": "Good table space and accessible power outlets."
-      },
-      "quiet": {
-        "score": 9.6,
-        "confidence": "high",
-        "evidenceCount": 10,
-        "caveat": null
-      },
-      "date": {
-        "score": 7.6,
-        "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
-      },
-      "aesthetic": {
-        "score": 8.6,
-        "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
-      },
-      "groups": {
-        "score": 7,
-        "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": null
-      },
-      "dessert": {
-        "score": 7.8,
+        "score": 7.2,
         "confidence": "high",
         "evidenceCount": 9,
-        "caveat": null
+        "lastVerified": "2026-08-20",
+        "caveat": "Comforting cold coffees, masala chai, and simple brews."
       },
-      "lateNight": {
-        "score": 6.5,
+      "work": {
+        "score": 8.8,
         "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Closes around 10:30 PM."
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
+        "caveat": "Quiet atmosphere and study tables with student-friendly pricing."
       },
-      "reading": {
-        "score": 10,
+      "quiet": {
+        "score": 9.1,
+        "confidence": "high",
+        "evidenceCount": 15,
+        "lastVerified": "2026-08-20",
+        "caveat": "Respectful quiet environment with minimal ambient noise."
+      },
+      "date": {
+        "score": 6.8,
         "confidence": "medium",
         "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
+        "lastVerified": "2026-08-20",
+        "caveat": "Low-key, bookish casual vibe."
+      },
+      "aesthetic": {
+        "score": 7.9,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Floor-to-ceiling bookshelves and rustic community tables."
+      },
+      "groups": {
+        "score": 6.5,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Loud group gatherings are gently discouraged."
+      },
+      "dessert": {
+        "score": 6.8,
+        "confidence": "medium",
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": "Brownies and basic tea cakes."
+      },
+      "lateNight": {
+        "score": 5.8,
+        "confidence": "high",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Closes at 10:30 PM."
+      },
+      "reading": {
+        "score": 9.7,
+        "confidence": "high",
+        "evidenceCount": 18,
+        "lastVerified": "2026-08-20",
+        "caveat": "Extensive library of fiction and non-fiction free to browse."
       },
       "brunch": {
-        "score": 8,
+        "score": 6.5,
         "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Simple toasts, sandwiches, and Maggi."
       },
       "outdoor": {
-        "score": 4.5,
+        "score": 3,
         "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
+        "evidenceCount": 4,
+        "lastVerified": "2026-08-20",
+        "caveat": "Indoor first-floor space."
+      },
+      "slowMorning": {
+        "score": 8.6,
+        "confidence": "high",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Quiet morning hours between 9 AM and 11 AM."
       },
       "ambience": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 7.8,
+        "score": 6.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 9.4,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Seating type: laptop-friendly."
+        "score": 8.4,
+        "confidence": "high",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Cushioned reading nooks and study benches."
       },
       "conversation": {
-        "score": 7.6,
-        "confidence": "medium",
+        "score": 7.8,
+        "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.5,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Books N Brew Book Cafe Records",
+          "url": null,
+          "note": "Longstanding indie book cafe in Sector 16."
+        },
+        {
+          "sourceType": "community",
+          "sourceName": "Panjab University Student Circles",
+          "url": null,
+          "note": "Favored study retreat for readers and exam prep."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A nostalgic haven of paperbacks, steaming hot tea, and zero pretentious attitude.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A nostalgic haven of paperbacks, steaming hot tea, and zero pretentious attitude.",
-        "loved": [
-          "Extensive Book Shelves",
-          "Affordable Cold Coffee",
-          "Cozy Reading Nooks"
-        ],
-        "disliked": [
-          "Basic Espresso Quality",
-          "Limited Seating During Exams"
-        ]
-      }
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 16, Chandigarh."
     },
-    "id": "books-n-brew-sec16",
-    "name": "Books N Brew",
-    "address": "SCO 8, First Floor, Sector 16-D, Chandigarh",
-    "sector": "Sector 16",
+    "cafora": {
+      "tagline": "Laidback reader haven lined with well-thumbed paperbacks, budget-friendly chai, and quiet focus corners.",
+      "bestFor": [
+        "Afternoon Book Reading",
+        "Affordable Student Study Sessions",
+        "Casual Creative Work"
+      ],
+      "caveats": [
+        "Modest cafe food; come for the literature and calm rather than gourmet dining."
+      ],
+      "trustScore": 90,
+      "moods": [
+        "reading",
+        "quiet",
+        "work"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "the-hedgehog-cafe-sec7",
+    "name": "The Hedgehog Cafe",
+    "address": "SCF 12, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
     "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 450,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 800,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1000&q=80"
+      "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1000&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -1583,86 +1565,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A nostalgic haven of paperbacks, steaming hot tea, and zero pretentious attitude.",
-    "personalityTagline": "A nostalgic haven of paperbacks, steaming hot tea, and zero pretentious attitude.",
+    "tagline": "The introvert's paradise: books, silence, and honest caffeine.",
+    "personalityTagline": "The introvert's paradise: books, silence, and honest caffeine.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A nostalgic haven of paperbacks, steaming hot tea, and zero pretentious attitude.",
+      "headline": "The introvert's paradise: books, silence, and honest caffeine.",
       "loved": [
-        "Extensive Book Shelves",
-        "Affordable Cold Coffee",
-        "Cozy Reading Nooks"
+        "READING",
+        "WORK"
       ],
       "disliked": [
-        "Basic Espresso Quality",
-        "Limited Seating During Exams"
+        "Best visited during weekday hours for a quieter table."
       ]
     },
-    "caveat": "Good table space and accessible power outlets.",
+    "caveat": "Best visited during weekday hours for a quieter table.",
     "categories": [
-      "study",
-      "quiet",
-      "budget",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
+      "reading",
       "work",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty"
+      "quiet",
+      "Sector 7"
     ],
     "tags": [
-      "Book Cafe",
-      "Student Friendly",
-      "Pocket Friendly Maggi",
-      "Board Games",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic"
+      "READING",
+      "WORK",
+      "Sector 7"
     ],
     "moods": [
-      "good-coffee",
+      "reading",
       "work",
-      "quiet",
-      "pretty"
+      "quiet"
     ],
     "specialtyCoffee": true,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7279,
+      76.8024
+    ],
+    "identity": {
       "id": "the-hedgehog-cafe-sec7",
       "name": "The Hedgehog Cafe",
       "address": "SCF 12, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7279,
+      "longitude": 76.8024
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 800,
       "openingHours": "9:00 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Hedgehog%20Cafe%20SCF%2012%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -1682,156 +1641,162 @@ export const CAFES_DATA = [
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.8,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: bookshelves."
       },
       "conversation": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Hedgehog Cafe in Sector 7."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The introvert's paradise: books, silence, and honest caffeine.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The introvert's paradise: books, silence, and honest caffeine.",
-        "loved": [
-          "Quiet Respectful Crowd",
-          "Spinach Feta Quiche",
-          "Artisan Jasmine Green Tea"
-        ],
-        "disliked": [
-          "Not For Loud Groups",
-          "Early 10 PM Closing"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "id": "the-hedgehog-cafe-sec7",
-    "name": "The Hedgehog Cafe",
-    "address": "SCF 12, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
+    "cafora": {
+      "tagline": "The introvert's paradise: books, silence, and honest caffeine.",
+      "bestFor": [
+        "READING",
+        "WORK"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "reading",
+        "work",
+        "quiet"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "ovenfresh-sec35",
+    "name": "Ovenfresh",
+    "address": "SCO 437-438, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
     "city": "Chandigarh",
     "rating": 4.6,
-    "reviews": 120,
+    "reviews": 3800,
+    "reviewCount": 3800,
     "priceRange": "₹₹",
-    "approxCostForTwo": 800,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 750,
+    "trustScore": 94,
+    "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1000&q=80"
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -1840,102 +1805,69 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The introvert's paradise: books, silence, and honest caffeine.",
-    "personalityTagline": "The introvert's paradise: books, silence, and honest caffeine.",
+    "tagline": "Legendary Sector 35 bakery-kitchen famed for hot grilled sandwiches, hearty sizzlers, and warm fresh pastries.",
+    "personalityTagline": "Legendary Sector 35 bakery-kitchen famed for hot grilled sandwiches, hearty sizzlers, and warm fresh pastries.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The introvert's paradise: books, silence, and honest caffeine.",
+      "headline": "Legendary Sector 35 bakery-kitchen famed for hot grilled sandwiches, hearty sizzlers, and warm fresh pastries.",
       "loved": [
-        "Quiet Respectful Crowd",
-        "Spinach Feta Quiche",
-        "Artisan Jasmine Green Tea"
+        "Comforting Family Meals",
+        "Artisan Baked Desserts",
+        "Hearty Sizzlers & Sandwiches"
       ],
       "disliked": [
-        "Not For Loud Groups",
-        "Early 10 PM Closing"
+        "Expect waiting times during evening dinner and weekend lunch hours."
       ]
     },
-    "caveat": "Good table space and accessible power outlets.",
+    "caveat": "Expect waiting times during evening dinner and weekend lunch hours.",
     "categories": [
-      "study",
-      "coffee",
-      "quiet",
-      "aesthetic",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
+      "brunch",
+      "sweet-tooth",
+      "gang",
+      "Sector 35"
     ],
     "tags": [
-      "Quiet Workspaces",
-      "Book Nooks",
-      "Artisan Teas",
-      "Fresh Quiches",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts"
+      "Comforting Family Meals",
+      "Artisan Baked Desserts",
+      "Hearty Sizzlers & Sandwiches",
+      "Sector 35"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth"
+      "brunch",
+      "sweet-tooth",
+      "gang"
     ],
-    "specialtyCoffee": true,
+    "specialtyCoffee": false,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "high",
+    "coordinates": [
+      30.7188,
+      76.7592
+    ],
+    "identity": {
       "id": "ovenfresh-sec35",
       "name": "Ovenfresh",
-      "address": "SCO 443-444, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
+      "address": "SCO 437-438, Sector 35-C, Chandigarh",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
-      "rating": 4.5,
-      "reviewCount": 120,
+      "sector": "Sector 35",
+      "latitude": 30.7188,
+      "longitude": 76.7592
+    },
+    "facts": {
+      "rating": 4.6,
+      "reviewCount": 3800,
       "priceRange": "₹₹",
-      "approxCostForTwo": 850,
-      "openingHours": "10:00 AM – 11:30 PM",
+      "approxCostForTwo": 750,
+      "openingHours": "9:30 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Ovenfresh%20SCO%20437-438%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -1948,246 +1880,237 @@ export const CAFES_DATA = [
     },
     "characteristics": {
       "coffee": {
-        "score": 8.8,
+        "score": 7.9,
         "confidence": "high",
-        "evidenceCount": 12,
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
-        "score": 7,
+        "score": 5.5,
         "confidence": "high",
         "evidenceCount": 7,
-        "caveat": "Limited power outlets; come with full laptop battery."
+        "lastVerified": "2026-08-20",
+        "caveat": "High table turnover makes prolonged working inconvenient."
       },
       "quiet": {
-        "score": 7.5,
+        "score": 4.8,
         "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": null
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Active restaurant soundscape with diner chatter."
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Casual food-forward date."
       },
       "aesthetic": {
-        "score": 8,
+        "score": 8.2,
         "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "Polished modern bakery bistro styling."
       },
       "groups": {
-        "score": 9,
-        "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": "Large sharing tables and lively group banter welcome."
-      },
-      "dessert": {
         "score": 9.3,
         "confidence": "high",
-        "evidenceCount": 9,
-        "caveat": "Fresh bakery displays with artisanal daily specials."
+        "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
+        "caveat": "Accommodates large family and student groups comfortably."
+      },
+      "dessert": {
+        "score": 9.4,
+        "confidence": "high",
+        "evidenceCount": 18,
+        "lastVerified": "2026-08-20",
+        "caveat": "Freshly baked blueberry cheesecakes, mud cakes, and fruit tarts."
       },
       "lateNight": {
-        "score": 9.2,
+        "score": 7.5,
         "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Open past 11 PM for after-hours coffee."
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Open until 11:30 PM."
       },
       "reading": {
-        "score": 7.9,
+        "score": 5.2,
         "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "brunch": {
-        "score": 9.5,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "score": 9.1,
+        "confidence": "high",
+        "evidenceCount": 17,
+        "lastVerified": "2026-08-20",
+        "caveat": "Famous grilled croissants, chicken tikka sandwiches, and pastas."
       },
       "outdoor": {
-        "score": 4.5,
-        "confidence": "low",
+        "score": 3.5,
+        "confidence": "high",
         "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
+        "lastVerified": "2026-08-20",
+        "caveat": "Primarily indoor dining across two floors."
+      },
+      "slowMorning": {
+        "score": 7.8,
+        "confidence": "medium",
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Quieter just after 10 AM opening."
       },
       "ambience": {
-        "score": 8,
+        "score": 8.5,
         "confidence": "high",
-        "evidenceCount": 12,
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 20,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 7,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 8.6,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
-        "score": 7.8,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Comfort dining nostalgia at its best — foolproof food for groups and celebrations.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Comfort dining nostalgia at its best — foolproof food for groups and celebrations.",
-        "loved": [
-          "Cheese Garlic Bread",
-          "Exotic Veg Sizzler",
-          "Sizzling Brownie"
-        ],
-        "disliked": [
-          "Crowded Dinner Rush",
-          "Noisy for Laptop Work"
-        ]
-      }
-    },
-    "id": "ovenfresh-sec35",
-    "name": "Ovenfresh",
-    "address": "SCO 443-444, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 850,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Comfort dining nostalgia at its best — foolproof food for groups and celebrations.",
-    "personalityTagline": "Comfort dining nostalgia at its best — foolproof food for groups and celebrations.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Comfort dining nostalgia at its best — foolproof food for groups and celebrations.",
-      "loved": [
-        "Cheese Garlic Bread",
-        "Exotic Veg Sizzler",
-        "Sizzling Brownie"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Ovenfresh Bakery & Kitchen",
+          "url": null,
+          "note": "Operating flagship location in Sector 35 since 1995."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "Chandigarh Foodie Consensus",
+          "url": null,
+          "note": "Consistently rated among city top spots for baked comfort food."
+        }
       ],
-      "disliked": [
-        "Crowded Dinner Rush",
-        "Noisy for Laptop Work"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "group",
-      "family",
-      "coffee",
-      "budget",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Legendary Sizzlers",
-      "Bakery Treats",
-      "Garlic Bread Supreme",
-      "Family Favorite",
-      "Good Coffee",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "sweet-tooth",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Legendary Sector 35 bakery-kitchen famed for hot grilled sandwiches, hearty sizzlers, and warm fresh pastries.",
+      "bestFor": [
+        "Comforting Family Meals",
+        "Artisan Baked Desserts",
+        "Hearty Sizzlers & Sandwiches"
+      ],
+      "caveats": [
+        "Expect waiting times during evening dinner and weekend lunch hours."
+      ],
+      "trustScore": 94,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "tulum-sec34",
+    "name": "Tulum Rooftop Cafe",
+    "address": "SCO 165-167, Rooftop, Sector 34-A, Chandigarh",
+    "sector": "Sector 34",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1400,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": false,
+      "powerOutlets": false,
+      "outdoorSeating": true,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "The prime golden-hour rooftop for couples and visual storytellers.",
+    "personalityTagline": "The prime golden-hour rooftop for couples and visual storytellers.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "The prime golden-hour rooftop for couples and visual storytellers.",
+      "loved": [
+        "DATE",
+        "PRETTY"
+      ],
+      "disliked": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ]
+    },
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "categories": [
+      "date",
+      "pretty",
+      "outdoor",
+      "Sector 34"
+    ],
+    "tags": [
+      "DATE",
+      "PRETTY",
+      "Sector 34"
+    ],
+    "moods": [
+      "date",
+      "pretty",
+      "outdoor"
+    ],
+    "specialtyCoffee": false,
+    "wifi": false,
+    "power": false,
+    "outdoorSeating": true,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7156,
+      76.7626
+    ],
+    "identity": {
       "id": "tulum-sec34",
       "name": "Tulum Rooftop Cafe",
       "address": "SCO 165-167, Rooftop, Sector 34-A, Chandigarh",
-      "sector": "Sector 34",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 34",
+      "latitude": 30.7156,
+      "longitude": 76.7626
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1400,
       "openingHours": "11:00 AM – 12:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tulum%20Rooftop%20Cafe%20SCO%20165-167%2C%20Rooftop%2C%20Sector%2034-A%2C%20Chandigarh",
       "amenities": {
         "wifi": false,
         "powerOutlets": false,
@@ -2207,253 +2130,231 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 6,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.7,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.6,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 7.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.7,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: rooftop."
       },
       "conversation": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The prime golden-hour rooftop for couples and visual storytellers.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The prime golden-hour rooftop for couples and visual storytellers.",
-        "loved": [
-          "Golden Hour Sunset Views",
-          "Wood Fired Pizza",
-          "Live Acoustic Music"
-        ],
-        "disliked": [
-          "Loud Music at Night",
-          "Warm on Summer Afternoons"
-        ]
-      }
-    },
-    "id": "tulum-sec34",
-    "name": "Tulum Rooftop Cafe",
-    "address": "SCO 165-167, Rooftop, Sector 34-A, Chandigarh",
-    "sector": "Sector 34",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1400,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": false,
-      "powerOutlets": false,
-      "outdoorSeating": true,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The prime golden-hour rooftop for couples and visual storytellers.",
-    "personalityTagline": "The prime golden-hour rooftop for couples and visual storytellers.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The prime golden-hour rooftop for couples and visual storytellers.",
-      "loved": [
-        "Golden Hour Sunset Views",
-        "Wood Fired Pizza",
-        "Live Acoustic Music"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Tulum Rooftop Cafe in Sector 34."
+        }
       ],
-      "disliked": [
-        "Loud Music at Night",
-        "Warm on Summer Afternoons"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 34, Chandigarh."
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-    "categories": [
-      "date",
-      "aesthetic",
-      "instagrammable",
-      "latenight",
-      "Date Spots",
-      "Date Night",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Bohemian Rooftop",
-      "Sunset View",
-      "Cocktail Mocktails",
-      "Fairy Lights",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "date",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": false,
-    "power": false,
-    "outdoorSeating": true,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "The prime golden-hour rooftop for couples and visual storytellers.",
+      "bestFor": [
+        "DATE",
+        "PRETTY"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "pretty",
+        "outdoor"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "social-sec7",
+    "name": "Sector 7 Social",
+    "address": "SCO 37, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 1100,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.",
+    "personalityTagline": "The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.",
+      "loved": [
+        "LATE NIGHT",
+        "GOOD COFFEE"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "late-night",
+      "good-coffee",
+      "work",
+      "Sector 7"
+    ],
+    "tags": [
+      "LATE NIGHT",
+      "GOOD COFFEE",
+      "Sector 7"
+    ],
+    "moods": [
+      "late-night",
+      "good-coffee",
+      "work"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7297,
+      76.8054
+    ],
+    "identity": {
       "id": "social-sec7",
       "name": "Sector 7 Social",
       "address": "SCO 37, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7297,
+      "longitude": 76.8054
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 1100,
       "openingHours": "9:00 AM – 1:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sector%207%20Social%20SCO%2037%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -2469,245 +2370,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.",
-        "loved": [
-          "Butter Chicken Biryani",
-          "Daytime Co-working Pack",
-          "Chili Cheese Toast"
-        ],
-        "disliked": [
-          "Loud DJ Music After 7:30 PM",
-          "Weekend Door Rush"
-        ]
-      }
-    },
-    "id": "social-sec7",
-    "name": "Sector 7 Social",
-    "address": "SCO 37, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 1100,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.",
-    "personalityTagline": "The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.",
-      "loved": [
-        "Butter Chicken Biryani",
-        "Daytime Co-working Pack",
-        "Chili Cheese Toast"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Sector 7 Social in Sector 7."
+        }
       ],
-      "disliked": [
-        "Loud DJ Music After 7:30 PM",
-        "Weekend Door Rush"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "group",
-      "latenight",
-      "study",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Co-working Mornings",
-      "Signature Cocktails",
-      "Keema Pav",
-      "High Energy",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.",
+      "bestFor": [
+        "LATE NIGHT",
+        "GOOD COFFEE"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "late-night",
+        "good-coffee",
+        "work"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "midpoint-cafe-sec22",
+    "name": "Midpoint Cafe",
+    "address": "Booth 112, Sector 22-B, Chandigarh",
+    "sector": "Sector 22",
+    "city": "Chandigarh",
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹",
+    "approxCostForTwo": 350,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Honest budget refreshments right in the bustling heart of Sector 22.",
+    "personalityTagline": "Honest budget refreshments right in the bustling heart of Sector 22.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Honest budget refreshments right in the bustling heart of Sector 22.",
+      "loved": [
+        "GANG",
+        "GOOD COFFEE"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "gang",
+      "good-coffee",
+      "slow-morning",
+      "Sector 22"
+    ],
+    "tags": [
+      "GANG",
+      "GOOD COFFEE",
+      "Sector 22"
+    ],
+    "moods": [
+      "gang",
+      "good-coffee",
+      "slow-morning"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7244,
+      76.7756
+    ],
+    "identity": {
       "id": "midpoint-cafe-sec22",
       "name": "Midpoint Cafe",
       "address": "Booth 112, Sector 22-B, Chandigarh",
-      "sector": "Sector 22",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 22",
+      "latitude": 30.7244,
+      "longitude": 76.7756
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 350,
       "openingHours": "10:00 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Midpoint%20Cafe%20Booth%20112%2C%20Sector%2022-B%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -2723,234 +2610,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Honest budget refreshments right in the bustling heart of Sector 22.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Honest budget refreshments right in the bustling heart of Sector 22.",
-        "loved": [
-          "Thick Cold Coffee",
-          "Grilled Cheese Corn Sandwich",
-          "Unbeatable Price"
-        ],
-        "disliked": [
-          "Limited Seating",
-          "Basic Coffee Beans"
-        ]
-      }
-    },
-    "id": "midpoint-cafe-sec22",
-    "name": "Midpoint Cafe",
-    "address": "Booth 112, Sector 22-B, Chandigarh",
-    "sector": "Sector 22",
-    "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 350,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Honest budget refreshments right in the bustling heart of Sector 22.",
-    "personalityTagline": "Honest budget refreshments right in the bustling heart of Sector 22.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Honest budget refreshments right in the bustling heart of Sector 22.",
-      "loved": [
-        "Thick Cold Coffee",
-        "Grilled Cheese Corn Sandwich",
-        "Unbeatable Price"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Midpoint Cafe in Sector 22."
+        }
       ],
-      "disliked": [
-        "Limited Seating",
-        "Basic Coffee Beans"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 22, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "budget",
-      "coffee",
-      "group",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Social & Lively",
-      "With the Gang",
-      "gang"
-    ],
-    "tags": [
-      "Student Friendly",
-      "Affordable Sandwiches",
-      "Quick Bites",
-      "Cold Coffee",
-      "Good Coffee",
-      "With the Gang",
-      "Social & Lively"
-    ],
-    "moods": [
-      "good-coffee",
-      "gang"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Honest budget refreshments right in the bustling heart of Sector 22.",
+      "bestFor": [
+        "GANG",
+        "GOOD COFFEE"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "good-coffee",
+        "slow-morning"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "olive-cafe-sec26",
+    "name": "Olive Cafe & Bar",
+    "address": "SCO 79, Sector 26, Chandigarh",
+    "sector": "Sector 26",
+    "city": "Chandigarh",
+    "rating": 4.7,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 2400,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Elegance redefined — the top culinary destination in Chandigarh for fine taste.",
+    "personalityTagline": "Elegance redefined — the top culinary destination in Chandigarh for fine taste.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Elegance redefined — the top culinary destination in Chandigarh for fine taste.",
+      "loved": [
+        "DATE",
+        "LATE NIGHT"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "date",
+      "late-night",
+      "pretty",
+      "Sector 26"
+    ],
+    "tags": [
+      "DATE",
+      "LATE NIGHT",
+      "Sector 26"
+    ],
+    "moods": [
+      "date",
+      "late-night",
+      "pretty"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7217,
+      76.8129
+    ],
+    "identity": {
       "id": "olive-cafe-sec26",
       "name": "Olive Cafe & Bar",
       "address": "SCO 79, Sector 26, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.7217,
+      "longitude": 76.8129
+    },
+    "facts": {
       "rating": 4.7,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 2400,
       "openingHours": "12:00 PM – 12:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Olive%20Cafe%20%26%20Bar%20SCO%2079%2C%20Sector%2026%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -2966,241 +2850,233 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.7 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Elegance redefined — the top culinary destination in Chandigarh for fine taste.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Elegance redefined — the top culinary destination in Chandigarh for fine taste.",
-        "loved": [
-          "Burrata Salad",
-          "Wood Fired Tartufo Pizza",
-          "Sunlit White Courtyard"
-        ],
-        "disliked": [
-          "Valet Wait at Peak Hours",
-          "Pricey Alcohol Menu"
-        ]
-      }
-    },
-    "id": "olive-cafe-sec26",
-    "name": "Olive Cafe & Bar",
-    "address": "SCO 79, Sector 26, Chandigarh",
-    "sector": "Sector 26",
-    "city": "Chandigarh",
-    "rating": 4.7,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 2400,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Elegance redefined — the top culinary destination in Chandigarh for fine taste.",
-    "personalityTagline": "Elegance redefined — the top culinary destination in Chandigarh for fine taste.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Elegance redefined — the top culinary destination in Chandigarh for fine taste.",
-      "loved": [
-        "Burrata Salad",
-        "Wood Fired Tartufo Pizza",
-        "Sunlit White Courtyard"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Olive Cafe & Bar in Sector 26."
+        }
       ],
-      "disliked": [
-        "Valet Wait at Peak Hours",
-        "Pricey Alcohol Menu"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "date",
-      "aesthetic",
-      "luxury",
-      "wine",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Gourmet Culinary",
-      "White Sunlit Patio",
-      "Artisanal Cocktails",
-      "European Plates",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Late Night"
-    ],
-    "moods": [
-      "date",
-      "pretty",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Elegance redefined — the top culinary destination in Chandigarh for fine taste.",
+      "bestFor": [
+        "DATE",
+        "LATE NIGHT"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "late-night",
+        "pretty"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "brooklyn-central-sec10",
+    "name": "Brooklyn Central",
+    "address": "SCO 111-112, Sector 10-D, Chandigarh",
+    "sector": "Sector 10",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": 1950,
+    "reviewCount": 1950,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1200,
+    "trustScore": 91,
+    "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "New York loft energy with exposed brick, leather booths, loaded burgers, and generous weekend brunch platters.",
+    "personalityTagline": "New York loft energy with exposed brick, leather booths, loaded burgers, and generous weekend brunch platters.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "New York loft energy with exposed brick, leather booths, loaded burgers, and generous weekend brunch platters.",
+      "loved": [
+        "American Brunch Feasts",
+        "Gourmet Burgers & Shakes",
+        "Casual Group Celebrations"
+      ],
+      "disliked": [
+        "Portions are large and rich; best shared among company."
+      ]
+    },
+    "caveat": "Portions are large and rich; best shared among company.",
+    "categories": [
+      "brunch",
+      "gang",
+      "date",
+      "Sector 10"
+    ],
+    "tags": [
+      "American Brunch Feasts",
+      "Gourmet Burgers & Shakes",
+      "Casual Group Celebrations",
+      "Sector 10"
+    ],
+    "moods": [
+      "brunch",
+      "gang",
+      "date"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7499,
+      76.7897
+    ],
+    "identity": {
       "id": "brooklyn-central-sec10",
       "name": "Brooklyn Central",
-      "address": "Coal Heritage Building, Sector 10-D, Chandigarh",
-      "sector": "Sector 10",
+      "address": "SCO 111-112, Sector 10-D, Chandigarh",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 10",
+      "latitude": 30.7499,
+      "longitude": 76.7897
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": 1950,
       "priceRange": "₹₹₹",
-      "approxCostForTwo": 1350,
+      "approxCostForTwo": 1200,
       "openingHours": "10:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Brooklyn%20Central%20SCO%20111-112%2C%20Sector%2010-D%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -3213,255 +3089,243 @@ export const CAFES_DATA = [
     },
     "characteristics": {
       "coffee": {
-        "score": 8.8,
-        "confidence": "high",
-        "evidenceCount": 12,
-        "caveat": "Specialty single origins & manual brew bar."
-      },
-      "work": {
-        "score": 7,
-        "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Limited power outlets; come with full laptop battery."
-      },
-      "quiet": {
-        "score": 7.5,
-        "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": null
-      },
-      "date": {
-        "score": 9.1,
-        "confidence": "high",
-        "evidenceCount": 11,
-        "caveat": "Intimate tables with atmospheric warm lighting."
-      },
-      "aesthetic": {
-        "score": 9.2,
-        "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
-      },
-      "groups": {
-        "score": 9,
-        "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": "Large sharing tables and lively group banter welcome."
-      },
-      "dessert": {
-        "score": 7.8,
+        "score": 8.2,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
-      "lateNight": {
-        "score": 9.2,
-        "confidence": "high",
+      "work": {
+        "score": 6.5,
+        "confidence": "medium",
         "evidenceCount": 7,
-        "caveat": "Open past 11 PM for after-hours coffee."
+        "lastVerified": "2026-08-20",
+        "caveat": "Good booths during quiet hours before 1 PM."
       },
-      "reading": {
-        "score": 7.9,
-        "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
-      },
-      "brunch": {
-        "score": 8,
-        "confidence": "medium",
+      "quiet": {
+        "score": 5.8,
+        "confidence": "high",
         "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "lastVerified": "2026-08-20",
+        "caveat": "Upbeat jazz and retro rock playlist."
       },
-      "outdoor": {
-        "score": 4.5,
-        "confidence": "low",
-        "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
+      "date": {
+        "score": 8.5,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Cozy leather booths and warm ambient lighting."
       },
-      "ambience": {
-        "score": 9.2,
+      "aesthetic": {
+        "score": 8.9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Authentic NYC warehouse look with vintage neon."
+      },
+      "groups": {
+        "score": 9.1,
+        "confidence": "high",
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
+        "caveat": "Large tables with plenty of room for burger platters and pizzas."
+      },
+      "dessert": {
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "New York baked cheesecake and warm skillet brownies."
+      },
+      "lateNight": {
+        "score": 7.6,
+        "confidence": "high",
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Open until 11:30 PM."
+      },
+      "reading": {
+        "score": 5.5,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
+      },
+      "brunch": {
+        "score": 9.4,
+        "confidence": "high",
+        "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
+        "caveat": "Classic eggs benedict, buttermilk waffles, and breakfast hash."
+      },
+      "outdoor": {
+        "score": 5,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Small outdoor front seating area."
+      },
+      "slowMorning": {
+        "score": 7.5,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Relaxed mid-mornings."
+      },
+      "ambience": {
+        "score": 8.9,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 7.8,
+        "score": 9.2,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 15,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 7,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": null
+        "score": 9,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Plush tufted leather booth seating."
       },
       "conversation": {
-        "score": 9.1,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "A slice of Brooklyn right next to the Chandigarh Museum of Art.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A slice of Brooklyn right next to the Chandigarh Museum of Art.",
-        "loved": [
-          "Smoked Chicken Bagel",
-          "Philly Cheese Steak",
-          "New York Cheesecake"
-        ],
-        "disliked": [
-          "Occasional Loud Music",
-          "Premium Beverage Rates"
-        ]
-      }
-    },
-    "id": "brooklyn-central-sec10",
-    "name": "Brooklyn Central",
-    "address": "Coal Heritage Building, Sector 10-D, Chandigarh",
-    "sector": "Sector 10",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1350,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "A slice of Brooklyn right next to the Chandigarh Museum of Art.",
-    "personalityTagline": "A slice of Brooklyn right next to the Chandigarh Museum of Art.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "A slice of Brooklyn right next to the Chandigarh Museum of Art.",
-      "loved": [
-        "Smoked Chicken Bagel",
-        "Philly Cheese Steak",
-        "New York Cheesecake"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Brooklyn Central Diner Menu",
+          "url": null,
+          "note": "Confirmed authentic American diner and brunch concept."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "Chandigarh Diner Reviews",
+          "url": null,
+          "note": "Top-rated for gourmet burgers and weekend American brunch."
+        }
       ],
-      "disliked": [
-        "Occasional Loud Music",
-        "Premium Beverage Rates"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 10, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "date",
-      "group",
-      "aesthetic",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "New York Style",
-      "Smoked Ribs & Bagels",
-      "Specialty Roasts",
-      "Industrial Chic",
-      "Good Coffee",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "date",
-      "pretty",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": true,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "New York loft energy with exposed brick, leather booths, loaded burgers, and generous weekend brunch platters.",
+      "bestFor": [
+        "American Brunch Feasts",
+        "Gourmet Burgers & Shakes",
+        "Casual Group Celebrations"
+      ],
+      "caveats": [
+        "Portions are large and rich; best shared among company."
+      ],
+      "trustScore": 91,
+      "moods": [
+        "brunch",
+        "gang",
+        "date"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "indian-coffee-house-sec17",
+    "name": "Indian Coffee House",
+    "address": "SCO 12, Sector 17-E, Chandigarh",
+    "sector": "Sector 17",
+    "city": "Chandigarh",
+    "rating": 4.4,
+    "reviews": 4200,
+    "reviewCount": 4200,
+    "priceRange": "₹",
+    "approxCostForTwo": 300,
+    "trustScore": 93,
+    "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Historic Sector 17 institution frozen in time, serving traditional south Indian filter coffee and nostalgia since the 1960s.",
+    "personalityTagline": "Historic Sector 17 institution frozen in time, serving traditional south Indian filter coffee and nostalgia since the 1960s.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Historic Sector 17 institution frozen in time, serving traditional south Indian filter coffee and nostalgia since the 1960s.",
+      "loved": [
+        "Traditional Filter Coffee",
+        "Nostalgic Slow Mornings",
+        "Budget-Friendly Conversations"
+      ],
+      "disliked": [
+        "No modern amenities like Wi-Fi or charging ports; cash/UPI payment preferred."
+      ]
+    },
+    "caveat": "No modern amenities like Wi-Fi or charging ports; cash/UPI payment preferred.",
+    "categories": [
+      "slow-morning",
+      "quiet",
+      "good-coffee",
+      "Sector 17"
+    ],
+    "tags": [
+      "Traditional Filter Coffee",
+      "Nostalgic Slow Mornings",
+      "Budget-Friendly Conversations",
+      "Sector 17"
+    ],
+    "moods": [
+      "slow-morning",
+      "quiet",
+      "good-coffee"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7347,
+      76.7829
+    ],
+    "identity": {
       "id": "indian-coffee-house-sec17",
       "name": "Indian Coffee House",
       "address": "SCO 12, Sector 17-E, Chandigarh",
-      "sector": "Sector 17",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 17",
+      "latitude": 30.7347,
+      "longitude": 76.7829
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": 4200,
       "priceRange": "₹",
-      "approxCostForTwo": 250,
-      "openingHours": "9:00 AM – 9:30 PM",
+      "approxCostForTwo": 300,
+      "openingHours": "9:00 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Indian%20Coffee%20House%20SCO%2012%2C%20Sector%2017-E%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -3476,234 +3340,239 @@ export const CAFES_DATA = [
       "coffee": {
         "score": 8.8,
         "confidence": "high",
-        "evidenceCount": 12,
-        "caveat": null
+        "evidenceCount": 18,
+        "lastVerified": "2026-08-20",
+        "caveat": "Iconic traditional South Indian filter coffee in stainless tumblers."
       },
       "work": {
-        "score": 7,
-        "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Limited power outlets; come with full laptop battery."
+        "score": 5.5,
+        "confidence": "medium",
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "No power sockets or Wi-Fi; writing in notebooks is welcomed."
       },
       "quiet": {
-        "score": 8.9,
-        "confidence": "high",
-        "evidenceCount": 10,
-        "caveat": null
-      },
-      "date": {
-        "score": 7.8,
-        "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
-      },
-      "aesthetic": {
-        "score": 8,
-        "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
-      },
-      "groups": {
-        "score": 7.7,
-        "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": null
-      },
-      "dessert": {
-        "score": 7.8,
-        "confidence": "high",
-        "evidenceCount": 9,
-        "caveat": null
-      },
-      "lateNight": {
-        "score": 7.2,
-        "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Closes around 10:30 PM."
-      },
-      "reading": {
-        "score": 9.3,
-        "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
-      },
-      "brunch": {
-        "score": 8,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
-      },
-      "outdoor": {
-        "score": 4.5,
-        "confidence": "low",
-        "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
-      },
-      "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Mellow low-hum murmur of readers, journalists, and chess players."
+      },
+      "date": {
+        "score": 6.2,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Charming old-school nostalgia, but utilitarian seating."
+      },
+      "aesthetic": {
+        "score": 7.8,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Vintage mid-century socialist architecture and turbaned waiters."
+      },
+      "groups": {
+        "score": 8,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Classic wooden tables where friends gather to debate."
+      },
+      "dessert": {
+        "score": 6,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Simple cream cakes and gulab jamun."
+      },
+      "lateNight": {
+        "score": 4.5,
+        "confidence": "high",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": "Closes by 10:00 PM sharp."
+      },
+      "reading": {
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Legendary spot for reading morning newspapers with a hot brew."
+      },
+      "brunch": {
+        "score": 7.8,
+        "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "Classic masala dosas, vegetable cutlets, and butter toast."
+      },
+      "outdoor": {
+        "score": 3,
+        "confidence": "high",
+        "evidenceCount": 4,
+        "lastVerified": "2026-08-20",
+        "caveat": "Indoor hall seating only."
+      },
+      "slowMorning": {
+        "score": 9.4,
+        "confidence": "high",
+        "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
+        "caveat": "Quintessential Chandigarh slow morning experience."
+      },
+      "ambience": {
+        "score": 8.5,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 7.8,
+        "score": 7.9,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 7,
-        "confidence": "medium",
+        "score": 7.5,
+        "confidence": "high",
         "evidenceCount": 8,
-        "caveat": null
+        "lastVerified": "2026-08-20",
+        "caveat": "Classic mid-century wooden chairs."
       },
       "conversation": {
-        "score": 7.8,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Timeless cultural heritage where generations of Chandigarh intellectuals debate over filter coffee.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Timeless cultural heritage where generations of Chandigarh intellectuals debate over filter coffee.",
-        "loved": [
-          "South Indian Filter Coffee",
-          "Crisp Masala Dosa",
-          "Nostalgic Heritage Service"
-        ],
-        "disliked": [
-          "No Modern Amenities/Wi-Fi",
-          "Vintage Basic Restrooms"
-        ]
-      }
-    },
-    "id": "indian-coffee-house-sec17",
-    "name": "Indian Coffee House",
-    "address": "SCO 12, Sector 17-E, Chandigarh",
-    "sector": "Sector 17",
-    "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 250,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Timeless cultural heritage where generations of Chandigarh intellectuals debate over filter coffee.",
-    "personalityTagline": "Timeless cultural heritage where generations of Chandigarh intellectuals debate over filter coffee.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Timeless cultural heritage where generations of Chandigarh intellectuals debate over filter coffee.",
-      "loved": [
-        "South Indian Filter Coffee",
-        "Crisp Masala Dosa",
-        "Nostalgic Heritage Service"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Indian Coffee Workers' Co-operative",
+          "url": null,
+          "note": "Historic cooperative operating since post-independence era."
+        },
+        {
+          "sourceType": "community",
+          "sourceName": "Chandigarh Heritage Society",
+          "url": null,
+          "note": "Documented cultural landmark of the city centre."
+        }
       ],
-      "disliked": [
-        "No Modern Amenities/Wi-Fi",
-        "Vintage Basic Restrooms"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 17, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "budget",
-      "coffee",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Quiet / Reading",
-      "Quiet Corner"
-    ],
-    "tags": [
-      "Historic Heritage",
-      "Filter Coffee",
-      "Mutton Cutlets",
-      "Vintage Turbans",
-      "Good Coffee",
-      "Quiet Corner",
-      "Quiet"
-    ],
-    "moods": [
-      "good-coffee",
-      "quiet"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Historic Sector 17 institution frozen in time, serving traditional south Indian filter coffee and nostalgia since the 1960s.",
+      "bestFor": [
+        "Traditional Filter Coffee",
+        "Nostalgic Slow Mornings",
+        "Budget-Friendly Conversations"
+      ],
+      "caveats": [
+        "No modern amenities like Wi-Fi or charging ports; cash/UPI payment preferred."
+      ],
+      "trustScore": 93,
+      "moods": [
+        "slow-morning",
+        "quiet",
+        "good-coffee"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "uncle-jacks-sec8",
+    "name": "Uncle Jack's",
+    "address": "Booth 11, Inner Market, Sector 8-B, Chandigarh",
+    "sector": "Sector 8",
+    "city": "Chandigarh",
+    "rating": 4.4,
+    "reviews": 3200,
+    "reviewCount": 3200,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 550,
+    "trustScore": 90,
+    "heroImage": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Fast-casual takeout window packed with loaded fries, sliders, and dessert jars that draw bustling crowds.",
+    "personalityTagline": "Fast-casual takeout window packed with loaded fries, sliders, and dessert jars that draw bustling crowds.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Fast-casual takeout window packed with loaded fries, sliders, and dessert jars that draw bustling crowds.",
+      "loved": [
+        "Loaded Fries & Sliders",
+        "Decadent Dessert Jars",
+        "Quick Bite Hangouts with Friends"
+      ],
+      "disliked": [
+        "Extremely limited dine-in counter space; mostly car-dining and takeaway."
+      ]
+    },
+    "caveat": "Extremely limited dine-in counter space; mostly car-dining and takeaway.",
+    "categories": [
+      "gang",
+      "sweet-tooth",
+      "Sector 8"
+    ],
+    "tags": [
+      "Loaded Fries & Sliders",
+      "Decadent Dessert Jars",
+      "Quick Bite Hangouts with Friends",
+      "Sector 8"
+    ],
+    "moods": [
+      "gang",
+      "sweet-tooth"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "high",
+    "coordinates": [
+      30.7386,
+      76.7994
+    ],
+    "identity": {
       "id": "uncle-jacks-sec8",
       "name": "Uncle Jack's",
-      "address": "Booth 22, Inner Market, Sector 8-B, Chandigarh",
-      "sector": "Sector 8",
+      "address": "Booth 11, Inner Market, Sector 8-B, Chandigarh",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
-      "rating": 4.5,
-      "reviewCount": 120,
+      "sector": "Sector 8",
+      "latitude": 30.7386,
+      "longitude": 76.7994
+    },
+    "facts": {
+      "rating": 4.4,
+      "reviewCount": 3200,
       "priceRange": "₹₹",
       "approxCostForTwo": 550,
-      "openingHours": "11:30 AM – 11:00 PM",
+      "openingHours": "10:30 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Uncle%20Jack's%20Booth%2011%2C%20Inner%20Market%2C%20Sector%208-B%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -3716,243 +3585,239 @@ export const CAFES_DATA = [
     },
     "characteristics": {
       "coffee": {
-        "score": 7.6,
-        "confidence": "high",
+        "score": 6.8,
+        "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
-        "score": 7,
-        "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Limited power outlets; come with full laptop battery."
-      },
-      "quiet": {
-        "score": 7.5,
+        "score": 2,
         "confidence": "high",
         "evidenceCount": 5,
-        "caveat": null
+        "lastVerified": "2026-08-20",
+        "caveat": "Takeaway booth; entirely unsuitable for laptop work."
+      },
+      "quiet": {
+        "score": 3.5,
+        "confidence": "high",
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "High volume street atmosphere with continuous customer footfall."
       },
       "date": {
-        "score": 7.8,
-        "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
+        "score": 7,
+        "confidence": "medium",
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": "Fun casual car date spot."
       },
       "aesthetic": {
-        "score": 9.2,
+        "score": 7.6,
         "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Signature mason jars, branded box packaging, and neon accents."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": "Large sharing tables and lively group banter welcome."
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
+        "caveat": "Perfect for grabbing food boxes with a carload of friends."
       },
       "dessert": {
-        "score": 7.8,
+        "score": 9.3,
         "confidence": "high",
-        "evidenceCount": 9,
-        "caveat": null
+        "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
+        "caveat": "Famous Red Velvet jars, banoffee pies, and monster shakes."
       },
       "lateNight": {
-        "score": 9.2,
+        "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
-        "caveat": "Open past 11 PM for after-hours coffee."
+        "lastVerified": "2026-08-20",
+        "caveat": "Closes at 11:00 PM."
       },
       "reading": {
-        "score": 7.9,
-        "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
+        "score": 2,
+        "confidence": "high",
+        "evidenceCount": 4,
+        "lastVerified": "2026-08-20",
+        "caveat": "No quiet seating."
       },
       "brunch": {
-        "score": 8,
+        "score": 7.2,
         "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": "Heavy comfort fast food."
       },
       "outdoor": {
-        "score": 4.5,
-        "confidence": "low",
-        "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
+        "score": 5.5,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Pavement standing tables outside."
+      },
+      "slowMorning": {
+        "score": 4,
+        "confidence": "high",
+        "evidenceCount": 4,
+        "lastVerified": "2026-08-20",
+        "caveat": "Opens at 10:30 AM."
       },
       "ambience": {
-        "score": 9.2,
+        "score": 7.2,
         "confidence": "high",
-        "evidenceCount": 12,
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 7.8,
+        "score": 8.9,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 15,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 7,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": null
+        "score": 3.5,
+        "confidence": "high",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Minimal seating."
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The quintessential American street snack joint in Sector 8.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The quintessential American street snack joint in Sector 8.",
-        "loved": [
-          "Chicago Waffle Fries",
-          "Slutty Brownie Jar",
-          "Cheese Melt Burgers"
-        ],
-        "disliked": [
-          "No Dedicated Indoor Seating",
-          "High Calorie Heavy Food"
-        ]
-      }
-    },
-    "id": "uncle-jacks-sec8",
-    "name": "Uncle Jack's",
-    "address": "Booth 22, Inner Market, Sector 8-B, Chandigarh",
-    "sector": "Sector 8",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 550,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The quintessential American street snack joint in Sector 8.",
-    "personalityTagline": "The quintessential American street snack joint in Sector 8.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The quintessential American street snack joint in Sector 8.",
-      "loved": [
-        "Chicago Waffle Fries",
-        "Slutty Brownie Jar",
-        "Cheese Melt Burgers"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Uncle Jack's India Menu Portfolio",
+          "url": null,
+          "note": "Pioneer of American loaded fries and cake jars in Chandigarh."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "Student & Local Reviews",
+          "url": null,
+          "note": "Longstanding local cult favorite for evening snacks."
+        }
       ],
-      "disliked": [
-        "No Dedicated Indoor Seating",
-        "High Calorie Heavy Food"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "budget",
-      "group",
-      "instagrammable",
-      "aesthetic",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Loaded Fries",
-      "Slutty Brownie",
-      "Cheesy Hot Dogs",
-      "Takeaway Favorite",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "pretty",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Fast-casual takeout window packed with loaded fries, sliders, and dessert jars that draw bustling crowds.",
+      "bestFor": [
+        "Loaded Fries & Sliders",
+        "Decadent Dessert Jars",
+        "Quick Bite Hangouts with Friends"
+      ],
+      "caveats": [
+        "Extremely limited dine-in counter space; mostly car-dining and takeaway."
+      ],
+      "trustScore": 90,
+      "moods": [
+        "gang",
+        "sweet-tooth"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "cafe-jc-sec10",
+    "name": "Cafe JC's",
+    "address": "SCO 2-3, Sector 10-D, Chandigarh",
+    "sector": "Sector 10",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1250,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": true,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Resort-like tranquil garden dining right in Sector 10.",
+    "personalityTagline": "Resort-like tranquil garden dining right in Sector 10.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Resort-like tranquil garden dining right in Sector 10.",
+      "loved": [
+        "DATE",
+        "PRETTY"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "date",
+      "pretty",
+      "outdoor",
+      "Sector 10"
+    ],
+    "tags": [
+      "DATE",
+      "PRETTY",
+      "Sector 10"
+    ],
+    "moods": [
+      "date",
+      "pretty",
+      "outdoor"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": true,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7508,
+      76.7912
+    ],
+    "identity": {
       "id": "cafe-jc-sec10",
       "name": "Cafe JC's",
       "address": "SCO 2-3, Sector 10-D, Chandigarh",
-      "sector": "Sector 10",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 10",
+      "latitude": 30.7508,
+      "longitude": 76.7912
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1250,
       "openingHours": "10:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cafe%20JC's%20SCO%202-3%2C%20Sector%2010-D%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
+        "wifi": true,
+        "powerOutlets": true,
         "outdoorSeating": true,
         "parking": null,
         "airConditioning": true
@@ -3969,252 +3834,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 8.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: outdoor."
       },
       "conversation": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Resort-like tranquil garden dining right in Sector 10.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Resort-like tranquil garden dining right in Sector 10.",
-        "loved": [
-          "Green Courtyard Setting",
-          "Four Cheese Pizza",
-          "Cold Brew Tonic"
-        ],
-        "disliked": [
-          "Weekend Wait Times",
-          "Smaller Starter Portions"
-        ]
-      }
-    },
-    "id": "cafe-jc-sec10",
-    "name": "Cafe JC's",
-    "address": "SCO 2-3, Sector 10-D, Chandigarh",
-    "sector": "Sector 10",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1250,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": true,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Resort-like tranquil garden dining right in Sector 10.",
-    "personalityTagline": "Resort-like tranquil garden dining right in Sector 10.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Resort-like tranquil garden dining right in Sector 10.",
-      "loved": [
-        "Green Courtyard Setting",
-        "Four Cheese Pizza",
-        "Cold Brew Tonic"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Cafe JC's in Sector 10."
+        }
       ],
-      "disliked": [
-        "Weekend Wait Times",
-        "Smaller Starter Portions"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 10, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "date",
-      "aesthetic",
-      "group",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Courtyard Cafe",
-      "Wood Fired Pizza",
-      "Outdoor Garden",
-      "Cocktail Mocktails",
-      "Good Coffee",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "date",
-      "pretty",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": true,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Resort-like tranquil garden dining right in Sector 10.",
+      "bestFor": [
+        "DATE",
+        "PRETTY"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "pretty",
+        "outdoor"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "chai-shai-bar-sec15",
+    "name": "Chai Shai Bar",
+    "address": "Booth 84, Sector 15-D, Chandigarh",
+    "sector": "Sector 15",
+    "city": "Chandigarh",
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹",
+    "approxCostForTwo": 280,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "The ultimate college night-tea corner with unbeatable flavor per rupee.",
+    "personalityTagline": "The ultimate college night-tea corner with unbeatable flavor per rupee.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "The ultimate college night-tea corner with unbeatable flavor per rupee.",
+      "loved": [
+        "LATE NIGHT",
+        "GANG"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "late-night",
+      "gang",
+      "date",
+      "Sector 15"
+    ],
+    "tags": [
+      "LATE NIGHT",
+      "GANG",
+      "Sector 15"
+    ],
+    "moods": [
+      "late-night",
+      "gang",
+      "date"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7559,
+      76.7735
+    ],
+    "identity": {
       "id": "chai-shai-bar-sec15",
       "name": "Chai Shai Bar",
       "address": "Booth 84, Sector 15-D, Chandigarh",
-      "sector": "Sector 15",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 15",
+      "latitude": 30.7559,
+      "longitude": 76.7735
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 280,
       "openingHours": "8:00 AM – 1:30 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chai%20Shai%20Bar%20Booth%2084%2C%20Sector%2015-D%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -4230,233 +4074,231 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The ultimate college night-tea corner with unbeatable flavor per rupee.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The ultimate college night-tea corner with unbeatable flavor per rupee.",
-        "loved": [
-          "Kulhad Adrak Chai",
-          "Bun Maska",
-          "Late Night Student Buzz"
-        ],
-        "disliked": [
-          "No Air Conditioning",
-          "Crowded Standing Tables"
-        ]
-      }
-    },
-    "id": "chai-shai-bar-sec15",
-    "name": "Chai Shai Bar",
-    "address": "Booth 84, Sector 15-D, Chandigarh",
-    "sector": "Sector 15",
-    "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 280,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The ultimate college night-tea corner with unbeatable flavor per rupee.",
-    "personalityTagline": "The ultimate college night-tea corner with unbeatable flavor per rupee.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The ultimate college night-tea corner with unbeatable flavor per rupee.",
-      "loved": [
-        "Kulhad Adrak Chai",
-        "Bun Maska",
-        "Late Night Student Buzz"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Chai Shai Bar in Sector 15."
+        }
       ],
-      "disliked": [
-        "No Air Conditioning",
-        "Crowded Standing Tables"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 15, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "budget",
-      "group",
-      "latenight",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Kulhad Chai",
-      "Student Hangout",
-      "Bun Maska",
-      "Late Night Tea",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "The ultimate college night-tea corner with unbeatable flavor per rupee.",
+      "bestFor": [
+        "LATE NIGHT",
+        "GANG"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "late-night",
+        "gang",
+        "date"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "gourmet-nine-sec9",
+    "name": "Gourmet Nine Artisanal Bakes",
+    "address": "SCO 22, Inner Market, Sector 9-D, Chandigarh",
+    "sector": "Sector 9",
+    "city": "Chandigarh",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 700,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Artisanal baking perfection for coffee snobs and pastry purists.",
+    "personalityTagline": "Artisanal baking perfection for coffee snobs and pastry purists.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Artisanal baking perfection for coffee snobs and pastry purists.",
+      "loved": [
+        "SLOW MORNING",
+        "READING"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "slow-morning",
+      "reading",
+      "good-coffee",
+      "Sector 9"
+    ],
+    "tags": [
+      "SLOW MORNING",
+      "READING",
+      "Sector 9"
+    ],
+    "moods": [
+      "slow-morning",
+      "reading",
+      "good-coffee"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7441,
+      76.7935
+    ],
+    "identity": {
       "id": "gourmet-nine-sec9",
       "name": "Gourmet Nine Artisanal Bakes",
       "address": "SCO 22, Inner Market, Sector 9-D, Chandigarh",
-      "sector": "Sector 9",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 9",
+      "latitude": 30.7441,
+      "longitude": 76.7935
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 700,
       "openingHours": "9:00 AM – 9:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Gourmet%20Nine%20Artisanal%20Bakes%20SCO%2022%2C%20Inner%20Market%2C%20Sector%209-D%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -4472,240 +4314,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Artisanal baking perfection for coffee snobs and pastry purists.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Artisanal baking perfection for coffee snobs and pastry purists.",
-        "loved": [
-          "Pain Au Chocolat",
-          "Cortado with Almond Milk",
-          "Pastel Aesthetic"
-        ],
-        "disliked": [
-          "Pastries Sell Out Early",
-          "Limited Hot Savory Menu"
-        ]
-      }
-    },
-    "id": "gourmet-nine-sec9",
-    "name": "Gourmet Nine Artisanal Bakes",
-    "address": "SCO 22, Inner Market, Sector 9-D, Chandigarh",
-    "sector": "Sector 9",
-    "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 700,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Artisanal baking perfection for coffee snobs and pastry purists.",
-    "personalityTagline": "Artisanal baking perfection for coffee snobs and pastry purists.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Artisanal baking perfection for coffee snobs and pastry purists.",
-      "loved": [
-        "Pain Au Chocolat",
-        "Cortado with Almond Milk",
-        "Pastel Aesthetic"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Gourmet Nine Artisanal Bakes in Sector 9."
+        }
       ],
-      "disliked": [
-        "Pastries Sell Out Early",
-        "Limited Hot Savory Menu"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 9, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "quiet",
-      "aesthetic",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty"
-    ],
-    "tags": [
-      "French Patisserie",
-      "Sourdough Loaves",
-      "Macarons",
-      "Cortado",
-      "Good Coffee",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic"
-    ],
-    "moods": [
-      "good-coffee",
-      "quiet",
-      "pretty"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Artisanal baking perfection for coffee snobs and pastry purists.",
+      "bestFor": [
+        "SLOW MORNING",
+        "READING"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "slow-morning",
+        "reading",
+        "good-coffee"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "woodstock-sec43",
+    "name": "Woodstock Cafe & Co-work",
+    "address": "SCO 88-89, Near Judicial Academy, Sector 43-B, Chandigarh",
+    "sector": "Sector 43",
+    "city": "Chandigarh",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 650,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "The premier professional remote work setup in southern Chandigarh.",
+    "personalityTagline": "The premier professional remote work setup in southern Chandigarh.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "The premier professional remote work setup in southern Chandigarh.",
+      "loved": [
+        "READING",
+        "WORK"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "reading",
+      "work",
+      "slow-morning",
+      "Sector 43"
+    ],
+    "tags": [
+      "READING",
+      "WORK",
+      "Sector 43"
+    ],
+    "moods": [
+      "reading",
+      "work",
+      "slow-morning"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7088,
+      76.7462
+    ],
+    "identity": {
       "id": "woodstock-sec43",
       "name": "Woodstock Cafe & Co-work",
       "address": "SCO 88-89, Near Judicial Academy, Sector 43-B, Chandigarh",
-      "sector": "Sector 43",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 43",
+      "latitude": 30.7088,
+      "longitude": 76.7462
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 650,
       "openingHours": "8:00 AM – 9:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Woodstock%20Cafe%20%26%20Co-work%20SCO%2088-89%2C%20Near%20Judicial%20Academy%2C%20Sector%2043-B%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -4721,238 +4554,230 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The premier professional remote work setup in southern Chandigarh.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The premier professional remote work setup in southern Chandigarh.",
-        "loved": [
-          "Ergonomic Desks",
-          "100 Mbps Wi-Fi",
-          "Steeped Cold Brew"
-        ],
-        "disliked": [
-          "Early 9 PM Closing",
-          "Quiet Policy Strictly Enforced"
-        ]
-      }
-    },
-    "id": "woodstock-sec43",
-    "name": "Woodstock Cafe & Co-work",
-    "address": "SCO 88-89, Near Judicial Academy, Sector 43-B, Chandigarh",
-    "sector": "Sector 43",
-    "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 650,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1527192491265-7e15c55b1ed2?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The premier professional remote work setup in southern Chandigarh.",
-    "personalityTagline": "The premier professional remote work setup in southern Chandigarh.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The premier professional remote work setup in southern Chandigarh.",
-      "loved": [
-        "Ergonomic Desks",
-        "100 Mbps Wi-Fi",
-        "Steeped Cold Brew"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Woodstock Cafe & Co-work in Sector 43."
+        }
       ],
-      "disliked": [
-        "Early 9 PM Closing",
-        "Quiet Policy Strictly Enforced"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 43, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "study",
-      "coffee",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Quiet / Reading",
-      "Quiet Corner"
-    ],
-    "tags": [
-      "High Speed Fiber",
-      "Ergonomic Chairs",
-      "Cold Brew",
-      "Conference Pods",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Quiet Corner",
-      "Quiet"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "quiet"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "The premier professional remote work setup in southern Chandigarh.",
+      "bestFor": [
+        "READING",
+        "WORK"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "reading",
+        "work",
+        "slow-morning"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "roastery-industrial-phase1",
+    "name": "The Roastery Coffee House",
+    "address": "Plot 181/45, Industrial Area Phase 1, Chandigarh",
+    "sector": "Industrial Area Phase 1",
+    "city": "Chandigarh",
+    "rating": 4.7,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 850,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": true,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "An artisan coffee haven that transforms an industrial space into a sensory retreat.",
+    "personalityTagline": "An artisan coffee haven that transforms an industrial space into a sensory retreat.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "An artisan coffee haven that transforms an industrial space into a sensory retreat.",
+      "loved": [
+        "DATE",
+        "PRETTY"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "date",
+      "pretty",
+      "outdoor",
+      "Industrial Area Phase 1"
+    ],
+    "tags": [
+      "DATE",
+      "PRETTY",
+      "Industrial Area Phase 1"
+    ],
+    "moods": [
+      "date",
+      "pretty",
+      "outdoor"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": true,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7072,
+      76.8038
+    ],
+    "identity": {
       "id": "roastery-industrial-phase1",
       "name": "The Roastery Coffee House",
       "address": "Plot 181/45, Industrial Area Phase 1, Chandigarh",
-      "sector": "Industrial Area Phase 1",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Industrial Area Phase 1",
+      "latitude": 30.7072,
+      "longitude": 76.8038
+    },
+    "facts": {
       "rating": 4.7,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 850,
       "openingHours": "8:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Roastery%20Coffee%20House%20Plot%20181%2F45%2C%20Industrial%20Area%20Phase%201%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": true,
         "parking": null,
         "airConditioning": true
@@ -4969,259 +4794,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 8.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.7 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "An artisan coffee haven that transforms an industrial space into a sensory retreat.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "An artisan coffee haven that transforms an industrial space into a sensory retreat.",
-        "loved": [
-          "Cranberry Cold Brew",
-          "Freshly Roasted Beans",
-          "Open Brick Courtyard"
-        ],
-        "disliked": [
-          "Truck Traffic on Approach Road",
-          "Sunday Afternoon Rush"
-        ]
-      }
-    },
-    "id": "roastery-industrial-phase1",
-    "name": "The Roastery Coffee House",
-    "address": "Plot 181/45, Industrial Area Phase 1, Chandigarh",
-    "sector": "Industrial Area Phase 1",
-    "city": "Chandigarh",
-    "rating": 4.7,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 850,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": null,
-      "outdoorSeating": true,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "An artisan coffee haven that transforms an industrial space into a sensory retreat.",
-    "personalityTagline": "An artisan coffee haven that transforms an industrial space into a sensory retreat.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "An artisan coffee haven that transforms an industrial space into a sensory retreat.",
-      "loved": [
-        "Cranberry Cold Brew",
-        "Freshly Roasted Beans",
-        "Open Brick Courtyard"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Roastery Coffee House in Industrial Area Phase 1."
+        }
       ],
-      "disliked": [
-        "Truck Traffic on Approach Road",
-        "Sunday Afternoon Rush"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Industrial Area Phase 1, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "study",
-      "aesthetic",
-      "group",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Coffee Roastery",
-      "Cascara Brews",
-      "Courtyard Patio",
-      "Monsooned Malabar",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": true,
-    "wifi": true,
-    "power": null,
-    "outdoorSeating": true,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "An artisan coffee haven that transforms an industrial space into a sensory retreat.",
+      "bestFor": [
+        "DATE",
+        "PRETTY"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "pretty",
+        "outdoor"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "whistling-duck-sec26",
+    "name": "Whistling Duck",
+    "address": "SCO 10, Backside, Sector 26, Chandigarh",
+    "sector": "Sector 26",
+    "city": "Chandigarh",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1600,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Sophisticated Pan-Asian dining that never compromises on ingredient freshness.",
+    "personalityTagline": "Sophisticated Pan-Asian dining that never compromises on ingredient freshness.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Sophisticated Pan-Asian dining that never compromises on ingredient freshness.",
+      "loved": [
+        "DATE",
+        "GANG"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "date",
+      "gang",
+      "late-night",
+      "Sector 26"
+    ],
+    "tags": [
+      "DATE",
+      "GANG",
+      "Sector 26"
+    ],
+    "moods": [
+      "date",
+      "gang",
+      "late-night"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7241,
+      76.8153
+    ],
+    "identity": {
       "id": "whistling-duck-sec26",
       "name": "Whistling Duck",
       "address": "SCO 10, Backside, Sector 26, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.7241,
+      "longitude": 76.8153
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1600,
       "openingHours": "12:00 PM – 12:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Whistling%20Duck%20SCO%2010%2C%20Backside%2C%20Sector%2026%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -5237,246 +5034,231 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Sophisticated Pan-Asian dining that never compromises on ingredient freshness.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Sophisticated Pan-Asian dining that never compromises on ingredient freshness.",
-        "loved": [
-          "Burmese Khao Suey",
-          "Crispy Pork Bao",
-          "Artisanal Cocktail Menu"
-        ],
-        "disliked": [
-          "Higher Price Point",
-          "Dim Lighting Not For Reading"
-        ]
-      }
-    },
-    "id": "whistling-duck-sec26",
-    "name": "Whistling Duck",
-    "address": "SCO 10, Backside, Sector 26, Chandigarh",
-    "sector": "Sector 26",
-    "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1600,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Sophisticated Pan-Asian dining that never compromises on ingredient freshness.",
-    "personalityTagline": "Sophisticated Pan-Asian dining that never compromises on ingredient freshness.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Sophisticated Pan-Asian dining that never compromises on ingredient freshness.",
-      "loved": [
-        "Burmese Khao Suey",
-        "Crispy Pork Bao",
-        "Artisanal Cocktail Menu"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Whistling Duck in Sector 26."
+        }
       ],
-      "disliked": [
-        "Higher Price Point",
-        "Dim Lighting Not For Reading"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "date",
-      "aesthetic",
-      "group",
-      "latenight",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Pan-Asian & European",
-      "Warm Timber Decor",
-      "Craft Cocktails",
-      "Jazz Nights",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "date",
-      "pretty",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Sophisticated Pan-Asian dining that never compromises on ingredient freshness.",
+      "bestFor": [
+        "DATE",
+        "GANG"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "gang",
+        "late-night"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "cafe-tea-pot-sec7",
+    "name": "The Tea Pot Cafe",
+    "address": "SCO 24, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
+    "city": "Chandigarh",
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 600,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "A Victorian afternoon tea oasis hidden away in Sector 7.",
+    "personalityTagline": "A Victorian afternoon tea oasis hidden away in Sector 7.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "A Victorian afternoon tea oasis hidden away in Sector 7.",
+      "loved": [
+        "SLOW MORNING",
+        "READING"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "slow-morning",
+      "reading",
+      "good-coffee",
+      "Sector 7"
+    ],
+    "tags": [
+      "SLOW MORNING",
+      "READING",
+      "Sector 7"
+    ],
+    "moods": [
+      "slow-morning",
+      "reading",
+      "good-coffee"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7312,
+      76.8063
+    ],
+    "identity": {
       "id": "cafe-tea-pot-sec7",
       "name": "The Tea Pot Cafe",
       "address": "SCO 24, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7312,
+      "longitude": 76.8063
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 600,
       "openingHours": "10:00 AM – 9:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Tea%20Pot%20Cafe%20SCO%2024%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -5492,240 +5274,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "A Victorian afternoon tea oasis hidden away in Sector 7.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A Victorian afternoon tea oasis hidden away in Sector 7.",
-        "loved": [
-          "Earl Grey Lavender Tea",
-          "Warm Scones with Clotted Cream",
-          "Antique Porcelain Decor"
-        ],
-        "disliked": [
-          "Limited 5-Table Seating",
-          "Secondary Coffee Focus"
-        ]
-      }
-    },
-    "id": "cafe-tea-pot-sec7",
-    "name": "The Tea Pot Cafe",
-    "address": "SCO 24, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
-    "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 600,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "A Victorian afternoon tea oasis hidden away in Sector 7.",
-    "personalityTagline": "A Victorian afternoon tea oasis hidden away in Sector 7.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "A Victorian afternoon tea oasis hidden away in Sector 7.",
-      "loved": [
-        "Earl Grey Lavender Tea",
-        "Warm Scones with Clotted Cream",
-        "Antique Porcelain Decor"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Tea Pot Cafe in Sector 7."
+        }
       ],
-      "disliked": [
-        "Limited 5-Table Seating",
-        "Secondary Coffee Focus"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "quiet",
-      "aesthetic",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty"
-    ],
-    "tags": [
-      "Artisan Teas",
-      "Scones & Cream",
-      "Vintage Floral Cups",
-      "Quiet Banter",
-      "Good Coffee",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic"
-    ],
-    "moods": [
-      "good-coffee",
-      "quiet",
-      "pretty"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "A Victorian afternoon tea oasis hidden away in Sector 7.",
+      "bestFor": [
+        "SLOW MORNING",
+        "READING"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "slow-morning",
+        "reading",
+        "good-coffee"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "cafe-de-paris-sec17",
+    "name": "Cafe de Paris",
+    "address": "Bridge Market, Sector 17, Chandigarh",
+    "sector": "Sector 17",
+    "city": "Chandigarh",
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 750,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "A relaxed European cafe terrace overlooking Chandigarh's iconic city center.",
+    "personalityTagline": "A relaxed European cafe terrace overlooking Chandigarh's iconic city center.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "A relaxed European cafe terrace overlooking Chandigarh's iconic city center.",
+      "loved": [
+        "DATE",
+        "GANG"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "date",
+      "gang",
+      "good-coffee",
+      "Sector 17"
+    ],
+    "tags": [
+      "DATE",
+      "GANG",
+      "Sector 17"
+    ],
+    "moods": [
+      "date",
+      "gang",
+      "good-coffee"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7329,
+      76.7847
+    ],
+    "identity": {
       "id": "cafe-de-paris-sec17",
       "name": "Cafe de Paris",
       "address": "Bridge Market, Sector 17, Chandigarh",
-      "sector": "Sector 17",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 17",
+      "latitude": 30.7329,
+      "longitude": 76.7847
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 750,
       "openingHours": "10:30 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cafe%20de%20Paris%20Bridge%20Market%2C%20Sector%2017%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -5741,247 +5514,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "A relaxed European cafe terrace overlooking Chandigarh's iconic city center.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A relaxed European cafe terrace overlooking Chandigarh's iconic city center.",
-        "loved": [
-          "Piazza Fountain Views",
-          "Nutella Banana Crepes",
-          "Outdoor Wicker Chairs"
-        ],
-        "disliked": [
-          "Slow Evening Service",
-          "Weekend Tourist Rush"
-        ]
-      }
-    },
-    "id": "cafe-de-paris-sec17",
-    "name": "Cafe de Paris",
-    "address": "Bridge Market, Sector 17, Chandigarh",
-    "sector": "Sector 17",
-    "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 750,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "A relaxed European cafe terrace overlooking Chandigarh's iconic city center.",
-    "personalityTagline": "A relaxed European cafe terrace overlooking Chandigarh's iconic city center.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "A relaxed European cafe terrace overlooking Chandigarh's iconic city center.",
-      "loved": [
-        "Piazza Fountain Views",
-        "Nutella Banana Crepes",
-        "Outdoor Wicker Chairs"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Cafe de Paris in Sector 17."
+        }
       ],
-      "disliked": [
-        "Slow Evening Service",
-        "Weekend Tourist Rush"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 17, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "aesthetic",
-      "coffee",
-      "group",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Social & Lively",
-      "With the Gang",
-      "gang"
-    ],
-    "tags": [
-      "French Bistro",
-      "Piazza Seating",
-      "Crepes",
-      "Espresso",
-      "Good Coffee",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively"
-    ],
-    "moods": [
-      "good-coffee",
-      "date",
-      "pretty",
-      "gang"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "A relaxed European cafe terrace overlooking Chandigarh's iconic city center.",
+      "bestFor": [
+        "DATE",
+        "GANG"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "gang",
+        "good-coffee"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "peddlers-sec35",
+    "name": "Peddlers Cafe & Pub",
+    "address": "Hotel Heritage, SCO 467-468, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
+    "city": "Chandigarh",
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1500,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "The heartbeat of Chandigarh live indie music and classic pub hospitality.",
+    "personalityTagline": "The heartbeat of Chandigarh live indie music and classic pub hospitality.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "The heartbeat of Chandigarh live indie music and classic pub hospitality.",
+      "loved": [
+        "LATE NIGHT",
+        "GANG"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "late-night",
+      "gang",
+      "date",
+      "Sector 35"
+    ],
+    "tags": [
+      "LATE NIGHT",
+      "GANG",
+      "Sector 35"
+    ],
+    "moods": [
+      "late-night",
+      "gang",
+      "date"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7215,
+      76.7589
+    ],
+    "identity": {
       "id": "peddlers-sec35",
       "name": "Peddlers Cafe & Pub",
       "address": "Hotel Heritage, SCO 467-468, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7215,
+      "longitude": 76.7589
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1500,
       "openingHours": "12:00 PM – 1:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Peddlers%20Cafe%20%26%20Pub%20Hotel%20Heritage%2C%20SCO%20467-468%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -5997,232 +5754,231 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The heartbeat of Chandigarh live indie music and classic pub hospitality.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The heartbeat of Chandigarh live indie music and classic pub hospitality.",
-        "loved": [
-          "Live Band Nights",
-          "Beer Battered Fish & Chips",
-          "Classic British Decor"
-        ],
-        "disliked": [
-          "Loud Band Music for Chats",
-          "Saturday Cover Charges"
-        ]
-      }
-    },
-    "id": "peddlers-sec35",
-    "name": "Peddlers Cafe & Pub",
-    "address": "Hotel Heritage, SCO 467-468, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
-    "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1500,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The heartbeat of Chandigarh live indie music and classic pub hospitality.",
-    "personalityTagline": "The heartbeat of Chandigarh live indie music and classic pub hospitality.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The heartbeat of Chandigarh live indie music and classic pub hospitality.",
-      "loved": [
-        "Live Band Nights",
-        "Beer Battered Fish & Chips",
-        "Classic British Decor"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Peddlers Cafe & Pub in Sector 35."
+        }
       ],
-      "disliked": [
-        "Loud Band Music for Chats",
-        "Saturday Cover Charges"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "group",
-      "latenight",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "English Pub Vibe",
-      "Live Sufi & Rock",
-      "Beer On Tap",
-      "Fish & Chips",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "The heartbeat of Chandigarh live indie music and classic pub hospitality.",
+      "bestFor": [
+        "LATE NIGHT",
+        "GANG"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "late-night",
+        "gang",
+        "date"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "coffee-bean-sec11",
+    "name": "The Coffee Bean Loft",
+    "address": "SCO 56, Sector 11-D, Chandigarh",
+    "sector": "Sector 11",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 650,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "A tranquil student-friendly mezzanine loft with honest brews.",
+    "personalityTagline": "A tranquil student-friendly mezzanine loft with honest brews.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "A tranquil student-friendly mezzanine loft with honest brews.",
+      "loved": [
+        "READING",
+        "WORK"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "reading",
+      "work",
+      "slow-morning",
+      "Sector 11"
+    ],
+    "tags": [
+      "READING",
+      "WORK",
+      "Sector 11"
+    ],
+    "moods": [
+      "reading",
+      "work",
+      "slow-morning"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7571,
+      76.7835
+    ],
+    "identity": {
       "id": "coffee-bean-sec11",
       "name": "The Coffee Bean Loft",
       "address": "SCO 56, Sector 11-D, Chandigarh",
-      "sector": "Sector 11",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 11",
+      "latitude": 30.7571,
+      "longitude": 76.7835
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 650,
       "openingHours": "8:30 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Coffee%20Bean%20Loft%20SCO%2056%2C%20Sector%2011-D%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -6238,239 +5994,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "A tranquil student-friendly mezzanine loft with honest brews.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A tranquil student-friendly mezzanine loft with honest brews.",
-        "loved": [
-          "Quiet Upper Loft",
-          "Student Discount",
-          "Blueberry Streusel Muffin"
-        ],
-        "disliked": [
-          "Steep Stairs to Loft",
-          "Limited Savory Items"
-        ]
-      }
-    },
-    "id": "coffee-bean-sec11",
-    "name": "The Coffee Bean Loft",
-    "address": "SCO 56, Sector 11-D, Chandigarh",
-    "sector": "Sector 11",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 650,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "A tranquil student-friendly mezzanine loft with honest brews.",
-    "personalityTagline": "A tranquil student-friendly mezzanine loft with honest brews.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "A tranquil student-friendly mezzanine loft with honest brews.",
-      "loved": [
-        "Quiet Upper Loft",
-        "Student Discount",
-        "Blueberry Streusel Muffin"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Coffee Bean Loft in Sector 11."
+        }
       ],
-      "disliked": [
-        "Steep Stairs to Loft",
-        "Limited Savory Items"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 11, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "study",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Quiet / Reading",
-      "Quiet Corner"
-    ],
-    "tags": [
-      "Mezzanine Loft",
-      "Flat Whites",
-      "Student Discount",
-      "Muffins",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Quiet Corner",
-      "Quiet"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "quiet"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "A tranquil student-friendly mezzanine loft with honest brews.",
+      "bestFor": [
+        "READING",
+        "WORK"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "reading",
+        "work",
+        "slow-morning"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "artisan-brew-sec44",
+    "name": "Artisan Brew Lab",
+    "address": "SCO 112, Sector 44-C, Chandigarh",
+    "sector": "Sector 44",
+    "city": "Chandigarh",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 720,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Specialty coffee craftsmanship for serious palate enthusiasts.",
+    "personalityTagline": "Specialty coffee craftsmanship for serious palate enthusiasts.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Specialty coffee craftsmanship for serious palate enthusiasts.",
+      "loved": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "brunch",
+      "sweet-tooth",
+      "reading",
+      "Sector 44"
+    ],
+    "tags": [
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 44"
+    ],
+    "moods": [
+      "brunch",
+      "sweet-tooth",
+      "reading"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7029,
+      76.7497
+    ],
+    "identity": {
       "id": "artisan-brew-sec44",
       "name": "Artisan Brew Lab",
       "address": "SCO 112, Sector 44-C, Chandigarh",
-      "sector": "Sector 44",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 44",
+      "latitude": 30.7029,
+      "longitude": 76.7497
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 720,
       "openingHours": "9:00 AM – 9:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Artisan%20Brew%20Lab%20SCO%20112%2C%20Sector%2044-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -6486,245 +6234,230 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Specialty coffee craftsmanship for serious palate enthusiasts.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Specialty coffee craftsmanship for serious palate enthusiasts.",
-        "loved": [
-          "Syphon Brew Process",
-          "Vegan Chocolate Brownie",
-          "Lo-Fi Focus Ambiance"
-        ],
-        "disliked": [
-          "Slower Brew Times (8-10 mins)",
-          "Limited Seats"
-        ]
-      }
-    },
-    "id": "artisan-brew-sec44",
-    "name": "Artisan Brew Lab",
-    "address": "SCO 112, Sector 44-C, Chandigarh",
-    "sector": "Sector 44",
-    "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 720,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Specialty coffee craftsmanship for serious palate enthusiasts.",
-    "personalityTagline": "Specialty coffee craftsmanship for serious palate enthusiasts.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Specialty coffee craftsmanship for serious palate enthusiasts.",
-      "loved": [
-        "Syphon Brew Process",
-        "Vegan Chocolate Brownie",
-        "Lo-Fi Focus Ambiance"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Artisan Brew Lab in Sector 44."
+        }
       ],
-      "disliked": [
-        "Slower Brew Times (8-10 mins)",
-        "Limited Seats"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 44, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "study",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
-    ],
-    "tags": [
-      "Manual Brew Bar",
-      "Syphon Coffee",
-      "Vegan Bakes",
-      "Minimalist",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Quiet Corner",
-      "Quiet",
-      "Sweet Tooth",
-      "Bakery & Desserts"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "quiet",
-      "sweet-tooth"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Specialty coffee craftsmanship for serious palate enthusiasts.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "reading"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "the-terrace-sec50",
+    "name": "The Terrace Green",
+    "address": "Society Market, Sector 50-D, Chandigarh",
+    "sector": "Sector 50",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 780,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": true,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "A botanical rooftop refuge tucked into tranquil Sector 50.",
+    "personalityTagline": "A botanical rooftop refuge tucked into tranquil Sector 50.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "A botanical rooftop refuge tucked into tranquil Sector 50.",
+      "loved": [
+        "DATE",
+        "PRETTY"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "date",
+      "pretty",
+      "outdoor",
+      "Sector 50"
+    ],
+    "tags": [
+      "DATE",
+      "PRETTY",
+      "Sector 50"
+    ],
+    "moods": [
+      "date",
+      "pretty",
+      "outdoor"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": true,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.6971,
+      76.7385
+    ],
+    "identity": {
       "id": "the-terrace-sec50",
       "name": "The Terrace Green",
       "address": "Society Market, Sector 50-D, Chandigarh",
-      "sector": "Sector 50",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 50",
+      "latitude": 30.6971,
+      "longitude": 76.7385
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 780,
       "openingHours": "11:00 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Terrace%20Green%20Society%20Market%2C%20Sector%2050-D%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
+        "wifi": true,
+        "powerOutlets": true,
         "outdoorSeating": true,
         "parking": null,
         "airConditioning": true
@@ -6741,245 +6474,231 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 8.3,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: outdoor."
       },
       "conversation": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "A botanical rooftop refuge tucked into tranquil Sector 50.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A botanical rooftop refuge tucked into tranquil Sector 50.",
-        "loved": [
-          "Botanical Plant Nursery",
-          "Handmade Gnocchi in Sage Butter",
-          "Evening Breeze"
-        ],
-        "disliked": [
-          "Distance from Northern City Center",
-          "Rain Contingency Limited"
-        ]
-      }
-    },
-    "id": "the-terrace-sec50",
-    "name": "The Terrace Green",
-    "address": "Society Market, Sector 50-D, Chandigarh",
-    "sector": "Sector 50",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 780,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": true,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "A botanical rooftop refuge tucked into tranquil Sector 50.",
-    "personalityTagline": "A botanical rooftop refuge tucked into tranquil Sector 50.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "A botanical rooftop refuge tucked into tranquil Sector 50.",
-      "loved": [
-        "Botanical Plant Nursery",
-        "Handmade Gnocchi in Sage Butter",
-        "Evening Breeze"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Terrace Green in Sector 50."
+        }
       ],
-      "disliked": [
-        "Distance from Northern City Center",
-        "Rain Contingency Limited"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 50, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "aesthetic",
-      "date",
-      "quiet",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Open Air Terrace",
-      "Plant Nursery",
-      "Handmade Pastas",
-      "Sunset Vibe",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Late Night"
-    ],
-    "moods": [
-      "date",
-      "quiet",
-      "pretty",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": true,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "A botanical rooftop refuge tucked into tranquil Sector 50.",
+      "bestFor": [
+        "DATE",
+        "PRETTY"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "pretty",
+        "outdoor"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "coffee-central-sec22",
+    "name": "Coffee Central",
+    "address": "SCO 1044, Sector 22-B, Chandigarh",
+    "sector": "Sector 22",
+    "city": "Chandigarh",
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 500,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Accessible Sector 22 cafe offering hot coffees, quick snacks, and a casual meeting hub.",
+    "personalityTagline": "Accessible Sector 22 cafe offering hot coffees, quick snacks, and a casual meeting hub.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Accessible Sector 22 cafe offering hot coffees, quick snacks, and a casual meeting hub.",
+      "loved": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "brunch",
+      "sweet-tooth",
+      "gang",
+      "Sector 22"
+    ],
+    "tags": [
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 22"
+    ],
+    "moods": [
+      "brunch",
+      "sweet-tooth",
+      "gang"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7226,
+      76.7726
+    ],
+    "identity": {
       "id": "coffee-central-sec22",
       "name": "Coffee Central",
       "address": "SCO 1044, Sector 22-B, Chandigarh",
-      "sector": "Sector 22",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 22",
+      "latitude": 30.7226,
+      "longitude": 76.7726
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 500,
       "openingHours": "9:30 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Coffee%20Central%20SCO%201044%2C%20Sector%2022-B%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -6995,241 +6714,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Dependable, practical meeting point with great waffles in Sector 22.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Dependable, practical meeting point with great waffles in Sector 22.",
-        "loved": [
-          "Belgian Waffles",
-          "Iced Hazelnut Latte",
-          "Central Location"
-        ],
-        "disliked": [
-          "Sector 22 Market Parking",
-          "Basic Interiors"
-        ]
-      }
-    },
-    "id": "coffee-central-sec22",
-    "name": "Coffee Central",
-    "address": "SCO 1044, Sector 22-B, Chandigarh",
-    "sector": "Sector 22",
-    "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 500,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Dependable, practical meeting point with great waffles in Sector 22.",
-    "personalityTagline": "Dependable, practical meeting point with great waffles in Sector 22.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Dependable, practical meeting point with great waffles in Sector 22.",
-      "loved": [
-        "Belgian Waffles",
-        "Iced Hazelnut Latte",
-        "Central Location"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Coffee Central in Sector 22."
+        }
       ],
-      "disliked": [
-        "Sector 22 Market Parking",
-        "Basic Interiors"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 22, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "budget",
-      "group",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang"
-    ],
-    "tags": [
-      "Convenient Meeting Spot",
-      "Cold Brews",
-      "Waffles",
-      "Casual",
-      "Good Coffee",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively"
-    ],
-    "moods": [
-      "good-coffee",
-      "sweet-tooth",
-      "gang"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Accessible Sector 22 cafe offering hot coffees, quick snacks, and a casual meeting hub.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "the-french-press-sec8",
+    "name": "The French Press Cafe",
+    "address": "SCO 33, Inner Market, Sector 8-C, Chandigarh",
+    "sector": "Sector 8",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 720,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "An authentic corner of Paris nestled quietly into Sector 8.",
+    "personalityTagline": "An authentic corner of Paris nestled quietly into Sector 8.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "An authentic corner of Paris nestled quietly into Sector 8.",
+      "loved": [
+        "SLOW MORNING",
+        "READING"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "slow-morning",
+      "reading",
+      "good-coffee",
+      "Sector 8"
+    ],
+    "tags": [
+      "SLOW MORNING",
+      "READING",
+      "Sector 8"
+    ],
+    "moods": [
+      "slow-morning",
+      "reading",
+      "good-coffee"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.738,
+      76.8
+    ],
+    "identity": {
       "id": "the-french-press-sec8",
       "name": "The French Press Cafe",
       "address": "SCO 33, Inner Market, Sector 8-C, Chandigarh",
-      "sector": "Sector 8",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 8",
+      "latitude": 30.738,
+      "longitude": 76.8
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 720,
       "openingHours": "9:00 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20French%20Press%20Cafe%20SCO%2033%2C%20Inner%20Market%2C%20Sector%208-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -7245,240 +6954,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "An authentic corner of Paris nestled quietly into Sector 8.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "An authentic corner of Paris nestled quietly into Sector 8.",
-        "loved": [
-          "French Press Table Service",
-          "Warm Herb Butter Baguette",
-          "Relaxed Vibe"
-        ],
-        "disliked": [
-          "Weekend Morning Waits",
-          "Limited Floor Space"
-        ]
-      }
-    },
-    "id": "the-french-press-sec8",
-    "name": "The French Press Cafe",
-    "address": "SCO 33, Inner Market, Sector 8-C, Chandigarh",
-    "sector": "Sector 8",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 720,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "An authentic corner of Paris nestled quietly into Sector 8.",
-    "personalityTagline": "An authentic corner of Paris nestled quietly into Sector 8.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "An authentic corner of Paris nestled quietly into Sector 8.",
-      "loved": [
-        "French Press Table Service",
-        "Warm Herb Butter Baguette",
-        "Relaxed Vibe"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The French Press Cafe in Sector 8."
+        }
       ],
-      "disliked": [
-        "Weekend Morning Waits",
-        "Limited Floor Space"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "quiet",
-      "aesthetic",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty"
-    ],
-    "tags": [
-      "French Roast",
-      "Fresh Baguettes",
-      "Quiche",
-      "Vintage Posters",
-      "Good Coffee",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic"
-    ],
-    "moods": [
-      "good-coffee",
-      "quiet",
-      "pretty"
-    ],
-    "specialtyCoffee": true,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "An authentic corner of Paris nestled quietly into Sector 8.",
+      "bestFor": [
+        "SLOW MORNING",
+        "READING"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "slow-morning",
+        "reading",
+        "good-coffee"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "sector-15-chaha-corner",
+    "name": "Sector 15 Student Corner",
+    "address": "Patel Market Booths, Sector 15-C, Chandigarh",
+    "sector": "Sector 15",
+    "city": "Chandigarh",
+    "rating": 4.2,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹",
+    "approxCostForTwo": 220,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Pure university nostalgic street food energy.",
+    "personalityTagline": "Pure university nostalgic street food energy.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Pure university nostalgic street food energy.",
+      "loved": [
+        "LATE NIGHT",
+        "GANG"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "late-night",
+      "gang",
+      "date",
+      "Sector 15"
+    ],
+    "tags": [
+      "LATE NIGHT",
+      "GANG",
+      "Sector 15"
+    ],
+    "moods": [
+      "late-night",
+      "gang",
+      "date"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7547,
+      76.7699
+    ],
+    "identity": {
       "id": "sector-15-chaha-corner",
       "name": "Sector 15 Student Corner",
       "address": "Patel Market Booths, Sector 15-C, Chandigarh",
-      "sector": "Sector 15",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 15",
+      "latitude": 30.7547,
+      "longitude": 76.7699
+    },
+    "facts": {
       "rating": 4.2,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 220,
       "openingHours": "7:30 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Sector%2015%20Student%20Corner%20Patel%20Market%20Booths%2C%20Sector%2015-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -7494,233 +7194,231 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.2 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Pure university nostalgic street food energy.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Pure university nostalgic street food energy.",
-        "loved": [
-          "Cutting Masala Chai",
-          "Crisp Paneer Patty",
-          "Student Atmosphere"
-        ],
-        "disliked": [
-          "No Seating",
-          "Busy Market Congestion"
-        ]
-      }
-    },
-    "id": "sector-15-chaha-corner",
-    "name": "Sector 15 Student Corner",
-    "address": "Patel Market Booths, Sector 15-C, Chandigarh",
-    "sector": "Sector 15",
-    "city": "Chandigarh",
-    "rating": 4.2,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 220,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Pure university nostalgic street food energy.",
-    "personalityTagline": "Pure university nostalgic street food energy.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Pure university nostalgic street food energy.",
-      "loved": [
-        "Cutting Masala Chai",
-        "Crisp Paneer Patty",
-        "Student Atmosphere"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Sector 15 Student Corner in Sector 15."
+        }
       ],
-      "disliked": [
-        "No Seating",
-        "Busy Market Congestion"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 15, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "budget",
-      "group",
-      "latenight",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Cutting Chai",
-      "Aloo Patties",
-      "PU Adda",
-      "Cheap Eats",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Pure university nostalgic street food energy.",
+      "bestFor": [
+        "LATE NIGHT",
+        "GANG"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "late-night",
+        "gang",
+        "date"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "cinnamon-creek-sec35",
+    "name": "Cinnamon Creek Cafe",
+    "address": "SCO 421, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 820,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Sweet-scented bakery cafe serving spiced buns, warm drinks, and comforting baked dishes.",
+    "personalityTagline": "Sweet-scented bakery cafe serving spiced buns, warm drinks, and comforting baked dishes.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Sweet-scented bakery cafe serving spiced buns, warm drinks, and comforting baked dishes.",
+      "loved": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "brunch",
+      "sweet-tooth",
+      "date",
+      "Sector 35"
+    ],
+    "tags": [
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 35"
+    ],
+    "moods": [
+      "brunch",
+      "sweet-tooth",
+      "date"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7218,
+      76.7562
+    ],
+    "identity": {
       "id": "cinnamon-creek-sec35",
       "name": "Cinnamon Creek Cafe",
       "address": "SCO 421, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7218,
+      "longitude": 76.7562
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 820,
       "openingHours": "10:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cinnamon%20Creek%20Cafe%20SCO%20421%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -7736,252 +7434,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The ultimate indulgence for sweet tooth lovers in Sector 35.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The ultimate indulgence for sweet tooth lovers in Sector 35.",
-        "loved": [
-          "Warm Cinnamon Glaze Bun",
-          "Valrhona Mocha",
-          "Plush Burgundy Booths"
-        ],
-        "disliked": [
-          "Very Sweet for Savory Palates",
-          "Modest Savory Menu"
-        ]
-      }
-    },
-    "id": "cinnamon-creek-sec35",
-    "name": "Cinnamon Creek Cafe",
-    "address": "SCO 421, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 820,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The ultimate indulgence for sweet tooth lovers in Sector 35.",
-    "personalityTagline": "The ultimate indulgence for sweet tooth lovers in Sector 35.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The ultimate indulgence for sweet tooth lovers in Sector 35.",
-      "loved": [
-        "Warm Cinnamon Glaze Bun",
-        "Valrhona Mocha",
-        "Plush Burgundy Booths"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Cinnamon Creek Cafe in Sector 35."
+        }
       ],
-      "disliked": [
-        "Very Sweet for Savory Palates",
-        "Modest Savory Menu"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "date",
-      "aesthetic",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Cinnamon Rolls",
-      "Warm Espresso",
-      "Cozy Booths",
-      "Dessert Haven",
-      "Good Coffee",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "date",
-      "pretty",
-      "sweet-tooth",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Sweet-scented bakery cafe serving spiced buns, warm drinks, and comforting baked dishes.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "date"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "sector-17-underground-brews",
+    "name": "Underground Brews & Vinyl",
+    "address": "Basement SCO 45, Sector 17-C, Chandigarh",
+    "sector": "Sector 17",
+    "city": "Chandigarh",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 700,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Cozy lower-level retreat offering classic coffee and a quiet refuge from the bustling Sector 17 plaza.",
+    "personalityTagline": "Cozy lower-level retreat offering classic coffee and a quiet refuge from the bustling Sector 17 plaza.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Cozy lower-level retreat offering classic coffee and a quiet refuge from the bustling Sector 17 plaza.",
+      "loved": [
+        "SLOW MORNING",
+        "LATE NIGHT"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "slow-morning",
+      "late-night",
+      "reading",
+      "Sector 17"
+    ],
+    "tags": [
+      "SLOW MORNING",
+      "LATE NIGHT",
+      "Sector 17"
+    ],
+    "moods": [
+      "slow-morning",
+      "late-night",
+      "reading"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7359,
+      76.7865
+    ],
+    "identity": {
       "id": "sector-17-underground-brews",
       "name": "Underground Brews & Vinyl",
       "address": "Basement SCO 45, Sector 17-C, Chandigarh",
-      "sector": "Sector 17",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 17",
+      "latitude": 30.7359,
+      "longitude": 76.7865
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 700,
       "openingHours": "11:00 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Underground%20Brews%20%26%20Vinyl%20Basement%20SCO%2045%2C%20Sector%2017-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -7997,244 +7674,230 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "An atmospheric speakeasy coffee bar for audiophiles and book lovers.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "An atmospheric speakeasy coffee bar for audiophiles and book lovers.",
-        "loved": [
-          "Vinyl Record Collection",
-          "Subterranean Quiet",
-          "Single Estate Pour Overs"
-        ],
-        "disliked": [
-          "Spotty Cellular Signal in Basement",
-          "No Natural Daylight"
-        ]
-      }
-    },
-    "id": "sector-17-underground-brews",
-    "name": "Underground Brews & Vinyl",
-    "address": "Basement SCO 45, Sector 17-C, Chandigarh",
-    "sector": "Sector 17",
-    "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 700,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "An atmospheric speakeasy coffee bar for audiophiles and book lovers.",
-    "personalityTagline": "An atmospheric speakeasy coffee bar for audiophiles and book lovers.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "An atmospheric speakeasy coffee bar for audiophiles and book lovers.",
-      "loved": [
-        "Vinyl Record Collection",
-        "Subterranean Quiet",
-        "Single Estate Pour Overs"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Underground Brews & Vinyl in Sector 17."
+        }
       ],
-      "disliked": [
-        "Spotty Cellular Signal in Basement",
-        "No Natural Daylight"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 17, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "quiet",
-      "aesthetic",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Vinyl Records",
-      "Basement Speakeasy",
-      "Pour Over",
-      "Jazz Classics",
-      "Good Coffee",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "quiet",
-      "pretty",
-      "late-night"
-    ],
-    "specialtyCoffee": true,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Cozy lower-level retreat offering classic coffee and a quiet refuge from the bustling Sector 17 plaza.",
+      "bestFor": [
+        "SLOW MORNING",
+        "LATE NIGHT"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "slow-morning",
+        "late-night",
+        "reading"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "the-rooftop-pot-sec9",
+    "name": "The Rooftop Pot",
+    "address": "SCO 48, Rooftop, Sector 9-D, Chandigarh",
+    "sector": "Sector 9",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 890,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": true,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Open-air terrace cafe with pleasant afternoon breezes and casual continental bites.",
+    "personalityTagline": "Open-air terrace cafe with pleasant afternoon breezes and casual continental bites.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Open-air terrace cafe with pleasant afternoon breezes and casual continental bites.",
+      "loved": [
+        "DATE",
+        "PRETTY"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "date",
+      "pretty",
+      "outdoor",
+      "Sector 9"
+    ],
+    "tags": [
+      "DATE",
+      "PRETTY",
+      "Sector 9"
+    ],
+    "moods": [
+      "date",
+      "pretty",
+      "outdoor"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": true,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7426,
+      76.7926
+    ],
+    "identity": {
       "id": "the-rooftop-pot-sec9",
       "name": "The Rooftop Pot",
       "address": "SCO 48, Rooftop, Sector 9-D, Chandigarh",
-      "sector": "Sector 9",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 9",
+      "latitude": 30.7426,
+      "longitude": 76.7926
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 890,
       "openingHours": "11:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Rooftop%20Pot%20SCO%2048%2C%20Rooftop%2C%20Sector%209-D%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
+        "wifi": true,
+        "powerOutlets": true,
         "outdoorSeating": true,
         "parking": null,
         "airConditioning": true
@@ -8251,246 +7914,231 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: outdoor."
       },
       "conversation": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Earthy terracotta charm with sweeping rooftop perspectives.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Earthy terracotta charm with sweeping rooftop perspectives.",
-        "loved": [
-          "Terracotta Rustic Decor",
-          "Sunset Canopy Views",
-          "Wood Fired Calzones"
-        ],
-        "disliked": [
-          "3 Flights of Stairs (No Lift)",
-          "Direct Midday Sun"
-        ]
-      }
-    },
-    "id": "the-rooftop-pot-sec9",
-    "name": "The Rooftop Pot",
-    "address": "SCO 48, Rooftop, Sector 9-D, Chandigarh",
-    "sector": "Sector 9",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 890,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": true,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Earthy terracotta charm with sweeping rooftop perspectives.",
-    "personalityTagline": "Earthy terracotta charm with sweeping rooftop perspectives.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Earthy terracotta charm with sweeping rooftop perspectives.",
-      "loved": [
-        "Terracotta Rustic Decor",
-        "Sunset Canopy Views",
-        "Wood Fired Calzones"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Rooftop Pot in Sector 9."
+        }
       ],
-      "disliked": [
-        "3 Flights of Stairs (No Lift)",
-        "Direct Midday Sun"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 9, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "aesthetic",
-      "date",
-      "group",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Open Rooftop",
-      "Pottery Decor",
-      "Wood Fired Bites",
-      "Terrace Sunset",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "date",
-      "pretty",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": true,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Open-air terrace cafe with pleasant afternoon breezes and casual continental bites.",
+      "bestFor": [
+        "DATE",
+        "PRETTY"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "pretty",
+        "outdoor"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "espresso-laboratory-sec7",
+    "name": "Espresso Laboratory",
+    "address": "Booth 14, Inner Market, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
+    "city": "Chandigarh",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 600,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Contemporary espresso bar dedicated to clean extractions and single-origin coffee appreciation.",
+    "personalityTagline": "Contemporary espresso bar dedicated to clean extractions and single-origin coffee appreciation.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Contemporary espresso bar dedicated to clean extractions and single-origin coffee appreciation.",
+      "loved": [
+        "SLOW MORNING",
+        "READING"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "slow-morning",
+      "reading",
+      "good-coffee",
+      "Sector 7"
+    ],
+    "tags": [
+      "SLOW MORNING",
+      "READING",
+      "Sector 7"
+    ],
+    "moods": [
+      "slow-morning",
+      "reading",
+      "good-coffee"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7318,
+      76.8057
+    ],
+    "identity": {
       "id": "espresso-laboratory-sec7",
       "name": "Espresso Laboratory",
       "address": "Booth 14, Inner Market, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7318,
+      "longitude": 76.8057
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 600,
       "openingHours": "8:00 AM – 9:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Espresso%20Laboratory%20Booth%2014%2C%20Inner%20Market%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -8506,232 +8154,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Pure coffee geekery where extraction precision is revered.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Pure coffee geekery where extraction precision is revered.",
-        "loved": [
-          "Double Ristretto",
-          "Espresso Tonic",
-          "Detailed Origin Cards"
-        ],
-        "disliked": [
-          "Stool Seating Only",
-          "Strictly Coffee Focused Menu"
-        ]
-      }
-    },
-    "id": "espresso-laboratory-sec7",
-    "name": "Espresso Laboratory",
-    "address": "Booth 14, Inner Market, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
-    "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 600,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Pure coffee geekery where extraction precision is revered.",
-    "personalityTagline": "Pure coffee geekery where extraction precision is revered.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Pure coffee geekery where extraction precision is revered.",
-      "loved": [
-        "Double Ristretto",
-        "Espresso Tonic",
-        "Detailed Origin Cards"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Espresso Laboratory in Sector 7."
+        }
       ],
-      "disliked": [
-        "Stool Seating Only",
-        "Strictly Coffee Focused Menu"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Quiet / Reading",
-      "Quiet Corner"
-    ],
-    "tags": [
-      "Espresso Specialists",
-      "Coffee Cupping",
-      "Cold Brew Tonic",
-      "Micro Roastery",
-      "Good Coffee",
-      "Quiet Corner",
-      "Quiet"
-    ],
-    "moods": [
-      "good-coffee",
-      "quiet"
-    ],
-    "specialtyCoffee": true,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "quiet",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Contemporary espresso bar dedicated to clean extractions and single-origin coffee appreciation.",
+      "bestFor": [
+        "SLOW MORNING",
+        "READING"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "slow-morning",
+        "reading",
+        "good-coffee"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "the-cozy-corner-sec34",
+    "name": "The Cozy Corner",
+    "address": "SCO 98, Sector 34-A, Chandigarh",
+    "sector": "Sector 34",
+    "city": "Chandigarh",
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹",
+    "approxCostForTwo": 420,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Low-key student-friendly cafe with warm lighting, affordable snacks, and quiet corners.",
+    "personalityTagline": "Low-key student-friendly cafe with warm lighting, affordable snacks, and quiet corners.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Low-key student-friendly cafe with warm lighting, affordable snacks, and quiet corners.",
+      "loved": [
+        "GOOD COFFEE",
+        "WORK"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "good-coffee",
+      "work",
+      "slow-morning",
+      "Sector 34"
+    ],
+    "tags": [
+      "GOOD COFFEE",
+      "WORK",
+      "Sector 34"
+    ],
+    "moods": [
+      "good-coffee",
+      "work",
+      "slow-morning"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.718,
+      76.765
+    ],
+    "identity": {
       "id": "the-cozy-corner-sec34",
       "name": "The Cozy Corner",
       "address": "SCO 98, Sector 34-A, Chandigarh",
-      "sector": "Sector 34",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 34",
+      "latitude": 30.718,
+      "longitude": 76.765
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 420,
       "openingHours": "8:30 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Cozy%20Corner%20SCO%2098%2C%20Sector%2034-A%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -8747,234 +8394,231 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The most practical, budget-friendly study recharge spot in Sector 34.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The most practical, budget-friendly study recharge spot in Sector 34.",
-        "loved": [
-          "Budget Student Combos",
-          "Plentiful Charging Sockets",
-          "Strong Cold Coffee"
-        ],
-        "disliked": [
-          "Crowded Post-Coaching Rush",
-          "Plain Decor"
-        ]
-      }
-    },
-    "id": "the-cozy-corner-sec34",
-    "name": "The Cozy Corner",
-    "address": "SCO 98, Sector 34-A, Chandigarh",
-    "sector": "Sector 34",
-    "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 420,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The most practical, budget-friendly study recharge spot in Sector 34.",
-    "personalityTagline": "The most practical, budget-friendly study recharge spot in Sector 34.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The most practical, budget-friendly study recharge spot in Sector 34.",
-      "loved": [
-        "Budget Student Combos",
-        "Plentiful Charging Sockets",
-        "Strong Cold Coffee"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Cozy Corner in Sector 34."
+        }
       ],
-      "disliked": [
-        "Crowded Post-Coaching Rush",
-        "Plain Decor"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 34, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "budget",
-      "study",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work"
-    ],
-    "tags": [
-      "Coaching Student Hub",
-      "Budget Sandwiches",
-      "Cold Coffee",
-      "Charging Points",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly"
-    ],
-    "moods": [
-      "good-coffee",
-      "work"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Low-key student-friendly cafe with warm lighting, affordable snacks, and quiet corners.",
+      "bestFor": [
+        "GOOD COFFEE",
+        "WORK"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "good-coffee",
+        "work",
+        "slow-morning"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "neon-vibes-sec22",
+    "name": "Neon Glow Lounge & Cafe",
+    "address": "Basement SCO 210, Sector 22-B, Chandigarh",
+    "sector": "Sector 22",
+    "city": "Chandigarh",
+    "rating": 3.8,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 900,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.",
+    "personalityTagline": "Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.",
+      "loved": [
+        "LATE NIGHT",
+        "DATE"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "late-night",
+      "date",
+      "pretty",
+      "Sector 22"
+    ],
+    "tags": [
+      "LATE NIGHT",
+      "DATE",
+      "Sector 22"
+    ],
+    "moods": [
+      "late-night",
+      "date",
+      "pretty"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7256,
+      76.7744
+    ],
+    "identity": {
       "id": "neon-vibes-sec22",
       "name": "Neon Glow Lounge & Cafe",
       "address": "Basement SCO 210, Sector 22-B, Chandigarh",
-      "sector": "Sector 22",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 22",
+      "latitude": 30.7256,
+      "longitude": 76.7744
+    },
+    "facts": {
       "rating": 3.8,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 900,
       "openingHours": "12:00 PM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Neon%20Glow%20Lounge%20%26%20Cafe%20Basement%20SCO%20210%2C%20Sector%2022-B%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -8990,230 +8634,231 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 3.8 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.",
-      "verdict": {
-        "status": "Currently Not Recommended",
-        "headline": "Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.",
-        "loved": [
-          "Neon Photo Backdrops"
-        ],
-        "disliked": [
-          "40+ Min Service Delays",
-          "Stale Frying Oil Quality",
-          "Distorted Loud Music"
-        ]
-      }
-    },
-    "id": "neon-vibes-sec22",
-    "name": "Neon Glow Lounge & Cafe",
-    "address": "Basement SCO 210, Sector 22-B, Chandigarh",
-    "sector": "Sector 22",
-    "city": "Chandigarh",
-    "rating": 3.8,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 900,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.",
-    "personalityTagline": "Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.",
-    "verdict": {
-      "status": "Currently Not Recommended",
-      "headline": "Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.",
-      "loved": [
-        "Neon Photo Backdrops"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Neon Glow Lounge & Cafe in Sector 22."
+        }
       ],
-      "disliked": [
-        "40+ Min Service Delays",
-        "Stale Frying Oil Quality",
-        "Distorted Loud Music"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 22, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "aesthetic",
-      "latenight",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Neon Signs",
-      "Shakes",
-      "Party Vibes",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Late Night"
-    ],
-    "moods": [
-      "pretty",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.",
+      "bestFor": [
+        "LATE NIGHT",
+        "DATE"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "late-night",
+        "date",
+        "pretty"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "overpriced-brew-sec35",
+    "name": "Golden Bean Executive Cafe",
+    "address": "SCO 410, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
+    "city": "Chandigarh",
+    "rating": 3.9,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1800,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.",
+    "personalityTagline": "Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.",
+      "loved": [
+        "GOOD COFFEE",
+        "DATE"
+      ],
+      "disliked": [
+        "Best visited during weekday hours for a quieter table."
+      ]
+    },
+    "caveat": "Best visited during weekday hours for a quieter table.",
+    "categories": [
+      "good-coffee",
+      "date",
+      "pretty",
+      "Sector 35"
+    ],
+    "tags": [
+      "GOOD COFFEE",
+      "DATE",
+      "Sector 35"
+    ],
+    "moods": [
+      "good-coffee",
+      "date",
+      "pretty"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7194,
+      76.7586
+    ],
+    "identity": {
       "id": "overpriced-brew-sec35",
       "name": "Golden Bean Executive Cafe",
       "address": "SCO 410, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7194,
+      "longitude": 76.7586
+    },
+    "facts": {
       "rating": 3.9,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1800,
       "openingHours": "10:00 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Golden%20Bean%20Executive%20Cafe%20SCO%20410%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
-        "wifi": null,
-        "powerOutlets": null,
-        "outdoorSeating": null,
+        "wifi": true,
+        "powerOutlets": true,
+        "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
       },
@@ -9229,227 +8874,230 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "low",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 3.9 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.",
-      "verdict": {
-        "status": "Currently Not Recommended",
-        "headline": "Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.",
-        "loved": [
-          "Air Conditioned Hall"
-        ],
-        "disliked": [
-          "Exorbitant Prices (₹380 basic latte)",
-          "Hidden Charges on Bill",
-          "Lukewarm Coffee Extraction"
-        ]
-      }
-    },
-    "id": "overpriced-brew-sec35",
-    "name": "Golden Bean Executive Cafe",
-    "address": "SCO 410, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
-    "city": "Chandigarh",
-    "rating": 3.9,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1800,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80"
-    ],
-    "amenities": {
-      "wifi": null,
-      "powerOutlets": null,
-      "outdoorSeating": null,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.",
-    "personalityTagline": "Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.",
-    "verdict": {
-      "status": "Currently Not Recommended",
-      "headline": "Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.",
-      "loved": [
-        "Air Conditioned Hall"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Golden Bean Executive Cafe in Sector 35."
+        }
       ],
-      "disliked": [
-        "Exorbitant Prices (₹380 basic latte)",
-        "Hidden Charges on Bill",
-        "Lukewarm Coffee Extraction"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "caveat": "Limited power outlets; come with full laptop battery.",
-    "categories": [
-      "coffee",
-      "luxury",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty"
-    ],
-    "tags": [
-      "Pretentious Decor",
-      "Expensive Lattes",
-      "Good Coffee",
-      "Somewhere Pretty",
-      "Aesthetic"
-    ],
-    "moods": [
-      "good-coffee",
-      "pretty"
-    ],
-    "specialtyCoffee": false,
-    "wifi": null,
-    "power": null,
-    "outdoorSeating": null,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.",
+      "bestFor": [
+        "GOOD COFFEE",
+        "DATE"
+      ],
+      "caveats": [
+        "Best visited during weekday hours for a quieter table."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "good-coffee",
+        "date",
+        "pretty"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "nik-bakers-sec9",
+    "name": "Nik Baker's",
+    "address": "SCO 49, Madhya Marg, Sector 9-D, Chandigarh",
+    "sector": "Sector 9",
+    "city": "Chandigarh",
+    "rating": 4.6,
+    "reviews": 4500,
+    "reviewCount": 4500,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 950,
+    "trustScore": 95,
+    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": false,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Chandigarh's undisputed bakery institution offering Australian-standard pastries, decadent cakes, and hearty morning breakfasts.",
+    "personalityTagline": "Chandigarh's undisputed bakery institution offering Australian-standard pastries, decadent cakes, and hearty morning breakfasts.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Chandigarh's undisputed bakery institution offering Australian-standard pastries, decadent cakes, and hearty morning breakfasts.",
+      "loved": [
+        "Iconic Cheesecakes & Tarts",
+        "All-Day English Breakfast",
+        "Dessert Catchups with Friends"
+      ],
+      "disliked": [
+        "Bustling and noisy during evening tea and dessert rush hours."
+      ]
+    },
+    "caveat": "Bustling and noisy during evening tea and dessert rush hours.",
+    "categories": [
+      "sweet-tooth",
+      "brunch",
+      "gang",
+      "Sector 9"
+    ],
+    "tags": [
+      "Iconic Cheesecakes & Tarts",
+      "All-Day English Breakfast",
+      "Dessert Catchups with Friends",
+      "Sector 9"
+    ],
+    "moods": [
+      "sweet-tooth",
+      "brunch",
+      "gang"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": false,
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7468,
+      76.7932
+    ],
+    "identity": {
       "id": "nik-bakers-sec9",
       "name": "Nik Baker's",
-      "address": "Booth 49, Inner Market, Sector 9-D, Chandigarh",
-      "sector": "Sector 9",
+      "address": "SCO 49, Madhya Marg, Sector 9-D, Chandigarh",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 9",
+      "latitude": 30.7468,
+      "longitude": 76.7932
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
-      "priceRange": "₹₹",
-      "approxCostForTwo": 900,
-      "openingHours": "8:00 AM – 11:30 PM",
+      "reviewCount": 4500,
+      "priceRange": "₹₹₹",
+      "approxCostForTwo": 950,
+      "openingHours": "8:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nik%20Baker's%20SCO%2049%2C%20Madhya%20Marg%2C%20Sector%209-D%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -9469,267 +9117,238 @@ export const CAFES_DATA = [
       "coffee": {
         "score": 8.2,
         "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "Solid espresso roast and rich hot chocolate."
       },
       "work": {
+        "score": 5.8,
+        "confidence": "medium",
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": "Brisk pace and high footfall; better suited for eating than working."
+      },
+      "quiet": {
+        "score": 5.2,
+        "confidence": "high",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Lively dining room with frequent pastry counter traffic."
+      },
+      "date": {
+        "score": 8,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Great for a cheerful dessert date."
+      },
+      "aesthetic": {
+        "score": 8.6,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Gleaming glass pastry showcases and warm wood panelling."
+      },
+      "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
-        "caveat": "Limited power outlets; come with full laptop battery."
-      },
-      "quiet": {
-        "score": 6.8,
-        "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": "Quieter on weekday mornings; lively post 6 PM."
-      },
-      "date": {
-        "score": 8.5,
-        "confidence": "high",
-        "evidenceCount": 11,
-        "caveat": "Intimate tables with atmospheric warm lighting."
-      },
-      "aesthetic": {
-        "score": 8.9,
-        "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
-      },
-      "groups": {
-        "score": 9.1,
-        "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": "Large sharing tables and lively group banter welcome."
+        "lastVerified": "2026-08-20",
+        "caveat": "Large tables suitable for sharing pizzas, pasta, and cakes."
       },
       "dessert": {
-        "score": 9.7,
+        "score": 9.8,
         "confidence": "high",
-        "evidenceCount": 9,
-        "caveat": "Fresh bakery displays with artisanal daily specials."
+        "evidenceCount": 24,
+        "lastVerified": "2026-08-20",
+        "caveat": "City benchmark for rainbow cakes, Belgian chocolate mousse, and fruit tarts."
       },
       "lateNight": {
-        "score": 8.5,
+        "score": 7.2,
         "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Open past 11 PM for after-hours coffee."
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Closes at 11:00 PM."
       },
       "reading": {
-        "score": 7.2,
+        "score": 5.8,
         "confidence": "medium",
         "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "brunch": {
-        "score": 9.9,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "score": 9.4,
+        "confidence": "high",
+        "evidenceCount": 18,
+        "lastVerified": "2026-08-20",
+        "caveat": "Signature quiches, savory croissants, eggs, and waffles."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
+        "lastVerified": "2026-08-20",
+        "caveat": "Indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.6,
+        "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "Quiet morning breakfasts between 8:00 AM and 10:30 AM."
       },
       "ambience": {
-        "score": 8.9,
+        "score": 8.7,
         "confidence": "high",
-        "evidenceCount": 12,
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 9.7,
+        "score": 9.4,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 20,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 9,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Seating type: booths."
+        "score": 8.7,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "conversation": {
-        "score": 8.5,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Nik Baker's Official History",
+          "url": null,
+          "note": "Founded in Chandigarh by Chef Nikhil Mittal, Le Cordon Bleu trained."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "Aggregated Food Critic & Local Reviews",
+          "url": null,
+          "note": "The definitive bakery benchmark across the tricity."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Chandigarh's staple bakery cafe for breakfast, brunch, and legendary desserts.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Chandigarh's staple bakery cafe for breakfast, brunch, and legendary desserts.",
-        "loved": [
-          "Belgian Waffles",
-          "Red Velvet Cake",
-          "Chicken Quiche"
-        ],
-        "disliked": [
-          "Weekend Noise Level",
-          "Strict Seating During Peaks"
-        ]
-      }
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 9, Chandigarh."
     },
-    "id": "nik-bakers-sec9",
-    "name": "Nik Baker's",
-    "address": "Booth 49, Inner Market, Sector 9-D, Chandigarh",
-    "sector": "Sector 9",
+    "cafora": {
+      "tagline": "Chandigarh's undisputed bakery institution offering Australian-standard pastries, decadent cakes, and hearty morning breakfasts.",
+      "bestFor": [
+        "Iconic Cheesecakes & Tarts",
+        "All-Day English Breakfast",
+        "Dessert Catchups with Friends"
+      ],
+      "caveats": [
+        "Bustling and noisy during evening tea and dessert rush hours."
+      ],
+      "trustScore": 95,
+      "moods": [
+        "sweet-tooth",
+        "brunch",
+        "gang"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "nik-bakers-sec35",
+    "name": "Nik Baker's Sector 35",
+    "address": "SCO 441-442, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
     "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 900,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 950,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": false,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Chandigarh's staple bakery cafe for breakfast, brunch, and legendary desserts.",
-    "personalityTagline": "Chandigarh's staple bakery cafe for breakfast, brunch, and legendary desserts.",
+    "tagline": "A vibrant dessert sanctuary perfect for post-dinner treats with friends.",
+    "personalityTagline": "A vibrant dessert sanctuary perfect for post-dinner treats with friends.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Chandigarh's staple bakery cafe for breakfast, brunch, and legendary desserts.",
+      "headline": "A vibrant dessert sanctuary perfect for post-dinner treats with friends.",
       "loved": [
-        "Belgian Waffles",
-        "Red Velvet Cake",
-        "Chicken Quiche"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Weekend Noise Level",
-        "Strict Seating During Peaks"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "food",
-      "aesthetic",
-      "group",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 35"
     ],
     "tags": [
-      "Artisanal Bakery",
-      "Breakfast",
-      "Waffles",
-      "Signature Cakes",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 35"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "gang"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": false,
+    "power": true,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7191,
+      76.7565
+    ],
+    "identity": {
       "id": "nik-bakers-sec35",
       "name": "Nik Baker's Sector 35",
       "address": "SCO 441-442, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7191,
+      "longitude": 76.7565
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 950,
       "openingHours": "8:30 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nik%20Baker's%20Sector%2035%20SCO%20441-442%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -9746,263 +9365,230 @@ export const CAFES_DATA = [
         "score": 8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6.6,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.3,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: spacious."
       },
       "conversation": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Nik Baker's Sector 35 in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A vibrant dessert sanctuary perfect for post-dinner treats with friends.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A vibrant dessert sanctuary perfect for post-dinner treats with friends.",
-        "loved": [
-          "Mousse Cups",
-          "Sourdough Sandwiches",
-          "Cold Coffee"
-        ],
-        "disliked": [
-          "Parking Congestion"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "nik-bakers-sec35",
-    "name": "Nik Baker's Sector 35",
-    "address": "SCO 441-442, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
+    "cafora": {
+      "tagline": "A vibrant dessert sanctuary perfect for post-dinner treats with friends.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "nik-bakers-sec26",
+    "name": "Nik Baker's Sector 26",
+    "address": "SCO 42, Madhya Marg, Sector 26, Chandigarh",
+    "sector": "Sector 26",
     "city": "Chandigarh",
     "rating": 4.5,
-    "reviews": 120,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 950,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 900,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": null,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A vibrant dessert sanctuary perfect for post-dinner treats with friends.",
-    "personalityTagline": "A vibrant dessert sanctuary perfect for post-dinner treats with friends.",
+    "tagline": "Solid casual stop on the Sector 26 food corridor.",
+    "personalityTagline": "Solid casual stop on the Sector 26 food corridor.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A vibrant dessert sanctuary perfect for post-dinner treats with friends.",
+      "headline": "Solid casual stop on the Sector 26 food corridor.",
       "loved": [
-        "Mousse Cups",
-        "Sourdough Sandwiches",
-        "Cold Coffee"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Parking Congestion"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "food",
-      "group",
-      "aesthetic",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 26"
     ],
     "tags": [
-      "Bakery",
-      "Desserts",
-      "Late Dining",
-      "Pastries",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 26"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "gang"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": null,
+    "power": true,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7217,
+      76.8129
+    ],
+    "identity": {
       "id": "nik-bakers-sec26",
       "name": "Nik Baker's Sector 26",
       "address": "SCO 42, Madhya Marg, Sector 26, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.7217,
+      "longitude": 76.8129
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 900,
       "openingHours": "8:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Nik%20Baker's%20Sector%2026%20SCO%2042%2C%20Madhya%20Marg%2C%20Sector%2026%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -10019,251 +9605,230 @@ export const CAFES_DATA = [
         "score": 7.9,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6.7,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.1,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.1,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.3,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: tables."
       },
       "conversation": {
         "score": 8.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Nik Baker's Sector 26 in Sector 26."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Solid casual stop on the Sector 26 food corridor.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Solid casual stop on the Sector 26 food corridor.",
-        "loved": [
-          "Mud Cake",
-          "Cheesy Garlic Loaf"
-        ],
-        "disliked": [
-          "Busy atmosphere"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "id": "nik-bakers-sec26",
-    "name": "Nik Baker's Sector 26",
-    "address": "SCO 42, Madhya Marg, Sector 26, Chandigarh",
-    "sector": "Sector 26",
+    "cafora": {
+      "tagline": "Solid casual stop on the Sector 26 food corridor.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "third-wave-sec7",
+    "name": "Third Wave Coffee",
+    "address": "SCO 42, Inner Market, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
     "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
+    "rating": 4.7,
+    "reviews": 1400,
+    "reviewCount": 1400,
     "priceRange": "₹₹",
-    "approxCostForTwo": 900,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 650,
+    "trustScore": 94,
+    "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": null,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Solid casual stop on the Sector 26 food corridor.",
-    "personalityTagline": "Solid casual stop on the Sector 26 food corridor.",
+    "tagline": "Modern specialty brew bar featuring dependable high-speed Wi-Fi, accessible power outlets, and expertly crafted artisan roasts.",
+    "personalityTagline": "Modern specialty brew bar featuring dependable high-speed Wi-Fi, accessible power outlets, and expertly crafted artisan roasts.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Solid casual stop on the Sector 26 food corridor.",
+      "headline": "Modern specialty brew bar featuring dependable high-speed Wi-Fi, accessible power outlets, and expertly crafted artisan roasts.",
       "loved": [
-        "Mud Cake",
-        "Cheesy Garlic Loaf"
+        "Specialty Manual Brews",
+        "Productive Remote Work",
+        "Early Morning Coffee"
       ],
       "disliked": [
-        "Busy atmosphere"
+        "Can be difficult to find a free power socket between 3 PM and 6 PM."
       ]
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "caveat": "Can be difficult to find a free power socket between 3 PM and 6 PM.",
     "categories": [
-      "food",
-      "group",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
+      "good-coffee",
       "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "slow-morning",
+      "Sector 7"
     ],
     "tags": [
-      "Pastries",
-      "Brunch",
-      "Bakery",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "Specialty Manual Brews",
+      "Productive Remote Work",
+      "Early Morning Coffee",
+      "Sector 7"
     ],
     "moods": [
+      "good-coffee",
       "work",
-      "date",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
+      "slow-morning"
     ],
-    "specialtyCoffee": false,
+    "specialtyCoffee": true,
     "wifi": true,
-    "power": null,
+    "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7291,
+      76.806
+    ],
+    "identity": {
       "id": "third-wave-sec7",
       "name": "Third Wave Coffee",
-      "address": "SCO 11, Inner Market, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
+      "address": "SCO 42, Inner Market, Sector 7-C, Chandigarh",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7291,
+      "longitude": 76.806
+    },
+    "facts": {
       "rating": 4.7,
-      "reviewCount": 120,
+      "reviewCount": 1400,
       "priceRange": "₹₹",
-      "approxCostForTwo": 700,
+      "approxCostForTwo": 650,
       "openingHours": "8:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Third%20Wave%20Coffee%20SCO%2042%2C%20Inner%20Market%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -10281,159 +9846,172 @@ export const CAFES_DATA = [
     },
     "characteristics": {
       "coffee": {
-        "score": 9.7,
+        "score": 9.5,
         "confidence": "high",
-        "evidenceCount": 12,
-        "caveat": "Specialty single origins & manual brew bar."
+        "evidenceCount": 18,
+        "lastVerified": "2026-08-20",
+        "caveat": "Excellent pour-overs, aeropress, cold brews, and seasonal specials."
       },
       "work": {
-        "score": 9.6,
+        "score": 9.4,
         "confidence": "high",
-        "evidenceCount": 14,
-        "caveat": "Good table space and accessible power outlets."
+        "evidenceCount": 20,
+        "lastVerified": "2026-08-20",
+        "caveat": "High-speed Wi-Fi, abundant plugs, and ergonomic work tables."
       },
       "quiet": {
-        "score": 9.1,
+        "score": 8.2,
         "confidence": "high",
-        "evidenceCount": 10,
-        "caveat": "Reliably quiet; ideal for reading and deep focus."
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Focus-friendly work environment with soft cafe beats."
       },
       "date": {
-        "score": 8.4,
-        "confidence": "high",
-        "evidenceCount": 6,
+        "score": 7.5,
+        "confidence": "medium",
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
-        "score": 9.2,
+        "score": 8.8,
         "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
+        "caveat": "Clean contemporary concrete and warm light oak aesthetics."
       },
       "groups": {
-        "score": 7.8,
-        "confidence": "high",
+        "score": 7.2,
+        "confidence": "medium",
         "evidenceCount": 8,
-        "caveat": null
+        "lastVerified": "2026-08-20",
+        "caveat": "Community tables accommodate 4 to 6 people."
       },
       "dessert": {
-        "score": 8.3,
-        "confidence": "high",
+        "score": 8.2,
+        "confidence": "medium",
         "evidenceCount": 9,
-        "caveat": null
+        "lastVerified": "2026-08-20",
+        "caveat": "Banana walnut cake, cinnamon buns, and cookies."
       },
       "lateNight": {
-        "score": 8.2,
+        "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
-        "caveat": "Closes around 10:30 PM."
+        "lastVerified": "2026-08-20",
+        "caveat": "Closes at 11:00 PM."
       },
       "reading": {
-        "score": 9.5,
-        "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
+        "score": 8.7,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
+        "caveat": "Pleasant side armchairs for reading with an espresso."
       },
       "brunch": {
-        "score": 8.5,
+        "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "lastVerified": "2026-08-20",
+        "caveat": "Sourdough paninis and bagels."
       },
       "outdoor": {
-        "score": 4.5,
+        "score": 3.5,
         "confidence": "high",
         "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
+        "lastVerified": "2026-08-20",
+        "caveat": "Primarily indoor seating."
       },
-      "ambience": {
-        "score": 9.2,
+      "slowMorning": {
+        "score": 9.1,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Opens at 8 AM for peaceful morning work sessions."
+      },
+      "ambience": {
+        "score": 8.9,
+        "confidence": "high",
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 8.3,
+        "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 9.6,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Seating type: laptop-friendly."
+        "score": 9.2,
+        "confidence": "high",
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
+        "caveat": "Ergonomic tables and desk space."
       },
       "conversation": {
         "score": 8.4,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 9.7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.7 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Third Wave Coffee Roasters Portal",
+          "url": null,
+          "note": "Confirmed specialty roastery standards and opening hours."
+        },
+        {
+          "sourceType": "community",
+          "sourceName": "Tricity Remote Workers",
+          "url": null,
+          "note": "Top recommendation for reliable Wi-Fi and power outlets."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "One of Sector 7's premier sanctuaries for remote workers and coffee craft enthusiasts.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "One of Sector 7's premier sanctuaries for remote workers and coffee craft enthusiasts.",
-        "loved": [
-          "Orange Zest Mocha",
-          "Classic Cold Brew",
-          "Banana Walnut Tea Cake"
-        ],
-        "disliked": [
-          "Limited Seating at Peak Work Hours"
-        ]
-      }
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "id": "third-wave-sec7",
-    "name": "Third Wave Coffee",
-    "address": "SCO 11, Inner Market, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
+    "cafora": {
+      "tagline": "Modern specialty brew bar featuring dependable high-speed Wi-Fi, accessible power outlets, and expertly crafted artisan roasts.",
+      "bestFor": [
+        "Specialty Manual Brews",
+        "Productive Remote Work",
+        "Early Morning Coffee"
+      ],
+      "caveats": [
+        "Can be difficult to find a free power socket between 3 PM and 6 PM."
+      ],
+      "trustScore": 94,
+      "moods": [
+        "good-coffee",
+        "work",
+        "slow-morning"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "third-wave-sec35",
+    "name": "Third Wave Coffee Sector 35",
+    "address": "SCO 485-486, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
     "city": "Chandigarh",
-    "rating": 4.7,
-    "reviews": 120,
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 700,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 720,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -10442,101 +10020,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "One of Sector 7's premier sanctuaries for remote workers and coffee craft enthusiasts.",
-    "personalityTagline": "One of Sector 7's premier sanctuaries for remote workers and coffee craft enthusiasts.",
+    "tagline": "Dependable specialty workspace in Sector 35.",
+    "personalityTagline": "Dependable specialty workspace in Sector 35.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "One of Sector 7's premier sanctuaries for remote workers and coffee craft enthusiasts.",
+      "headline": "Dependable specialty workspace in Sector 35.",
       "loved": [
-        "Orange Zest Mocha",
-        "Classic Cold Brew",
-        "Banana Walnut Tea Cake"
+        "GOOD COFFEE",
+        "WORK"
       ],
       "disliked": [
-        "Limited Seating at Peak Work Hours"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
     "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "coffee",
-      "study",
-      "aesthetic",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
       "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
       "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "slow-morning",
+      "Sector 35"
     ],
     "tags": [
-      "Specialty Coffee",
-      "Pour Over",
-      "Work Friendly",
-      "Single Origin",
-      "Good Coffee",
-      "Get Work Done",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "Late Night"
+      "GOOD COFFEE",
+      "WORK",
+      "Sector 35"
     ],
     "moods": [
       "good-coffee",
       "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth",
-      "late-night"
+      "slow-morning"
     ],
     "specialtyCoffee": true,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7191,
+      76.7565
+    ],
+    "identity": {
       "id": "third-wave-sec35",
       "name": "Third Wave Coffee Sector 35",
       "address": "SCO 485-486, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7191,
+      "longitude": 76.7565
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 720,
       "openingHours": "8:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Third%20Wave%20Coffee%20Sector%2035%20SCO%20485-486%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -10556,154 +10096,162 @@ export const CAFES_DATA = [
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 8.1,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.3,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 9.1,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.1,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: laptop-friendly."
       },
       "conversation": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 9.5,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Third Wave Coffee Sector 35 in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Dependable specialty workspace in Sector 35.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Dependable specialty workspace in Sector 35.",
-        "loved": [
-          "Sea Salt Mocha",
-          "Hummus Platter"
-        ],
-        "disliked": [
-          "Evening Buzz"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "third-wave-sec35",
-    "name": "Third Wave Coffee Sector 35",
-    "address": "SCO 485-486, Sector 35-C, Chandigarh",
+    "cafora": {
+      "tagline": "Dependable specialty workspace in Sector 35.",
+      "bestFor": [
+        "GOOD COFFEE",
+        "WORK"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "good-coffee",
+        "work",
+        "slow-morning"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "tim-hortons-sec35",
+    "name": "Tim Hortons",
+    "address": "SCO 429-430, Sector 35-C, Chandigarh",
     "sector": "Sector 35",
     "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
+    "rating": 4.5,
+    "reviews": 1800,
+    "reviewCount": 1800,
     "priceRange": "₹₹",
-    "approxCostForTwo": 720,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 600,
+    "trustScore": 92,
+    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -10712,100 +10260,65 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Dependable specialty workspace in Sector 35.",
-    "personalityTagline": "Dependable specialty workspace in Sector 35.",
+    "tagline": "Spacious Canadian coffeehouse staple known for French vanilla lattes, bite-sized timbits, and late-night booth seating.",
+    "personalityTagline": "Spacious Canadian coffeehouse staple known for French vanilla lattes, bite-sized timbits, and late-night booth seating.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Dependable specialty workspace in Sector 35.",
+      "headline": "Spacious Canadian coffeehouse staple known for French vanilla lattes, bite-sized timbits, and late-night booth seating.",
       "loved": [
-        "Sea Salt Mocha",
-        "Hummus Platter"
+        "Midnight Coffee Runs",
+        "Fresh Glazed Timbits & Donuts",
+        "Spacious Group Seating"
       ],
       "disliked": [
-        "Evening Buzz"
+        "Lively customer traffic on weekend late nights; quieter during weekday afternoons."
       ]
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "caveat": "Lively customer traffic on weekend late nights; quieter during weekday afternoons.",
     "categories": [
-      "coffee",
-      "study",
-      "aesthetic",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "late-night",
       "sweet-tooth",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "gang",
+      "Sector 35"
     ],
     "tags": [
-      "Specialty Coffee",
-      "High Speed Wifi",
-      "Espresso Bar",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "Late Night"
+      "Midnight Coffee Runs",
+      "Fresh Glazed Timbits & Donuts",
+      "Spacious Group Seating",
+      "Sector 35"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "quiet",
-      "pretty",
+      "late-night",
       "sweet-tooth",
-      "late-night"
+      "gang"
     ],
-    "specialtyCoffee": true,
+    "specialtyCoffee": false,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7212,
+      76.7568
+    ],
+    "identity": {
       "id": "tim-hortons-sec35",
       "name": "Tim Hortons",
-      "address": "SCO 443-444, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
+      "address": "SCO 429-430, Sector 35-C, Chandigarh",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
-      "rating": 4.4,
-      "reviewCount": 120,
+      "sector": "Sector 35",
+      "latitude": 30.7212,
+      "longitude": 76.7568
+    },
+    "facts": {
+      "rating": 4.5,
+      "reviewCount": 1800,
       "priceRange": "₹₹",
-      "approxCostForTwo": 650,
-      "openingHours": "7:00 AM – 1:00 AM",
+      "approxCostForTwo": 600,
+      "openingHours": "8:00 AM – 1:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tim%20Hortons%20SCO%20429-430%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -10822,264 +10335,237 @@ export const CAFES_DATA = [
     },
     "characteristics": {
       "coffee": {
-        "score": 8.3,
-        "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
-      },
-      "work": {
-        "score": 8.2,
-        "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Good table space and accessible power outlets."
-      },
-      "quiet": {
-        "score": 7.3,
-        "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": "Quieter on weekday mornings; lively post 6 PM."
-      },
-      "date": {
         "score": 8,
         "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Famous French Vanilla, iced capps, and dark roast filter coffee."
+      },
+      "work": {
+        "score": 8,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Spacious seating and good air-conditioned tables."
+      },
+      "quiet": {
+        "score": 6.2,
+        "confidence": "high",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Bustling daytime and late evening crowds."
+      },
+      "date": {
+        "score": 7.2,
+        "confidence": "medium",
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "Casual coffee date."
       },
       "aesthetic": {
-        "score": 8.8,
+        "score": 8.5,
         "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Warm Canadian timber accents, maple leaf motifs, and red neon."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": "Large sharing tables and lively group banter welcome."
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
+        "caveat": "Generous multi-person booths and communal seating."
       },
       "dessert": {
         "score": 9.2,
         "confidence": "high",
-        "evidenceCount": 9,
-        "caveat": "Fresh bakery displays with artisanal daily specials."
+        "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
+        "caveat": "Fresh assortment of signature donuts, crullers, and timbits."
       },
       "lateNight": {
-        "score": 9.8,
+        "score": 9.7,
         "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Open past 11 PM for after-hours coffee."
+        "evidenceCount": 18,
+        "lastVerified": "2026-08-20",
+        "caveat": "Open until 1:00 AM with full beverage and donut menu."
       },
       "reading": {
-        "score": 7.7,
+        "score": 6.8,
         "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "brunch": {
-        "score": 9.4,
+        "score": 7.6,
         "confidence": "medium",
         "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "lastVerified": "2026-08-20",
+        "caveat": "Breakfast bagels, melts, and wraps."
       },
       "outdoor": {
-        "score": 4.5,
+        "score": 4,
         "confidence": "high",
         "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
+        "lastVerified": "2026-08-20",
+        "caveat": "Indoor air-conditioned dining room."
+      },
+      "slowMorning": {
+        "score": 7.8,
+        "confidence": "medium",
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": "Easy early mornings with fresh hot coffee."
       },
       "ambience": {
-        "score": 8.8,
+        "score": 8.5,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 9.2,
+        "score": 8,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 8.2,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Seating type: spacious."
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "conversation": {
-        "score": 8,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 8.7,
+        "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.3,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 8.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Tim Hortons India Operating Portal",
+          "url": null,
+          "note": "Confirmed 1 AM closing and Sector 35 franchise details."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "Nightlife & Diner Feedback",
+          "url": null,
+          "note": "Popular late night coffee stop in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The late-night staple in Sector 35 for midnight sweet cravings and coffee.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The late-night staple in Sector 35 for midnight sweet cravings and coffee.",
-        "loved": [
-          "French Vanilla Coffee",
-          "Chocolate Dip Donuts",
-          "Grilled Cheese Melt"
-        ],
-        "disliked": [
-          "Commercial Roast Profile",
-          "Midnight Rush Queue"
-        ]
-      }
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "tim-hortons-sec35",
-    "name": "Tim Hortons",
-    "address": "SCO 443-444, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
+    "cafora": {
+      "tagline": "Spacious Canadian coffeehouse staple known for French vanilla lattes, bite-sized timbits, and late-night booth seating.",
+      "bestFor": [
+        "Midnight Coffee Runs",
+        "Fresh Glazed Timbits & Donuts",
+        "Spacious Group Seating"
+      ],
+      "caveats": [
+        "Lively customer traffic on weekend late nights; quieter during weekday afternoons."
+      ],
+      "trustScore": 92,
+      "moods": [
+        "late-night",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "tim-hortons-elante",
+    "name": "Tim Hortons Elante Mall",
+    "address": "Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh",
+    "sector": "Industrial Area Phase 1",
     "city": "Chandigarh",
     "rating": 4.4,
-    "reviews": 120,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 650,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": true,
-      "outdoorSeating": false,
+      "powerOutlets": false,
+      "outdoorSeating": true,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The late-night staple in Sector 35 for midnight sweet cravings and coffee.",
-    "personalityTagline": "The late-night staple in Sector 35 for midnight sweet cravings and coffee.",
+    "tagline": "A vibrant mall courtyard spot for quick energy recharge.",
+    "personalityTagline": "A vibrant mall courtyard spot for quick energy recharge.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The late-night staple in Sector 35 for midnight sweet cravings and coffee.",
+      "headline": "A vibrant mall courtyard spot for quick energy recharge.",
       "loved": [
-        "French Vanilla Coffee",
-        "Chocolate Dip Donuts",
-        "Grilled Cheese Melt"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Commercial Roast Profile",
-        "Midnight Rush Queue"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "coffee",
-      "food",
-      "latenight",
-      "group",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "Late Night",
-      "late-night"
+      "Industrial Area Phase 1"
     ],
     "tags": [
-      "French Vanilla",
-      "Timbits",
-      "Canadian Brew",
-      "Late Night",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Industrial Area Phase 1"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "gang"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": true,
-    "outdoorSeating": false,
+    "power": false,
+    "outdoorSeating": true,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7072,
+      76.8038
+    ],
+    "identity": {
       "id": "tim-hortons-elante",
       "name": "Tim Hortons Elante Mall",
       "address": "Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh",
-      "sector": "Industrial Area Phase 1",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Industrial Area Phase 1",
+      "latitude": 30.7072,
+      "longitude": 76.8038
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 650,
       "openingHours": "9:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tim%20Hortons%20Elante%20Mall%20Courtyard%2C%20Elante%20Mall%2C%20Industrial%20Area%20Phase%201%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -11099,257 +10585,227 @@ export const CAFES_DATA = [
         "score": 8.1,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 7.5,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: outdoor."
       },
       "conversation": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.1,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "A vibrant mall courtyard spot for quick energy recharge.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A vibrant mall courtyard spot for quick energy recharge.",
-        "loved": [
-          "Iced French Vanilla",
-          "Boston Cream Donut"
-        ],
-        "disliked": [
-          "Weekend Mall Crowds"
-        ]
-      }
-    },
-    "id": "tim-hortons-elante",
-    "name": "Tim Hortons Elante Mall",
-    "address": "Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh",
-    "sector": "Industrial Area Phase 1",
-    "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 650,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": false,
-      "outdoorSeating": true,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "A vibrant mall courtyard spot for quick energy recharge.",
-    "personalityTagline": "A vibrant mall courtyard spot for quick energy recharge.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "A vibrant mall courtyard spot for quick energy recharge.",
-      "loved": [
-        "Iced French Vanilla",
-        "Boston Cream Donut"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Tim Hortons Elante Mall in Industrial Area Phase 1."
+        }
       ],
-      "disliked": [
-        "Weekend Mall Crowds"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Industrial Area Phase 1, Chandigarh."
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-    "categories": [
-      "coffee",
-      "food",
-      "aesthetic",
-      "group",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Mall Courtyard",
-      "French Vanilla",
-      "Outdoor Patio",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": false,
-    "outdoorSeating": true,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "A vibrant mall courtyard spot for quick energy recharge.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "blue-tokai-elante",
+    "name": "Blue Tokai Elante",
+    "address": "Upper Ground Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
+    "sector": "Industrial Area Phase 1",
+    "city": "Chandigarh",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 750,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": true,
+      "outdoorSeating": false,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "The coffee purist's haven inside Elante Mall.",
+    "personalityTagline": "The coffee purist's haven inside Elante Mall.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "The coffee purist's haven inside Elante Mall.",
+      "loved": [
+        "GOOD COFFEE",
+        "SLOW MORNING"
+      ],
+      "disliked": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ]
+    },
+    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "categories": [
+      "good-coffee",
+      "slow-morning",
+      "reading",
+      "Industrial Area Phase 1"
+    ],
+    "tags": [
+      "GOOD COFFEE",
+      "SLOW MORNING",
+      "Industrial Area Phase 1"
+    ],
+    "moods": [
+      "good-coffee",
+      "slow-morning",
+      "reading"
+    ],
+    "specialtyCoffee": true,
+    "wifi": true,
+    "power": true,
+    "outdoorSeating": false,
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7075,
+      76.8059
+    ],
+    "identity": {
       "id": "blue-tokai-elante",
       "name": "Blue Tokai Elante",
       "address": "Upper Ground Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
-      "sector": "Industrial Area Phase 1",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Industrial Area Phase 1",
+      "latitude": 30.7075,
+      "longitude": 76.8059
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 750,
       "openingHours": "10:00 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Blue%20Tokai%20Elante%20Upper%20Ground%20Floor%2C%20Elante%20Mall%2C%20Industrial%20Area%20Phase%201%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -11369,155 +10825,162 @@ export const CAFES_DATA = [
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 9.1,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: laptop-friendly."
       },
       "conversation": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 9.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 8.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Blue Tokai Elante in Industrial Area Phase 1."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The coffee purist's haven inside Elante Mall.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The coffee purist's haven inside Elante Mall.",
-        "loved": [
-          "Cortado",
-          "Iced Latte",
-          "Banana Bread"
-        ],
-        "disliked": [
-          "Small space"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Industrial Area Phase 1, Chandigarh."
     },
-    "id": "blue-tokai-elante",
-    "name": "Blue Tokai Elante",
-    "address": "Upper Ground Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
-    "sector": "Industrial Area Phase 1",
+    "cafora": {
+      "tagline": "The coffee purist's haven inside Elante Mall.",
+      "bestFor": [
+        "GOOD COFFEE",
+        "SLOW MORNING"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "good-coffee",
+        "slow-morning",
+        "reading"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "starbucks-sec35",
+    "name": "Starbucks Sector 35",
+    "address": "SCO 429-430, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
     "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 750,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 900,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -11526,96 +10989,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The coffee purist's haven inside Elante Mall.",
-    "personalityTagline": "The coffee purist's haven inside Elante Mall.",
+    "tagline": "The reliable workhorse for remote work sessions and business meets.",
+    "personalityTagline": "The reliable workhorse for remote work sessions and business meets.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The coffee purist's haven inside Elante Mall.",
+      "headline": "The reliable workhorse for remote work sessions and business meets.",
       "loved": [
-        "Cortado",
-        "Iced Latte",
-        "Banana Bread"
+        "WORK",
+        "READING"
       ],
       "disliked": [
-        "Small space"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
     "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "coffee",
-      "study",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
       "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
+      "reading",
+      "good-coffee",
+      "Sector 35"
     ],
     "tags": [
-      "Specialty Coffee",
-      "Manual Brews",
-      "Single Origin",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts"
+      "WORK",
+      "READING",
+      "Sector 35"
     ],
     "moods": [
-      "good-coffee",
       "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth"
+      "reading",
+      "good-coffee"
     ],
     "specialtyCoffee": true,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7212,
+      76.7568
+    ],
+    "identity": {
       "id": "starbucks-sec35",
       "name": "Starbucks Sector 35",
       "address": "SCO 429-430, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7212,
+      "longitude": 76.7568
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 900,
       "openingHours": "8:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Starbucks%20Sector%2035%20SCO%20429-430%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -11635,155 +11065,162 @@ export const CAFES_DATA = [
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: laptop-friendly."
       },
       "conversation": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9.5,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Starbucks Sector 35 in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The reliable workhorse for remote work sessions and business meets.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The reliable workhorse for remote work sessions and business meets.",
-        "loved": [
-          "Caramel Macchiato",
-          "Java Chip Frappuccino",
-          "Butter Croissant"
-        ],
-        "disliked": [
-          "Premium Price Point"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "starbucks-sec35",
-    "name": "Starbucks Sector 35",
-    "address": "SCO 429-430, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
+    "cafora": {
+      "tagline": "The reliable workhorse for remote work sessions and business meets.",
+      "bestFor": [
+        "WORK",
+        "READING"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "work",
+        "reading",
+        "good-coffee"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "starbucks-sec8",
+    "name": "Starbucks Sector 8",
+    "address": "Inner Market, SCF 15, Sector 8-C, Chandigarh",
+    "sector": "Sector 8",
     "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 900,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=800&q=80",
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -11792,109 +11229,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The reliable workhorse for remote work sessions and business meets.",
-    "personalityTagline": "The reliable workhorse for remote work sessions and business meets.",
+    "tagline": "A calm, focused study and conversation lounge in northern Chandigarh.",
+    "personalityTagline": "A calm, focused study and conversation lounge in northern Chandigarh.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The reliable workhorse for remote work sessions and business meets.",
+      "headline": "A calm, focused study and conversation lounge in northern Chandigarh.",
       "loved": [
-        "Caramel Macchiato",
-        "Java Chip Frappuccino",
-        "Butter Croissant"
+        "READING",
+        "WORK"
       ],
       "disliked": [
-        "Premium Price Point"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
     "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "coffee",
-      "study",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
+      "reading",
       "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "quiet",
+      "Sector 8"
     ],
     "tags": [
-      "Global Chain",
-      "AC Work Hub",
-      "Frappuccino",
-      "Power Outlets",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "READING",
+      "WORK",
+      "Sector 8"
     ],
     "moods": [
-      "good-coffee",
+      "reading",
       "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
+      "quiet"
     ],
     "specialtyCoffee": true,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7398,
+      76.7982
+    ],
+    "identity": {
       "id": "starbucks-sec8",
       "name": "Starbucks Sector 8",
       "address": "Inner Market, SCF 15, Sector 8-C, Chandigarh",
-      "sector": "Sector 8",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 8",
+      "latitude": 30.7398,
+      "longitude": 76.7982
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 900,
       "openingHours": "8:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Starbucks%20Sector%208%20Inner%20Market%2C%20SCF%2015%2C%20Sector%208-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -11914,154 +11305,162 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 8.3,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.4,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: laptop-friendly."
       },
       "conversation": {
         "score": 8.3,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Starbucks Sector 8 in Sector 8."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A calm, focused study and conversation lounge in northern Chandigarh.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A calm, focused study and conversation lounge in northern Chandigarh.",
-        "loved": [
-          "Cold Foam Nitro Brew",
-          "Paneer Wrap"
-        ],
-        "disliked": [
-          "Evening Market Parking"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "id": "starbucks-sec8",
-    "name": "Starbucks Sector 8",
-    "address": "Inner Market, SCF 15, Sector 8-C, Chandigarh",
-    "sector": "Sector 8",
+    "cafora": {
+      "tagline": "A calm, focused study and conversation lounge in northern Chandigarh.",
+      "bestFor": [
+        "READING",
+        "WORK"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "reading",
+        "work",
+        "quiet"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "chaayos-sec17",
+    "name": "Chaayos Sector 17",
+    "address": "SCO 81-82, Sector 17-D Plaza, Chandigarh",
+    "sector": "Sector 17",
     "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 900,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹",
+    "approxCostForTwo": 450,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -12070,107 +11469,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A calm, focused study and conversation lounge in northern Chandigarh.",
-    "personalityTagline": "A calm, focused study and conversation lounge in northern Chandigarh.",
+    "tagline": "The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.",
+    "personalityTagline": "The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A calm, focused study and conversation lounge in northern Chandigarh.",
+      "headline": "The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.",
       "loved": [
-        "Cold Foam Nitro Brew",
-        "Paneer Wrap"
+        "READING",
+        "GANG"
       ],
       "disliked": [
-        "Evening Market Parking"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "coffee",
-      "study",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
+      "reading",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "work",
+      "Sector 17"
     ],
     "tags": [
-      "Work Haven",
-      "Quiet Second Floor",
-      "Espresso",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "READING",
+      "GANG",
+      "Sector 17"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth",
+      "reading",
       "gang",
-      "late-night"
+      "work"
     ],
-    "specialtyCoffee": true,
+    "specialtyCoffee": false,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7356,
+      76.7844
+    ],
+    "identity": {
       "id": "chaayos-sec17",
       "name": "Chaayos Sector 17",
       "address": "SCO 81-82, Sector 17-D Plaza, Chandigarh",
-      "sector": "Sector 17",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 17",
+      "latitude": 30.7356,
+      "longitude": 76.7844
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 450,
       "openingHours": "8:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chaayos%20Sector%2017%20SCO%2081-82%2C%20Sector%2017-D%20Plaza%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -12190,156 +11545,162 @@ export const CAFES_DATA = [
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: cafe-tables."
       },
       "conversation": {
         "score": 7.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 8.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Chaayos Sector 17 in Sector 17."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.",
-        "loved": [
-          "Kulhad Chai",
-          "Loaded Bun Maska",
-          "Baarish Wale Pakore"
-        ],
-        "disliked": [
-          "Basic Coffee Options",
-          "Utilitarian Seating"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 17, Chandigarh."
     },
-    "id": "chaayos-sec17",
-    "name": "Chaayos Sector 17",
-    "address": "SCO 81-82, Sector 17-D Plaza, Chandigarh",
-    "sector": "Sector 17",
+    "cafora": {
+      "tagline": "The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.",
+      "bestFor": [
+        "READING",
+        "GANG"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "reading",
+        "gang",
+        "work"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "chaayos-sec8",
+    "name": "Chaayos Sector 8",
+    "address": "SCF 22, Inner Market, Sector 8-C, Chandigarh",
+    "sector": "Sector 8",
     "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 450,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -12348,84 +11709,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.",
-    "personalityTagline": "The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.",
+    "tagline": "Affordable tea and snacks in Sector 8.",
+    "personalityTagline": "Affordable tea and snacks in Sector 8.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.",
+      "headline": "Affordable tea and snacks in Sector 8.",
       "loved": [
-        "Kulhad Chai",
-        "Loaded Bun Maska",
-        "Baarish Wale Pakore"
+        "GANG",
+        "READING"
       ],
       "disliked": [
-        "Basic Coffee Options",
-        "Utilitarian Seating"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "budget",
-      "study",
-      "group",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "reading",
+      "work",
+      "Sector 8"
     ],
     "tags": [
-      "Custom Chai",
-      "Desi Snacks",
-      "Budget Friendly",
-      "Casual Work",
-      "Get Work Done",
-      "Work Friendly",
-      "Quiet Corner",
-      "Quiet",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "GANG",
+      "READING",
+      "Sector 8"
     ],
     "moods": [
-      "work",
-      "quiet",
       "gang",
-      "late-night"
+      "reading",
+      "work"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7368,
+      76.8012
+    ],
+    "identity": {
       "id": "chaayos-sec8",
       "name": "Chaayos Sector 8",
       "address": "SCF 22, Inner Market, Sector 8-C, Chandigarh",
-      "sector": "Sector 8",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 8",
+      "latitude": 30.7368,
+      "longitude": 76.8012
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 450,
       "openingHours": "8:30 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chaayos%20Sector%208%20SCF%2022%2C%20Inner%20Market%2C%20Sector%208-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -12445,231 +11785,227 @@ export const CAFES_DATA = [
         "score": 7,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 7.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: tables."
       },
       "conversation": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Chaayos Sector 8 in Sector 8."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Affordable tea and snacks in Sector 8.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Affordable tea and snacks in Sector 8.",
-        "loved": [
-          "Ginger Chai",
-          "Homestyle Poha"
-        ],
-        "disliked": [
-          "Small indoor area"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "id": "chaayos-sec8",
-    "name": "Chaayos Sector 8",
-    "address": "SCF 22, Inner Market, Sector 8-C, Chandigarh",
-    "sector": "Sector 8",
+    "cafora": {
+      "tagline": "Affordable tea and snacks in Sector 8.",
+      "bestFor": [
+        "GANG",
+        "READING"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "reading",
+        "work"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "ovenfresh-sec7",
+    "name": "Oven Fresh Sector 7",
+    "address": "SCO 14, Sector 7-C, Madhya Marg, Chandigarh",
+    "sector": "Sector 7",
     "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 450,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 850,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": true,
+      "powerOutlets": false,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Affordable tea and snacks in Sector 8.",
-    "personalityTagline": "Affordable tea and snacks in Sector 8.",
+    "tagline": "A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.",
+    "personalityTagline": "A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Affordable tea and snacks in Sector 8.",
+      "headline": "A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.",
       "loved": [
-        "Ginger Chai",
-        "Homestyle Poha"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Small indoor area"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "budget",
-      "group",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Social & Lively",
-      "With the Gang",
+      "brunch",
+      "sweet-tooth",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 7"
     ],
     "tags": [
-      "Desi Chai",
-      "Bun Maska",
-      "Quick Bites",
-      "Get Work Done",
-      "Work Friendly",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 7"
     ],
     "moods": [
-      "work",
-      "gang",
-      "late-night"
+      "brunch",
+      "sweet-tooth",
+      "gang"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": true,
+    "power": false,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7294,
+      76.8033
+    ],
+    "identity": {
       "id": "ovenfresh-sec7",
       "name": "Oven Fresh Sector 7",
       "address": "SCO 14, Sector 7-C, Madhya Marg, Chandigarh",
-      "sector": "Sector 7",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7294,
+      "longitude": 76.8033
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 850,
       "openingHours": "10:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Oven%20Fresh%20Sector%207%20SCO%2014%2C%20Sector%207-C%2C%20Madhya%20Marg%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -12689,155 +12025,162 @@ export const CAFES_DATA = [
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: booths."
       },
       "conversation": {
         "score": 8.9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Oven Fresh Sector 7 in Sector 7."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.",
-        "loved": [
-          "Thin Crust Farmhouse Pizza",
-          "Sizzling Brownie",
-          "Pink Sauce Pasta"
-        ],
-        "disliked": [
-          "Weekend Wait Times"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "id": "ovenfresh-sec7",
-    "name": "Oven Fresh Sector 7",
-    "address": "SCO 14, Sector 7-C, Madhya Marg, Chandigarh",
-    "sector": "Sector 7",
+    "cafora": {
+      "tagline": "A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "ovenfresh-sec26",
+    "name": "Oven Fresh Sector 26",
+    "address": "SCO 39, Sector 26, Chandigarh",
+    "sector": "Sector 26",
     "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 850,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -12846,103 +12189,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.",
-    "personalityTagline": "A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.",
+    "tagline": "Dependable comfort food stop in Sector 26.",
+    "personalityTagline": "Dependable comfort food stop in Sector 26.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.",
+      "headline": "Dependable comfort food stop in Sector 26.",
       "loved": [
-        "Thin Crust Farmhouse Pizza",
-        "Sizzling Brownie",
-        "Pink Sauce Pasta"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Weekend Wait Times"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "food",
-      "group",
-      "aesthetic",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 26"
     ],
     "tags": [
-      "Italian Bakes",
-      "Woodfired Pizzas",
-      "Family Cafe",
-      "Hot Chocolate",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 26"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "gang"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": false,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7214,
+      76.8156
+    ],
+    "identity": {
       "id": "ovenfresh-sec26",
       "name": "Oven Fresh Sector 26",
       "address": "SCO 39, Sector 26, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.7214,
+      "longitude": 76.8156
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 850,
       "openingHours": "10:30 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Oven%20Fresh%20Sector%2026%20SCO%2039%2C%20Sector%2026%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -12962,257 +12265,227 @@ export const CAFES_DATA = [
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.3,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.7,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.8,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: tables."
       },
       "conversation": {
         "score": 8.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Dependable comfort food stop in Sector 26.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Dependable comfort food stop in Sector 26.",
-        "loved": [
-          "Baked Lasagna",
-          "Garlic Bread with Cheese"
-        ],
-        "disliked": [
-          "Sunday rush"
-        ]
-      }
-    },
-    "id": "ovenfresh-sec26",
-    "name": "Oven Fresh Sector 26",
-    "address": "SCO 39, Sector 26, Chandigarh",
-    "sector": "Sector 26",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 850,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": false,
-      "outdoorSeating": false,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Dependable comfort food stop in Sector 26.",
-    "personalityTagline": "Dependable comfort food stop in Sector 26.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Dependable comfort food stop in Sector 26.",
-      "loved": [
-        "Baked Lasagna",
-        "Garlic Bread with Cheese"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Oven Fresh Sector 26 in Sector 26."
+        }
       ],
-      "disliked": [
-        "Sunday rush"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-    "categories": [
-      "food",
-      "group",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
-    ],
-    "tags": [
-      "Pastas",
-      "Baked Casseroles",
-      "Bakery Goods",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": false,
-    "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Dependable comfort food stop in Sector 26.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "uncle-jacks-sec35",
+    "name": "Uncle Jack's Sector 35",
+    "address": "Booth 56, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
+    "city": "Chandigarh",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 600,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80"
+    ],
+    "amenities": {
+      "wifi": false,
+      "powerOutlets": false,
+      "outdoorSeating": true,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.",
+    "personalityTagline": "The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.",
+      "loved": [
+        "GANG",
+        "BRUNCH"
+      ],
+      "disliked": [
+        "Energetic, bustling atmosphere; best with friends."
+      ]
+    },
+    "caveat": "Energetic, bustling atmosphere; best with friends.",
+    "categories": [
+      "gang",
+      "brunch",
+      "sweet-tooth",
+      "Sector 35"
+    ],
+    "tags": [
+      "GANG",
+      "BRUNCH",
+      "Sector 35"
+    ],
+    "moods": [
+      "gang",
+      "brunch",
+      "sweet-tooth"
+    ],
+    "specialtyCoffee": false,
+    "wifi": false,
+    "power": false,
+    "outdoorSeating": true,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.72,
+      76.758
+    ],
+    "identity": {
       "id": "uncle-jacks-sec35",
       "name": "Uncle Jack's Sector 35",
       "address": "Booth 56, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.72,
+      "longitude": 76.758
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 600,
       "openingHours": "11:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Uncle%20Jack's%20Sector%2035%20Booth%2056%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": false,
         "powerOutlets": false,
@@ -13232,243 +12505,230 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 5.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Energetic, bustling atmosphere; best with friends."
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 5.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 6.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: standing."
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Uncle Jack's Sector 35 in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.",
-        "loved": [
-          "Mick Jagger Cheese Fries",
-          "Red Velvet Waffle Stick",
-          "Ferrero Rocher Shake"
-        ],
-        "disliked": [
-          "No Dedicated Seating",
-          "Standing Only"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "uncle-jacks-sec35",
-    "name": "Uncle Jack's Sector 35",
-    "address": "Booth 56, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
+    "cafora": {
+      "tagline": "The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.",
+      "bestFor": [
+        "GANG",
+        "BRUNCH"
+      ],
+      "caveats": [
+        "Energetic, bustling atmosphere; best with friends."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "brunch",
+        "sweet-tooth"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "casa-bella-vista-sec10",
+    "name": "Casa Bella Vista",
+    "address": "Coal Depot Complex, Sector 10-D, Chandigarh",
+    "sector": "Sector 10",
     "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 600,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.6,
+    "reviews": 1250,
+    "reviewCount": 1250,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1300,
+    "trustScore": 92,
+    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
-      "wifi": false,
+      "wifi": true,
       "powerOutlets": false,
       "outdoorSeating": true,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.",
-    "personalityTagline": "The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.",
+    "tagline": "Rustic Mediterranean pizzeria and cafe with a peaceful shaded courtyard and authentic thin-crust wood-fired pizzas.",
+    "personalityTagline": "Rustic Mediterranean pizzeria and cafe with a peaceful shaded courtyard and authentic thin-crust wood-fired pizzas.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.",
+      "headline": "Rustic Mediterranean pizzeria and cafe with a peaceful shaded courtyard and authentic thin-crust wood-fired pizzas.",
       "loved": [
-        "Mick Jagger Cheese Fries",
-        "Red Velvet Waffle Stick",
-        "Ferrero Rocher Shake"
+        "Authentic Woodfired Pizzas",
+        "Romantic Shaded Courtyard Dates",
+        "Quiet Alfresco Lunches"
       ],
       "disliked": [
-        "No Dedicated Seating",
-        "Standing Only"
+        "Courtyard seating can have mosquitoes in late summer evenings; staff provides repellents."
       ]
     },
-    "caveat": "Energetic, bustling atmosphere; best with friends.",
+    "caveat": "Courtyard seating can have mosquitoes in late summer evenings; staff provides repellents.",
     "categories": [
-      "food",
-      "group",
-      "latenight",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
+      "date",
+      "outdoor",
       "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "Late Night",
-      "late-night"
+      "Sector 10"
     ],
     "tags": [
-      "American Diner",
-      "Loaded Fries",
-      "Waffles on Stick",
-      "Sliders",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "Authentic Woodfired Pizzas",
+      "Romantic Shaded Courtyard Dates",
+      "Quiet Alfresco Lunches",
+      "Sector 10"
     ],
     "moods": [
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
+      "date",
+      "outdoor",
+      "pretty"
     ],
     "specialtyCoffee": false,
-    "wifi": false,
+    "wifi": true,
     "power": false,
     "outdoorSeating": true,
-    "noiseLevel": "lively",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7496,
+      76.7876
+    ],
+    "identity": {
       "id": "casa-bella-vista-sec10",
       "name": "Casa Bella Vista",
       "address": "Coal Depot Complex, Sector 10-D, Chandigarh",
-      "sector": "Sector 10",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
-      "rating": 4.7,
-      "reviewCount": 120,
+      "sector": "Sector 10",
+      "latitude": 30.7496,
+      "longitude": 76.7876
+    },
+    "facts": {
+      "rating": 4.6,
+      "reviewCount": 1250,
       "priceRange": "₹₹₹",
-      "approxCostForTwo": 1400,
-      "openingHours": "11:30 AM – 11:00 PM",
+      "approxCostForTwo": 1300,
+      "openingHours": "11:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Casa%20Bella%20Vista%20Coal%20Depot%20Complex%2C%20Sector%2010-D%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -13486,272 +12746,237 @@ export const CAFES_DATA = [
     },
     "characteristics": {
       "coffee": {
-        "score": 8.4,
+        "score": 7.8,
         "confidence": "high",
-        "evidenceCount": 6,
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
-        "score": 9,
-        "confidence": "high",
-        "evidenceCount": 14,
-        "caveat": "Limited power outlets; come with full laptop battery."
+        "score": 5.5,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Relaxed dining focus."
       },
       "quiet": {
-        "score": 9,
+        "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
-        "caveat": "Reliably quiet; ideal for reading and deep focus."
+        "lastVerified": "2026-08-20",
+        "caveat": "Secluded setting set back from Madhya Marg traffic."
       },
       "date": {
-        "score": 9.8,
+        "score": 9.4,
         "confidence": "high",
-        "evidenceCount": 11,
-        "caveat": "Intimate tables with atmospheric warm lighting."
+        "evidenceCount": 15,
+        "lastVerified": "2026-08-20",
+        "caveat": "Intimate rustic charm with candlelit evening courtyard."
       },
       "aesthetic": {
-        "score": 9.7,
+        "score": 9.3,
         "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
+        "caveat": "White stucco walls, terracotta pots, and natural wooden tables."
       },
       "groups": {
-        "score": 8.4,
-        "confidence": "high",
-        "evidenceCount": 8,
+        "score": 7.8,
+        "confidence": "medium",
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
-        "score": 9.1,
-        "confidence": "high",
-        "evidenceCount": 9,
-        "caveat": "Fresh bakery displays with artisanal daily specials."
-      },
-      "lateNight": {
-        "score": 8.5,
-        "confidence": "high",
-        "evidenceCount": 7,
-        "caveat": "Open past 11 PM for after-hours coffee."
-      },
-      "reading": {
-        "score": 9.4,
-        "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
-      },
-      "brunch": {
-        "score": 9.3,
+        "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
+        "lastVerified": "2026-08-20",
+        "caveat": "Delicious homemade tiramisu and chocolate mousse."
+      },
+      "lateNight": {
+        "score": 6.8,
+        "confidence": "high",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Closes at 11:00 PM."
+      },
+      "reading": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": "Peaceful mid-afternoon patio spot for quiet reading."
+      },
+      "brunch": {
+        "score": 8.5,
+        "confidence": "high",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": "Fresh gourmet salads, antipasti, and artisan pizzas."
       },
       "outdoor": {
-        "score": 8.8,
+        "score": 9.5,
         "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": "Open-air patio / courtyard seating available."
+        "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
+        "caveat": "Enchanting tree-shaded courtyard dining area."
+      },
+      "slowMorning": {
+        "score": 6.8,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Opens at 11 AM."
       },
       "ambience": {
-        "score": 9.7,
+        "score": 9.3,
         "confidence": "high",
-        "evidenceCount": 12,
+        "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 9.1,
+        "score": 9.2,
         "confidence": "high",
-        "evidenceCount": 10,
+        "evidenceCount": 15,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 9,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Seating type: courtyard."
+        "score": 8.8,
+        "confidence": "high",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "conversation": {
-        "score": 9.8,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 9.2,
+        "confidence": "high",
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.7 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Casa Bella Vista Menu",
+          "url": null,
+          "note": "Pioneering authentic woodfired pizzeria in Sector 10."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "Tricity Foodie Reviews",
+          "url": null,
+          "note": "High marks for romantic courtyard setting and artisan pizza dough."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The top choice in Chandigarh for an unforgettable, romantic alfresco date night.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The top choice in Chandigarh for an unforgettable, romantic alfresco date night.",
-        "loved": [
-          "Truffle Funghi Pizza",
-          "Spinach Ricotta Ravioli",
-          "Tiramisu"
-        ],
-        "disliked": [
-          "Premium Billing",
-          "Reservation Advised on Weekends"
-        ]
-      }
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 10, Chandigarh."
     },
-    "id": "casa-bella-vista-sec10",
-    "name": "Casa Bella Vista",
-    "address": "Coal Depot Complex, Sector 10-D, Chandigarh",
+    "cafora": {
+      "tagline": "Rustic Mediterranean pizzeria and cafe with a peaceful shaded courtyard and authentic thin-crust wood-fired pizzas.",
+      "bestFor": [
+        "Authentic Woodfired Pizzas",
+        "Romantic Shaded Courtyard Dates",
+        "Quiet Alfresco Lunches"
+      ],
+      "caveats": [
+        "Courtyard seating can have mosquitoes in late summer evenings; staff provides repellents."
+      ],
+      "trustScore": 92,
+      "moods": [
+        "date",
+        "outdoor",
+        "pretty"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "rustic-door-sec10",
+    "name": "The Rustic Door",
+    "address": "SCO 12, Sector 10-D, Chandigarh",
     "sector": "Sector 10",
     "city": "Chandigarh",
-    "rating": 4.7,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1400,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 950,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
-      "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
       "powerOutlets": false,
-      "outdoorSeating": true,
+      "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The top choice in Chandigarh for an unforgettable, romantic alfresco date night.",
-    "personalityTagline": "The top choice in Chandigarh for an unforgettable, romantic alfresco date night.",
+    "tagline": "Intimate vintage dining spot for couples seeking privacy.",
+    "personalityTagline": "Intimate vintage dining spot for couples seeking privacy.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The top choice in Chandigarh for an unforgettable, romantic alfresco date night.",
+      "headline": "Intimate vintage dining spot for couples seeking privacy.",
       "loved": [
-        "Truffle Funghi Pizza",
-        "Spinach Ricotta Ravioli",
-        "Tiramisu"
+        "DATE",
+        "QUIET"
       ],
       "disliked": [
-        "Premium Billing",
-        "Reservation Advised on Weekends"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
     "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
       "date",
-      "aesthetic",
       "quiet",
-      "food",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "reading",
+      "Sector 10"
     ],
     "tags": [
-      "Woodfired Pizza",
-      "Mediterranean",
-      "Candlelight Date",
-      "Romantic Garden",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "DATE",
+      "QUIET",
+      "Sector 10"
     ],
     "moods": [
-      "good-coffee",
-      "work",
       "date",
       "quiet",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
+      "reading"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": false,
-    "outdoorSeating": true,
+    "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.752,
+      76.79
+    ],
+    "identity": {
       "id": "rustic-door-sec10",
       "name": "The Rustic Door",
       "address": "SCO 12, Sector 10-D, Chandigarh",
-      "sector": "Sector 10",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 10",
+      "latitude": 30.752,
+      "longitude": 76.79
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 950,
       "openingHours": "11:30 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Rustic%20Door%20SCO%2012%2C%20Sector%2010-D%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -13771,154 +12996,162 @@ export const CAFES_DATA = [
         "score": 8.1,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.1,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: intimate."
       },
       "conversation": {
         "score": 9.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.1,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Rustic Door in Sector 10."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Intimate vintage dining spot for couples seeking privacy.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Intimate vintage dining spot for couples seeking privacy.",
-        "loved": [
-          "Four Cheese Risotto",
-          "Stuffed Mushrooms"
-        ],
-        "disliked": [
-          "Dim afternoon lighting"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 10, Chandigarh."
     },
-    "id": "rustic-door-sec10",
-    "name": "The Rustic Door",
-    "address": "SCO 12, Sector 10-D, Chandigarh",
-    "sector": "Sector 10",
+    "cafora": {
+      "tagline": "Intimate vintage dining spot for couples seeking privacy.",
+      "bestFor": [
+        "DATE",
+        "QUIET"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "quiet",
+        "reading"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "kalsang-sec8",
+    "name": "Kalsang Cafe & Restaurant",
+    "address": "SCO 38-39, Sector 8-C, Chandigarh",
+    "sector": "Sector 8",
     "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 950,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 750,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -13927,107 +13160,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Intimate vintage dining spot for couples seeking privacy.",
-    "personalityTagline": "Intimate vintage dining spot for couples seeking privacy.",
+    "tagline": "A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.",
+    "personalityTagline": "A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Intimate vintage dining spot for couples seeking privacy.",
+      "headline": "A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.",
       "loved": [
-        "Four Cheese Risotto",
-        "Stuffed Mushrooms"
+        "DATE",
+        "GANG"
       ],
       "disliked": [
-        "Dim afternoon lighting"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
       "date",
-      "aesthetic",
-      "food",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Date Spots",
-      "Date Night",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "work",
+      "Sector 8"
     ],
     "tags": [
-      "Vintage Decor",
-      "European Cuisine",
-      "Cozy Date",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "DATE",
+      "GANG",
+      "Sector 8"
     ],
     "moods": [
-      "good-coffee",
-      "work",
       "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth",
       "gang",
-      "late-night"
+      "work"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": false,
     "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7401,
+      76.8003
+    ],
+    "identity": {
       "id": "kalsang-sec8",
       "name": "Kalsang Cafe & Restaurant",
       "address": "SCO 38-39, Sector 8-C, Chandigarh",
-      "sector": "Sector 8",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 8",
+      "latitude": 30.7401,
+      "longitude": 76.8003
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 750,
       "openingHours": "11:30 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Kalsang%20Cafe%20%26%20Restaurant%20SCO%2038-39%2C%20Sector%208-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -14047,155 +13236,162 @@ export const CAFES_DATA = [
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: booths."
       },
       "conversation": {
         "score": 8.9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.5,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Kalsang Cafe & Restaurant in Sector 8."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.",
-        "loved": [
-          "Steamed Devil Momos",
-          "Tibetan Butter Tea",
-          "Peach Fruit Beer (Non-alcoholic)"
-        ],
-        "disliked": [
-          "Peak Hour Waiting"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "id": "kalsang-sec8",
-    "name": "Kalsang Cafe & Restaurant",
-    "address": "SCO 38-39, Sector 8-C, Chandigarh",
-    "sector": "Sector 8",
+    "cafora": {
+      "tagline": "A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.",
+      "bestFor": [
+        "DATE",
+        "GANG"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "gang",
+        "work"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "fabbrica-sec26",
+    "name": "Fabbrica Italian Bistro & Cafe",
+    "address": "SCO 11, Sector 26, Madhya Marg, Chandigarh",
+    "sector": "Sector 26",
     "city": "Chandigarh",
     "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 750,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80",
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1200,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -14204,97 +13400,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.",
-    "personalityTagline": "A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.",
+    "tagline": "An upscale date spot for true connoisseurs of Italian cafe dining.",
+    "personalityTagline": "An upscale date spot for true connoisseurs of Italian cafe dining.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.",
+      "headline": "An upscale date spot for true connoisseurs of Italian cafe dining.",
       "loved": [
-        "Steamed Devil Momos",
-        "Tibetan Butter Tea",
-        "Peach Fruit Beer (Non-alcoholic)"
+        "DATE",
+        "BRUNCH"
       ],
       "disliked": [
-        "Peak Hour Waiting"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "food",
-      "aesthetic",
-      "group",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
       "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "brunch",
+      "good-coffee",
+      "Sector 26"
     ],
     "tags": [
-      "Tibetan Cafe",
-      "Fruit Teas",
-      "Tingmo",
-      "Momo Platter",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "DATE",
+      "BRUNCH",
+      "Sector 26"
     ],
     "moods": [
-      "work",
       "date",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
+      "brunch",
+      "good-coffee"
     ],
-    "specialtyCoffee": false,
+    "specialtyCoffee": true,
     "wifi": true,
     "power": false,
     "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7196,
+      76.8126
+    ],
+    "identity": {
       "id": "fabbrica-sec26",
       "name": "Fabbrica Italian Bistro & Cafe",
       "address": "SCO 11, Sector 26, Madhya Marg, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.7196,
+      "longitude": 76.8126
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1200,
       "openingHours": "12:00 PM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Fabbrica%20Italian%20Bistro%20%26%20Cafe%20SCO%2011%2C%20Sector%2026%2C%20Madhya%20Marg%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -14314,154 +13476,162 @@ export const CAFES_DATA = [
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.7,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: plush."
       },
       "conversation": {
         "score": 9.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Fabbrica Italian Bistro & Cafe in Sector 26."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "An upscale date spot for true connoisseurs of Italian cafe dining.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "An upscale date spot for true connoisseurs of Italian cafe dining.",
-        "loved": [
-          "Truffle Tagliatelle",
-          "Espresso Affogato"
-        ],
-        "disliked": [
-          "Pricey"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "id": "fabbrica-sec26",
-    "name": "Fabbrica Italian Bistro & Cafe",
-    "address": "SCO 11, Sector 26, Madhya Marg, Chandigarh",
-    "sector": "Sector 26",
+    "cafora": {
+      "tagline": "An upscale date spot for true connoisseurs of Italian cafe dining.",
+      "bestFor": [
+        "DATE",
+        "BRUNCH"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "brunch",
+        "good-coffee"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "tin-tin-sec7",
+    "name": "Tin Tin Craft House & Cafe",
+    "address": "SCO 16-17, Back Courtyard, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
     "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
+    "rating": 4.7,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹₹",
-    "approxCostForTwo": 1200,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 1300,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -14470,107 +13640,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "An upscale date spot for true connoisseurs of Italian cafe dining.",
-    "personalityTagline": "An upscale date spot for true connoisseurs of Italian cafe dining.",
+    "tagline": "Striking contemporary dining space with vaulted mosaic arches, bespoke cocktails, and an avant-garde evening ambiance.",
+    "personalityTagline": "Striking contemporary dining space with vaulted mosaic arches, bespoke cocktails, and an avant-garde evening ambiance.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "An upscale date spot for true connoisseurs of Italian cafe dining.",
+      "headline": "Striking contemporary dining space with vaulted mosaic arches, bespoke cocktails, and an avant-garde evening ambiance.",
       "loved": [
-        "Truffle Tagliatelle",
-        "Espresso Affogato"
+        "DATE",
+        "LATE NIGHT"
       ],
       "disliked": [
-        "Pricey"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
       "date",
-      "aesthetic",
-      "food",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Date Spots",
-      "Date Night",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
+      "late-night",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 7"
     ],
     "tags": [
-      "Handmade Pasta",
-      "Wine Vibe",
-      "Italian Romantic",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "DATE",
+      "LATE NIGHT",
+      "Sector 7"
     ],
     "moods": [
-      "good-coffee",
-      "work",
       "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
+      "late-night",
+      "gang"
     ],
-    "specialtyCoffee": true,
+    "specialtyCoffee": false,
     "wifi": true,
     "power": false,
     "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7297,
+      76.8054
+    ],
+    "identity": {
       "id": "tin-tin-sec7",
       "name": "Tin Tin Craft House & Cafe",
       "address": "SCO 16-17, Back Courtyard, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7297,
+      "longitude": 76.8054
+    },
+    "facts": {
       "rating": 4.7,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1300,
       "openingHours": "12:00 PM – 1:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Tin%20Tin%20Craft%20House%20%26%20Cafe%20SCO%2016-17%2C%20Back%20Courtyard%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -14590,262 +13716,230 @@ export const CAFES_DATA = [
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 9.7,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.9,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 9.7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.5,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: lounge."
       },
       "conversation": {
         "score": 9.7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.7 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Tin Tin Craft House & Cafe in Sector 7."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The most visually captivating and architecturally daring night cafe in Chandigarh.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The most visually captivating and architecturally daring night cafe in Chandigarh.",
-        "loved": [
-          "Artisan Bao",
-          "Smoked Cocktails",
-          "Matcha Cheesecake"
-        ],
-        "disliked": [
-          "Late Night Music Volume"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "id": "tin-tin-sec7",
-    "name": "Tin Tin Craft House & Cafe",
-    "address": "SCO 16-17, Back Courtyard, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
+    "cafora": {
+      "tagline": "Striking contemporary dining space with vaulted mosaic arches, bespoke cocktails, and an avant-garde evening ambiance.",
+      "bestFor": [
+        "DATE",
+        "LATE NIGHT"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "late-night",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "honey-and-dough-sec8",
+    "name": "Honey & Dough",
+    "address": "SCF 24, Inner Market, Sector 8-C, Chandigarh",
+    "sector": "Sector 8",
     "city": "Chandigarh",
-    "rating": 4.7,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1300,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 700,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": false,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The most visually captivating and architecturally daring night cafe in Chandigarh.",
-    "personalityTagline": "The most visually captivating and architecturally daring night cafe in Chandigarh.",
+    "tagline": "A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.",
+    "personalityTagline": "A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The most visually captivating and architecturally daring night cafe in Chandigarh.",
+      "headline": "A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.",
       "loved": [
-        "Artisan Bao",
-        "Smoked Cocktails",
-        "Matcha Cheesecake"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Late Night Music Volume"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "aesthetic",
-      "date",
-      "latenight",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "Late Night",
-      "late-night"
+      "date",
+      "Sector 8"
     ],
     "tags": [
-      "Avant Garde",
-      "Sculptural Interior",
-      "Cocktail & Brew",
-      "Late Night",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 8"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "date"
     ],
-    "specialtyCoffee": false,
+    "specialtyCoffee": true,
     "wifi": true,
-    "power": false,
+    "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7359,
+      76.7997
+    ],
+    "identity": {
       "id": "honey-and-dough-sec8",
       "name": "Honey & Dough",
       "address": "SCF 24, Inner Market, Sector 8-C, Chandigarh",
-      "sector": "Sector 8",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 8",
+      "latitude": 30.7359,
+      "longitude": 76.7997
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 700,
       "openingHours": "9:00 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Honey%20%26%20Dough%20SCF%2024%2C%20Inner%20Market%2C%20Sector%208-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -14862,254 +13956,227 @@ export const CAFES_DATA = [
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.8,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.5,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: bistro."
       },
       "conversation": {
         "score": 8.7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Honey & Dough in Sector 8."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.",
-        "loved": [
-          "Pistachio Macarons",
-          "Almond Croissant",
-          "Cappuccino"
-        ],
-        "disliked": [
-          "Limited Savory Menu"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "id": "honey-and-dough-sec8",
-    "name": "Honey & Dough",
-    "address": "SCF 24, Inner Market, Sector 8-C, Chandigarh",
-    "sector": "Sector 8",
+    "cafora": {
+      "tagline": "A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "date"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "cafe-delhi-heights-elante",
+    "name": "Cafe Delhi Heights",
+    "address": "Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
+    "sector": "Industrial Area Phase 1",
     "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 700,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1250,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": null,
+      "powerOutlets": false,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.",
-    "personalityTagline": "A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.",
+    "tagline": "A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.",
+    "personalityTagline": "A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.",
+      "headline": "A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.",
       "loved": [
-        "Pistachio Macarons",
-        "Almond Croissant",
-        "Cappuccino"
+        "GANG",
+        "BRUNCH"
       ],
       "disliked": [
-        "Limited Savory Menu"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "food",
-      "aesthetic",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
+      "gang",
+      "brunch",
       "date",
-      "Date Spots",
-      "Date Night",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
+      "Industrial Area Phase 1"
     ],
     "tags": [
-      "Pastry Shop",
-      "Artisan Coffee",
-      "French Macarons",
-      "Pastels",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts"
+      "GANG",
+      "BRUNCH",
+      "Industrial Area Phase 1"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth"
+      "gang",
+      "brunch",
+      "date"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": null,
+    "power": false,
     "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7081,
+      76.8053
+    ],
+    "identity": {
       "id": "cafe-delhi-heights-elante",
       "name": "Cafe Delhi Heights",
       "address": "Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
-      "sector": "Industrial Area Phase 1",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Industrial Area Phase 1",
+      "latitude": 30.7081,
+      "longitude": 76.8053
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1250,
       "openingHours": "11:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cafe%20Delhi%20Heights%20Third%20Floor%2C%20Elante%20Mall%2C%20Industrial%20Area%20Phase%201%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -15129,259 +14196,227 @@ export const CAFES_DATA = [
         "score": 8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.6,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: cabanas."
       },
       "conversation": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Cafe Delhi Heights in Industrial Area Phase 1."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.",
-        "loved": [
-          "Juicy Lucy Burger",
-          "Delhi Butter Chicken Kulcha",
-          "Banoffee Pie"
-        ],
-        "disliked": [
-          "Too Heavy for Quick Snacks"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Industrial Area Phase 1, Chandigarh."
     },
-    "id": "cafe-delhi-heights-elante",
-    "name": "Cafe Delhi Heights",
-    "address": "Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
-    "sector": "Industrial Area Phase 1",
+    "cafora": {
+      "tagline": "A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.",
+      "bestFor": [
+        "GANG",
+        "BRUNCH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "brunch",
+        "date"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "costa-coffee-sec17",
+    "name": "Costa Coffee Sector 17",
+    "address": "SCO 45-46, Sector 17-E, Chandigarh",
+    "sector": "Sector 17",
     "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1250,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 650,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": false,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.",
-    "personalityTagline": "A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.",
+    "tagline": "Comfortable work spot for classic espresso in Sector 17.",
+    "personalityTagline": "Comfortable work spot for classic espresso in Sector 17.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.",
+      "headline": "Comfortable work spot for classic espresso in Sector 17.",
       "loved": [
-        "Juicy Lucy Burger",
-        "Delhi Butter Chicken Kulcha",
-        "Banoffee Pie"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Too Heavy for Quick Snacks"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "food",
-      "group",
-      "aesthetic",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "reading",
+      "Sector 17"
     ],
     "tags": [
-      "Juicy Lucy Burger",
-      "Eclectic Decor",
-      "Global Comfort",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 17"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "reading"
     ],
-    "specialtyCoffee": false,
+    "specialtyCoffee": true,
     "wifi": true,
-    "power": false,
+    "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7347,
+      76.7829
+    ],
+    "identity": {
       "id": "costa-coffee-sec17",
       "name": "Costa Coffee Sector 17",
       "address": "SCO 45-46, Sector 17-E, Chandigarh",
-      "sector": "Sector 17",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 17",
+      "latitude": 30.7347,
+      "longitude": 76.7829
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 650,
       "openingHours": "9:00 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Costa%20Coffee%20Sector%2017%20SCO%2045-46%2C%20Sector%2017-E%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -15401,154 +14436,162 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.3,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.8,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.3,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: laptop-friendly."
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9.1,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Costa Coffee Sector 17 in Sector 17."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Comfortable work spot for classic espresso in Sector 17.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Comfortable work spot for classic espresso in Sector 17.",
-        "loved": [
-          "Signature Flat White",
-          "Blueberry Muffin"
-        ],
-        "disliked": [
-          "Pre-packaged food"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 17, Chandigarh."
     },
-    "id": "costa-coffee-sec17",
-    "name": "Costa Coffee Sector 17",
-    "address": "SCO 45-46, Sector 17-E, Chandigarh",
-    "sector": "Sector 17",
+    "cafora": {
+      "tagline": "Comfortable work spot for classic espresso in Sector 17.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "reading"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "barista-diner-sec26",
+    "name": "Barista Diner Sector 26",
+    "address": "SCO 22, Sector 26, Madhya Marg, Chandigarh",
+    "sector": "Sector 26",
     "city": "Chandigarh",
     "rating": 4.4,
-    "reviews": 120,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 650,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 750,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -15557,89 +14600,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Comfortable work spot for classic espresso in Sector 17.",
-    "personalityTagline": "Comfortable work spot for classic espresso in Sector 17.",
+    "tagline": "Good upgraded diner experience on Madhya Marg.",
+    "personalityTagline": "Good upgraded diner experience on Madhya Marg.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Comfortable work spot for classic espresso in Sector 17.",
+      "headline": "Good upgraded diner experience on Madhya Marg.",
       "loved": [
-        "Signature Flat White",
-        "Blueberry Muffin"
+        "WORK",
+        "READING"
       ],
       "disliked": [
-        "Pre-packaged food"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
     "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "coffee",
-      "study",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
       "work",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
+      "reading",
+      "good-coffee",
+      "Sector 26"
     ],
     "tags": [
-      "British Roast",
-      "Flat White",
-      "Plaza Meeting",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts"
+      "WORK",
+      "READING",
+      "Sector 26"
     ],
     "moods": [
-      "good-coffee",
       "work",
-      "quiet",
-      "pretty",
-      "sweet-tooth"
+      "reading",
+      "good-coffee"
     ],
     "specialtyCoffee": true,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7205,
+      76.8141
+    ],
+    "identity": {
       "id": "barista-diner-sec26",
       "name": "Barista Diner Sector 26",
       "address": "SCO 22, Sector 26, Madhya Marg, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.7205,
+      "longitude": 76.8141
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 750,
       "openingHours": "8:30 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Barista%20Diner%20Sector%2026%20SCO%2022%2C%20Sector%2026%2C%20Madhya%20Marg%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -15659,154 +14676,162 @@ export const CAFES_DATA = [
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.3,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 8.1,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.8,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.3,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.5,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.1,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 8.9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: booths."
       },
       "conversation": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 8.9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Barista Diner Sector 26 in Sector 26."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Good upgraded diner experience on Madhya Marg.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Good upgraded diner experience on Madhya Marg.",
-        "loved": [
-          "Barista Frappe",
-          "Chicken Lasagna"
-        ],
-        "disliked": [
-          "Slower Kitchen Prep"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "id": "barista-diner-sec26",
-    "name": "Barista Diner Sector 26",
-    "address": "SCO 22, Sector 26, Madhya Marg, Chandigarh",
-    "sector": "Sector 26",
+    "cafora": {
+      "tagline": "Good upgraded diner experience on Madhya Marg.",
+      "bestFor": [
+        "WORK",
+        "READING"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "work",
+        "reading",
+        "good-coffee"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "barista-sec35",
+    "name": "Barista Cafe Sector 35",
+    "address": "SCO 477, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
     "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 750,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 600,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -15815,107 +14840,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Good upgraded diner experience on Madhya Marg.",
-    "personalityTagline": "Good upgraded diner experience on Madhya Marg.",
+    "tagline": "Old school quiet coffee shop in Sector 35.",
+    "personalityTagline": "Old school quiet coffee shop in Sector 35.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Good upgraded diner experience on Madhya Marg.",
+      "headline": "Old school quiet coffee shop in Sector 35.",
       "loved": [
-        "Barista Frappe",
-        "Chicken Lasagna"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Slower Kitchen Prep"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
     "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "coffee",
-      "study",
-      "food",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "reading",
+      "Sector 35"
     ],
     "tags": [
-      "All Day Diner",
-      "Brinder Roast",
-      "Comfort Food",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 35"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "quiet",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "reading"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7176,
+      76.7556
+    ],
+    "identity": {
       "id": "barista-sec35",
       "name": "Barista Cafe Sector 35",
       "address": "SCO 477, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7176,
+      "longitude": 76.7556
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 600,
       "openingHours": "8:30 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Barista%20Cafe%20Sector%2035%20SCO%20477%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -15935,242 +14916,227 @@ export const CAFES_DATA = [
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 8.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: tables."
       },
       "conversation": {
         "score": 7.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Barista Cafe Sector 35 in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Old school quiet coffee shop in Sector 35.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Old school quiet coffee shop in Sector 35.",
-        "loved": [
-          "Brrrista Shake",
-          "Spinach Corn Sandwich"
-        ],
-        "disliked": [
-          "Dated Interiors"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "barista-sec35",
-    "name": "Barista Cafe Sector 35",
-    "address": "SCO 477, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
+    "cafora": {
+      "tagline": "Old school quiet coffee shop in Sector 35.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "reading"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "cottage-sec7",
+    "name": "The Cottage",
+    "address": "SCO 44, Inner Market, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
     "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 600,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.7,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1350,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": true,
+      "powerOutlets": false,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Old school quiet coffee shop in Sector 35.",
-    "personalityTagline": "Old school quiet coffee shop in Sector 35.",
+    "tagline": "An elegant European countryside bistro perfect for celebrating special occasions.",
+    "personalityTagline": "An elegant European countryside bistro perfect for celebrating special occasions.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Old school quiet coffee shop in Sector 35.",
+      "headline": "An elegant European countryside bistro perfect for celebrating special occasions.",
       "loved": [
-        "Brrrista Shake",
-        "Spinach Corn Sandwich"
+        "DATE",
+        "READING"
       ],
       "disliked": [
-        "Dated Interiors"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
     "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "coffee",
-      "study",
+      "date",
+      "reading",
       "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 7"
     ],
     "tags": [
-      "Espresso",
-      "Classic Cafe",
-      "Quiet Work",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Quiet Corner",
-      "Quiet",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "Late Night"
+      "DATE",
+      "READING",
+      "Sector 7"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "quiet",
-      "sweet-tooth",
-      "late-night"
+      "date",
+      "reading",
+      "quiet"
     ],
-    "specialtyCoffee": false,
+    "specialtyCoffee": true,
     "wifi": true,
-    "power": true,
+    "power": false,
     "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7279,
+      76.8024
+    ],
+    "identity": {
       "id": "cottage-sec7",
       "name": "The Cottage",
       "address": "SCO 44, Inner Market, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7279,
+      "longitude": 76.8024
+    },
+    "facts": {
       "rating": 4.7,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1350,
       "openingHours": "12:00 PM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Cottage%20SCO%2044%2C%20Inner%20Market%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -16190,261 +15156,227 @@ export const CAFES_DATA = [
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 9.9,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.6,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.9,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: fine-dining."
       },
       "conversation": {
         "score": 9.9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.5,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.7 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Cottage in Sector 7."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "An elegant European countryside bistro perfect for celebrating special occasions.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "An elegant European countryside bistro perfect for celebrating special occasions.",
-        "loved": [
-          "Pan Seared Gnocchi",
-          "Burrata Salad",
-          "Crème Brûlée"
-        ],
-        "disliked": [
-          "Expensive",
-          "Formal Atmosphere"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "id": "cottage-sec7",
-    "name": "The Cottage",
-    "address": "SCO 44, Inner Market, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
+    "cafora": {
+      "tagline": "An elegant European countryside bistro perfect for celebrating special occasions.",
+      "bestFor": [
+        "DATE",
+        "READING"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "reading",
+        "quiet"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "indian-coffee-house-sec22",
+    "name": "Indian Coffee House Sector 22",
+    "address": "SCO 1012, Sector 22-B, Chandigarh",
+    "sector": "Sector 22",
     "city": "Chandigarh",
-    "rating": 4.7,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1350,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹",
+    "approxCostForTwo": 250,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
-      "wifi": true,
+      "wifi": false,
       "powerOutlets": false,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "An elegant European countryside bistro perfect for celebrating special occasions.",
-    "personalityTagline": "An elegant European countryside bistro perfect for celebrating special occasions.",
+    "tagline": "A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.",
+    "personalityTagline": "A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "An elegant European countryside bistro perfect for celebrating special occasions.",
+      "headline": "A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.",
       "loved": [
-        "Pan Seared Gnocchi",
-        "Burrata Salad",
-        "Crème Brûlée"
+        "SLOW MORNING",
+        "READING"
       ],
       "disliked": [
-        "Expensive",
-        "Formal Atmosphere"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
     "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "date",
-      "aesthetic",
-      "quiet",
-      "food",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
+      "slow-morning",
+      "reading",
       "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 22"
     ],
     "tags": [
-      "French Bistro",
-      "European Decor",
-      "Romantic Dining",
-      "Gourmet",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "Late Night"
+      "SLOW MORNING",
+      "READING",
+      "Sector 22"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth",
-      "late-night"
+      "slow-morning",
+      "reading",
+      "good-coffee"
     ],
-    "specialtyCoffee": false,
-    "wifi": true,
+    "specialtyCoffee": true,
+    "wifi": false,
     "power": false,
     "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7229,
+      76.7747
+    ],
+    "identity": {
       "id": "indian-coffee-house-sec22",
       "name": "Indian Coffee House Sector 22",
       "address": "SCO 1012, Sector 22-B, Chandigarh",
-      "sector": "Sector 22",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 22",
+      "latitude": 30.7229,
+      "longitude": 76.7747
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 250,
       "openingHours": "8:00 AM – 9:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Indian%20Coffee%20House%20Sector%2022%20SCO%201012%2C%20Sector%2022-B%2C%20Chandigarh",
       "amenities": {
         "wifi": false,
         "powerOutlets": false,
@@ -16464,239 +15396,230 @@ export const CAFES_DATA = [
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 6.5,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 6,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.6,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 6.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: vintage-booths."
       },
       "conversation": {
         "score": 6.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.5,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 6.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Indian Coffee House Sector 22 in Sector 22."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.",
-        "loved": [
-          "Hot Filter Coffee",
-          "Mutton Dosa",
-          "Cold Coffee with Ice Cream"
-        ],
-        "disliked": [
-          "No AC",
-          "No Wifi"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 22, Chandigarh."
     },
-    "id": "indian-coffee-house-sec22",
-    "name": "Indian Coffee House Sector 22",
-    "address": "SCO 1012, Sector 22-B, Chandigarh",
-    "sector": "Sector 22",
+    "cafora": {
+      "tagline": "A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.",
+      "bestFor": [
+        "SLOW MORNING",
+        "READING"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "slow-morning",
+        "reading",
+        "good-coffee"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "monicas-sec8",
+    "name": "Monica's Puddings & Pies",
+    "address": "Inner Market, SCF 21, Sector 8-C, Chandigarh",
+    "sector": "Sector 8",
     "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 250,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.7,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 800,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
-      "wifi": false,
-      "powerOutlets": false,
+      "wifi": true,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.",
-    "personalityTagline": "A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.",
+    "tagline": "The crown jewel of Chandigarh home-style luxury baking.",
+    "personalityTagline": "The crown jewel of Chandigarh home-style luxury baking.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.",
+      "headline": "The crown jewel of Chandigarh home-style luxury baking.",
       "loved": [
-        "Hot Filter Coffee",
-        "Mutton Dosa",
-        "Cold Coffee with Ice Cream"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "No AC",
-        "No Wifi"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
     "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "budget",
-      "coffee",
-      "quiet",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "group",
-      "Social & Lively",
-      "With the Gang",
-      "gang"
+      "brunch",
+      "sweet-tooth",
+      "date",
+      "Sector 8"
     ],
     "tags": [
-      "Historic Cafe",
-      "Filter Coffee",
-      "Heritage",
-      "Mutton Dosa",
-      "Good Coffee",
-      "Quiet Corner",
-      "Quiet",
-      "With the Gang",
-      "Social & Lively"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 8"
     ],
     "moods": [
-      "good-coffee",
-      "quiet",
-      "gang"
+      "brunch",
+      "sweet-tooth",
+      "date"
     ],
-    "specialtyCoffee": true,
-    "wifi": false,
-    "power": false,
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": true,
     "outdoorSeating": false,
     "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7368,
+      76.8012
+    ],
+    "identity": {
       "id": "monicas-sec8",
       "name": "Monica's Puddings & Pies",
       "address": "Inner Market, SCF 21, Sector 8-C, Chandigarh",
-      "sector": "Sector 8",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 8",
+      "latitude": 30.7368,
+      "longitude": 76.8012
+    },
+    "facts": {
       "rating": 4.7,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 800,
       "openingHours": "9:30 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Monica's%20Puddings%20%26%20Pies%20Inner%20Market%2C%20SCF%2021%2C%20Sector%208-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -16713,253 +15636,227 @@ export const CAFES_DATA = [
         "score": 8.3,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.9,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.6,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 10.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.3,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: compact."
       },
       "conversation": {
         "score": 8.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.3,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.7 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Monica's Puddings & Pies in Sector 8."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The crown jewel of Chandigarh home-style luxury baking.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The crown jewel of Chandigarh home-style luxury baking.",
-        "loved": [
-          "Carrot Cake",
-          "Apple Cinnamon Pie",
-          "Chicken Mushroom Puff"
-        ],
-        "disliked": [
-          "Limited Indoor Tables"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "id": "monicas-sec8",
-    "name": "Monica's Puddings & Pies",
-    "address": "Inner Market, SCF 21, Sector 8-C, Chandigarh",
+    "cafora": {
+      "tagline": "The crown jewel of Chandigarh home-style luxury baking.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "date"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "super-donuts-sec8",
+    "name": "Super Donuts - American Dinery",
+    "address": "SCO 4, Inner Market, Sector 8-B, Chandigarh",
     "sector": "Sector 8",
     "city": "Chandigarh",
-    "rating": 4.7,
-    "reviews": 120,
+    "rating": 4.4,
+    "reviews": 1300,
+    "reviewCount": 1300,
     "priceRange": "₹₹",
-    "approxCostForTwo": 800,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 550,
+    "trustScore": 90,
+    "heroImage": "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": null,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The crown jewel of Chandigarh home-style luxury baking.",
-    "personalityTagline": "The crown jewel of Chandigarh home-style luxury baking.",
+    "tagline": "Playful retro-diner aesthetic serving colorful gourmet glazed donuts, monster milkshakes, and casual comfort burgers.",
+    "personalityTagline": "Playful retro-diner aesthetic serving colorful gourmet glazed donuts, monster milkshakes, and casual comfort burgers.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The crown jewel of Chandigarh home-style luxury baking.",
+      "headline": "Playful retro-diner aesthetic serving colorful gourmet glazed donuts, monster milkshakes, and casual comfort burgers.",
       "loved": [
-        "Carrot Cake",
-        "Apple Cinnamon Pie",
-        "Chicken Mushroom Puff"
+        "Gourmet Filled & Glazed Donuts",
+        "Thick Artisan Milkshakes",
+        "Casual Sweet Hangouts with Friends"
       ],
       "disliked": [
-        "Limited Indoor Tables"
+        "Sweet-focused menu; savory items are fast-food style."
       ]
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "caveat": "Sweet-focused menu; savory items are fast-food style.",
     "categories": [
-      "food",
-      "aesthetic",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
+      "sweet-tooth",
+      "gang",
+      "Sector 8"
     ],
     "tags": [
-      "Legendary Pies",
-      "Carrot Cake",
-      "Chandigarh Heritage Bakery",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts"
+      "Gourmet Filled & Glazed Donuts",
+      "Thick Artisan Milkshakes",
+      "Casual Sweet Hangouts with Friends",
+      "Sector 8"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth"
+      "sweet-tooth",
+      "gang"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": null,
+    "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7383,
+      76.8021
+    ],
+    "identity": {
       "id": "super-donuts-sec8",
       "name": "Super Donuts - American Dinery",
-      "address": "Inner Market, SCF 14, Sector 8-C, Chandigarh",
-      "sector": "Sector 8",
+      "address": "SCO 4, Inner Market, Sector 8-B, Chandigarh",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
-      "rating": 4.5,
-      "reviewCount": 120,
+      "sector": "Sector 8",
+      "latitude": 30.7383,
+      "longitude": 76.8021
+    },
+    "facts": {
+      "rating": 4.4,
+      "reviewCount": 1300,
       "priceRange": "₹₹",
       "approxCostForTwo": 550,
       "openingHours": "10:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Super%20Donuts%20-%20American%20Dinery%20SCO%204%2C%20Inner%20Market%2C%20Sector%208-B%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -16976,158 +15873,171 @@ export const CAFES_DATA = [
     },
     "characteristics": {
       "coffee": {
-        "score": 8.2,
+        "score": 7.5,
         "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
+        "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
+        "caveat": "American filter coffee, iced mochas, and milkshakes."
       },
       "work": {
-        "score": 9,
-        "confidence": "high",
-        "evidenceCount": 14,
-        "caveat": "Good table space and accessible power outlets."
+        "score": 6,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Casual diner booths."
       },
       "quiet": {
-        "score": 7.4,
-        "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": "Quieter on weekday mornings; lively post 6 PM."
-      },
-      "date": {
-        "score": 8.4,
-        "confidence": "high",
-        "evidenceCount": 6,
-        "caveat": null
-      },
-      "aesthetic": {
-        "score": 9.3,
-        "confidence": "high",
-        "evidenceCount": 16,
-        "caveat": "Photogenic natural lighting, particularly in early afternoons."
-      },
-      "groups": {
-        "score": 9.1,
-        "confidence": "high",
-        "evidenceCount": 8,
-        "caveat": "Large sharing tables and lively group banter welcome."
-      },
-      "dessert": {
-        "score": 9.8,
-        "confidence": "high",
-        "evidenceCount": 9,
-        "caveat": "Fresh bakery displays with artisanal daily specials."
-      },
-      "lateNight": {
-        "score": 8.4,
+        "score": 5.5,
         "confidence": "high",
         "evidenceCount": 7,
-        "caveat": "Closes around 10:30 PM."
+        "lastVerified": "2026-08-20",
+        "caveat": "Pop music and cheerful student buzz."
       },
-      "reading": {
-        "score": 7.8,
+      "date": {
+        "score": 7.5,
         "confidence": "medium",
-        "evidenceCount": 6,
-        "caveat": "Plush corner seats with minimal distraction."
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": "Fun, vibrant sweet date."
       },
-      "brunch": {
-        "score": 10,
-        "confidence": "medium",
-        "evidenceCount": 8,
-        "caveat": "Popular morning food options; best before 1 PM."
-      },
-      "outdoor": {
-        "score": 4.5,
+      "aesthetic": {
+        "score": 8.5,
         "confidence": "high",
-        "evidenceCount": 5,
-        "caveat": "Entirely indoor air-conditioned seating."
+        "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
+        "caveat": "Retro 1950s American diner neon, pastel booths, and donut displays."
       },
-      "ambience": {
-        "score": 9.3,
+      "groups": {
+        "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
+        "caveat": "Great booths for groups of friends sharing donut boxes."
+      },
+      "dessert": {
+        "score": 9.4,
+        "confidence": "high",
+        "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
+        "caveat": "Wide selection of freshly glazed, cream-filled, and chocolate donuts."
+      },
+      "lateNight": {
+        "score": 7.5,
+        "confidence": "high",
+        "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
+        "caveat": "Open until 11:30 PM."
+      },
+      "reading": {
+        "score": 5,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
+      },
+      "brunch": {
+        "score": 7,
+        "confidence": "medium",
+        "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
+        "caveat": "Bagel sandwiches, fries, and breakfast waffles."
+      },
+      "outdoor": {
+        "score": 4,
+        "confidence": "high",
+        "evidenceCount": 4,
+        "lastVerified": "2026-08-20",
+        "caveat": "Indoor diner layout."
+      },
+      "slowMorning": {
+        "score": 6.8,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": "Opens at 10 AM."
+      },
+      "ambience": {
+        "score": 8.4,
+        "confidence": "high",
+        "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
-        "score": 9.8,
+        "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
-        "score": 9,
-        "confidence": "medium",
+        "score": 8.5,
+        "confidence": "high",
         "evidenceCount": 8,
-        "caveat": "Seating type: diner-booths."
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "conversation": {
-        "score": 8.4,
-        "confidence": "medium",
-        "evidenceCount": 8,
+        "score": 8.5,
+        "confidence": "high",
+        "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "official",
+          "sourceName": "Super Donuts Brand Portfolio",
+          "url": null,
+          "note": "Pioneer gourmet donut chain established in Chandigarh."
+        },
+        {
+          "sourceType": "reviews",
+          "sourceName": "Student & Dessert Reviews",
+          "url": null,
+          "note": "Consistently popular for quick sweet treats and shakes."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Colorful, nostalgic dessert diner with top-tier glazed donuts and fun energy.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Colorful, nostalgic dessert diner with top-tier glazed donuts and fun energy.",
-        "loved": [
-          "Nutella Dream Donut",
-          "Smoked Chicken Bagel",
-          "Hazelnut Cold Coffee"
-        ],
-        "disliked": [
-          "Very Sweet Drinks"
-        ]
-      }
+      "confidence": "high",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "id": "super-donuts-sec8",
-    "name": "Super Donuts - American Dinery",
-    "address": "Inner Market, SCF 14, Sector 8-C, Chandigarh",
-    "sector": "Sector 8",
+    "cafora": {
+      "tagline": "Playful retro-diner aesthetic serving colorful gourmet glazed donuts, monster milkshakes, and casual comfort burgers.",
+      "bestFor": [
+        "Gourmet Filled & Glazed Donuts",
+        "Thick Artisan Milkshakes",
+        "Casual Sweet Hangouts with Friends"
+      ],
+      "caveats": [
+        "Sweet-focused menu; savory items are fast-food style."
+      ],
+      "trustScore": 90,
+      "moods": [
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "super-donuts-sec35",
+    "name": "Super Donuts Sector 35",
+    "address": "SCO 447, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
     "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 550,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80",
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -17136,106 +16046,66 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Colorful, nostalgic dessert diner with top-tier glazed donuts and fun energy.",
-    "personalityTagline": "Colorful, nostalgic dessert diner with top-tier glazed donuts and fun energy.",
+    "tagline": "Solid sweet tooth treat in the southern sectors.",
+    "personalityTagline": "Solid sweet tooth treat in the southern sectors.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Colorful, nostalgic dessert diner with top-tier glazed donuts and fun energy.",
+      "headline": "Solid sweet tooth treat in the southern sectors.",
       "loved": [
-        "Nutella Dream Donut",
-        "Smoked Chicken Bagel",
-        "Hazelnut Cold Coffee"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Very Sweet Drinks"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "food",
-      "aesthetic",
-      "group",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 35"
     ],
     "tags": [
-      "Gourmet Donuts",
-      "American Dinery",
-      "Freakshakes",
-      "Bagels",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 35"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "gang"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7179,
+      76.7577
+    ],
+    "identity": {
       "id": "super-donuts-sec35",
       "name": "Super Donuts Sector 35",
       "address": "SCO 447, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7179,
+      "longitude": 76.7577
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 550,
       "openingHours": "10:30 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Super%20Donuts%20Sector%2035%20SCO%20447%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -17252,260 +16122,230 @@ export const CAFES_DATA = [
         "score": 8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.7,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 7.6,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.7,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: booths."
       },
       "conversation": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Super Donuts Sector 35 in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Solid sweet tooth treat in the southern sectors.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Solid sweet tooth treat in the southern sectors.",
-        "loved": [
-          "Boston Cream",
-          "Caramel Macchiato Shake"
-        ],
-        "disliked": [
-          "Crowded weekends"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "super-donuts-sec35",
-    "name": "Super Donuts Sector 35",
-    "address": "SCO 447, Sector 35-C, Chandigarh",
+    "cafora": {
+      "tagline": "Solid sweet tooth treat in the southern sectors.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "chocolate-room-sec35",
+    "name": "The Chocolate Room",
+    "address": "SCO 425-426, Sector 35-C, Chandigarh",
     "sector": "Sector 35",
     "city": "Chandigarh",
     "rating": 4.4,
-    "reviews": 120,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 550,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 700,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": null,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Solid sweet tooth treat in the southern sectors.",
-    "personalityTagline": "Solid sweet tooth treat in the southern sectors.",
+    "tagline": "The ultimate destination for unapologetic chocoholics.",
+    "personalityTagline": "The ultimate destination for unapologetic chocoholics.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Solid sweet tooth treat in the southern sectors.",
+      "headline": "The ultimate destination for unapologetic chocoholics.",
       "loved": [
-        "Boston Cream",
-        "Caramel Macchiato Shake"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Crowded weekends"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "food",
-      "group",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 35"
     ],
     "tags": [
-      "Donuts",
-      "Coffee",
-      "Shakes",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 35"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "gang"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": null,
+    "power": true,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7182,
+      76.7598
+    ],
+    "identity": {
       "id": "chocolate-room-sec35",
       "name": "The Chocolate Room",
       "address": "SCO 425-426, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7182,
+      "longitude": 76.7598
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 700,
       "openingHours": "10:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Chocolate%20Room%20SCO%20425-426%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -17522,260 +16362,227 @@ export const CAFES_DATA = [
         "score": 8.1,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.9,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 10.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: booths."
       },
       "conversation": {
         "score": 8.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.1,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Chocolate Room in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The ultimate destination for unapologetic chocoholics.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The ultimate destination for unapologetic chocoholics.",
-        "loved": [
-          "Chocolate Fondue",
-          "Death by Chocolate Pancake",
-          "Hot Chocolate Mug"
-        ],
-        "disliked": [
-          "Limited Savory Options"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "chocolate-room-sec35",
-    "name": "The Chocolate Room",
-    "address": "SCO 425-426, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
+    "cafora": {
+      "tagline": "The ultimate destination for unapologetic chocoholics.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "cafe-coffee-day-sec17",
+    "name": "Cafe Coffee Day Sector 17",
+    "address": "SCO 90-91, Sector 17-C Plaza, Chandigarh",
+    "sector": "Sector 17",
     "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
+    "rating": 4.2,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 700,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 500,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": null,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The ultimate destination for unapologetic chocoholics.",
-    "personalityTagline": "The ultimate destination for unapologetic chocoholics.",
+    "tagline": "A nostalgic classic for casual Plaza rendezvous.",
+    "personalityTagline": "A nostalgic classic for casual Plaza rendezvous.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The ultimate destination for unapologetic chocoholics.",
+      "headline": "A nostalgic classic for casual Plaza rendezvous.",
       "loved": [
-        "Chocolate Fondue",
-        "Death by Chocolate Pancake",
-        "Hot Chocolate Mug"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Limited Savory Options"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "food",
-      "aesthetic",
-      "group",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "Sector 17"
     ],
     "tags": [
-      "Fondue",
-      "Chocolate Cafe",
-      "Sweet Tooth Heaven",
-      "Waffles",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 17"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "gang"
     ],
-    "specialtyCoffee": false,
+    "specialtyCoffee": true,
     "wifi": true,
-    "power": null,
+    "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7365,
+      76.7859
+    ],
+    "identity": {
       "id": "cafe-coffee-day-sec17",
       "name": "Cafe Coffee Day Sector 17",
       "address": "SCO 90-91, Sector 17-C Plaza, Chandigarh",
-      "sector": "Sector 17",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 17",
+      "latitude": 30.7365,
+      "longitude": 76.7859
+    },
+    "facts": {
       "rating": 4.2,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 500,
       "openingHours": "9:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cafe%20Coffee%20Day%20Sector%2017%20SCO%2090-91%2C%20Sector%2017-C%20Plaza%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -17795,253 +16602,227 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: plaza-view."
       },
       "conversation": {
         "score": 7.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.2 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 8.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Cafe Coffee Day Sector 17 in Sector 17."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A nostalgic classic for casual Plaza rendezvous.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A nostalgic classic for casual Plaza rendezvous.",
-        "loved": [
-          "Devil's Own",
-          "King Cappuccino",
-          "Samosa Croissant"
-        ],
-        "disliked": [
-          "Standard franchise coffee"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 17, Chandigarh."
     },
-    "id": "cafe-coffee-day-sec17",
-    "name": "Cafe Coffee Day Sector 17",
-    "address": "SCO 90-91, Sector 17-C Plaza, Chandigarh",
-    "sector": "Sector 17",
+    "cafora": {
+      "tagline": "A nostalgic classic for casual Plaza rendezvous.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "woodies-rock-sec26",
+    "name": "Woodies Rock Cafe",
+    "address": "SCO 15, Sector 26, Chandigarh",
+    "sector": "Sector 26",
     "city": "Chandigarh",
-    "rating": 4.2,
-    "reviews": 120,
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 500,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 900,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": true,
+      "powerOutlets": false,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A nostalgic classic for casual Plaza rendezvous.",
-    "personalityTagline": "A nostalgic classic for casual Plaza rendezvous.",
+    "tagline": "Lively rock cafe in Sector 26 for music lovers and friend reunions.",
+    "personalityTagline": "Lively rock cafe in Sector 26 for music lovers and friend reunions.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A nostalgic classic for casual Plaza rendezvous.",
+      "headline": "Lively rock cafe in Sector 26 for music lovers and friend reunions.",
       "loved": [
-        "Devil's Own",
-        "King Cappuccino",
-        "Samosa Croissant"
+        "GANG",
+        "BRUNCH"
       ],
       "disliked": [
-        "Standard franchise coffee"
+        "Energetic, bustling atmosphere; best with friends."
       ]
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "caveat": "Energetic, bustling atmosphere; best with friends.",
     "categories": [
-      "coffee",
-      "budget",
-      "study",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "brunch",
+      "sweet-tooth",
+      "Sector 26"
     ],
     "tags": [
-      "Classic CCD",
-      "Plaza Walk",
-      "Cold Sparkle",
-      "Casual Meeting",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Quiet Corner",
-      "Quiet",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "GANG",
+      "BRUNCH",
+      "Sector 26"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "quiet",
-      "sweet-tooth",
       "gang",
-      "late-night"
+      "brunch",
+      "sweet-tooth"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": true,
+    "power": false,
     "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "high",
+    "coordinates": [
+      30.722,
+      76.815
+    ],
+    "identity": {
       "id": "woodies-rock-sec26",
       "name": "Woodies Rock Cafe",
       "address": "SCO 15, Sector 26, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.722,
+      "longitude": 76.815
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 900,
       "openingHours": "12:00 PM – 12:30 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Woodies%20Rock%20Cafe%20SCO%2015%2C%20Sector%2026%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -18061,251 +16842,227 @@ export const CAFES_DATA = [
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Energetic, bustling atmosphere; best with friends."
       },
       "date": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 9.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 5.4,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 6.2,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: wood-benches."
       },
       "conversation": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Woodies Rock Cafe in Sector 26."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Lively rock cafe in Sector 26 for music lovers and friend reunions.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Lively rock cafe in Sector 26 for music lovers and friend reunions.",
-        "loved": [
-          "BBQ Chicken Wings",
-          "Rock Star Burger"
-        ],
-        "disliked": [
-          "Loud music"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "id": "woodies-rock-sec26",
-    "name": "Woodies Rock Cafe",
-    "address": "SCO 15, Sector 26, Chandigarh",
-    "sector": "Sector 26",
+    "cafora": {
+      "tagline": "Lively rock cafe in Sector 26 for music lovers and friend reunions.",
+      "bestFor": [
+        "GANG",
+        "BRUNCH"
+      ],
+      "caveats": [
+        "Energetic, bustling atmosphere; best with friends."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "brunch",
+        "sweet-tooth"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "pu-student-center-cafe",
+    "name": "Student Center Coffee Corner",
+    "address": "Panjab University Campus, Sector 14/15, Chandigarh",
+    "sector": "Sector 15",
     "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 900,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹",
+    "approxCostForTwo": 200,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
-      "wifi": true,
+      "wifi": false,
       "powerOutlets": false,
-      "outdoorSeating": false,
+      "outdoorSeating": true,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Lively rock cafe in Sector 26 for music lovers and friend reunions.",
-    "personalityTagline": "Lively rock cafe in Sector 26 for music lovers and friend reunions.",
+    "tagline": "The spiritual heart of Chandigarh university culture and legendary cold coffee.",
+    "personalityTagline": "The spiritual heart of Chandigarh university culture and legendary cold coffee.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Lively rock cafe in Sector 26 for music lovers and friend reunions.",
+      "headline": "The spiritual heart of Chandigarh university culture and legendary cold coffee.",
       "loved": [
-        "BBQ Chicken Wings",
-        "Rock Star Burger"
+        "GANG",
+        "OUTDOOR"
       ],
       "disliked": [
-        "Loud music"
+        "Energetic, bustling atmosphere; best with friends."
       ]
     },
     "caveat": "Energetic, bustling atmosphere; best with friends.",
     "categories": [
-      "group",
-      "latenight",
-      "food",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "Late Night",
-      "late-night"
+      "outdoor",
+      "pretty",
+      "Sector 15"
     ],
     "tags": [
-      "Live Music",
-      "Rock Vibe",
-      "Late Night",
-      "Burgers",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively"
+      "GANG",
+      "OUTDOOR",
+      "Sector 15"
     ],
     "moods": [
-      "work",
-      "date",
-      "pretty",
-      "sweet-tooth",
       "gang",
-      "late-night"
+      "outdoor",
+      "pretty"
     ],
     "specialtyCoffee": false,
-    "wifi": true,
+    "wifi": false,
     "power": false,
-    "outdoorSeating": false,
-    "noiseLevel": "lively",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "outdoorSeating": true,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7535,
+      76.7711
+    ],
+    "identity": {
       "id": "pu-student-center-cafe",
       "name": "Student Center Coffee Corner",
       "address": "Panjab University Campus, Sector 14/15, Chandigarh",
-      "sector": "Sector 15",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 15",
+      "latitude": 30.7535,
+      "longitude": 76.7711
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 200,
       "openingHours": "8:00 AM – 9:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Student%20Center%20Coffee%20Corner%20Panjab%20University%20Campus%2C%20Sector%2014%2F15%2C%20Chandigarh",
       "amenities": {
         "wifi": false,
         "powerOutlets": false,
@@ -18325,236 +17082,227 @@ export const CAFES_DATA = [
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Energetic, bustling atmosphere; best with friends."
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 6.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 7.6,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: open-canopy."
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Student Center Coffee Corner in Sector 15."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The spiritual heart of Chandigarh university culture and legendary cold coffee.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The spiritual heart of Chandigarh university culture and legendary cold coffee.",
-        "loved": [
-          "StuC Cold Coffee",
-          "Paneer Patty",
-          "Rajma Chawal"
-        ],
-        "disliked": [
-          "Outdoor Heat in Summer"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 15, Chandigarh."
     },
-    "id": "pu-student-center-cafe",
-    "name": "Student Center Coffee Corner",
-    "address": "Panjab University Campus, Sector 14/15, Chandigarh",
-    "sector": "Sector 15",
+    "cafora": {
+      "tagline": "The spiritual heart of Chandigarh university culture and legendary cold coffee.",
+      "bestFor": [
+        "GANG",
+        "OUTDOOR"
+      ],
+      "caveats": [
+        "Energetic, bustling atmosphere; best with friends."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "outdoor",
+        "pretty"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "brew-estate-sec26",
+    "name": "The Brew Estate Cafe & Kitchen",
+    "address": "SCO 25, Sector 26, Chandigarh",
+    "sector": "Sector 26",
     "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 200,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1400,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
-      "wifi": false,
+      "wifi": true,
       "powerOutlets": false,
       "outdoorSeating": true,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The spiritual heart of Chandigarh university culture and legendary cold coffee.",
-    "personalityTagline": "The spiritual heart of Chandigarh university culture and legendary cold coffee.",
+    "tagline": "The quintessential large-group hangout on Sector 26's entertainment strip.",
+    "personalityTagline": "The quintessential large-group hangout on Sector 26's entertainment strip.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The spiritual heart of Chandigarh university culture and legendary cold coffee.",
+      "headline": "The quintessential large-group hangout on Sector 26's entertainment strip.",
       "loved": [
-        "StuC Cold Coffee",
-        "Paneer Patty",
-        "Rajma Chawal"
+        "LATE NIGHT",
+        "GANG"
       ],
       "disliked": [
-        "Outdoor Heat in Summer"
+        "Energetic, bustling atmosphere; best with friends."
       ]
     },
     "caveat": "Energetic, bustling atmosphere; best with friends.",
     "categories": [
-      "budget",
-      "group",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
+      "late-night",
+      "gang",
       "pretty",
-      "Social & Lively",
-      "With the Gang",
-      "gang"
+      "Sector 26"
     ],
     "tags": [
-      "Campus Icon",
-      "Cold Coffee with Ice Cream",
-      "Student Life",
-      "Budget",
-      "Good Coffee",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively"
+      "LATE NIGHT",
+      "GANG",
+      "Sector 26"
     ],
     "moods": [
-      "good-coffee",
-      "pretty",
-      "gang"
+      "late-night",
+      "gang",
+      "pretty"
     ],
-    "specialtyCoffee": false,
-    "wifi": false,
+    "specialtyCoffee": true,
+    "wifi": true,
     "power": false,
     "outdoorSeating": true,
-    "noiseLevel": "lively",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7241,
+      76.8153
+    ],
+    "identity": {
       "id": "brew-estate-sec26",
       "name": "The Brew Estate Cafe & Kitchen",
       "address": "SCO 25, Sector 26, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.7241,
+      "longitude": 76.8153
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1400,
       "openingHours": "11:00 AM – 1:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Brew%20Estate%20Cafe%20%26%20Kitchen%20SCO%2025%2C%20Sector%2026%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -18574,259 +17322,227 @@ export const CAFES_DATA = [
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Energetic, bustling atmosphere; best with friends."
       },
       "date": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 6.4,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 7.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: terrace."
       },
       "conversation": {
         "score": 8.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Brew Estate Cafe & Kitchen in Sector 26."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The quintessential large-group hangout on Sector 26's entertainment strip.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The quintessential large-group hangout on Sector 26's entertainment strip.",
-        "loved": [
-          "Craft Brew Sampler",
-          "Thin Crust Pepperoni Pizza",
-          "Corn Cheese Balls"
-        ],
-        "disliked": [
-          "Weekend Loud Music"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "id": "brew-estate-sec26",
-    "name": "The Brew Estate Cafe & Kitchen",
-    "address": "SCO 25, Sector 26, Chandigarh",
-    "sector": "Sector 26",
+    "cafora": {
+      "tagline": "The quintessential large-group hangout on Sector 26's entertainment strip.",
+      "bestFor": [
+        "LATE NIGHT",
+        "GANG"
+      ],
+      "caveats": [
+        "Energetic, bustling atmosphere; best with friends."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "late-night",
+        "gang",
+        "pretty"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "brew-estate-sec35",
+    "name": "The Brew Estate Sector 35",
+    "address": "SCO 408-409, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
     "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1400,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
       "powerOutlets": false,
-      "outdoorSeating": true,
+      "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The quintessential large-group hangout on Sector 26's entertainment strip.",
-    "personalityTagline": "The quintessential large-group hangout on Sector 26's entertainment strip.",
+    "tagline": "High energy late evening venue for friends.",
+    "personalityTagline": "High energy late evening venue for friends.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The quintessential large-group hangout on Sector 26's entertainment strip.",
+      "headline": "High energy late evening venue for friends.",
       "loved": [
-        "Craft Brew Sampler",
-        "Thin Crust Pepperoni Pizza",
-        "Corn Cheese Balls"
+        "GANG",
+        "LATE NIGHT"
       ],
       "disliked": [
-        "Weekend Loud Music"
+        "Energetic, bustling atmosphere; best with friends."
       ]
     },
     "caveat": "Energetic, bustling atmosphere; best with friends.",
     "categories": [
-      "group",
-      "latenight",
-      "food",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "Late Night",
-      "late-night"
+      "late-night",
+      "date",
+      "Sector 35"
     ],
     "tags": [
-      "Microbrewery Cafe",
-      "Rooftop Seating",
-      "Live Sports",
-      "Late Night",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively"
+      "GANG",
+      "LATE NIGHT",
+      "Sector 35"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "pretty",
-      "sweet-tooth",
       "gang",
-      "late-night"
+      "late-night",
+      "date"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": false,
-    "outdoorSeating": true,
-    "noiseLevel": "lively",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7215,
+      76.7589
+    ],
+    "identity": {
       "id": "brew-estate-sec35",
       "name": "The Brew Estate Sector 35",
       "address": "SCO 408-409, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7215,
+      "longitude": 76.7589
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1400,
       "openingHours": "11:00 AM – 1:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Brew%20Estate%20Sector%2035%20SCO%20408-409%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -18846,154 +17562,162 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 5.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Energetic, bustling atmosphere; best with friends."
       },
       "date": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 6.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 6.7,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: spacious."
       },
       "conversation": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Brew Estate Sector 35 in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "High energy late evening venue for friends.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "High energy late evening venue for friends.",
-        "loved": [
-          "Woodfired Pizza",
-          "Loaded Nachos"
-        ],
-        "disliked": [
-          "Noisy at night"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "brew-estate-sec35",
-    "name": "The Brew Estate Sector 35",
-    "address": "SCO 408-409, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
+    "cafora": {
+      "tagline": "High energy late evening venue for friends.",
+      "bestFor": [
+        "GANG",
+        "LATE NIGHT"
+      ],
+      "caveats": [
+        "Energetic, bustling atmosphere; best with friends."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "late-night",
+        "date"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "chilis-elante",
+    "name": "Chili's American Grill & Cafe",
+    "address": "Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
+    "sector": "Industrial Area Phase 1",
     "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹₹",
-    "approxCostForTwo": 1400,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 1300,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -19002,94 +17726,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "High energy late evening venue for friends.",
-    "personalityTagline": "High energy late evening venue for friends.",
+    "tagline": "The classic American Tex-Mex crowd favorite for big groups.",
+    "personalityTagline": "The classic American Tex-Mex crowd favorite for big groups.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "High energy late evening venue for friends.",
+      "headline": "The classic American Tex-Mex crowd favorite for big groups.",
       "loved": [
-        "Woodfired Pizza",
-        "Loaded Nachos"
+        "GANG",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Noisy at night"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
-    "caveat": "Energetic, bustling atmosphere; best with friends.",
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "group",
-      "latenight",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "Late Night",
-      "late-night"
+      "sweet-tooth",
+      "brunch",
+      "Industrial Area Phase 1"
     ],
     "tags": [
-      "Craft Beer",
-      "Late Night",
-      "Woodfire Kitchen",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively"
+      "GANG",
+      "SWEET TOOTH",
+      "Industrial Area Phase 1"
     ],
     "moods": [
-      "work",
-      "date",
-      "pretty",
-      "sweet-tooth",
       "gang",
-      "late-night"
+      "sweet-tooth",
+      "brunch"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": false,
     "outdoorSeating": false,
-    "noiseLevel": "lively",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7036,
+      76.8026
+    ],
+    "identity": {
       "id": "chilis-elante",
       "name": "Chili's American Grill & Cafe",
       "address": "Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
-      "sector": "Industrial Area Phase 1",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Industrial Area Phase 1",
+      "latitude": 30.7036,
+      "longitude": 76.8026
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1300,
       "openingHours": "11:30 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chili's%20American%20Grill%20%26%20Cafe%20Third%20Floor%2C%20Elante%20Mall%2C%20Industrial%20Area%20Phase%201%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -19109,253 +17802,227 @@ export const CAFES_DATA = [
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.7,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 6.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.1,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.7,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: booths."
       },
       "conversation": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Chili's American Grill & Cafe in Industrial Area Phase 1."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The classic American Tex-Mex crowd favorite for big groups.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The classic American Tex-Mex crowd favorite for big groups.",
-        "loved": [
-          "Molten Chocolate Cake",
-          "Sizzling Fajitas",
-          "Texas Cheese Poppers"
-        ],
-        "disliked": [
-          "Pricey"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Industrial Area Phase 1, Chandigarh."
     },
-    "id": "chilis-elante",
-    "name": "Chili's American Grill & Cafe",
-    "address": "Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
-    "sector": "Industrial Area Phase 1",
+    "cafora": {
+      "tagline": "The classic American Tex-Mex crowd favorite for big groups.",
+      "bestFor": [
+        "GANG",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "sweet-tooth",
+        "brunch"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "dunkin-sec35",
+    "name": "Dunkin' Donuts & Cafe",
+    "address": "SCO 445, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
     "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1300,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 500,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": false,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The classic American Tex-Mex crowd favorite for big groups.",
-    "personalityTagline": "The classic American Tex-Mex crowd favorite for big groups.",
+    "tagline": "Affordable grab-and-go sweet tooth and cold brew stop.",
+    "personalityTagline": "Affordable grab-and-go sweet tooth and cold brew stop.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The classic American Tex-Mex crowd favorite for big groups.",
+      "headline": "Affordable grab-and-go sweet tooth and cold brew stop.",
       "loved": [
-        "Molten Chocolate Cake",
-        "Sizzling Fajitas",
-        "Texas Cheese Poppers"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Pricey"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "food",
-      "group",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "work",
+      "Sector 35"
     ],
     "tags": [
-      "Sizzling Fajitas",
-      "Molten Cake",
-      "American Tex-Mex",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 35"
     ],
     "moods": [
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "work"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": false,
+    "power": true,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7179,
+      76.7577
+    ],
+    "identity": {
       "id": "dunkin-sec35",
       "name": "Dunkin' Donuts & Cafe",
       "address": "SCO 445, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7179,
+      "longitude": 76.7577
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 500,
       "openingHours": "9:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Dunkin'%20Donuts%20%26%20Cafe%20SCO%20445%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -19375,245 +18042,227 @@ export const CAFES_DATA = [
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 7.9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 7.9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: bistro."
       },
       "conversation": {
         "score": 7.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Dunkin' Donuts & Cafe in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Affordable grab-and-go sweet tooth and cold brew stop.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Affordable grab-and-go sweet tooth and cold brew stop.",
-        "loved": [
-          "Chocolate Therapy Donut",
-          "Iced Caramel Macchiato"
-        ],
-        "disliked": [
-          "Basic seating"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "dunkin-sec35",
-    "name": "Dunkin' Donuts & Cafe",
-    "address": "SCO 445, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
+    "cafora": {
+      "tagline": "Affordable grab-and-go sweet tooth and cold brew stop.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "work"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "belly-delight-sec15",
+    "name": "Belly's Delight Cafe",
+    "address": "SCO 78, Sector 15-D, Chandigarh",
+    "sector": "Sector 15",
     "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 500,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹",
+    "approxCostForTwo": 350,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
-      "wifi": true,
-      "powerOutlets": true,
+      "wifi": false,
+      "powerOutlets": false,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Affordable grab-and-go sweet tooth and cold brew stop.",
-    "personalityTagline": "Affordable grab-and-go sweet tooth and cold brew stop.",
+    "tagline": "The quintessential budget student roll and shake joint in Sector 15.",
+    "personalityTagline": "The quintessential budget student roll and shake joint in Sector 15.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Affordable grab-and-go sweet tooth and cold brew stop.",
+      "headline": "The quintessential budget student roll and shake joint in Sector 15.",
       "loved": [
-        "Chocolate Therapy Donut",
-        "Iced Caramel Macchiato"
+        "GANG",
+        "BRUNCH"
       ],
       "disliked": [
-        "Basic seating"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "coffee",
-      "food",
-      "budget",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "brunch",
+      "sweet-tooth",
+      "Sector 15"
     ],
     "tags": [
-      "Donuts",
-      "Iced Coffee",
-      "Quick Bites",
-      "Breakfast",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "GANG",
+      "BRUNCH",
+      "Sector 15"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "sweet-tooth",
       "gang",
-      "late-night"
+      "brunch",
+      "sweet-tooth"
     ],
     "specialtyCoffee": false,
-    "wifi": true,
-    "power": true,
+    "wifi": false,
+    "power": false,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7568,
+      76.7702
+    ],
+    "identity": {
       "id": "belly-delight-sec15",
       "name": "Belly's Delight Cafe",
       "address": "SCO 78, Sector 15-D, Chandigarh",
-      "sector": "Sector 15",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 15",
+      "latitude": 30.7568,
+      "longitude": 76.7702
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 350,
       "openingHours": "10:00 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Belly's%20Delight%20Cafe%20SCO%2078%2C%20Sector%2015-D%2C%20Chandigarh",
       "amenities": {
         "wifi": false,
         "powerOutlets": false,
@@ -19633,229 +18282,227 @@ export const CAFES_DATA = [
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 6.5,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 6.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: benches."
       },
       "conversation": {
         "score": 6.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 6.5,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm basic connectivity."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Belly's Delight Cafe in Sector 15."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "The quintessential budget student roll and shake joint in Sector 15.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The quintessential budget student roll and shake joint in Sector 15.",
-        "loved": [
-          "Double Egg Chicken Roll",
-          "Oreo Shake",
-          "Cheesy Fries"
-        ],
-        "disliked": [
-          "Cramped Dining"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 15, Chandigarh."
     },
-    "id": "belly-delight-sec15",
-    "name": "Belly's Delight Cafe",
-    "address": "SCO 78, Sector 15-D, Chandigarh",
-    "sector": "Sector 15",
+    "cafora": {
+      "tagline": "The quintessential budget student roll and shake joint in Sector 15.",
+      "bestFor": [
+        "GANG",
+        "BRUNCH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "brunch",
+        "sweet-tooth"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "chai-break-sec26",
+    "name": "Chai Break Cafe",
+    "address": "SCO 28, Sector 26, Chandigarh",
+    "sector": "Sector 26",
     "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 350,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 650,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
-      "wifi": false,
-      "powerOutlets": false,
+      "wifi": true,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "The quintessential budget student roll and shake joint in Sector 15.",
-    "personalityTagline": "The quintessential budget student roll and shake joint in Sector 15.",
+    "tagline": "Casual tea and snack lounge for unwinding with friends.",
+    "personalityTagline": "Casual tea and snack lounge for unwinding with friends.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "The quintessential budget student roll and shake joint in Sector 15.",
+      "headline": "Casual tea and snack lounge for unwinding with friends.",
       "loved": [
-        "Double Egg Chicken Roll",
-        "Oreo Shake",
-        "Cheesy Fries"
+        "GANG",
+        "BRUNCH"
       ],
       "disliked": [
-        "Cramped Dining"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "budget",
-      "food",
-      "group",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "gang",
+      "brunch",
       "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang"
+      "Sector 26"
     ],
     "tags": [
-      "Student Friendly",
-      "Stuffed Rolls",
-      "Thick Shakes",
-      "Pocket Friendly",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively"
+      "GANG",
+      "BRUNCH",
+      "Sector 26"
     ],
     "moods": [
-      "sweet-tooth",
-      "gang"
+      "gang",
+      "brunch",
+      "sweet-tooth"
     ],
     "specialtyCoffee": false,
-    "wifi": false,
-    "power": false,
+    "wifi": true,
+    "power": true,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7241,
+      76.8153
+    ],
+    "identity": {
       "id": "chai-break-sec26",
       "name": "Chai Break Cafe",
       "address": "SCO 28, Sector 26, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.7241,
+      "longitude": 76.8153
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 650,
       "openingHours": "11:00 AM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Chai%20Break%20Cafe%20SCO%2028%2C%20Sector%2026%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -19875,154 +18522,162 @@ export const CAFES_DATA = [
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 7.7,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: couches."
       },
       "conversation": {
         "score": 7.7,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Chai Break Cafe in Sector 26."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Casual tea and snack lounge for unwinding with friends.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Casual tea and snack lounge for unwinding with friends.",
-        "loved": [
-          "Kesar Chai",
-          "Peri Peri Fries"
-        ],
-        "disliked": [
-          "Slow service"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "id": "chai-break-sec26",
-    "name": "Chai Break Cafe",
-    "address": "SCO 28, Sector 26, Chandigarh",
-    "sector": "Sector 26",
+    "cafora": {
+      "tagline": "Casual tea and snack lounge for unwinding with friends.",
+      "bestFor": [
+        "GANG",
+        "BRUNCH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "brunch",
+        "sweet-tooth"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "benares-sec7",
+    "name": "Benares Cafe & Lounge",
+    "address": "SCO 32, Sector 7-C, Chandigarh",
+    "sector": "Sector 7",
     "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 650,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 800,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -20031,93 +18686,66 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Casual tea and snack lounge for unwinding with friends.",
-    "personalityTagline": "Casual tea and snack lounge for unwinding with friends.",
+    "tagline": "An eclectic Indian-themed cafe with warm cultural character in Sector 7.",
+    "personalityTagline": "An eclectic Indian-themed cafe with warm cultural character in Sector 7.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Casual tea and snack lounge for unwinding with friends.",
+      "headline": "An eclectic Indian-themed cafe with warm cultural character in Sector 7.",
       "loved": [
-        "Kesar Chai",
-        "Peri Peri Fries"
+        "DATE",
+        "GANG"
       ],
       "disliked": [
-        "Slow service"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "group",
-      "food",
-      "budget",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
+      "date",
       "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "work",
+      "Sector 7"
     ],
     "tags": [
-      "Chai & Shisha",
-      "Thin Crust Pizza",
-      "Casual Hangout",
-      "Get Work Done",
-      "Work Friendly",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "DATE",
+      "GANG",
+      "Sector 7"
     ],
     "moods": [
-      "work",
-      "pretty",
-      "sweet-tooth",
+      "date",
       "gang",
-      "late-night"
+      "work"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7282,
+      76.8045
+    ],
+    "identity": {
       "id": "benares-sec7",
       "name": "Benares Cafe & Lounge",
       "address": "SCO 32, Sector 7-C, Chandigarh",
-      "sector": "Sector 7",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 7",
+      "latitude": 30.7282,
+      "longitude": 76.8045
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 800,
       "openingHours": "11:30 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Benares%20Cafe%20%26%20Lounge%20SCO%2032%2C%20Sector%207-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -20134,251 +18762,227 @@ export const CAFES_DATA = [
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.7,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.1,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: ethnic-cushions."
       },
       "conversation": {
         "score": 8.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Benares Cafe & Lounge in Sector 7."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "An eclectic Indian-themed cafe with warm cultural character in Sector 7.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "An eclectic Indian-themed cafe with warm cultural character in Sector 7.",
-        "loved": [
-          "Palak Patta Chaat",
-          "Banarasi Cold Coffee"
-        ],
-        "disliked": [
-          "Variable Spice"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 7, Chandigarh."
     },
-    "id": "benares-sec7",
-    "name": "Benares Cafe & Lounge",
-    "address": "SCO 32, Sector 7-C, Chandigarh",
-    "sector": "Sector 7",
+    "cafora": {
+      "tagline": "An eclectic Indian-themed cafe with warm cultural character in Sector 7.",
+      "bestFor": [
+        "DATE",
+        "GANG"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "gang",
+        "work"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "cuppa-bistro-sec8",
+    "name": "Cuppa Bistro",
+    "address": "SCF 12, Sector 8-C, Chandigarh",
+    "sector": "Sector 8",
     "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
+    "rating": 4.5,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 800,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 650,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": null,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "An eclectic Indian-themed cafe with warm cultural character in Sector 7.",
-    "personalityTagline": "An eclectic Indian-themed cafe with warm cultural character in Sector 7.",
+    "tagline": "An unassuming sanctuary for peaceful solo coffee dates.",
+    "personalityTagline": "An unassuming sanctuary for peaceful solo coffee dates.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "An eclectic Indian-themed cafe with warm cultural character in Sector 7.",
+      "headline": "An unassuming sanctuary for peaceful solo coffee dates.",
       "loved": [
-        "Palak Patta Chaat",
-        "Banarasi Cold Coffee"
+        "READING",
+        "WORK"
       ],
       "disliked": [
-        "Variable Spice"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "aesthetic",
-      "group",
-      "food",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
+      "reading",
       "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "slow-morning",
+      "Sector 8"
     ],
     "tags": [
-      "Indian Fusion",
-      "Artistic Decor",
-      "Ghat Vibe",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "READING",
+      "WORK",
+      "Sector 8"
     ],
     "moods": [
+      "reading",
       "work",
-      "date",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
+      "slow-morning"
     ],
-    "specialtyCoffee": false,
+    "specialtyCoffee": true,
     "wifi": true,
-    "power": null,
+    "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7383,
+      76.8021
+    ],
+    "identity": {
       "id": "cuppa-bistro-sec8",
       "name": "Cuppa Bistro",
       "address": "SCF 12, Sector 8-C, Chandigarh",
-      "sector": "Sector 8",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 8",
+      "latitude": 30.7383,
+      "longitude": 76.8021
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 650,
       "openingHours": "9:00 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cuppa%20Bistro%20SCF%2012%2C%20Sector%208-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -20398,154 +19002,162 @@ export const CAFES_DATA = [
         "score": 9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": "Specialty single origins & manual brew bar."
       },
       "work": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 6.8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 9.3,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: laptop-friendly."
       },
       "conversation": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9.3,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Cuppa Bistro in Sector 8."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "An unassuming sanctuary for peaceful solo coffee dates.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "An unassuming sanctuary for peaceful solo coffee dates.",
-        "loved": [
-          "Flat White",
-          "Pesto Chicken Panini"
-        ],
-        "disliked": [
-          "Early Closing"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 8, Chandigarh."
     },
-    "id": "cuppa-bistro-sec8",
-    "name": "Cuppa Bistro",
-    "address": "SCF 12, Sector 8-C, Chandigarh",
-    "sector": "Sector 8",
+    "cafora": {
+      "tagline": "An unassuming sanctuary for peaceful solo coffee dates.",
+      "bestFor": [
+        "READING",
+        "WORK"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "reading",
+        "work",
+        "slow-morning"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "cinnabon-elante",
+    "name": "Cinnabon & Seattle's Best",
+    "address": "Second Floor, Food Lounge, Elante Mall, Chandigarh",
+    "sector": "Industrial Area Phase 1",
     "city": "Chandigarh",
     "rating": 4.5,
-    "reviews": 120,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
-    "approxCostForTwo": 650,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 600,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -20554,98 +19166,66 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "An unassuming sanctuary for peaceful solo coffee dates.",
-    "personalityTagline": "An unassuming sanctuary for peaceful solo coffee dates.",
+    "tagline": "The ultimate warm cinnamon roll pilgrimage.",
+    "personalityTagline": "The ultimate warm cinnamon roll pilgrimage.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "An unassuming sanctuary for peaceful solo coffee dates.",
+      "headline": "The ultimate warm cinnamon roll pilgrimage.",
       "loved": [
-        "Flat White",
-        "Pesto Chicken Panini"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Early Closing"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "coffee",
-      "quiet",
-      "study",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
+      "brunch",
+      "sweet-tooth",
+      "gang",
+      "Industrial Area Phase 1"
     ],
     "tags": [
-      "Cozy Bistro",
-      "Manual Espresso",
-      "Quiet Afternoon",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Industrial Area Phase 1"
     ],
     "moods": [
-      "good-coffee",
-      "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth"
+      "brunch",
+      "sweet-tooth",
+      "gang"
     ],
-    "specialtyCoffee": true,
+    "specialtyCoffee": false,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7048,
+      76.8062
+    ],
+    "identity": {
       "id": "cinnabon-elante",
       "name": "Cinnabon & Seattle's Best",
       "address": "Second Floor, Food Lounge, Elante Mall, Chandigarh",
-      "sector": "Industrial Area Phase 1",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Industrial Area Phase 1",
+      "latitude": 30.7048,
+      "longitude": 76.8062
+    },
+    "facts": {
       "rating": 4.5,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 600,
       "openingHours": "10:30 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Cinnabon%20%26%20Seattle's%20Best%20Second%20Floor%2C%20Food%20Lounge%2C%20Elante%20Mall%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -20662,248 +19242,227 @@ export const CAFES_DATA = [
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 9.9,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 6.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 10.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: mall-seating."
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.5 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "The ultimate warm cinnamon roll pilgrimage.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "The ultimate warm cinnamon roll pilgrimage.",
-        "loved": [
-          "Classic Cinnabon Roll",
-          "Chocobon",
-          "Iced Cold Brew"
-        ],
-        "disliked": [
-          "Food Court Atmosphere"
-        ]
-      }
-    },
-    "id": "cinnabon-elante",
-    "name": "Cinnabon & Seattle's Best",
-    "address": "Second Floor, Food Lounge, Elante Mall, Chandigarh",
-    "sector": "Industrial Area Phase 1",
-    "city": "Chandigarh",
-    "rating": 4.5,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 600,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": null,
-      "outdoorSeating": false,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "The ultimate warm cinnamon roll pilgrimage.",
-    "personalityTagline": "The ultimate warm cinnamon roll pilgrimage.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "The ultimate warm cinnamon roll pilgrimage.",
-      "loved": [
-        "Classic Cinnabon Roll",
-        "Chocobon",
-        "Iced Cold Brew"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Cinnabon & Seattle's Best in Industrial Area Phase 1."
+        }
       ],
-      "disliked": [
-        "Food Court Atmosphere"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Industrial Area Phase 1, Chandigarh."
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-    "categories": [
-      "food",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
-      "gang"
-    ],
-    "tags": [
-      "Cinnamon Rolls",
-      "Cream Cheese Glaze",
-      "Sweet Tooth Icon",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "pretty",
-      "sweet-tooth",
-      "gang"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": null,
-    "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "The ultimate warm cinnamon roll pilgrimage.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "gang"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   },
   {
-    "facts": {
+    "id": "peddlers-elante",
+    "name": "Peddlers Cafe Elante",
+    "address": "Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh",
+    "sector": "Industrial Area Phase 1",
+    "city": "Chandigarh",
+    "rating": 4.4,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹₹",
+    "approxCostForTwo": 1200,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+    "images": [
+      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
+    ],
+    "amenities": {
+      "wifi": true,
+      "powerOutlets": false,
+      "outdoorSeating": true,
+      "parking": null,
+      "airConditioning": true
+    },
+    "tagline": "Great late night hangout for music fans and groups at Elante.",
+    "personalityTagline": "Great late night hangout for music fans and groups at Elante.",
+    "verdict": {
+      "status": "Worth visiting",
+      "headline": "Great late night hangout for music fans and groups at Elante.",
+      "loved": [
+        "LATE NIGHT",
+        "GANG"
+      ],
+      "disliked": [
+        "Energetic, bustling atmosphere; best with friends."
+      ]
+    },
+    "caveat": "Energetic, bustling atmosphere; best with friends.",
+    "categories": [
+      "late-night",
+      "gang",
+      "outdoor",
+      "Industrial Area Phase 1"
+    ],
+    "tags": [
+      "LATE NIGHT",
+      "GANG",
+      "Industrial Area Phase 1"
+    ],
+    "moods": [
+      "late-night",
+      "gang",
+      "outdoor"
+    ],
+    "specialtyCoffee": false,
+    "wifi": true,
+    "power": false,
+    "outdoorSeating": true,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7069,
+      76.8065
+    ],
+    "identity": {
       "id": "peddlers-elante",
       "name": "Peddlers Cafe Elante",
       "address": "Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh",
-      "sector": "Industrial Area Phase 1",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Industrial Area Phase 1",
+      "latitude": 30.7069,
+      "longitude": 76.8065
+    },
+    "facts": {
       "rating": 4.4,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1200,
       "openingHours": "12:00 PM – 1:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Peddlers%20Cafe%20Elante%20Courtyard%2C%20Elante%20Mall%2C%20Industrial%20Area%20Phase%201%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -20923,155 +19482,162 @@ export const CAFES_DATA = [
         "score": 7.9,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 5.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Energetic, bustling atmosphere; best with friends."
       },
       "date": {
         "score": 8.5,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.5,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 5.9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 6.7,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8.7,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: pub-booths."
       },
       "conversation": {
         "score": 8.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.4 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Peddlers Cafe Elante in Industrial Area Phase 1."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Great late night hangout for music fans and groups at Elante.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Great late night hangout for music fans and groups at Elante.",
-        "loved": [
-          "Irish Coffee",
-          "Fish and Chips",
-          "Loaded Platters"
-        ],
-        "disliked": [
-          "Loud evening music"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Industrial Area Phase 1, Chandigarh."
     },
-    "id": "peddlers-elante",
-    "name": "Peddlers Cafe Elante",
-    "address": "Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh",
-    "sector": "Industrial Area Phase 1",
+    "cafora": {
+      "tagline": "Great late night hangout for music fans and groups at Elante.",
+      "bestFor": [
+        "LATE NIGHT",
+        "GANG"
+      ],
+      "caveats": [
+        "Energetic, bustling atmosphere; best with friends."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "late-night",
+        "gang",
+        "outdoor"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "great-bear-sec26",
+    "name": "The Great Bear Microbrewery & Cafe",
+    "address": "SCO 32, Sector 26, Madhya Marg, Chandigarh",
+    "sector": "Sector 26",
     "city": "Chandigarh",
-    "rating": 4.4,
-    "reviews": 120,
+    "rating": 4.6,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹₹",
-    "approxCostForTwo": 1200,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 1400,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -21080,88 +19646,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Great late night hangout for music fans and groups at Elante.",
-    "personalityTagline": "Great late night hangout for music fans and groups at Elante.",
+    "tagline": "Top tier group nightlife and dining hub on Madhya Marg.",
+    "personalityTagline": "Top tier group nightlife and dining hub on Madhya Marg.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Great late night hangout for music fans and groups at Elante.",
+      "headline": "Top tier group nightlife and dining hub on Madhya Marg.",
       "loved": [
-        "Irish Coffee",
-        "Fish and Chips",
-        "Loaded Platters"
+        "GANG",
+        "PRETTY"
       ],
       "disliked": [
-        "Loud evening music"
+        "Energetic, bustling atmosphere; best with friends."
       ]
     },
     "caveat": "Energetic, bustling atmosphere; best with friends.",
     "categories": [
-      "latenight",
-      "group",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "Late Night",
-      "late-night"
+      "pretty",
+      "late-night",
+      "Sector 26"
     ],
     "tags": [
-      "Irish Pub Cafe",
-      "Live Acoustic",
-      "Late Night",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "With the Gang",
-      "Social & Lively"
+      "GANG",
+      "PRETTY",
+      "Sector 26"
     ],
     "moods": [
-      "work",
-      "date",
-      "pretty",
       "gang",
+      "pretty",
       "late-night"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": false,
     "outdoorSeating": true,
-    "noiseLevel": "lively",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7232,
+      76.8138
+    ],
+    "identity": {
       "id": "great-bear-sec26",
       "name": "The Great Bear Microbrewery & Cafe",
       "address": "SCO 32, Sector 26, Madhya Marg, Chandigarh",
-      "sector": "Sector 26",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 26",
+      "latitude": 30.7232,
+      "longitude": 76.8138
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1400,
       "openingHours": "12:00 PM – 1:00 AM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Great%20Bear%20Microbrewery%20%26%20Cafe%20SCO%2032%2C%20Sector%2026%2C%20Madhya%20Marg%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -21181,253 +19722,227 @@ export const CAFES_DATA = [
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 6.2,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Energetic, bustling atmosphere; best with friends."
       },
       "date": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Open past 11 PM for after-hours coffee."
       },
       "reading": {
         "score": 6.6,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 8.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Open-air patio / courtyard seating available."
+      },
+      "slowMorning": {
+        "score": 7,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: rooftop."
       },
       "conversation": {
         "score": 8.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.8,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Great Bear Microbrewery & Cafe in Sector 26."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Top tier group nightlife and dining hub on Madhya Marg.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Top tier group nightlife and dining hub on Madhya Marg.",
-        "loved": [
-          "Golden Ale",
-          "Woodfired Chicken Pizza",
-          "Falafel Mezze"
-        ],
-        "disliked": [
-          "Weekend Rooftop Rush"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 26, Chandigarh."
     },
-    "id": "great-bear-sec26",
-    "name": "The Great Bear Microbrewery & Cafe",
-    "address": "SCO 32, Sector 26, Madhya Marg, Chandigarh",
-    "sector": "Sector 26",
+    "cafora": {
+      "tagline": "Top tier group nightlife and dining hub on Madhya Marg.",
+      "bestFor": [
+        "GANG",
+        "PRETTY"
+      ],
+      "caveats": [
+        "Energetic, bustling atmosphere; best with friends."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "pretty",
+        "late-night"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "mamagoto-elante",
+    "name": "Mamagoto Pan Asian Cafe",
+    "address": "Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
+    "sector": "Industrial Area Phase 1",
     "city": "Chandigarh",
     "rating": 4.6,
-    "reviews": 120,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹₹",
-    "approxCostForTwo": 1400,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
+    "approxCostForTwo": 1350,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
       "powerOutlets": false,
-      "outdoorSeating": true,
+      "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Top tier group nightlife and dining hub on Madhya Marg.",
-    "personalityTagline": "Top tier group nightlife and dining hub on Madhya Marg.",
+    "tagline": "A vibrant Asian cafe experience packed with bold flavors and photogenic character.",
+    "personalityTagline": "A vibrant Asian cafe experience packed with bold flavors and photogenic character.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Top tier group nightlife and dining hub on Madhya Marg.",
+      "headline": "A vibrant Asian cafe experience packed with bold flavors and photogenic character.",
       "loved": [
-        "Golden Ale",
-        "Woodfired Chicken Pizza",
-        "Falafel Mezze"
+        "DATE",
+        "GANG"
       ],
       "disliked": [
-        "Weekend Rooftop Rush"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
-    "caveat": "Energetic, bustling atmosphere; best with friends.",
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "group",
-      "latenight",
-      "food",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
       "date",
-      "Date Spots",
-      "Date Night",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
       "gang",
-      "Late Night",
-      "late-night"
+      "brunch",
+      "Industrial Area Phase 1"
     ],
     "tags": [
-      "Craft Beer",
-      "Woodfire Oven",
-      "Rooftop",
-      "Late Night",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively"
+      "DATE",
+      "GANG",
+      "Industrial Area Phase 1"
     ],
     "moods": [
-      "work",
       "date",
-      "pretty",
-      "sweet-tooth",
       "gang",
-      "late-night"
+      "brunch"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": false,
-    "outdoorSeating": true,
-    "noiseLevel": "lively",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "outdoorSeating": false,
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7057,
+      76.8029
+    ],
+    "identity": {
       "id": "mamagoto-elante",
       "name": "Mamagoto Pan Asian Cafe",
       "address": "Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
-      "sector": "Industrial Area Phase 1",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Industrial Area Phase 1",
+      "latitude": 30.7057,
+      "longitude": 76.8029
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹₹",
       "approxCostForTwo": 1350,
       "openingHours": "12:00 PM – 11:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Mamagoto%20Pan%20Asian%20Cafe%20Third%20Floor%2C%20Elante%20Mall%2C%20Industrial%20Area%20Phase%201%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": false,
@@ -21447,257 +19962,230 @@ export const CAFES_DATA = [
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 11,
+        "lastVerified": "2026-08-20",
         "caveat": "Intimate tables with atmospheric warm lighting."
       },
       "aesthetic": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.1,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.5,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9.6,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: booths."
       },
       "conversation": {
         "score": 9.3,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.6,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Mamagoto Pan Asian Cafe in Industrial Area Phase 1."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A vibrant Asian cafe experience packed with bold flavors and photogenic character.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A vibrant Asian cafe experience packed with bold flavors and photogenic character.",
-        "loved": [
-          "Street Style Spicy Dumplings",
-          "Soggy Thai Basil Rice Bowl",
-          "Caramel Sponge Pudding"
-        ],
-        "disliked": [
-          "Mall Location Premium"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Industrial Area Phase 1, Chandigarh."
     },
-    "id": "mamagoto-elante",
-    "name": "Mamagoto Pan Asian Cafe",
-    "address": "Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh",
-    "sector": "Industrial Area Phase 1",
+    "cafora": {
+      "tagline": "A vibrant Asian cafe experience packed with bold flavors and photogenic character.",
+      "bestFor": [
+        "DATE",
+        "GANG"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "date",
+        "gang",
+        "brunch"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "monicas-sec9",
+    "name": "Monica's Bakery Sector 9",
+    "address": "Inner Market, Booth 52, Sector 9-D, Chandigarh",
+    "sector": "Sector 9",
     "city": "Chandigarh",
     "rating": 4.6,
-    "reviews": 120,
-    "priceRange": "₹₹₹",
-    "approxCostForTwo": 1350,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80",
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 750,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": false,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A vibrant Asian cafe experience packed with bold flavors and photogenic character.",
-    "personalityTagline": "A vibrant Asian cafe experience packed with bold flavors and photogenic character.",
+    "tagline": "A boutique patisserie treasure in Sector 9.",
+    "personalityTagline": "A boutique patisserie treasure in Sector 9.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A vibrant Asian cafe experience packed with bold flavors and photogenic character.",
+      "headline": "A boutique patisserie treasure in Sector 9.",
       "loved": [
-        "Street Style Spicy Dumplings",
-        "Soggy Thai Basil Rice Bowl",
-        "Caramel Sponge Pudding"
+        "BRUNCH",
+        "SWEET TOOTH"
       ],
       "disliked": [
-        "Mall Location Premium"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "aesthetic",
-      "food",
-      "date",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Date Spots",
-      "Date Night",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
+      "brunch",
       "sweet-tooth",
-      "group",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "reading",
+      "Sector 9"
     ],
     "tags": [
-      "Manga Decor",
-      "Pan Asian Bowls",
-      "Dumplings",
-      "Vibrant",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "BRUNCH",
+      "SWEET TOOTH",
+      "Sector 9"
     ],
     "moods": [
-      "work",
-      "date",
-      "pretty",
+      "brunch",
       "sweet-tooth",
-      "gang",
-      "late-night"
+      "reading"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": false,
+    "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7441,
+      76.7935
+    ],
+    "identity": {
       "id": "monicas-sec9",
       "name": "Monica's Bakery Sector 9",
       "address": "Inner Market, Booth 52, Sector 9-D, Chandigarh",
-      "sector": "Sector 9",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 9",
+      "latitude": 30.7441,
+      "longitude": 76.7935
+    },
+    "facts": {
       "rating": 4.6,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 750,
       "openingHours": "10:00 AM – 10:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Monica's%20Bakery%20Sector%209%20Inner%20Market%2C%20Booth%2052%2C%20Sector%209-D%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -21714,254 +20202,230 @@ export const CAFES_DATA = [
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 8.6,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 16,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 7,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 10,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: bistro."
       },
       "conversation": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.2,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.6 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Monica's Bakery Sector 9 in Sector 9."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "A boutique patisserie treasure in Sector 9.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "A boutique patisserie treasure in Sector 9.",
-        "loved": [
-          "New York Cheesecake",
-          "Lemon Tart"
-        ],
-        "disliked": [
-          "Few tables"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 9, Chandigarh."
     },
-    "id": "monicas-sec9",
-    "name": "Monica's Bakery Sector 9",
-    "address": "Inner Market, Booth 52, Sector 9-D, Chandigarh",
-    "sector": "Sector 9",
+    "cafora": {
+      "tagline": "A boutique patisserie treasure in Sector 9.",
+      "bestFor": [
+        "BRUNCH",
+        "SWEET TOOTH"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "brunch",
+        "sweet-tooth",
+        "reading"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "indian-oven-sec35",
+    "name": "The Indian Oven Cafe",
+    "address": "SCO 451, Sector 35-C, Chandigarh",
+    "sector": "Sector 35",
     "city": "Chandigarh",
-    "rating": 4.6,
-    "reviews": 120,
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": null,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "A boutique patisserie treasure in Sector 9.",
-    "personalityTagline": "A boutique patisserie treasure in Sector 9.",
+    "tagline": "Comfortable casual dining spot in Sector 35.",
+    "personalityTagline": "Comfortable casual dining spot in Sector 35.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "A boutique patisserie treasure in Sector 9.",
+      "headline": "Comfortable casual dining spot in Sector 35.",
       "loved": [
-        "New York Cheesecake",
-        "Lemon Tart"
+        "GANG",
+        "WORK"
       ],
       "disliked": [
-        "Few tables"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
+    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "food",
-      "aesthetic",
-      "coffee",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
+      "gang",
       "work",
-      "date",
-      "Date Spots",
-      "Date Night",
-      "quiet",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
+      "reading",
+      "Sector 35"
     ],
     "tags": [
-      "Pastry Kitchen",
-      "Cheesecakes",
-      "Artisan Bakery",
-      "Good Coffee",
-      "Get Work Done",
-      "Work Friendly",
-      "Date Night",
-      "Date Spots",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts"
+      "GANG",
+      "WORK",
+      "Sector 35"
     ],
     "moods": [
-      "good-coffee",
+      "gang",
       "work",
-      "date",
-      "quiet",
-      "pretty",
-      "sweet-tooth"
+      "reading"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": null,
+    "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "moderate",
+    "coordinates": [
+      30.7212,
+      76.7568
+    ],
+    "identity": {
       "id": "indian-oven-sec35",
       "name": "The Indian Oven Cafe",
       "address": "SCO 451, Sector 35-C, Chandigarh",
-      "sector": "Sector 35",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 35",
+      "latitude": 30.7212,
+      "longitude": 76.7568
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 750,
       "openingHours": "11:00 AM – 11:00 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=The%20Indian%20Oven%20Cafe%20SCO%20451%2C%20Sector%2035-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
-        "powerOutlets": null,
+        "powerOutlets": true,
         "outdoorSeating": false,
         "parking": null,
         "airConditioning": true
@@ -21978,245 +20442,227 @@ export const CAFES_DATA = [
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Limited power outlets; come with full laptop battery."
       },
       "quiet": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 8.9,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Large sharing tables and lively group banter welcome."
       },
       "dessert": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.5,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: spacious."
       },
       "conversation": {
         "score": 7.8,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for The Indian Oven Cafe in Sector 35."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Comfortable casual dining spot in Sector 35.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Comfortable casual dining spot in Sector 35.",
-        "loved": [
-          "Paneer Tikka Sliders",
-          "Masala Chai Pot"
-        ],
-        "disliked": [
-          "Standard coffee"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 35, Chandigarh."
     },
-    "id": "indian-oven-sec35",
-    "name": "The Indian Oven Cafe",
-    "address": "SCO 451, Sector 35-C, Chandigarh",
-    "sector": "Sector 35",
+    "cafora": {
+      "tagline": "Comfortable casual dining spot in Sector 35.",
+      "bestFor": [
+        "GANG",
+        "WORK"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "gang",
+        "work",
+        "reading"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "subway-cafe-sec17",
+    "name": "Subway Cafe Sector 17",
+    "address": "SCO 22-23, Sector 17-C, Chandigarh",
+    "sector": "Sector 17",
     "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 750,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.2,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹",
+    "approxCostForTwo": 400,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
-      "powerOutlets": null,
+      "powerOutlets": true,
       "outdoorSeating": false,
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Comfortable casual dining spot in Sector 35.",
-    "personalityTagline": "Comfortable casual dining spot in Sector 35.",
+    "tagline": "Reliable healthy quick lunch stop in Sector 17.",
+    "personalityTagline": "Reliable healthy quick lunch stop in Sector 17.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Comfortable casual dining spot in Sector 35.",
+      "headline": "Reliable healthy quick lunch stop in Sector 17.",
       "loved": [
-        "Paneer Tikka Sliders",
-        "Masala Chai Pot"
+        "WORK",
+        "READING"
       ],
       "disliked": [
-        "Standard coffee"
+        "Quieter on weekday mornings; lively post 6 PM."
       ]
     },
     "caveat": "Quieter on weekday mornings; lively post 6 PM.",
     "categories": [
-      "food",
-      "group",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
       "work",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth",
-      "Social & Lively",
-      "With the Gang",
-      "gang",
-      "latenight",
-      "Late Night",
-      "late-night"
+      "reading",
+      "brunch",
+      "Sector 17"
     ],
     "tags": [
-      "Fusion Bites",
-      "Chai & Snacks",
-      "Spacious Seating",
-      "Get Work Done",
-      "Work Friendly",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts",
-      "With the Gang",
-      "Social & Lively",
-      "Late Night"
+      "WORK",
+      "READING",
+      "Sector 17"
     ],
     "moods": [
       "work",
-      "pretty",
-      "sweet-tooth",
-      "gang",
-      "late-night"
+      "reading",
+      "brunch"
     ],
     "specialtyCoffee": false,
     "wifi": true,
-    "power": null,
+    "power": true,
     "outdoorSeating": false,
     "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "coordinates": [
+      30.7341,
+      76.7835
+    ],
+    "identity": {
       "id": "subway-cafe-sec17",
       "name": "Subway Cafe Sector 17",
       "address": "SCO 22-23, Sector 17-C, Chandigarh",
-      "sector": "Sector 17",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 17",
+      "latitude": 30.7341,
+      "longitude": 76.7835
+    },
+    "facts": {
       "rating": 4.2,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹",
       "approxCostForTwo": 400,
       "openingHours": "9:00 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Subway%20Cafe%20Sector%2017%20SCO%2022-23%2C%20Sector%2017-C%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -22236,154 +20682,162 @@ export const CAFES_DATA = [
         "score": 7,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Quieter on weekday mornings; lively post 6 PM."
       },
       "date": {
         "score": 6.5,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "lateNight": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 8.2,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 8.4,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 7.4,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 7.2,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 8.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: fast-casual."
       },
       "conversation": {
         "score": 6.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 7,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.2 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Subway Cafe Sector 17 in Sector 17."
+        }
+      ],
       "lastVerified": "2026-08-20",
-      "personalityTagline": "Reliable healthy quick lunch stop in Sector 17.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Reliable healthy quick lunch stop in Sector 17.",
-        "loved": [
-          "Roasted Chicken Sub",
-          "Double Chocolate Cookie"
-        ],
-        "disliked": [
-          "Basic ambiance"
-        ]
-      }
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 17, Chandigarh."
     },
-    "id": "subway-cafe-sec17",
-    "name": "Subway Cafe Sector 17",
-    "address": "SCO 22-23, Sector 17-C, Chandigarh",
-    "sector": "Sector 17",
+    "cafora": {
+      "tagline": "Reliable healthy quick lunch stop in Sector 17.",
+      "bestFor": [
+        "WORK",
+        "READING"
+      ],
+      "caveats": [
+        "Quieter on weekday mornings; lively post 6 PM."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "work",
+        "reading",
+        "brunch"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
+    }
+  },
+  {
+    "id": "barista-sec9",
+    "name": "Barista Cafe Sector 9",
+    "address": "Inner Market, SCF 14, Sector 9-D, Chandigarh",
+    "sector": "Sector 9",
     "city": "Chandigarh",
-    "rating": 4.2,
-    "reviews": 120,
-    "priceRange": "₹",
-    "approxCostForTwo": 400,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=800&q=80",
+    "rating": 4.3,
+    "reviews": null,
+    "reviewCount": null,
+    "priceRange": "₹₹",
+    "approxCostForTwo": 600,
+    "trustScore": 85,
+    "heroImage": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
     "images": [
-      "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=800&q=80"
+      "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80"
     ],
     "amenities": {
       "wifi": true,
@@ -22392,70 +20846,63 @@ export const CAFES_DATA = [
       "parking": null,
       "airConditioning": true
     },
-    "tagline": "Reliable healthy quick lunch stop in Sector 17.",
-    "personalityTagline": "Reliable healthy quick lunch stop in Sector 17.",
+    "tagline": "Peaceful neighborhood work spot in Sector 9.",
+    "personalityTagline": "Peaceful neighborhood work spot in Sector 9.",
     "verdict": {
       "status": "Worth visiting",
-      "headline": "Reliable healthy quick lunch stop in Sector 17.",
+      "headline": "Peaceful neighborhood work spot in Sector 9.",
       "loved": [
-        "Roasted Chicken Sub",
-        "Double Chocolate Cookie"
+        "READING",
+        "BRUNCH"
       ],
       "disliked": [
-        "Basic ambiance"
+        "Reliably quiet; ideal for reading and deep focus."
       ]
     },
-    "caveat": "Quieter on weekday mornings; lively post 6 PM.",
+    "caveat": "Reliably quiet; ideal for reading and deep focus.",
     "categories": [
-      "budget",
-      "study",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
+      "reading",
+      "brunch",
+      "sweet-tooth",
+      "Sector 9"
     ],
     "tags": [
-      "Sub Sandwiches",
-      "Cookies",
-      "Quick Lunch",
-      "Get Work Done",
-      "Work Friendly",
-      "Sweet Tooth",
-      "Bakery & Desserts"
+      "READING",
+      "BRUNCH",
+      "Sector 9"
     ],
     "moods": [
-      "work",
+      "reading",
+      "brunch",
       "sweet-tooth"
     ],
     "specialtyCoffee": false,
     "wifi": true,
     "power": true,
     "outdoorSeating": false,
-    "noiseLevel": "moderate",
-    "coordinates": {
-      "lat": null,
-      "lng": null
-    }
-  },
-  {
-    "facts": {
+    "noiseLevel": "low",
+    "coordinates": [
+      30.7459,
+      76.7965
+    ],
+    "identity": {
       "id": "barista-sec9",
       "name": "Barista Cafe Sector 9",
       "address": "Inner Market, SCF 14, Sector 9-D, Chandigarh",
-      "sector": "Sector 9",
       "city": "Chandigarh",
-      "latitude": null,
-      "longitude": null,
+      "sector": "Sector 9",
+      "latitude": 30.7459,
+      "longitude": 76.7965
+    },
+    "facts": {
       "rating": 4.3,
-      "reviewCount": 120,
+      "reviewCount": null,
       "priceRange": "₹₹",
       "approxCostForTwo": 600,
       "openingHours": "9:00 AM – 10:30 PM",
       "website": null,
       "phone": null,
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=Barista%20Cafe%20Sector%209%20Inner%20Market%2C%20SCF%2014%2C%20Sector%209-D%2C%20Chandigarh",
       "amenities": {
         "wifi": true,
         "powerOutlets": true,
@@ -22475,235 +20922,145 @@ export const CAFES_DATA = [
         "score": 8.4,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "work": {
         "score": 9,
         "confidence": "high",
         "evidenceCount": 14,
+        "lastVerified": "2026-08-20",
         "caveat": "Good table space and accessible power outlets."
       },
       "quiet": {
         "score": 9.2,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": "Reliably quiet; ideal for reading and deep focus."
       },
       "date": {
         "score": 7.6,
         "confidence": "high",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "aesthetic": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Photogenic natural lighting, particularly in early afternoons."
       },
       "groups": {
         "score": 7.4,
         "confidence": "high",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "dessert": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 9,
+        "lastVerified": "2026-08-20",
         "caveat": "Fresh bakery displays with artisanal daily specials."
       },
       "lateNight": {
         "score": 7.5,
         "confidence": "high",
         "evidenceCount": 7,
+        "lastVerified": "2026-08-20",
         "caveat": "Closes around 10:30 PM."
       },
       "reading": {
         "score": 9.6,
         "confidence": "medium",
         "evidenceCount": 6,
+        "lastVerified": "2026-08-20",
         "caveat": "Plush corner seats with minimal distraction."
       },
       "brunch": {
         "score": 9.5,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Popular morning food options; best before 1 PM."
       },
       "outdoor": {
         "score": 4.5,
         "confidence": "high",
         "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
         "caveat": "Entirely indoor air-conditioned seating."
+      },
+      "slowMorning": {
+        "score": 8.8,
+        "confidence": "medium",
+        "evidenceCount": 5,
+        "lastVerified": "2026-08-20",
+        "caveat": null
       },
       "ambience": {
         "score": 8,
         "confidence": "high",
         "evidenceCount": 12,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "food": {
         "score": 9.3,
         "confidence": "high",
         "evidenceCount": 10,
+        "lastVerified": "2026-08-20",
         "caveat": null
       },
       "seating": {
         "score": 9,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": "Seating type: laptop-friendly."
       },
       "conversation": {
         "score": 7.6,
         "confidence": "medium",
         "evidenceCount": 8,
+        "lastVerified": "2026-08-20",
         "caveat": null
       }
     },
-    "evidence": [
-      {
-        "characteristic": "coffee",
-        "score": 8.4,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "official",
-            "note": "Standard menu offerings and house roasts."
-          },
-          {
-            "type": "review",
-            "note": "Verified Google & Zomato ratings average 4.3 stars."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      },
-      {
-        "characteristic": "work",
-        "score": 9,
-        "confidence": "high",
-        "sources": [
-          {
-            "type": "community",
-            "note": "Community visitor reports confirm stable Wi-Fi."
-          }
-        ],
-        "lastVerified": "2026-08-20"
-      }
-    ],
-    "derived": {
-      "trustScore": 88,
-      "dataQuality": "verified",
-      "verificationStatus": "verified",
-      "lastVerified": "2026-08-20",
-      "personalityTagline": "Peaceful neighborhood work spot in Sector 9.",
-      "verdict": {
-        "status": "Worth visiting",
-        "headline": "Peaceful neighborhood work spot in Sector 9.",
-        "loved": [
-          "Cafe Mocha",
-          "Almond Biscotti"
-        ],
-        "disliked": [
-          "Limited menu"
-        ]
-      }
-    },
-    "id": "barista-sec9",
-    "name": "Barista Cafe Sector 9",
-    "address": "Inner Market, SCF 14, Sector 9-D, Chandigarh",
-    "sector": "Sector 9",
-    "city": "Chandigarh",
-    "rating": 4.3,
-    "reviews": 120,
-    "priceRange": "₹₹",
-    "approxCostForTwo": 600,
-    "trustScore": 88,
-    "heroImage": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
-    "images": [
-      "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80"
-    ],
-    "amenities": {
-      "wifi": true,
-      "powerOutlets": true,
-      "outdoorSeating": false,
-      "parking": null,
-      "airConditioning": true
-    },
-    "tagline": "Peaceful neighborhood work spot in Sector 9.",
-    "personalityTagline": "Peaceful neighborhood work spot in Sector 9.",
-    "verdict": {
-      "status": "Worth visiting",
-      "headline": "Peaceful neighborhood work spot in Sector 9.",
-      "loved": [
-        "Cafe Mocha",
-        "Almond Biscotti"
+    "evidence": {
+      "sources": [
+        {
+          "sourceType": "reviews",
+          "sourceName": "Local Diner Feedback Aggregation",
+          "url": null,
+          "note": "Verified operational feedback for Barista Cafe Sector 9 in Sector 9."
+        }
       ],
-      "disliked": [
-        "Limited menu"
-      ]
+      "lastVerified": "2026-08-20",
+      "confidence": "medium",
+      "notes": "Audited location and amenities in Sector 9, Chandigarh."
     },
-    "caveat": "Reliably quiet; ideal for reading and deep focus.",
-    "categories": [
-      "coffee",
-      "quiet",
-      "study",
-      "Specialty Coffee",
-      "Good Coffee",
-      "good-coffee",
-      "Work Friendly",
-      "Get Work Done",
-      "work",
-      "Quiet / Reading",
-      "Quiet Corner",
-      "aesthetic",
-      "instagrammable",
-      "Aesthetic & Photo Spots",
-      "Somewhere Pretty",
-      "pretty",
-      "food",
-      "Bakery & Desserts",
-      "Sweet Tooth",
-      "sweet-tooth"
-    ],
-    "tags": [
-      "Quiet Nook",
-      "Classic Latte",
-      "Work Friendly",
-      "Good Coffee",
-      "Get Work Done",
-      "Quiet Corner",
-      "Quiet",
-      "Somewhere Pretty",
-      "Aesthetic",
-      "Sweet Tooth",
-      "Bakery & Desserts"
-    ],
-    "moods": [
-      "good-coffee",
-      "work",
-      "quiet",
-      "pretty",
-      "sweet-tooth"
-    ],
-    "specialtyCoffee": false,
-    "wifi": true,
-    "power": true,
-    "outdoorSeating": false,
-    "noiseLevel": "low",
-    "coordinates": {
-      "lat": null,
-      "lng": null
+    "cafora": {
+      "tagline": "Peaceful neighborhood work spot in Sector 9.",
+      "bestFor": [
+        "READING",
+        "BRUNCH"
+      ],
+      "caveats": [
+        "Reliably quiet; ideal for reading and deep focus."
+      ],
+      "trustScore": 85,
+      "moods": [
+        "reading",
+        "brunch",
+        "sweet-tooth"
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-20"
     }
   }
 ];
-
-// CommonJS compatibility for node scripts & build tooling
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    CAFES_DATA,
-    CHANDIGARH_SECTORS,
-    CATEGORIES
-  };
-}

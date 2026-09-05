@@ -1,7 +1,71 @@
 import React, { useEffect, useRef } from "react";
 import { calculateTrustScore } from "../../utils/trustScore";
 
-export default function InteractiveMap({ cafes, selectedSector, activeCafeId }) {
+// Sector coordinate lookup fallback for Chandigarh
+const CHANDIGARH_SECTOR_COORDS = {
+  "sector 7": [30.7303, 76.8048],
+  "sector 8": [30.7380, 76.8000],
+  "sector 9": [30.7450, 76.7950],
+  "sector 10": [30.7520, 76.7900],
+  "sector 11": [30.7580, 76.7850],
+  "sector 15": [30.7550, 76.7720],
+  "sector 16": [30.7480, 76.7770],
+  "sector 17": [30.7350, 76.7850],
+  "sector 22": [30.7250, 76.7750],
+  "sector 26": [30.7220, 76.8150],
+  "sector 34": [30.7180, 76.7650],
+  "sector 35": [30.7200, 76.7580],
+  "sector 43": [30.7100, 76.7450],
+  "sector 44": [30.7050, 76.7500],
+  "sector 50": [30.6980, 76.7400],
+  "industrial area": [30.7060, 76.8050]
+};
+
+export function getCafeCoords(cafe) {
+  if (!cafe) return null;
+
+  // 1. If coordinates is an Array [lat, lng]
+  if (Array.isArray(cafe.coordinates) && cafe.coordinates.length >= 2) {
+    const lat = Number(cafe.coordinates[0]);
+    const lng = Number(cafe.coordinates[1]);
+    if (!isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0) {
+      return [lat, lng];
+    }
+  }
+
+  // 2. If coordinates is an Object { lat, lng }
+  if (cafe.coordinates && typeof cafe.coordinates === "object") {
+    const lat = Number(cafe.coordinates.lat ?? cafe.coordinates.latitude);
+    const lng = Number(cafe.coordinates.lng ?? cafe.coordinates.longitude);
+    if (!isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0) {
+      return [lat, lng];
+    }
+  }
+
+  // 3. If in identity or facts
+  const idLat = Number(cafe.identity?.latitude ?? cafe.facts?.latitude);
+  const idLng = Number(cafe.identity?.longitude ?? cafe.facts?.longitude);
+  if (!isNaN(idLat) && !isNaN(idLng) && idLat !== 0 && idLng !== 0) {
+    return [idLat, idLng];
+  }
+
+  // 4. Sector fallback lookup with slight deterministic jitter so pins don't overlap
+  const sec = (cafe.sector || cafe.identity?.sector || "").toLowerCase();
+  for (const [sKey, baseCoords] of Object.entries(CHANDIGARH_SECTOR_COORDS)) {
+    if (sec.includes(sKey)) {
+      let hash = 0;
+      const str = cafe.id || cafe.name || "";
+      for (let i = 0; i < str.length; i++) hash = (hash * 31 + str.charCodeAt(i)) % 1000;
+      const jitterLat = ((hash % 16) - 8) * 0.0003;
+      const jitterLng = (((hash * 7) % 16) - 8) * 0.0003;
+      return [baseCoords[0] + jitterLat, baseCoords[1] + jitterLng];
+    }
+  }
+
+  return [30.7350, 76.7900]; // Default city center (Sector 17)
+}
+
+export default function InteractiveMap({ cafes = [], selectedSector, activeCafeId }) {
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const markersRef = useRef([]);
@@ -43,7 +107,8 @@ export default function InteractiveMap({ cafes, selectedSector, activeCafeId }) 
 
     // Add cafe markers
     cafes.forEach((cafe) => {
-      if (!cafe.coordinates || cafe.coordinates.length < 2) return;
+      const coords = getCafeCoords(cafe);
+      if (!coords) return;
 
       const trust = calculateTrustScore(cafe);
 
@@ -102,7 +167,7 @@ export default function InteractiveMap({ cafes, selectedSector, activeCafeId }) 
           </div>
 
           <div style="font-size: 11px; color: #dcd0bf; margin-bottom: 8px;">
-            ${cafe.distanceKm} km · ${cafe.priceRange} (₹${cafe.approxCostForTwo} for 2)
+            ${cafe.distanceKm ? cafe.distanceKm + " km · " : ""}${cafe.priceRange} (₹${cafe.approxCostForTwo} for 2)
           </div>
 
           <div style="background: rgba(16,11,8,0.5); padding: 7px 9px; border-radius: 6px; margin-bottom: 10px; font-size: 11px; line-height: 1.35; border: 1px solid rgba(252,248,242,0.1);">
@@ -127,7 +192,7 @@ export default function InteractiveMap({ cafes, selectedSector, activeCafeId }) 
         </div>
       `;
 
-      const marker = L.marker([cafe.coordinates[0], cafe.coordinates[1]], { icon: customIcon })
+      const marker = L.marker(coords, { icon: customIcon })
         .addTo(map)
         .bindPopup(popupHtml, {
           className: "custom-leaflet-popup",
@@ -137,7 +202,7 @@ export default function InteractiveMap({ cafes, selectedSector, activeCafeId }) 
       // If this is the active cafe, open its popup & pan to it
       if (activeCafeId && cafe.id === activeCafeId) {
         marker.openPopup();
-        map.setView([cafe.coordinates[0], cafe.coordinates[1]], 15);
+        map.setView(coords, 15);
       }
 
       markersRef.current.push(marker);
@@ -146,15 +211,18 @@ export default function InteractiveMap({ cafes, selectedSector, activeCafeId }) 
     // Auto fit bounds if multiple cafes
     if (cafes.length > 1 && !activeCafeId) {
       const validCoords = cafes
-        .filter((c) => c.coordinates && c.coordinates.length >= 2)
-        .map((c) => [c.coordinates[0], c.coordinates[1]]);
+        .map((c) => getCafeCoords(c))
+        .filter(Boolean);
 
       if (validCoords.length > 0) {
         const bounds = L.latLngBounds(validCoords);
         map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
       }
     } else if (cafes.length === 1) {
-      map.setView([cafes[0].coordinates[0], cafes[0].coordinates[1]], 15);
+      const singleCoords = getCafeCoords(cafes[0]);
+      if (singleCoords) {
+        map.setView(singleCoords, 15);
+      }
     }
   }, [cafes, activeCafeId]);
 
@@ -163,13 +231,15 @@ export default function InteractiveMap({ cafes, selectedSector, activeCafeId }) 
     if (!mapInstanceRef.current || selectedSector === "All Chandigarh") return;
 
     const sectorCafes = cafes.filter(
-      (c) => c.sector?.toLowerCase().includes(selectedSector.toLowerCase()) && c.coordinates
+      (c) => c.sector?.toLowerCase().includes(selectedSector.toLowerCase())
     );
 
     if (sectorCafes.length > 0) {
-      const coords = sectorCafes.map((c) => [c.coordinates[0], c.coordinates[1]]);
-      const bounds = window.L.latLngBounds(coords);
-      mapInstanceRef.current.fitBounds(bounds, { padding: [60, 60], maxZoom: 15 });
+      const coords = sectorCafes.map((c) => getCafeCoords(c)).filter(Boolean);
+      if (coords.length > 0) {
+        const bounds = window.L.latLngBounds(coords);
+        mapInstanceRef.current.fitBounds(bounds, { padding: [60, 60], maxZoom: 15 });
+      }
     }
   }, [selectedSector, cafes]);
 
