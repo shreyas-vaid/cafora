@@ -165,7 +165,7 @@ export default function TrustBadge({ cafe, scoreOverride, size = "normal" }) {
           <div style={{ fontWeight: 700, color: "var(--accent-orange)", marginBottom: "4px" }}>
             🛡️ CAFORA Trust ({trust.score}/100)
           </div>
-          CAFORA Trust measures how confidently we can recommend this place based on review consistency, source agreement, recency and available verification.
+          CAFORA Trust reflects how confidently we can recommend this information based on source quality, consistency and recency.
         </div>
       )}
     </div>

@@ -147,7 +147,7 @@ CAFORA is a curated Chandigarh cafe discovery platform. It cuts through generic 
 - Sector-based location filtering covering 16 Chandigarh sectors
 - 87 verified cafes with real attributes (Wi-Fi, power outlets, noise level, seating comfort, prices)
 
-## Mood Categories
+## Mood Categories (12 Curated Vibes)
 1. Good Coffee (☕) - Specialty roasters, single origins, manual pour-overs.
 2. Get Work Done (💻) - Ergonomic seating, stable Wi-Fi, accessible power outlets.
 3. Date Night (❤️) - Romantic mood lighting, intimate seating, curated music.
@@ -156,6 +156,10 @@ CAFORA is a curated Chandigarh cafe discovery platform. It cuts through generic 
 6. Sweet Tooth (🍰) - Outstanding bakeries, artisanal patisseries, decadent desserts.
 7. With the Gang (👯) - Spacious sharing tables, social buzz, sharing platters.
 8. Late Night (🌙) - Open after hours for late-night coffee.
+9. Read & Unwind (📚) - Comfortable plush seating, tranquil low distraction, books.
+10. Brunch (🥐) - Wholesome morning plates, artisan toasts, daytime dining.
+11. Outdoor Escape (🌳) - Sunlit courtyards, garden patios, breezy open-air terraces.
+12. Slow Morning (🧘) - Gentle morning light, unhurried coffee, peaceful early ambiance.
 
 ## Curated Cafes Directory (${CAFES_DATA.length} Verified Spots)
 ${CAFES_DATA.map(c => `### ${c.name} (${c.sector})
@@ -163,6 +167,7 @@ ${CAFES_DATA.map(c => `### ${c.name} (${c.sector})
 - Rating: ${c.rating} (${c.reviews} reviews)
 - Trust Score: ${c.trustScore || 88}/100
 - Best for: ${(c.moods || c.categories || []).join(', ')}
+- Caveat: ${c.characteristics?.quiet?.caveat || c.characteristics?.work?.caveat || 'None reported'}
 - Description: ${c.verdict?.headline || c.featuredQuote || 'Verified spot'}
 - Address: ${c.address || c.sector}
 `).join('\n')}

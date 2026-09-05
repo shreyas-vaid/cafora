@@ -91,16 +91,16 @@ export default function MoodSelector({
         )}
       </div>
 
-      {/* Responsive Mood Card Grid */}
+      {/* Responsive Mood Card Grid (12 Moods) */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-          gap: "14px"
+          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+          gap: "12px"
         }}
       >
         {MOODS_LIST.map((mood) => {
-          const isSelected = activeMoods.includes(mood.id);
+          const isSelected = activeMoods.includes(mood.id) || (mood.id === "good-coffee" && activeMoods.includes("coffee"));
 
           return (
             <motion.div

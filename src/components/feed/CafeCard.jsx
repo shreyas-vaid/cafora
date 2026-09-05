@@ -8,6 +8,7 @@ import {
   calculateMatchPercentage,
   getMatchLabel,
   getWhyItMatches,
+  getCafeCaveat,
   getCaforaSaysPhrase
 } from "../../utils/vibeEngine";
 
@@ -50,6 +51,7 @@ export default function CafeCard({
   const matchPercentage = calculateMatchPercentage(cafe, activeMoods, searchQuery);
   const matchLabel = getMatchLabel(matchPercentage);
   const whyReasons = getWhyItMatches(cafe, activeMoods);
+  const caveat = getCafeCaveat(cafe, activeMoods);
   const caforaSays = isTopPick ? getCaforaSaysPhrase(cafe, activeMoods) : null;
   const isVibeActive = activeMoods.length > 0 || (searchQuery && searchQuery.trim().length > 0);
 
@@ -347,7 +349,7 @@ export default function CafeCard({
                     borderRadius: "var(--radius-xs)"
                   }}
                 >
-                  {matchPercentage}% MATCH · {matchLabel}
+                  {matchPercentage}% CAFORA MATCH · {matchLabel}
                 </div>
               )}
             </div>
@@ -382,6 +384,26 @@ export default function CafeCard({
                     <span>{reason}</span>
                   </div>
                 ))}
+
+                {/* Granular Caveat / Operational Note */}
+                {caveat && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      color: "var(--cream-muted)",
+                      fontSize: "10.5px",
+                      fontStyle: "italic",
+                      marginTop: "3px",
+                      borderTop: "1px solid rgba(252, 248, 242, 0.08)",
+                      paddingTop: "4px"
+                    }}
+                  >
+                    <span style={{ color: "var(--accent-orange)", fontSize: "10px" }}>ⓘ</span>
+                    <span>{caveat}</span>
+                  </div>
+                )}
               </div>
             )}
 

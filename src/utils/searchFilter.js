@@ -12,6 +12,7 @@
 
 import { calculateTrustScore } from "./trustScore.js";
 import { getRecommendationScore, LOW_TRUST_THRESHOLD } from "./recommendation.js";
+import { extractVibesFromSearch, getCharacteristicScore } from "./vibeEngine.js";
 
 export function filterAndSortCafes(cafes, {
   searchQuery = "",
@@ -95,10 +96,18 @@ export function filterAndSortCafes(cafes, {
           cafe.verdict?.headline || ""
         ].join(" ").toLowerCase();
 
-        // Must match at least one significant token, or if vibes extracted, allow vibe matching
+        // Must match at least one significant token, or match detected vibe characteristics
         const matchesAnyToken = searchTokens.some((token) => searchableText.includes(token));
         if (!matchesAnyToken) {
-          return false;
+          const detectedVibes = extractVibesFromSearch(query);
+          const hasVibeSuitability = detectedVibes.some((v) => {
+            const charKey = v === "good-coffee" ? "coffee" : v === "late-night" ? "lateNight" : v;
+            const score = getCharacteristicScore(cafe, charKey);
+            return score !== null && score >= 7.5;
+          });
+          if (!hasVibeSuitability) {
+            return false;
+          }
         }
       }
     }
