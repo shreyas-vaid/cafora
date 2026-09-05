@@ -18,8 +18,8 @@ import { CAFES_DATA } from './data/cafesData';
 test('renders Discover hero, 12-mood selection, and recommendations without zero results', async () => {
   render(<Discover />);
 
-  // 1. Hero Eyebrow contains 87 verified spots
-  expect(screen.getByText(/CHANDIGARH • 87 VERIFIED SPOTS/i)).toBeInTheDocument();
+  // 1. Hero Eyebrow contains 87 audited & curated spots
+  expect(screen.getByText(/CHANDIGARH • 87 AUDITED & CURATED SPOTS/i)).toBeInTheDocument();
 
   // 2. Date Night card exists and can be clicked
   const dateCard = screen.getByRole('button', { name: /Select vibe: DATE NIGHT/i });

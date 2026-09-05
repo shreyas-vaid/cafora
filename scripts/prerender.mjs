@@ -41,12 +41,15 @@ async function prerender() {
           "addressCountry": "IN"
         },
         "priceRange": cafe.priceRange || "₹₹",
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": cafe.rating || 4.5,
-          "reviewCount": cafe.reviews || 100
-        },
-        "description": cafe.verdict?.headline || cafe.featuredQuote || `Verified Chandigarh cafe in ${cafe.sector}`,
+        ...(cafe.rating ? {
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": cafe.rating,
+            "bestRating": 5,
+            "worstRating": 1
+          }
+        } : {}),
+        "description": cafe.verdict?.headline || cafe.tagline || `Audited Chandigarh cafe in ${cafe.sector}`,
         "keywords": [...(cafe.categories || []), ...(cafe.tags || []), ...(cafe.moods || [])].join(", ")
       }
     }))
@@ -57,7 +60,7 @@ async function prerender() {
   <div class="app-shell" style="background:#100b08;color:#fcf8f2;min-height:100vh;font-family:sans-serif;">
     <header style="padding:24px 20px;border-bottom:1px solid rgba(252,248,242,0.1);max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;">
       <h1 style="font-size:24px;letter-spacing:0.04em;margin:0;">CAFORA</h1>
-      <p style="margin:0;font-size:13px;color:#a89f91;">CHANDIGARH • ${CAFES_DATA.length} VERIFIED SPOTS</p>
+      <p style="margin:0;font-size:13px;color:#a89f91;">CHANDIGARH • ${CAFES_DATA.length} AUDITED & CURATED SPOTS</p>
     </header>
 
     <main style="max-width:1100px;margin:0 auto;padding:40px 20px;">
@@ -66,7 +69,7 @@ async function prerender() {
           WHERE ARE WE HAVING <span style="color:#e07a38;">coffee</span> TODAY?
         </h2>
         <p style="font-size:18px;color:#a89f91;max-width:620px;margin:0 auto;">
-          Chandigarh has way too many cafes. We narrowed it down to ${CAFES_DATA.length} verified spots with honest trust scores.
+          Chandigarh has way too many cafes. We narrowed it down to ${CAFES_DATA.length} audited spots with honest trust scores.
         </p>
       </section>
 
@@ -86,7 +89,7 @@ async function prerender() {
 
       <section>
         <h3 style="font-size:20px;margin-bottom:20px;border-bottom:1px solid rgba(252,248,242,0.1);padding-bottom:10px;">
-          ✦ VERIFIED CHANDIGARH CAFES (${CAFES_DATA.length})
+          ✦ AUDITED CHANDIGARH CAFES (${CAFES_DATA.length})
         </h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;">
           ${CAFES_DATA.map(c => `
@@ -95,9 +98,9 @@ async function prerender() {
                 <h4 style="font-size:18px;margin:0;color:#fcf8f2;">${c.name}</h4>
                 <span style="font-size:13px;color:#e07a38;font-weight:bold;">${c.priceRange || '₹₹'}</span>
               </div>
-              <p style="font-size:13px;color:#e07a38;margin:0 0 8px 0;">${c.sector} • Rating: ${c.rating || 4.5} (${c.reviews || 0} reviews)</p>
+              <p style="font-size:13px;color:#e07a38;margin:0 0 8px 0;">${c.sector} • Rating: ★ ${c.rating || 4.5}${c.reviews && c.reviews > 0 ? ` (${c.reviews} reviews)` : ' (Verified listing)'}</p>
               <p style="font-size:13px;color:#d5cdc2;line-height:1.4;margin:0 0 12px 0;">
-                ${c.verdict?.headline || c.featuredQuote || 'Recommended verified spot in Chandigarh.'}
+                ${c.tagline || c.verdict?.headline || 'Audited cafe in Chandigarh.'}
               </p>
               <div style="font-size:11px;color:#a89f91;">
                 <strong>Vibes:</strong> ${(c.moods || c.categories || []).join(', ')}

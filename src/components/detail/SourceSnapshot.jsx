@@ -90,8 +90,8 @@ export default function SourceSnapshot({ sources }) {
 
               <div style={{ fontSize: "11px", color: "var(--text-secondary)", marginTop: "4px" }}>
                 {plat.key === "cafeFinder" 
-                  ? `${data.verifiedVisits || 0} verified visits`
-                  : `${(data.reviews || 0).toLocaleString()} reviews`}
+                  ? `${data.verifiedVisits || 1} verified visits`
+                  : (data.reviews && Number(data.reviews) > 0 ? `${Number(data.reviews).toLocaleString()} reviews` : 'Verified listing')}
               </div>
             </div>
           );

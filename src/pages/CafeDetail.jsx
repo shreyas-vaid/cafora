@@ -372,9 +372,9 @@ export default function CafeDetail() {
                       Rating
                     </div>
                     <div style={{ fontSize: "17px", fontWeight: 800, color: "var(--gold)" }}>
-                      ★ {cafe.rating} {cafe.reviewCount != null && (
+                      ★ {cafe.rating} {cafe.reviewCount != null && cafe.reviewCount > 0 && (
                         <span style={{ fontSize: "12px", color: "var(--cream-faint)", fontWeight: 400 }}>
-                          ({cafe.reviewCount} reviews)
+                          ({Number(cafe.reviewCount).toLocaleString()} reviews)
                         </span>
                       )}
                     </div>

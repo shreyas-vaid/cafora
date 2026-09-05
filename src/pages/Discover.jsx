@@ -145,7 +145,7 @@ export default function Discover() {
               style={{ marginBottom: "16px" }}
             >
               <span className="label-editorial" style={{ letterSpacing: "0.2em" }}>
-                <span>✦</span> CHANDIGARH • {CAFES_DATA.length} VERIFIED SPOTS
+                <span>✦</span> CHANDIGARH • {CAFES_DATA.length} AUDITED & CURATED SPOTS
               </span>
             </motion.div>
 

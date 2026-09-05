@@ -306,7 +306,7 @@ export function extractVibesFromSearch(query = "") {
   if (q.includes("quiet") || q.includes("silent") || q.includes("calm") || q.includes("peace") || q.includes("secluded") || q.includes("alone") || q.includes("focus")) {
     detected.push("quiet");
   }
-  if (q.includes("pretty") || q.includes("aesthetic") || q.includes("photo") || q.includes("instagram") || q.includes("beautiful") || q.includes("interior") || q.includes("view")) {
+  if (q.includes("pretty") || q.includes("aesthetic") || q.includes("photo") || q.includes("instagram") || q.includes("beautiful") || q.includes("interior") || q.includes("view") || q.includes("ambience") || q.includes("ambiance")) {
     detected.push("pretty");
   }
   if (q.includes("sweet") || q.includes("dessert") || q.includes("pastry") || q.includes("cake") || q.includes("bakery") || q.includes("croissant") || q.includes("waffle")) {

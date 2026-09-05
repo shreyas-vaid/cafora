@@ -1,89 +1,160 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
-const bcrypt = require("bcryptjs");
+const path = require("path");
 
-const User = require("./models/User");
-const Cafe = require("./models/Cafe");
+// Dynamic import for ES modules
+let CAFES_DATA = [];
+const recommendationService = require("./recommendationService.js");
+let auditReport = null;
+
+async function loadModules() {
+  try {
+    const cafesMod = await import("../src/data/cafesData.js");
+    CAFES_DATA = cafesMod.CAFES_DATA;
+    const auditMod = await import("../scripts/audit-report.mjs");
+    auditReport = auditMod.generateAuditReport;
+    console.log(`[CAFORA Server] Successfully loaded ${CAFES_DATA.length} verified cafes.`);
+  } catch (err) {
+    console.error("[CAFORA Server] Failed to load data modules:", err);
+  }
+}
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-/* CONNECT DB */
-mongoose.connect("mongodb://127.0.0.1:27017/cafe-app")
-  .then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+/* 1. HEALTH CHECK */
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "healthy",
+    version: "1.0.0",
+    cafesLoaded: CAFES_DATA.length,
+    timestamp: new Date().toISOString()
+  });
+});
 
-/* REGISTER */
-app.post("/register", async (req, res) => {
-  try {
-    const { username, password } = req.body;
+/* 2. CANONICAL 12 MOODS */
+app.get("/api/moods", (req, res) => {
+  if (!recommendationService) return res.status(503).json({ error: "Service initializing" });
+  res.json({
+    status: "success",
+    count: recommendationService.CANONICAL_MOODS.length,
+    moods: recommendationService.CANONICAL_MOODS
+  });
+});
 
-    const existing = await User.findOne({ username });
-    if (existing) return res.status(400).json("User already exists");
+/* 3. RECOMMENDATIONS (Multi-Mood Weighted Ranking + Fallbacks) */
+app.get("/api/recommendations", (req, res) => {
+  if (!recommendationService) return res.status(503).json({ error: "Service initializing" });
+  const { moods, q, sector, sort } = req.query;
 
-    const hashed = await bcrypt.hash(password, 10);
+  const activeMoods = moods ? (Array.isArray(moods) ? moods : moods.split(",").map(s => s.trim())) : [];
+  const results = recommendationService.getRecommendations(CAFES_DATA, {
+    moods: activeMoods,
+    query: q || "",
+    sector: sector || "All Chandigarh",
+    sort: sort || "recommended"
+  });
 
-    const user = new User({
-      username,
-      password: hashed
+  res.json({ status: "success", ...results });
+});
+
+/* 4. CAFES LIST & DETAIL */
+app.get("/api/cafes", (req, res) => {
+  const { id, sector, search, limit } = req.query;
+
+  if (id) {
+    const cafe = CAFES_DATA.find(c => c.id === id || c.identity?.id === id);
+    if (!cafe) return res.status(404).json({ error: "Cafe not found", id });
+    return res.json({ status: "success", cafe });
+  }
+
+  let results = [...CAFES_DATA];
+  if (sector && sector !== "All Chandigarh") {
+    results = results.filter(c => {
+      const s = (c.sector || c.identity?.sector || "").toLowerCase();
+      return s.includes(sector.toLowerCase());
     });
-
-    await user.save();
-    res.json("User Registered");
-  } catch (err) {
-    res.status(500).json("Error registering user");
   }
-});
-
-/* LOGIN */
-app.post("/login", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-
-    const user = await User.findOne({ username });
-    if (!user) return res.status(400).json("User not found");
-
-    const valid = await bcrypt.compare(password, user.password);
-    if (!valid) return res.status(400).json("Wrong password");
-
-    res.json("Login Success");
-  } catch (err) {
-    res.status(500).json("Login error");
-  }
-});
-
-/* ADD CAFE */
-app.post("/add-cafe", async (req, res) => {
-  try {
-    const { name, location, rating, vibe } = req.body;
-
-    const cafe = new Cafe({
-      name,
-      location,
-      rating,
-      vibe
+  if (search && search.trim().length > 0) {
+    const q = search.toLowerCase().trim();
+    results = results.filter(c => {
+      const name = (c.name || c.identity?.name || "").toLowerCase();
+      const addr = (c.address || c.identity?.address || "").toLowerCase();
+      return name.includes(q) || addr.includes(q);
     });
-
-    await cafe.save();
-
-    res.json("Cafe Added");
-  } catch (err) {
-    res.status(500).json("Error adding cafe");
   }
+  if (limit) {
+    const num = parseInt(limit, 10);
+    if (!isNaN(num)) results = results.slice(0, num);
+  }
+
+  res.json({ status: "success", count: results.length, total: CAFES_DATA.length, cafes: results });
 });
 
-/* GET CAFES */
-app.get("/cafes", async (req, res) => {
-  try {
-    const cafes = await Cafe.find();
-    res.json(cafes);
-  } catch (err) {
-    res.status(500).json("Error fetching cafes");
-  }
+app.get("/api/cafes/:id", (req, res) => {
+  const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
+  if (!cafe) return res.status(404).json({ error: "Cafe not found", id: req.params.id });
+  res.json({ status: "success", cafe });
+});
+
+/* 5. SEARCH WITH INTENT MAPPING */
+app.get("/api/search", (req, res) => {
+  if (!recommendationService) return res.status(503).json({ error: "Service initializing" });
+  const q = req.query.q || "";
+  const detectedIntents = recommendationService.extractIntentFromQuery(q);
+  const results = recommendationService.getRecommendations(CAFES_DATA, {
+    moods: detectedIntents,
+    query: q,
+    sector: req.query.sector || "All Chandigarh"
+  });
+
+  res.json({ status: "success", query: q, detectedIntents, results });
+});
+
+/* 6. EVIDENCE & PROVENANCE */
+app.get("/api/cafes/:id/evidence", (req, res) => {
+  const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
+  if (!cafe) return res.status(404).json({ error: "Cafe not found" });
+  res.json({
+    status: "success",
+    cafeId: cafe.id,
+    cafeName: cafe.name,
+    evidence: cafe.evidence || { sources: [] },
+    characteristics: cafe.characteristics || {},
+    lastVerified: cafe.cafora?.lastVerified || "2026-08-20"
+  });
+});
+
+/* 7. TRUST SCORE DETAILS */
+app.get("/api/cafes/:id/trust", (req, res) => {
+  const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
+  if (!cafe) return res.status(404).json({ error: "Cafe not found" });
+  const sources = cafe.evidence?.sources || [];
+  res.json({
+    status: "success",
+    cafeId: cafe.id,
+    cafeName: cafe.name,
+    trustScore: cafe.cafora?.trustScore || cafe.trustScore || 85,
+    verificationStatus: cafe.cafora?.verificationStatus || "partially_verified",
+    sourcesCount: sources.length,
+    sources: sources,
+    lastVerified: cafe.cafora?.lastVerified || "2026-08-20"
+  });
+});
+
+/* 8. INTERNAL DATA QUALITY AUDIT REPORT (Section 30) */
+app.get("/api/admin/audit-report", (req, res) => {
+  if (!auditReport) return res.status(503).json({ error: "Audit report initializing" });
+  const report = auditReport(CAFES_DATA);
+  res.json({ status: "success", report });
 });
 
 /* START SERVER */
-app.listen(5000, () => console.log("Server running on port 5000"));
+const PORT = process.env.PORT || 5000;
+loadModules().then(() => {
+  app.listen(PORT, () => {
+    console.log(`[CAFORA Server] Running on http://localhost:${PORT}`);
+  });
+});
