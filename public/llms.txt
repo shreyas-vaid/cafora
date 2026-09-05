@@ -1,0 +1,719 @@
+# CAFORA — Chandigarh Cafe Discovery
+> Live site: https://caforacafe.vercel.app
+
+## About
+CAFORA is a curated Chandigarh cafe discovery platform. It cuts through generic listings to recommend cafes based on personality, verified visits, Trust Scores, and specific user vibes.
+
+## Core Features
+- Multi-mood recommendation engine (Good Coffee, Get Work Done, Date Night, Quiet Corner, Somewhere Pretty, Sweet Tooth, With the Gang, Late Night)
+- Trust Score algorithm penalizing review volatility and fake review bursts
+- Sector-based location filtering covering 16 Chandigarh sectors
+- 87 verified cafes with real attributes (Wi-Fi, power outlets, noise level, seating comfort, prices)
+
+## Mood Categories
+1. Good Coffee (☕) - Specialty roasters, single origins, manual pour-overs.
+2. Get Work Done (💻) - Ergonomic seating, stable Wi-Fi, accessible power outlets.
+3. Date Night (❤️) - Romantic mood lighting, intimate seating, curated music.
+4. Quiet Corner (🌿) - Low noise level, secluded tables, reading spots.
+5. Somewhere Pretty (📸) - Photogenic interiors, natural light, aesthetics.
+6. Sweet Tooth (🍰) - Outstanding bakeries, artisanal patisseries, decadent desserts.
+7. With the Gang (👯) - Spacious sharing tables, social buzz, sharing platters.
+8. Late Night (🌙) - Open after hours for late-night coffee.
+
+## Curated Cafes Directory (87 Verified Spots)
+### Blue Tokai Coffee Roasters (Sector 8)
+- Price: ₹₹ (~₹750 for two)
+- Rating: 4.7 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth
+- Description: The undisputed benchmark for specialty coffee lovers and remote professionals.
+- Address: Inner Market, SCF 18, Sector 8-C, Chandigarh
+
+### Backpackers Cafe (Sector 9)
+- Price: ₹₹₹ (~₹1200 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: A Chandigarh institution for leisurely brunches and vibrant weekend rendezvous.
+- Address: SCF 16, Inner Market, Sector 9-D, Chandigarh
+
+### The Willow Cafe (Sector 10)
+- Price: ₹₹ (~₹950 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, date, quiet, pretty, late-night
+- Description: The most serene, visually enchanting tea & dinner cafe in the northern sectors.
+- Address: SCO 01, Sector 10-D, Chandigarh
+
+### Cafe Nomad (Sector 7)
+- Price: ₹₹₹ (~₹1300 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, date, pretty, gang, late-night
+- Description: Exceptional Mediterranean flavours wrapped in bohemian serenity.
+- Address: 1914, Sector 7-C, Chandigarh
+
+### Virgin Courtyard (Sector 7)
+- Price: ₹₹₹ (~₹2200 for two)
+- Rating: 4.7 (undefined reviews)
+- Trust Score: 88/100
+- Best for: date, quiet, pretty, sweet-tooth, gang, late-night
+- Description: The quintessential milestone celebration cafe with unrivaled romance.
+- Address: SCO 130-132, Sector 7-C, Chandigarh
+
+### Books N Brew (Sector 16)
+- Price: ₹ (~₹450 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, quiet, pretty
+- Description: A nostalgic haven of paperbacks, steaming hot tea, and zero pretentious attitude.
+- Address: SCO 8, First Floor, Sector 16-D, Chandigarh
+
+### The Hedgehog Cafe (Sector 7)
+- Price: ₹₹ (~₹800 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth
+- Description: The introvert's paradise: books, silence, and honest caffeine.
+- Address: SCF 12, Sector 7-C, Chandigarh
+
+### Ovenfresh (Sector 35)
+- Price: ₹₹ (~₹850 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, sweet-tooth, gang, late-night
+- Description: Comfort dining nostalgia at its best — foolproof food for groups and celebrations.
+- Address: SCO 443-444, Sector 35-C, Chandigarh
+
+### Tulum Rooftop Cafe (Sector 34)
+- Price: ₹₹₹ (~₹1400 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: date, pretty, sweet-tooth, gang, late-night
+- Description: The prime golden-hour rooftop for couples and visual storytellers.
+- Address: SCO 165-167, Rooftop, Sector 34-A, Chandigarh
+
+### Sector 7 Social (Sector 7)
+- Price: ₹₹ (~₹1100 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, gang, late-night
+- Description: The ultimate dual-persona spot: hyper-productive daytime, energetic nightlife.
+- Address: SCO 37, Sector 7-C, Chandigarh
+
+### Midpoint Cafe (Sector 22)
+- Price: ₹ (~₹350 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, gang
+- Description: Honest budget refreshments right in the bustling heart of Sector 22.
+- Address: Booth 112, Sector 22-B, Chandigarh
+
+### Olive Cafe & Bar (Sector 26)
+- Price: ₹₹₹ (~₹2400 for two)
+- Rating: 4.7 (undefined reviews)
+- Trust Score: 88/100
+- Best for: date, pretty, late-night
+- Description: Elegance redefined — the top culinary destination in Chandigarh for fine taste.
+- Address: SCO 79, Sector 26, Chandigarh
+
+### Brooklyn Central (Sector 10)
+- Price: ₹₹₹ (~₹1350 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, date, pretty, gang, late-night
+- Description: A slice of Brooklyn right next to the Chandigarh Museum of Art.
+- Address: Coal Heritage Building, Sector 10-D, Chandigarh
+
+### Indian Coffee House (Sector 17)
+- Price: ₹ (~₹250 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, quiet
+- Description: Timeless cultural heritage where generations of Chandigarh intellectuals debate over filter coffee.
+- Address: SCO 12, Sector 17-E, Chandigarh
+
+### Uncle Jack's (Sector 8)
+- Price: ₹₹ (~₹550 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: pretty, gang, late-night
+- Description: The quintessential American street snack joint in Sector 8.
+- Address: Booth 22, Inner Market, Sector 8-B, Chandigarh
+
+### Cafe JC's (Sector 10)
+- Price: ₹₹₹ (~₹1250 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, date, pretty, gang, late-night
+- Description: Resort-like tranquil garden dining right in Sector 10.
+- Address: SCO 2-3, Sector 10-D, Chandigarh
+
+### Chai Shai Bar (Sector 15)
+- Price: ₹ (~₹280 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: gang, late-night
+- Description: The ultimate college night-tea corner with unbeatable flavor per rupee.
+- Address: Booth 84, Sector 15-D, Chandigarh
+
+### Gourmet Nine Artisanal Bakes (Sector 9)
+- Price: ₹₹ (~₹700 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, quiet, pretty
+- Description: Artisanal baking perfection for coffee snobs and pastry purists.
+- Address: SCO 22, Inner Market, Sector 9-D, Chandigarh
+
+### Woodstock Cafe & Co-work (Sector 43)
+- Price: ₹₹ (~₹650 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, quiet
+- Description: The premier professional remote work setup in southern Chandigarh.
+- Address: SCO 88-89, Near Judicial Academy, Sector 43-B, Chandigarh
+
+### The Roastery Coffee House (Industrial Area Phase 1)
+- Price: ₹₹ (~₹850 for two)
+- Rating: 4.7 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, gang, late-night
+- Description: An artisan coffee haven that transforms an industrial space into a sensory retreat.
+- Address: Plot 181/45, Industrial Area Phase 1, Chandigarh
+
+### Whistling Duck (Sector 26)
+- Price: ₹₹₹ (~₹1600 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: date, pretty, gang, late-night
+- Description: Sophisticated Pan-Asian dining that never compromises on ingredient freshness.
+- Address: SCO 10, Backside, Sector 26, Chandigarh
+
+### The Tea Pot Cafe (Sector 7)
+- Price: ₹₹ (~₹600 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, quiet, pretty
+- Description: A Victorian afternoon tea oasis hidden away in Sector 7.
+- Address: SCO 24, Sector 7-C, Chandigarh
+
+### Cafe de Paris (Sector 17)
+- Price: ₹₹ (~₹750 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, date, pretty, gang
+- Description: A relaxed European cafe terrace overlooking Chandigarh's iconic city center.
+- Address: Bridge Market, Sector 17, Chandigarh
+
+### Peddlers Cafe & Pub (Sector 35)
+- Price: ₹₹₹ (~₹1500 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: gang, late-night
+- Description: The heartbeat of Chandigarh live indie music and classic pub hospitality.
+- Address: Hotel Heritage, SCO 467-468, Sector 35-C, Chandigarh
+
+### The Coffee Bean Loft (Sector 11)
+- Price: ₹₹ (~₹650 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, quiet
+- Description: A tranquil student-friendly mezzanine loft with honest brews.
+- Address: SCO 56, Sector 11-D, Chandigarh
+
+### Artisan Brew Lab (Sector 44)
+- Price: ₹₹ (~₹720 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, quiet, sweet-tooth
+- Description: Specialty coffee craftsmanship for serious palate enthusiasts.
+- Address: SCO 112, Sector 44-C, Chandigarh
+
+### The Terrace Green (Sector 50)
+- Price: ₹₹ (~₹780 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: date, quiet, pretty, late-night
+- Description: A botanical rooftop refuge tucked into tranquil Sector 50.
+- Address: Society Market, Sector 50-D, Chandigarh
+
+### Coffee Central (Sector 22)
+- Price: ₹₹ (~₹500 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, sweet-tooth, gang
+- Description: Dependable, practical meeting point with great waffles in Sector 22.
+- Address: SCO 1044, Sector 22-B, Chandigarh
+
+### The French Press Cafe (Sector 8)
+- Price: ₹₹ (~₹720 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, quiet, pretty
+- Description: An authentic corner of Paris nestled quietly into Sector 8.
+- Address: SCO 33, Inner Market, Sector 8-C, Chandigarh
+
+### Sector 15 Student Corner (Sector 15)
+- Price: ₹ (~₹220 for two)
+- Rating: 4.2 (undefined reviews)
+- Trust Score: 88/100
+- Best for: gang, late-night
+- Description: Pure university nostalgic street food energy.
+- Address: Patel Market Booths, Sector 15-C, Chandigarh
+
+### Cinnamon Creek Cafe (Sector 35)
+- Price: ₹₹ (~₹820 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, date, pretty, sweet-tooth, late-night
+- Description: The ultimate indulgence for sweet tooth lovers in Sector 35.
+- Address: SCO 421, Sector 35-C, Chandigarh
+
+### Underground Brews & Vinyl (Sector 17)
+- Price: ₹₹ (~₹700 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, quiet, pretty, late-night
+- Description: An atmospheric speakeasy coffee bar for audiophiles and book lovers.
+- Address: Basement SCO 45, Sector 17-C, Chandigarh
+
+### The Rooftop Pot (Sector 9)
+- Price: ₹₹ (~₹890 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: date, pretty, gang, late-night
+- Description: Earthy terracotta charm with sweeping rooftop perspectives.
+- Address: SCO 48, Rooftop, Sector 9-D, Chandigarh
+
+### Espresso Laboratory (Sector 7)
+- Price: ₹₹ (~₹600 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, quiet
+- Description: Pure coffee geekery where extraction precision is revered.
+- Address: Booth 14, Inner Market, Sector 7-C, Chandigarh
+
+### The Cozy Corner (Sector 34)
+- Price: ₹ (~₹420 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work
+- Description: The most practical, budget-friendly study recharge spot in Sector 34.
+- Address: SCO 98, Sector 34-A, Chandigarh
+
+### Neon Glow Lounge & Cafe (Sector 22)
+- Price: ₹₹ (~₹900 for two)
+- Rating: 3.8 (undefined reviews)
+- Trust Score: 88/100
+- Best for: pretty, late-night
+- Description: Recent visitor feedback contains repeated complaints about service delays, food consistency, and distorted sound.
+- Address: Basement SCO 210, Sector 22-B, Chandigarh
+
+### Golden Bean Executive Cafe (Sector 35)
+- Price: ₹₹₹ (~₹1800 for two)
+- Rating: 3.9 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, pretty
+- Description: Discrepancy detected: high online rating does not match verified visitor reports of inflated billing and sub-par coffee.
+- Address: SCO 410, Sector 35-C, Chandigarh
+
+### Nik Baker's (Sector 9)
+- Price: ₹₹ (~₹900 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: Chandigarh's staple bakery cafe for breakfast, brunch, and legendary desserts.
+- Address: Booth 49, Inner Market, Sector 9-D, Chandigarh
+
+### Nik Baker's Sector 35 (Sector 35)
+- Price: ₹₹ (~₹950 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: A vibrant dessert sanctuary perfect for post-dinner treats with friends.
+- Address: SCO 441-442, Sector 35-C, Chandigarh
+
+### Nik Baker's Sector 26 (Sector 26)
+- Price: ₹₹ (~₹900 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, date, pretty, sweet-tooth, gang, late-night
+- Description: Solid casual stop on the Sector 26 food corridor.
+- Address: SCO 42, Madhya Marg, Sector 26, Chandigarh
+
+### Third Wave Coffee (Sector 7)
+- Price: ₹₹ (~₹700 for two)
+- Rating: 4.7 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth, late-night
+- Description: One of Sector 7's premier sanctuaries for remote workers and coffee craft enthusiasts.
+- Address: SCO 11, Inner Market, Sector 7-C, Chandigarh
+
+### Third Wave Coffee Sector 35 (Sector 35)
+- Price: ₹₹ (~₹720 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth, late-night
+- Description: Dependable specialty workspace in Sector 35.
+- Address: SCO 485-486, Sector 35-C, Chandigarh
+
+### Tim Hortons (Sector 35)
+- Price: ₹₹ (~₹650 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: The late-night staple in Sector 35 for midnight sweet cravings and coffee.
+- Address: SCO 443-444, Sector 35-C, Chandigarh
+
+### Tim Hortons Elante Mall (Industrial Area Phase 1)
+- Price: ₹₹ (~₹650 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: A vibrant mall courtyard spot for quick energy recharge.
+- Address: Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh
+
+### Blue Tokai Elante (Industrial Area Phase 1)
+- Price: ₹₹ (~₹750 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth
+- Description: The coffee purist's haven inside Elante Mall.
+- Address: Upper Ground Floor, Elante Mall, Industrial Area Phase 1, Chandigarh
+
+### Starbucks Sector 35 (Sector 35)
+- Price: ₹₹₹ (~₹900 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth, gang, late-night
+- Description: The reliable workhorse for remote work sessions and business meets.
+- Address: SCO 429-430, Sector 35-C, Chandigarh
+
+### Starbucks Sector 8 (Sector 8)
+- Price: ₹₹₹ (~₹900 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth, gang, late-night
+- Description: A calm, focused study and conversation lounge in northern Chandigarh.
+- Address: Inner Market, SCF 15, Sector 8-C, Chandigarh
+
+### Chaayos Sector 17 (Sector 17)
+- Price: ₹ (~₹450 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, quiet, gang, late-night
+- Description: The undisputed value pick for authentic chai enthusiasts and quick Plaza meetings.
+- Address: SCO 81-82, Sector 17-D Plaza, Chandigarh
+
+### Chaayos Sector 8 (Sector 8)
+- Price: ₹ (~₹450 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, gang, late-night
+- Description: Affordable tea and snacks in Sector 8.
+- Address: SCF 22, Inner Market, Sector 8-C, Chandigarh
+
+### Oven Fresh Sector 7 (Sector 7)
+- Price: ₹₹ (~₹850 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: A beloved Chandigarh heritage brand for comforting Continental food and bakery treats.
+- Address: SCO 14, Sector 7-C, Madhya Marg, Chandigarh
+
+### Oven Fresh Sector 26 (Sector 26)
+- Price: ₹₹ (~₹850 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: Dependable comfort food stop in Sector 26.
+- Address: SCO 39, Sector 26, Chandigarh
+
+### Uncle Jack's Sector 35 (Sector 35)
+- Price: ₹₹ (~₹600 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: pretty, sweet-tooth, gang, late-night
+- Description: The quintessential Chandigarh street-eats icon for friends craving loaded American comfort food.
+- Address: Booth 56, Sector 35-C, Chandigarh
+
+### Casa Bella Vista (Sector 10)
+- Price: ₹₹₹ (~₹1400 for two)
+- Rating: 4.7 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth, gang, late-night
+- Description: The top choice in Chandigarh for an unforgettable, romantic alfresco date night.
+- Address: Coal Depot Complex, Sector 10-D, Chandigarh
+
+### The Rustic Door (Sector 10)
+- Price: ₹₹ (~₹950 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth, gang, late-night
+- Description: Intimate vintage dining spot for couples seeking privacy.
+- Address: SCO 12, Sector 10-D, Chandigarh
+
+### Kalsang Cafe & Restaurant (Sector 8)
+- Price: ₹₹ (~₹750 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, date, pretty, sweet-tooth, gang, late-night
+- Description: A vibrant cultural cafe offering hearty Himalayan comfort food and charming decor.
+- Address: SCO 38-39, Sector 8-C, Chandigarh
+
+### Fabbrica Italian Bistro & Cafe (Sector 26)
+- Price: ₹₹₹ (~₹1200 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth, gang, late-night
+- Description: An upscale date spot for true connoisseurs of Italian cafe dining.
+- Address: SCO 11, Sector 26, Madhya Marg, Chandigarh
+
+### Tin Tin Craft House & Cafe (Sector 7)
+- Price: ₹₹₹ (~₹1300 for two)
+- Rating: 4.7 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: The most visually captivating and architecturally daring night cafe in Chandigarh.
+- Address: SCO 16-17, Back Courtyard, Sector 7-C, Chandigarh
+
+### Honey & Dough (Sector 8)
+- Price: ₹₹ (~₹700 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth
+- Description: A dainty patisserie perfect for afternoon tea and sweet tooth indulgences.
+- Address: SCF 24, Inner Market, Sector 8-C, Chandigarh
+
+### Cafe Delhi Heights (Industrial Area Phase 1)
+- Price: ₹₹₹ (~₹1250 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: A vibrant, energetic cafe offering big flavors and relaxed cabana lounging.
+- Address: Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh
+
+### Costa Coffee Sector 17 (Sector 17)
+- Price: ₹₹ (~₹650 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, quiet, pretty, sweet-tooth
+- Description: Comfortable work spot for classic espresso in Sector 17.
+- Address: SCO 45-46, Sector 17-E, Chandigarh
+
+### Barista Diner Sector 26 (Sector 26)
+- Price: ₹₹ (~₹750 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth, gang, late-night
+- Description: Good upgraded diner experience on Madhya Marg.
+- Address: SCO 22, Sector 26, Madhya Marg, Chandigarh
+
+### Barista Cafe Sector 35 (Sector 35)
+- Price: ₹₹ (~₹600 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, quiet, sweet-tooth, late-night
+- Description: Old school quiet coffee shop in Sector 35.
+- Address: SCO 477, Sector 35-C, Chandigarh
+
+### The Cottage (Sector 7)
+- Price: ₹₹₹ (~₹1350 for two)
+- Rating: 4.7 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth, late-night
+- Description: An elegant European countryside bistro perfect for celebrating special occasions.
+- Address: SCO 44, Inner Market, Sector 7-C, Chandigarh
+
+### Indian Coffee House Sector 22 (Sector 22)
+- Price: ₹ (~₹250 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, quiet, gang
+- Description: A nostalgic cultural institution where Chandigarh's elders and students meet over filter coffee.
+- Address: SCO 1012, Sector 22-B, Chandigarh
+
+### Monica's Puddings & Pies (Sector 8)
+- Price: ₹₹ (~₹800 for two)
+- Rating: 4.7 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth
+- Description: The crown jewel of Chandigarh home-style luxury baking.
+- Address: Inner Market, SCF 21, Sector 8-C, Chandigarh
+
+### Super Donuts - American Dinery (Sector 8)
+- Price: ₹₹ (~₹550 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: Colorful, nostalgic dessert diner with top-tier glazed donuts and fun energy.
+- Address: Inner Market, SCF 14, Sector 8-C, Chandigarh
+
+### Super Donuts Sector 35 (Sector 35)
+- Price: ₹₹ (~₹550 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: Solid sweet tooth treat in the southern sectors.
+- Address: SCO 447, Sector 35-C, Chandigarh
+
+### The Chocolate Room (Sector 35)
+- Price: ₹₹ (~₹700 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: The ultimate destination for unapologetic chocoholics.
+- Address: SCO 425-426, Sector 35-C, Chandigarh
+
+### Cafe Coffee Day Sector 17 (Sector 17)
+- Price: ₹₹ (~₹500 for two)
+- Rating: 4.2 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, quiet, sweet-tooth, gang, late-night
+- Description: A nostalgic classic for casual Plaza rendezvous.
+- Address: SCO 90-91, Sector 17-C Plaza, Chandigarh
+
+### Woodies Rock Cafe (Sector 26)
+- Price: ₹₹ (~₹900 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, date, pretty, sweet-tooth, gang, late-night
+- Description: Lively rock cafe in Sector 26 for music lovers and friend reunions.
+- Address: SCO 15, Sector 26, Chandigarh
+
+### Student Center Coffee Corner (Sector 15)
+- Price: ₹ (~₹200 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, pretty, gang
+- Description: The spiritual heart of Chandigarh university culture and legendary cold coffee.
+- Address: Panjab University Campus, Sector 14/15, Chandigarh
+
+### The Brew Estate Cafe & Kitchen (Sector 26)
+- Price: ₹₹₹ (~₹1400 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, pretty, sweet-tooth, gang, late-night
+- Description: The quintessential large-group hangout on Sector 26's entertainment strip.
+- Address: SCO 25, Sector 26, Chandigarh
+
+### The Brew Estate Sector 35 (Sector 35)
+- Price: ₹₹₹ (~₹1400 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, date, pretty, sweet-tooth, gang, late-night
+- Description: High energy late evening venue for friends.
+- Address: SCO 408-409, Sector 35-C, Chandigarh
+
+### Chili's American Grill & Cafe (Industrial Area Phase 1)
+- Price: ₹₹₹ (~₹1300 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, date, pretty, sweet-tooth, gang, late-night
+- Description: The classic American Tex-Mex crowd favorite for big groups.
+- Address: Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh
+
+### Dunkin' Donuts & Cafe (Sector 35)
+- Price: ₹₹ (~₹500 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, sweet-tooth, gang, late-night
+- Description: Affordable grab-and-go sweet tooth and cold brew stop.
+- Address: SCO 445, Sector 35-C, Chandigarh
+
+### Belly's Delight Cafe (Sector 15)
+- Price: ₹ (~₹350 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: sweet-tooth, gang
+- Description: The quintessential budget student roll and shake joint in Sector 15.
+- Address: SCO 78, Sector 15-D, Chandigarh
+
+### Chai Break Cafe (Sector 26)
+- Price: ₹₹ (~₹650 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, pretty, sweet-tooth, gang, late-night
+- Description: Casual tea and snack lounge for unwinding with friends.
+- Address: SCO 28, Sector 26, Chandigarh
+
+### Benares Cafe & Lounge (Sector 7)
+- Price: ₹₹ (~₹800 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, date, pretty, sweet-tooth, gang, late-night
+- Description: An eclectic Indian-themed cafe with warm cultural character in Sector 7.
+- Address: SCO 32, Sector 7-C, Chandigarh
+
+### Cuppa Bistro (Sector 8)
+- Price: ₹₹ (~₹650 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth
+- Description: An unassuming sanctuary for peaceful solo coffee dates.
+- Address: SCF 12, Sector 8-C, Chandigarh
+
+### Cinnabon & Seattle's Best (Industrial Area Phase 1)
+- Price: ₹₹ (~₹600 for two)
+- Rating: 4.5 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, pretty, sweet-tooth, gang
+- Description: The ultimate warm cinnamon roll pilgrimage.
+- Address: Second Floor, Food Lounge, Elante Mall, Chandigarh
+
+### Peddlers Cafe Elante (Industrial Area Phase 1)
+- Price: ₹₹₹ (~₹1200 for two)
+- Rating: 4.4 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, date, pretty, gang, late-night
+- Description: Great late night hangout for music fans and groups at Elante.
+- Address: Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh
+
+### The Great Bear Microbrewery & Cafe (Sector 26)
+- Price: ₹₹₹ (~₹1400 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, date, pretty, sweet-tooth, gang, late-night
+- Description: Top tier group nightlife and dining hub on Madhya Marg.
+- Address: SCO 32, Sector 26, Madhya Marg, Chandigarh
+
+### Mamagoto Pan Asian Cafe (Industrial Area Phase 1)
+- Price: ₹₹₹ (~₹1350 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, date, pretty, sweet-tooth, gang, late-night
+- Description: A vibrant Asian cafe experience packed with bold flavors and photogenic character.
+- Address: Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh
+
+### Monica's Bakery Sector 9 (Sector 9)
+- Price: ₹₹ (~₹750 for two)
+- Rating: 4.6 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, date, quiet, pretty, sweet-tooth
+- Description: A boutique patisserie treasure in Sector 9.
+- Address: Inner Market, Booth 52, Sector 9-D, Chandigarh
+
+### The Indian Oven Cafe (Sector 35)
+- Price: ₹₹ (~₹750 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, pretty, sweet-tooth, gang, late-night
+- Description: Comfortable casual dining spot in Sector 35.
+- Address: SCO 451, Sector 35-C, Chandigarh
+
+### Subway Cafe Sector 17 (Sector 17)
+- Price: ₹ (~₹400 for two)
+- Rating: 4.2 (undefined reviews)
+- Trust Score: 88/100
+- Best for: work, sweet-tooth
+- Description: Reliable healthy quick lunch stop in Sector 17.
+- Address: SCO 22-23, Sector 17-C, Chandigarh
+
+### Barista Cafe Sector 9 (Sector 9)
+- Price: ₹₹ (~₹600 for two)
+- Rating: 4.3 (undefined reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work, quiet, pretty, sweet-tooth
+- Description: Peaceful neighborhood work spot in Sector 9.
+- Address: Inner Market, SCF 14, Sector 9-D, Chandigarh
+
