@@ -14,6 +14,8 @@
  * - Search intent fusion with keyword extraction without hard elimination.
  */
 
+import { calculateTrustScore } from "./trustScore.js";
+
 // 1. Centralized 12-Mood Definitions with Characteristic Weights
 export const MOODS_LIST = [
   {
@@ -422,11 +424,11 @@ export function calculateMatchPercentage(cafe, activeMoodIds = [], searchQuery =
   const queryVibes = extractVibesFromSearch(searchQuery);
   const combinedVibes = Array.from(new Set([...validMoods, ...queryVibes]));
 
-  // If no mood and no query, return curated baseline derived from rating and trust
+  // If no mood and no query, return baseline derived from rating and trust
   if (combinedVibes.length === 0) {
-    const baseRating = Number(cafe.rating) || 4.5;
-    const trust = Number(cafe.trustScore || cafe.facts?.trustScore) || 88;
-    return Math.min(96, Math.max(70, Math.round((baseRating / 5) * 60 + (trust / 100) * 38)));
+    const baseRating = Number(cafe.rating) || 4.0;
+    const trust = calculateTrustScore(cafe).score;
+    return Math.min(96, Math.max(50, Math.round((baseRating / 5) * 60 + (trust / 100) * 38)));
   }
 
   // Calculate score for each active mood
@@ -636,8 +638,8 @@ export function rankCafesByVibeAndSearch(cafes = [], activeMoodIds = [], searchQ
       return matchB - matchA;
     }
     // Tie-breaker: Trust Score or rating
-    const trustB = Number(b.trustScore || b.facts?.trustScore) || 85;
-    const trustA = Number(a.trustScore || a.facts?.trustScore) || 85;
+    const trustB = calculateTrustScore(b).score;
+    const trustA = calculateTrustScore(a).score;
     if (trustB !== trustA) return trustB - trustA;
     return (Number(b.rating) || 0) - (Number(a.rating) || 0);
   });

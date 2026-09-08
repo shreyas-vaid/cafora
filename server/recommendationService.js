@@ -10,6 +10,7 @@
  * - Separation of Match Score (0-100%) vs. Trust Score (0-100)
  * - Evidence-based reason extraction and operational caveats
  */
+const { calculateTrustScore } = require('./trustScore.js');
 
 const CANONICAL_MOODS = [
   {
@@ -219,9 +220,7 @@ function getCharacteristicScore(cafe, key) {
 function calculateMatchScore(cafe, activeMoodIds = [], searchQuery = "") {
   if (!activeMoodIds || activeMoodIds.length === 0) {
     // Return baseline if no mood selected
-    const trust = (typeof cafe.cafora?.trustScore === 'number')
-      ? cafe.cafora.trustScore
-      : ((typeof cafe.trustScore === 'number') ? cafe.trustScore : 50);
+    const trust = calculateTrustScore(cafe).score;
     const rating = cafe.facts?.rating ?? cafe.rating;
     const ratingFactor = (typeof rating === 'number') ? (rating / 5) * 45 : 36;
     return Math.min(96, Math.max(50, Math.round(ratingFactor + (trust / 100) * 50)));
@@ -397,9 +396,8 @@ function getRecommendations(allCafes, options = {}) {
   // 2. Score every cafe
   const scoredCafes = pool.map(cafe => {
     const matchPercentage = calculateMatchScore(cafe, activeMoods, query);
-    const trustScore = (typeof cafe.cafora?.trustScore === 'number')
-      ? cafe.cafora.trustScore
-      : ((typeof cafe.trustScore === 'number') ? cafe.trustScore : null);
+    const trustResult = calculateTrustScore(cafe);
+    const trustScore = trustResult.score;
     const reasons = getMatchReasons(cafe, activeMoods);
     const caveats = getCafeCaveats(cafe);
 
@@ -408,6 +406,8 @@ function getRecommendations(allCafes, options = {}) {
       matchPercentage,
       matchScore: matchPercentage,
       trustScore,
+      trustComponents: trustResult.components,
+      trustExplanation: trustResult.explanation,
       matchReasons: reasons,
       caveats,
       matchLabel: matchPercentage >= 95 ? "Perfect match" : (matchPercentage >= 90 ? "Excellent match" : (matchPercentage >= 80 ? "Strong match" : "Good fit"))

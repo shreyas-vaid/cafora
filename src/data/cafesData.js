@@ -1,13 +1,13 @@
 /**
- * CHANDIGARH CAFÉ DATABASE (AUTHENTIC DATASET)
+ * CHANDIGARH CAFÉ DATABASE (AUTHENTIC EVIDENCE-BACKED DATASET)
  * 
  * 87 verified and cataloged cafes across Chandigarh with:
- * 1. ZERO fabricated review counts: all unverified review counts are null.
- * 2. ZERO synthetic OSM IDs: only actual Overpass API records carry osmId.
- * 3. TRANSPARENT PROVENANCE: internal placeholders marked sourceType = "internal_unverified".
- * 4. REAL CHARACTERISTICS: only assigned numeric scores when actual evidence exists (otherwise null).
- * 5. HONEST TRUST SCORES: dynamically computed without artificial 80/85 fallbacks.
- * 6. EVIDENCE-DERIVED MOODS: 2-3 strongest moods supported by underlying evidence.
+ * 1. ZERO manually assigned or hardcoded trust scores.
+ * 2. ZERO fabricated review counts: all unverified review counts are null.
+ * 3. ZERO synthetic OSM IDs: only actual Overpass API records carry osmId.
+ * 4. TRANSPARENT PROVENANCE: internal placeholders marked sourceType = "internal_unverified".
+ * 5. REAL CHARACTERISTICS: only assigned numeric scores when actual evidence exists (otherwise null).
+ * 6. EVIDENCE-DERIVED TRUST ENGINE: dynamic deterministic trust score calculation.
  */
 
 export const CHANDIGARH_SECTORS = [
@@ -110,7 +110,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 78,
     "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80",
@@ -157,7 +156,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "partially_verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 78,
     "evidenceCoverage": "17%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -173,7 +171,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "partially_verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 78,
       "evidenceCoverage": "17%"
     },
     "facts": {
@@ -353,9 +350,7 @@ export const CAFES_DATA = [
         "work"
       ],
       "caveat": "Seating fills up during peak afternoon and weekend hours.",
-      "trustScore": 78,
       "verificationStatus": "partially_verified",
-      "verificationScore": 78,
       "evidenceCoverage": "17%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -394,7 +389,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1200,
-    "trustScore": 70,
     "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80",
@@ -440,7 +434,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 70,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -456,7 +449,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 70,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -662,9 +654,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Expect wait times on Sunday mornings.",
-      "trustScore": 70,
       "verificationStatus": "verified",
-      "verificationScore": 70,
       "evidenceCoverage": "0%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -703,7 +693,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 950,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&q=80",
@@ -749,7 +738,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -765,7 +753,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -953,9 +940,7 @@ export const CAFES_DATA = [
         "pretty"
       ],
       "caveat": "Rooftop garden fills fast on pleasant winter afternoons.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -994,7 +979,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1200,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
@@ -1039,7 +1023,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -1055,7 +1038,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -1242,9 +1224,7 @@ export const CAFES_DATA = [
         "pretty"
       ],
       "caveat": "Interior tables are closely spaced.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -1283,7 +1263,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1800,
-    "trustScore": 88,
     "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
@@ -1330,7 +1309,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 88,
     "evidenceCoverage": "25%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -1346,7 +1324,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 88,
       "evidenceCoverage": "25%"
     },
     "facts": {
@@ -1510,9 +1487,7 @@ export const CAFES_DATA = [
         "outdoor"
       ],
       "caveat": "Advance reservations essential for weekend courtyard tables.",
-      "trustScore": 88,
       "verificationStatus": "verified",
-      "verificationScore": 88,
       "evidenceCoverage": "25%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -1552,7 +1527,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 450,
-    "trustScore": 74,
     "heroImage": "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1000&q=80"
@@ -1597,7 +1571,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "partially_verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 74,
     "evidenceCoverage": "17%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -1613,7 +1586,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "partially_verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 74,
       "evidenceCoverage": "17%"
     },
     "facts": {
@@ -1773,9 +1745,7 @@ export const CAFES_DATA = [
         "quiet"
       ],
       "caveat": "Second-floor walk-up with compact seating.",
-      "trustScore": 74,
       "verificationStatus": "partially_verified",
-      "verificationScore": 74,
       "evidenceCoverage": "17%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -1814,7 +1784,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 800,
-    "trustScore": 84,
     "heroImage": "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1000&q=80"
@@ -1861,7 +1830,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 84,
     "evidenceCoverage": "25%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -1877,7 +1845,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 84,
       "evidenceCoverage": "25%"
     },
     "facts": {
@@ -2040,9 +2007,7 @@ export const CAFES_DATA = [
         "slow-morning"
       ],
       "caveat": "Limited floor space during peak weekend reading hours.",
-      "trustScore": 84,
       "verificationStatus": "verified",
-      "verificationScore": 84,
       "evidenceCoverage": "25%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -2082,7 +2047,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 70,
     "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
@@ -2127,7 +2091,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 70,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -2143,7 +2106,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 70,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -2348,9 +2310,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Market parking requires patience on Friday and Saturday evenings.",
-      "trustScore": 70,
       "verificationStatus": "verified",
-      "verificationScore": 70,
       "evidenceCoverage": "0%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -2389,7 +2349,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1400,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
@@ -2434,7 +2393,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -2450,7 +2408,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -2637,9 +2594,7 @@ export const CAFES_DATA = [
         "outdoor"
       ],
       "caveat": "Advanced reservation essential on weekend nights.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -2678,7 +2633,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 1100,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=1000&q=80"
@@ -2723,7 +2677,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -2739,7 +2692,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -2926,9 +2878,7 @@ export const CAFES_DATA = [
         "late-night"
       ],
       "caveat": "Transitions into a noisy high-energy bar after 8 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -2967,7 +2917,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 350,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1000&q=80"
@@ -3010,7 +2959,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -3026,7 +2974,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -3213,9 +3160,7 @@ export const CAFES_DATA = [
         "good-coffee"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -3254,7 +3199,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 2400,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=1000&q=80"
@@ -3299,7 +3243,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -3315,7 +3258,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -3502,9 +3444,7 @@ export const CAFES_DATA = [
         "pretty"
       ],
       "caveat": "Upscale pricing reflects fine dining positioning.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -3543,7 +3483,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1200,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80"
@@ -3588,7 +3527,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -3604,7 +3542,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -3791,9 +3728,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Music volume rises during late evening dinner hours.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -3832,7 +3767,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 300,
-    "trustScore": 80,
     "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1000&q=80"
@@ -3877,7 +3811,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 80,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -3893,7 +3826,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 80,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -4098,9 +4030,7 @@ export const CAFES_DATA = [
         "quiet"
       ],
       "caveat": "Atmosphere is simple and vintage rather than modern.",
-      "trustScore": 80,
       "verificationStatus": "verified",
-      "verificationScore": 80,
       "evidenceCoverage": "0%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -4139,7 +4069,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 550,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=1000&q=80"
@@ -4184,7 +4113,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -4200,7 +4128,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -4387,9 +4314,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Outdoor standing and curbside takeaway only.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -4428,7 +4353,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1250,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1000&q=80"
@@ -4473,7 +4397,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -4489,7 +4412,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -4676,9 +4598,7 @@ export const CAFES_DATA = [
         "outdoor"
       ],
       "caveat": "Busy family crowds on weekend afternoons.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -4717,7 +4637,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 280,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
@@ -4760,7 +4679,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -4776,7 +4694,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -4963,9 +4880,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -5004,7 +4919,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 900,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80"
@@ -5049,7 +4963,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -5065,7 +4978,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -5252,9 +5164,7 @@ export const CAFES_DATA = [
         "reading"
       ],
       "caveat": "Mall footfall increases background noise on weekend evenings.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -5293,7 +5203,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 550,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80"
@@ -5338,7 +5247,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -5354,7 +5262,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -5541,9 +5448,7 @@ export const CAFES_DATA = [
         "slow-morning"
       ],
       "caveat": "Limited seating capacity inside.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -5582,7 +5487,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 850,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=1000&q=80"
@@ -5625,7 +5529,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -5641,7 +5544,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -5828,9 +5730,7 @@ export const CAFES_DATA = [
         "pretty"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -5869,7 +5769,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1600,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
@@ -5912,7 +5811,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -5928,7 +5826,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -6115,9 +6012,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -6156,7 +6051,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 600,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=1000&q=80"
@@ -6199,7 +6093,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -6215,7 +6108,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -6402,9 +6294,7 @@ export const CAFES_DATA = [
         "reading"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -6443,7 +6333,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1000&q=80"
@@ -6486,7 +6375,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -6502,7 +6390,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -6689,9 +6576,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -6730,7 +6615,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1500,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1000&q=80"
@@ -6773,7 +6657,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -6789,7 +6672,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -6976,9 +6858,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -7017,7 +6897,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 650,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1000&q=80"
@@ -7060,7 +6939,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -7076,7 +6954,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -7263,9 +7140,7 @@ export const CAFES_DATA = [
         "work"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -7304,7 +7179,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1200,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1000&q=80",
@@ -7350,7 +7224,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -7366,7 +7239,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -7554,9 +7426,7 @@ export const CAFES_DATA = [
         "pretty"
       ],
       "caveat": "Valet queues during peak weekend dinner slots.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -7595,7 +7465,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 550,
-    "trustScore": 80,
     "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80"
@@ -7640,7 +7509,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 80,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -7656,7 +7524,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 80,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -7861,9 +7728,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Crowded dining hall during midday lunch.",
-      "trustScore": 80,
       "verificationStatus": "verified",
-      "verificationScore": 80,
       "evidenceCoverage": "0%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -7902,7 +7767,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 500,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1000&q=80"
@@ -7945,7 +7809,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -7961,7 +7824,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -8148,9 +8010,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -8189,7 +8049,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 450,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=1000&q=80"
@@ -8234,7 +8093,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -8250,7 +8108,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -8437,9 +8294,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "No sit-down indoor seating available.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -8478,7 +8333,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 220,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1000&q=80"
@@ -8521,7 +8375,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -8537,7 +8390,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -8724,9 +8576,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Best visited during weekday hours for a quieter table.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -8765,7 +8615,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 500,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80"
@@ -8810,7 +8659,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -8826,7 +8674,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -9013,9 +8860,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Parking in Sector 35-C market is competitive on weekends.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -9054,7 +8899,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 850,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=1000&q=80",
@@ -9100,7 +8944,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -9116,7 +8959,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -9304,9 +9146,7 @@ export const CAFES_DATA = [
         "brunch"
       ],
       "caveat": "Indoor seating is limited during midday lunch.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -9345,7 +9185,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&q=80"
@@ -9390,7 +9229,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -9406,7 +9244,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -9593,9 +9430,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Limited dedicated parking outside market.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -9634,7 +9469,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1100,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1000&q=80",
@@ -9680,7 +9514,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -9696,7 +9529,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -9884,9 +9716,7 @@ export const CAFES_DATA = [
         "pretty"
       ],
       "caveat": "Higher pricing compared to conventional dining.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -9925,7 +9755,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 600,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1000&q=80"
@@ -9970,7 +9799,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -9986,7 +9814,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -10173,9 +10000,7 @@ export const CAFES_DATA = [
         "late-night"
       ],
       "caveat": "Can be bustling during coaching institute break hours.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -10214,7 +10039,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 700,
-    "trustScore": 70,
     "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80",
@@ -10260,7 +10084,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 70,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -10276,7 +10099,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 70,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -10482,9 +10304,7 @@ export const CAFES_DATA = [
         "late-night"
       ],
       "caveat": "Seating fills rapidly on weekend nights.",
-      "trustScore": 70,
       "verificationStatus": "verified",
-      "verificationScore": 70,
       "evidenceCoverage": "0%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -10523,7 +10343,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 650,
-    "trustScore": 70,
     "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1000&q=80",
@@ -10569,7 +10388,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 70,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -10585,7 +10403,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 70,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -10791,9 +10608,7 @@ export const CAFES_DATA = [
         "quiet"
       ],
       "caveat": "Savory menu items are minimal.",
-      "trustScore": 70,
       "verificationStatus": "verified",
-      "verificationScore": 70,
       "evidenceCoverage": "0%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -10832,7 +10647,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 950,
-    "trustScore": 88,
     "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
@@ -10878,7 +10692,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 88,
     "evidenceCoverage": "17%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -10894,7 +10707,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 88,
       "evidenceCoverage": "17%"
     },
     "facts": {
@@ -11104,9 +10916,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Service counter can be hectic during festival and weekend rushes.",
-      "trustScore": 88,
       "verificationStatus": "verified",
-      "verificationScore": 88,
       "evidenceCoverage": "17%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -11145,7 +10955,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 950,
-    "trustScore": 86,
     "heroImage": "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1517433670267-08bbd4be890f?auto=format&fit=crop&w=800&q=80"
@@ -11190,7 +10999,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 86,
     "evidenceCoverage": "17%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -11206,7 +11014,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 86,
       "evidenceCoverage": "17%"
     },
     "facts": {
@@ -11368,9 +11175,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Can get noisy during late evening and post-midnight rushes.",
-      "trustScore": 86,
       "verificationStatus": "verified",
-      "verificationScore": 86,
       "evidenceCoverage": "17%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -11409,7 +11214,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 900,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80"
@@ -11452,7 +11256,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -11468,7 +11271,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -11655,9 +11457,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -11696,7 +11496,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 650,
-    "trustScore": 78,
     "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
@@ -11744,7 +11543,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "partially_verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 78,
     "evidenceCoverage": "25%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -11760,7 +11558,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "partially_verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 78,
       "evidenceCoverage": "25%"
     },
     "facts": {
@@ -11923,9 +11720,7 @@ export const CAFES_DATA = [
         "work"
       ],
       "caveat": "Busy work crowd during late night hours.",
-      "trustScore": 78,
       "verificationStatus": "partially_verified",
-      "verificationScore": 78,
       "evidenceCoverage": "25%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -11965,7 +11760,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 720,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80"
@@ -12008,7 +11802,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -12024,7 +11817,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -12211,9 +12003,7 @@ export const CAFES_DATA = [
         "work"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -12252,7 +12042,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 600,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80"
@@ -12297,7 +12086,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -12313,7 +12101,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -12500,9 +12287,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Peak weekend drive-by traffic can cause delays.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -12541,7 +12326,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 650,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1525610553991-2bede1a236e2?auto=format&fit=crop&w=800&q=80"
@@ -12584,7 +12368,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -12600,7 +12383,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -12787,9 +12569,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -12828,7 +12608,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80"
@@ -12871,7 +12650,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -12887,7 +12665,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -13074,9 +12851,7 @@ export const CAFES_DATA = [
         "slow-morning"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -13115,7 +12890,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 900,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1453614512568-c4024d13c247?auto=format&fit=crop&w=800&q=80"
@@ -13158,7 +12932,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -13174,7 +12947,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -13361,9 +13133,7 @@ export const CAFES_DATA = [
         "reading"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -13402,7 +13172,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 900,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&w=800&q=80"
@@ -13445,7 +13214,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -13461,7 +13229,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -13648,9 +13415,7 @@ export const CAFES_DATA = [
         "work"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -13689,7 +13454,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 450,
-    "trustScore": 70,
     "heroImage": "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=800&q=80"
@@ -13734,7 +13498,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "verified",
     "verifiedAt": "2026-09-08T06:00:00.000Z",
-    "verificationScore": 70,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -13750,7 +13513,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "verified",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
-      "verificationScore": 70,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -13955,9 +13717,7 @@ export const CAFES_DATA = [
         "slow-morning"
       ],
       "caveat": "Compact indoor space during evening office break hours.",
-      "trustScore": 70,
       "verificationStatus": "verified",
-      "verificationScore": 70,
       "evidenceCoverage": "0%",
       "verifiedAt": "2026-09-08T06:00:00.000Z",
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -13996,7 +13756,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 450,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80"
@@ -14039,7 +13798,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -14055,7 +13813,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -14242,9 +13999,7 @@ export const CAFES_DATA = [
         "reading"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -14283,7 +14038,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 850,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80"
@@ -14326,7 +14080,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -14342,7 +14095,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -14529,9 +14281,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -14570,7 +14320,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 850,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80"
@@ -14613,7 +14362,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -14629,7 +14377,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -14816,9 +14563,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -14857,7 +14602,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 600,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=800&q=80"
@@ -14900,7 +14644,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -14916,7 +14659,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -15103,9 +14845,7 @@ export const CAFES_DATA = [
         "brunch"
       ],
       "caveat": "Energetic, bustling atmosphere; best with friends.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -15144,7 +14884,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1300,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
@@ -15190,7 +14929,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -15206,7 +14944,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -15394,9 +15131,7 @@ export const CAFES_DATA = [
         "outdoor"
       ],
       "caveat": "Outdoor seating is temperature-sensitive during peak summer afternoons.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -15435,7 +15170,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 950,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80"
@@ -15478,7 +15212,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -15494,7 +15227,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -15681,9 +15413,7 @@ export const CAFES_DATA = [
         "quiet"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -15722,7 +15452,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80"
@@ -15765,7 +15494,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -15781,7 +15509,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -15968,9 +15695,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -16009,7 +15734,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1200,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
@@ -16052,7 +15776,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -16068,7 +15791,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -16255,9 +15977,7 @@ export const CAFES_DATA = [
         "brunch"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -16296,7 +16016,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1300,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
@@ -16339,7 +16058,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -16355,7 +16073,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -16542,9 +16259,7 @@ export const CAFES_DATA = [
         "late-night"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -16583,7 +16298,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 700,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
@@ -16626,7 +16340,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -16642,7 +16355,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -16829,9 +16541,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -16870,7 +16580,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1250,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
@@ -16913,7 +16622,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -16929,7 +16637,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -17116,9 +16823,7 @@ export const CAFES_DATA = [
         "brunch"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -17157,7 +16862,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 650,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1507133750040-4a8f57021571?auto=format&fit=crop&w=800&q=80"
@@ -17200,7 +16904,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -17216,7 +16919,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -17403,9 +17105,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -17444,7 +17144,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=800&q=80"
@@ -17487,7 +17186,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -17503,7 +17201,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -17690,9 +17387,7 @@ export const CAFES_DATA = [
         "reading"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -17731,7 +17426,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 600,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
@@ -17774,7 +17468,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -17790,7 +17483,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -17977,9 +17669,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -18018,7 +17708,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1350,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
@@ -18061,7 +17750,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -18077,7 +17765,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -18264,9 +17951,7 @@ export const CAFES_DATA = [
         "reading"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -18305,7 +17990,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 250,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80"
@@ -18350,7 +18034,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -18366,7 +18049,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -18553,9 +18235,7 @@ export const CAFES_DATA = [
         "quiet"
       ],
       "caveat": "Vintage retro interior with basic non-cushioned seating.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -18594,7 +18274,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 800,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
@@ -18637,7 +18316,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -18653,7 +18331,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -18840,9 +18517,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -18881,7 +18556,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 550,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80"
@@ -18926,7 +18600,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -18942,7 +18615,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -19129,9 +18801,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Sweet items sell out quickly by late evening.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -19170,7 +18840,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 550,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=800&q=80"
@@ -19213,7 +18882,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -19229,7 +18897,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -19416,9 +19083,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -19457,7 +19122,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 700,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=800&q=80"
@@ -19500,7 +19164,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -19516,7 +19179,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -19703,9 +19365,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -19744,7 +19404,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 500,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
@@ -19787,7 +19446,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -19803,7 +19461,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -19990,9 +19647,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -20031,7 +19686,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 900,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
@@ -20074,7 +19728,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -20090,7 +19743,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -20277,9 +19929,7 @@ export const CAFES_DATA = [
         "brunch"
       ],
       "caveat": "Energetic, bustling atmosphere; best with friends.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -20318,7 +19968,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 200,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1517487881594-2787fef5ebf7?auto=format&fit=crop&w=800&q=80"
@@ -20363,7 +20012,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -20379,7 +20027,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -20566,9 +20213,7 @@ export const CAFES_DATA = [
         "outdoor"
       ],
       "caveat": "Open only during campus operational schedules.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -20607,7 +20252,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1400,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
@@ -20650,7 +20294,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -20666,7 +20309,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -20853,9 +20495,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Energetic, bustling atmosphere; best with friends.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -20894,7 +20534,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1400,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
@@ -20937,7 +20576,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -20953,7 +20591,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -21140,9 +20777,7 @@ export const CAFES_DATA = [
         "late-night"
       ],
       "caveat": "Energetic, bustling atmosphere; best with friends.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -21181,7 +20816,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1300,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
@@ -21224,7 +20858,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -21240,7 +20873,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -21427,9 +21059,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -21468,7 +21098,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 500,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=800&q=80"
@@ -21511,7 +21140,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -21527,7 +21155,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -21714,9 +21341,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -21755,7 +21380,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 350,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
@@ -21798,7 +21422,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -21814,7 +21437,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -22001,9 +21623,7 @@ export const CAFES_DATA = [
         "brunch"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -22042,7 +21662,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 650,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=800&q=80"
@@ -22085,7 +21704,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -22101,7 +21719,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -22288,9 +21905,7 @@ export const CAFES_DATA = [
         "brunch"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -22329,7 +21944,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 800,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80"
@@ -22372,7 +21986,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -22388,7 +22001,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -22575,9 +22187,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -22616,7 +22226,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 650,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80"
@@ -22659,7 +22268,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -22675,7 +22283,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -22862,9 +22469,7 @@ export const CAFES_DATA = [
         "work"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -22903,7 +22508,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 600,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
@@ -22946,7 +22550,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -22962,7 +22565,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -23149,9 +22751,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -23190,7 +22790,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1200,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80"
@@ -23233,7 +22832,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -23249,7 +22847,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -23436,9 +23033,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Energetic, bustling atmosphere; best with friends.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -23477,7 +23072,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1400,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80"
@@ -23520,7 +23114,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -23536,7 +23129,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -23723,9 +23315,7 @@ export const CAFES_DATA = [
         "pretty"
       ],
       "caveat": "Energetic, bustling atmosphere; best with friends.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -23764,7 +23354,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹₹",
     "approxCostForTwo": 1350,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=800&q=80"
@@ -23807,7 +23396,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -23823,7 +23411,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -24010,9 +23597,7 @@ export const CAFES_DATA = [
         "gang"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -24051,7 +23636,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
@@ -24094,7 +23678,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -24110,7 +23693,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -24297,9 +23879,7 @@ export const CAFES_DATA = [
         "sweet-tooth"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -24338,7 +23918,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 750,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
@@ -24381,7 +23960,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -24397,7 +23975,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -24584,9 +24161,7 @@ export const CAFES_DATA = [
         "work"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -24625,7 +24200,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹",
     "approxCostForTwo": 400,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=800&q=80"
@@ -24668,7 +24242,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -24684,7 +24257,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -24871,9 +24443,7 @@ export const CAFES_DATA = [
         "reading"
       ],
       "caveat": "Quieter on weekday mornings; lively post 6 PM.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",
@@ -24912,7 +24482,6 @@ export const CAFES_DATA = [
     "reviewCount": null,
     "priceRange": "₹₹",
     "approxCostForTwo": 600,
-    "trustScore": 45,
     "heroImage": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80",
     "images": [
       "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80"
@@ -24955,7 +24524,6 @@ export const CAFES_DATA = [
     ],
     "verificationStatus": "unverified",
     "verifiedAt": null,
-    "verificationScore": 45,
     "evidenceCoverage": "0%",
     "lastChecked": "2026-09-08T06:00:00.000Z",
     "identity": {
@@ -24971,7 +24539,6 @@ export const CAFES_DATA = [
       "googleMatchStatus": "unmatched",
       "verificationStatus": "unverified",
       "verifiedAt": null,
-      "verificationScore": 45,
       "evidenceCoverage": "0%"
     },
     "facts": {
@@ -25158,9 +24725,7 @@ export const CAFES_DATA = [
         "brunch"
       ],
       "caveat": "Reliably quiet; ideal for reading and deep focus.",
-      "trustScore": 45,
       "verificationStatus": "unverified",
-      "verificationScore": 45,
       "evidenceCoverage": "0%",
       "verifiedAt": null,
       "lastChecked": "2026-09-08T06:00:00.000Z",

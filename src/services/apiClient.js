@@ -10,6 +10,7 @@
 
 import { CAFES_DATA } from '../data/cafesData';
 import { MOODS_LIST, rankCafesByVibeAndSearch } from '../utils/vibeEngine';
+import { calculateTrustScore } from '../utils/trustScore';
 
 const API_BASE = process.env.REACT_APP_API_BASE || '/api';
 
@@ -159,12 +160,15 @@ export async function fetchTrust(id) {
     return await res.json();
   } catch (err) {
     const cafe = CAFES_DATA.find(c => c.id === id || c.identity?.id === id);
+    const trustResult = calculateTrustScore(cafe);
     return {
-      status: 'fallback',
+      status: 'offline_derived',
       cafeId: id,
       cafeName: cafe?.name,
-      trustScore: cafe?.cafora?.trustScore || cafe?.trustScore || 85,
-      confidence: cafe?.evidence?.confidence || 'high'
+      trustScore: trustResult.score,
+      components: trustResult.components,
+      explanation: trustResult.explanation,
+      confidence: cafe?.evidence?.confidence || 'medium'
     };
   }
 }

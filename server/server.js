@@ -6,6 +6,7 @@ const path = require("path");
 let CAFES_DATA = [];
 const recommendationService = require("./recommendationService.js");
 let auditReport = null;
+let calculateTrustScore = null;
 
 async function loadModules() {
   try {
@@ -13,7 +14,9 @@ async function loadModules() {
     CAFES_DATA = cafesMod.CAFES_DATA;
     const auditMod = await import("../scripts/audit-report.mjs");
     auditReport = auditMod.generateAuditReport;
-    console.log(`[CAFORA Server] Successfully loaded ${CAFES_DATA.length} verified cafes.`);
+    const trustMod = await import("./trustScore.js");
+    calculateTrustScore = trustMod.calculateTrustScore;
+    console.log(`[CAFORA Server] Successfully loaded ${CAFES_DATA.length} verified cafes and trust engine.`);
   } catch (err) {
     console.error("[CAFORA Server] Failed to load data modules:", err);
   }
@@ -131,16 +134,22 @@ app.get("/api/cafes/:id/evidence", (req, res) => {
 app.get("/api/cafes/:id/trust", (req, res) => {
   const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
   if (!cafe) return res.status(404).json({ error: "Cafe not found" });
-  const sources = cafe.evidence?.sources || [];
+  const sources = [
+    ...(cafe.evidence?.sources || []),
+    ...(cafe.facts?.provenance || [])
+  ];
+  const trustResult = calculateTrustScore ? calculateTrustScore(cafe) : { score: 0, components: {}, explanation: [] };
   res.json({
     status: "success",
     cafeId: cafe.id,
     cafeName: cafe.name,
-    trustScore: cafe.cafora?.trustScore || cafe.trustScore || 85,
-    verificationStatus: cafe.cafora?.verificationStatus || "partially_verified",
+    trustScore: trustResult.score,
+    components: trustResult.components,
+    explanation: trustResult.explanation,
+    verificationStatus: cafe.cafora?.verificationStatus || cafe.verificationStatus || "unverified",
     sourcesCount: sources.length,
     sources: sources,
-    lastVerified: cafe.cafora?.lastVerified || "2026-08-20"
+    lastVerified: cafe.cafora?.lastVerified || cafe.lastVerified || null
   });
 });
 

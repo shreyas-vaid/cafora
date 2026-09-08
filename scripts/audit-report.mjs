@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { CAFES_DATA } from '../src/data/cafesData.js';
+import { calculateTrustScore } from '../src/utils/trustScore.js';
 
 /**
  * CAFORA Data Quality Audit & Reporting Engine (Section 30)
@@ -56,7 +57,10 @@ export function generateAuditReport(cafes = CAFES_DATA) {
     const cafora = cafe.cafora || {};
     const moods = cafora.moods || cafe.moods || [];
     const status = cafora.verificationStatus || cafe.verificationStatus || 'unverified';
-    const trust = (typeof cafora.trustScore === 'number') ? cafora.trustScore : ((typeof cafe.trustScore === 'number') ? cafe.trustScore : 0);
+    
+    // Dynamic evidence-derived trust calculation
+    const trustResult = calculateTrustScore(cafe);
+    const trust = trustResult.score;
 
     // Duplicates check
     const normalizedName = (name || '').toLowerCase().trim();

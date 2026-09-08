@@ -17,7 +17,8 @@
  * Clamped: Math.round(Math.max(0, Math.min(100, Raw Trust * 100)))
  */
 
-export const SOURCE_QUALITY = {
+// 1. Centralized Source Quality Map
+const SOURCE_QUALITY = {
   official_website: 1.00,
   official_menu: 1.00,
   google_places: 0.95,
@@ -28,22 +29,18 @@ export const SOURCE_QUALITY = {
   internal_unverified: 0.15
 };
 
-export const FRESHNESS_HALF_LIFE_DAYS = 180;
-const ANCHOR_DATE = new Date('2026-09-08T00:00:00.000Z').getTime();
+// Half-life in days for venue data freshness decay
+const FRESHNESS_HALF_LIFE_DAYS = 180;
 
-export const TRUST_TIERS = {
-  HIGH: { min: 80, max: 100, label: "Highly Trusted", tier: "HIGH_TRUST", badgeClass: "trust-badge-high" },
-  GOOD: { min: 70, max: 79, label: "Verified Record", tier: "GOOD", badgeClass: "trust-badge-good" },
-  MIXED: { min: 50, max: 69, label: "Catalog Listing", tier: "MIXED", badgeClass: "trust-badge-mixed" },
-  LOW: { min: 0, max: 49, label: "Pending Verification", tier: "LOW", badgeClass: "trust-badge-low" }
-};
+// Anchor evaluation date (consistent reference point for deterministic freshness)
+const ANCHOR_DATE = new Date('2026-09-08T00:00:00.000Z').getTime();
 
 /**
  * Calculates deterministic trust score and component breakdown for a cafe
  * @param {Object} cafe - Cafe entity with facts, evidence, and characteristics
- * @returns {Object} { score, components, explanation, tier, label, badgeClass, confidence }
+ * @returns {Object} { score: 0-100, components: {...}, explanation: [...] }
  */
-export function calculateTrustScore(cafe) {
+function calculateTrustScore(cafe) {
   if (!cafe) {
     return {
       score: 0,
@@ -55,17 +52,13 @@ export function calculateTrustScore(cafe) {
         identityConfidence: 0,
         conflictPenalty: 0
       },
-      explanation: ["No cafe record provided"],
-      tier: "LOW",
-      label: "Insufficient Data",
-      badgeClass: "trust-badge-low",
-      confidence: "Unknown"
+      explanation: ["No cafe record provided"]
     };
   }
 
   const explanations = [];
 
-  // 1. SOURCE QUALITY (25%)
+  // --- COMPONENT 1: SOURCE QUALITY (Weight: 25%) ---
   const sources = [
     ...(cafe.evidence?.sources || []),
     ...(cafe.facts?.provenance || [])
@@ -86,18 +79,20 @@ export function calculateTrustScore(cafe) {
   } else if (sourceQuality >= 0.60) {
     explanations.push("Corroborated by independent local directories and community listings");
   } else if (sourceQuality > 0) {
-    explanations.push("Awaiting external corroboration; based on internal catalog records");
+    explanations.push("Awaiting external corroboration; based primarily on internal catalog records");
   } else {
     explanations.push("No verified source records available");
   }
 
-  // 2. SOURCE AGREEMENT (20%)
-  let sourceAgreement = 0.50;
+  // --- COMPONENT 2: SOURCE AGREEMENT (Weight: 20%) ---
+  // Compares evidence from different sources for key identity/factual attributes
+  let sourceAgreement = 0.50; // Neutral baseline when single source
   let conflictPenalty = 0;
 
   const distinctTypes = new Set(sources.map(s => s.sourceType || s.type).filter(Boolean));
   const hasOsm = sources.some(s => (s.sourceType || s.type) === 'openstreetmap');
   const hasOfficial = sources.some(s => (s.sourceType || s.type) === 'official_website' || (s.sourceType || s.type) === 'official_menu');
+  const hasDirectory = sources.some(s => (s.sourceType || s.type) === 'independent_directory');
 
   if (cafe.evidence?.conflict || cafe.facts?.conflict) {
     conflictPenalty = 0.25;
@@ -126,7 +121,8 @@ export function calculateTrustScore(cafe) {
     sourceAgreement = 0.10;
   }
 
-  // 3. EVIDENCE COVERAGE (20%)
+  // --- COMPONENT 3: EVIDENCE COVERAGE (Weight: 20%) ---
+  // Evaluates 10 factual fields. Unknown (null) information is NOT punished as false.
   const fieldsEvaluated = [
     Boolean(cafe.name || cafe.identity?.name),
     Boolean(cafe.address || cafe.identity?.address),
@@ -151,8 +147,9 @@ export function calculateTrustScore(cafe) {
     explanations.push("Limited factual coverage; several key operational attributes are unknown");
   }
 
-  // 4. FRESHNESS (15%)
-  let freshness = 0.40;
+  // --- COMPONENT 4: FRESHNESS (Weight: 15%) ---
+  // Exponential decay based on oldest/newest verification timestamp: exp(-ageDays / 180)
+  let freshness = 0.40; // Default when unverified
   const timestamps = sources
     .map(s => s.retrievedAt || s.lastVerified)
     .filter(Boolean)
@@ -174,7 +171,8 @@ export function calculateTrustScore(cafe) {
     explanations.push("No explicit verification timestamp recorded");
   }
 
-  // 5. IDENTITY CONFIDENCE (20%)
+  // --- COMPONENT 5: IDENTITY CONFIDENCE (Weight: 20%) ---
+  // Verified OSM node ID, official corporate domain, clean name/sector consistency
   let identityConfidence = 0.20;
   const osmId = cafe.identity?.osmId || cafe.osmId;
   const website = cafe.facts?.website || cafe.website;
@@ -200,7 +198,7 @@ export function calculateTrustScore(cafe) {
     explanations.push("Identity matching requires municipal registry corroboration");
   }
 
-  // 6. WEIGHTED FORMULA
+  // --- COMPONENT 6: WEIGHTED TRUST FORMULATION ---
   const rawTrust = (
     0.25 * sourceQuality +
     0.20 * sourceAgreement +
@@ -210,16 +208,6 @@ export function calculateTrustScore(cafe) {
   ) - conflictPenalty;
 
   const score = Math.round(Math.max(0, Math.min(100, rawTrust * 100)));
-
-  // UI Tier and labels
-  let tierInfo = TRUST_TIERS.LOW;
-  if (score >= TRUST_TIERS.HIGH.min) tierInfo = TRUST_TIERS.HIGH;
-  else if (score >= TRUST_TIERS.GOOD.min) tierInfo = TRUST_TIERS.GOOD;
-  else if (score >= TRUST_TIERS.MIXED.min) tierInfo = TRUST_TIERS.MIXED;
-
-  let confidence = "Low";
-  if (score >= 75) confidence = "High";
-  else if (score >= 50) confidence = "Medium";
 
   return {
     score,
@@ -231,19 +219,12 @@ export function calculateTrustScore(cafe) {
       identityConfidence,
       conflictPenalty
     },
-    explanation: explanations,
-    tier: tierInfo.tier,
-    label: tierInfo.label,
-    badgeClass: tierInfo.badgeClass,
-    confidence
+    explanation: explanations
   };
 }
 
-const trustScoreEngine = {
+module.exports = {
   calculateTrustScore,
   SOURCE_QUALITY,
-  FRESHNESS_HALF_LIFE_DAYS,
-  TRUST_TIERS
+  FRESHNESS_HALF_LIFE_DAYS
 };
-
-export default trustScoreEngine;

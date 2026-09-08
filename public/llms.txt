@@ -27,784 +27,784 @@ CAFORA is a curated Chandigarh cafe discovery platform. It cuts through generic 
 ## Curated Cafes Directory (87 Verified Spots)
 ### Blue Tokai Coffee Roasters (Sector 8)
 - Price: ₹₹ (~₹750 for two)
-- Rating: 4.7 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: good-coffee, work
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Blue Tokai's Sector 8 location works best when coffee is the point of the visit — especially for a focused morning with a laptop.
-- Address: Inner Market, SCF 18, Sector 8-C, Chandigarh
+- Caveat: Complimentary Wi-Fi and laptop-equipped seating
+- Description: Sector 8 roastery known for manual brew bars, single-origin beans, and morning focus sessions.
+- Address: SCO 14 & 15, Ground Floor, Madhya Marg, Sector 8-C, Chandigarh, 160009
 
 ### Backpackers Cafe (Sector 9)
 - Price: ₹₹₹ (~₹1200 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 96/100
-- Best for: brunch, gang, slow-morning
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, gang
 - Caveat: None reported
-- Description: Backpackers in Sector 9 fills up early on weekends for hearty cooked breakfasts and easy patio banter.
-- Address: SCF 16, Inner Market, Sector 9-D, Chandigarh
+- Description: Backpackers Cafe is a local establishment located in Sector 9. Factual attributes are maintained under CAFORA data authenticity guidelines.
+- Address: Chandigarh
 
 ### The Willow Cafe (Sector 10)
 - Price: ₹₹ (~₹950 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 96/100
-- Best for: brunch, pretty, slow-morning
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, pretty
 - Caveat: None reported
-- Description: The Willow Cafe draws people for afternoon tea and garden-style seating spread across multiple light-filled floors.
+- Description: The Willow Cafe is a local establishment located in Sector 10. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 01, Sector 10-D, Chandigarh
 
 ### Cafe Nomad (Sector 7)
 - Price: ₹₹₹ (~₹1200 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 96/100
-- Best for: brunch, pretty, date
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, pretty
 - Caveat: None reported
-- Description: Cafe Nomad offers warm bohemian textures, comfortable booth seating, and a thoughtful Mediterranean-leaning menu.
+- Description: Cafe Nomad is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 178-179, Inner Market, Sector 7-C, Chandigarh
 
 ### Virgin Courtyard (Sector 7)
 - Price: ₹₹₹ (~₹1800 for two)
-- Rating: 4.7 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: date, pretty, outdoor
 - Caveat: None reported
-- Description: Virgin Courtyard leans into the courtyard experience: greenery, open-air seating and a setting that makes an evening date feel like the obvious plan.
-- Address: SCO 1A, Inner Market, Sector 7-C, Chandigarh
+- Description: Italian dining terrace famous for cobblestone courtyard seating, candlelit date nights, and handcrafted pasta.
+- Address: SCO 1A, Madhya Marg, Sector 7-C, Chandigarh, 160007
 
 ### Books N Brew (Sector 16)
 - Price: ₹ (~₹450 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 96/100
-- Best for: reading, quiet, work
-- Caveat: Low ambient decibel levels before noon
-- Description: Books N Brew is a stripped-back reader's nook where low-cost chai and paperbacks matter more than glossy decor.
-- Address: SCO 8, First Floor, Sector 16-D, Chandigarh
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: reading, quiet
+- Caveat: Low-noise atmosphere suitable for continuous reading and study
+- Description: A cozy library-style cafe in Sector 16-D designed for readers, students, and quiet thinkers.
+- Address: SCF 8, 2nd Floor, Udyan Path, Sector 16-D, Chandigarh, 160015
 
 ### The Hedgehog Cafe (Sector 7)
 - Price: ₹₹ (~₹800 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: reading, quiet, slow-morning
-- Caveat: Low ambient decibel levels before noon
-- Description: The Hedgehog Cafe gives book enthusiasts quiet shelves, calm tables, and an unhurried morning atmosphere.
-- Address: SCF 12, Sector 7-C, Chandigarh
+- Caveat: Calm acoustic background tailored to solitary readers and remote workers
+- Description: Warm bibliophile sanctuary in Sector 7-C with ceiling-high bookshelves, board games, and quiet work spaces.
+- Address: SCO 12, Ground Floor, Inner Market, Sector 7-C, Chandigarh, 160019
 
 ### Ovenfresh (Sector 35)
 - Price: ₹₹ (~₹750 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 96/100
-- Best for: brunch, sweet-tooth, gang
-- Caveat: High background buzz during evening hours
-- Description: Ovenfresh remains a fixture on the Sector 35 dining stretch for hot sandwiches, baked crusts, and family dinners.
-- Address: SCO 437-438, Sector 35-C, Chandigarh
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
+- Caveat: None reported
+- Description: Ovenfresh is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
+- Address: Chandigarh
 
 ### Tulum Rooftop Cafe (Sector 34)
 - Price: ₹₹₹ (~₹1400 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 96/100
-- Best for: date, outdoor, pretty
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, outdoor
 - Caveat: None reported
-- Description: Tulum Rooftop delivers open skies and bamboo furnishings above Sector 34, coming alive around sunset.
+- Description: Tulum Rooftop Cafe is a local establishment located in Sector 34. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 165-167, Rooftop, Sector 34-A, Chandigarh
 
 ### Sector 7 Social (Sector 7)
 - Price: ₹₹ (~₹1100 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: gang, late-night
 - Caveat: None reported
-- Description: Sector 7 Social transitions from daytime cafe seating into a loud, packed evening gathering space.
+- Description: Sector 7 Social is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 37, Sector 7-C, Chandigarh
 
 ### Midpoint Cafe (Sector 22)
 - Price: ₹ (~₹350 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 96/100
-- Best for: gang, good-coffee, slow-morning
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, good-coffee
 - Caveat: None reported
-- Description: Midpoint Cafe keeps things simple in Sector 22 with fast hot coffee, honest bites, and student-friendly pricing.
+- Description: Midpoint Cafe is a local establishment located in Sector 22. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Booth 112, Sector 22-B, Chandigarh
 
 ### Olive Cafe & Bar (Sector 26)
 - Price: ₹₹₹ (~₹2400 for two)
-- Rating: 4.7 (null reviews)
-- Trust Score: 96/100
-- Best for: date, pretty, outdoor
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, pretty
 - Caveat: None reported
-- Description: Olive Cafe & Bar brings crisp whitewashed walls, open sunlight, and refined Italian dining to Sector 26.
+- Description: Olive Cafe & Bar is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 79, Sector 26, Chandigarh
 
 ### Brooklyn Central (Sector 10)
 - Price: ₹₹₹ (~₹1200 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 96/100
-- Best for: brunch, gang, date
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, gang
 - Caveat: None reported
-- Description: Brooklyn Central feels like an airy urban diner with brick accents, leather seating, and substantial burgers.
+- Description: Brooklyn Central is a local establishment located in Sector 10. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 111-112, Sector 10-D, Chandigarh
 
 ### Indian Coffee House (Sector 17)
 - Price: ₹ (~₹300 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 96/100
-- Best for: slow-morning, quiet, good-coffee
-- Caveat: Low ambient decibel levels before noon
-- Description: Indian Coffee House in the Sector 17 plaza serves traditional filter coffee and dosas at unchanged retro tables.
-- Address: SCO 12, Sector 17-E, Chandigarh
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: slow-morning, quiet
+- Caveat: None reported
+- Description: Indian Coffee House is a local establishment located in Sector 17. Factual attributes are maintained under CAFORA data authenticity guidelines.
+- Address: Chandigarh
 
 ### Uncle Jack's (Sector 8)
 - Price: ₹₹ (~₹550 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: gang, sweet-tooth
-- Caveat: High background buzz during evening hours
-- Description: Uncle Jack's Sector 8 kiosk is built for quick curbside pickups of waffle fries and cheese-loaded bites.
+- Caveat: None reported
+- Description: Uncle Jack's is a local establishment located in Sector 8. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Booth 11, Inner Market, Sector 8-B, Chandigarh
 
 ### Cafe JC's (Sector 10)
 - Price: ₹₹₹ (~₹1250 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, outdoor, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, outdoor
 - Caveat: None reported
-- Description: Cafe JC's sits surrounded by courtyard greenery in Sector 10, making outdoor lunches pleasant in cooler weather.
+- Description: Cafe JC's is a local establishment located in Sector 10. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 2-3, Sector 10-D, Chandigarh
 
 ### Chai Shai Bar (Sector 15)
 - Price: ₹ (~₹280 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: late-night, gang, date
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: late-night, gang
 - Caveat: None reported
-- Description: Chai Shai Bar is an affordable student regular near Panjab University for steaming kulhad tea and quick talks.
+- Description: Chai Shai Bar is a local establishment located in Sector 15. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Booth 84, Sector 15-D, Chandigarh
 
 ### The Coffee Bean & Tea Leaf (Industrial Area Phase 1)
 - Price: ₹₹₹ (~₹900 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 96/100
-- Best for: good-coffee, reading, work
-- Caveat: Dedicated laptop seating available during daytime
-- Description: The Coffee Bean & Tea Leaf inside Elante provides a quiet refuge from mall crowds with reliable brewed tea.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, reading
+- Caveat: None reported
+- Description: The Coffee Bean & Tea Leaf is a local establishment located in Industrial Area Phase 1. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Upper Ground Floor, Elante Mall, Industrial Area Phase 1, Chandigarh
 
 ### Vinnie's Bakery & Cafe (Sector 11)
 - Price: ₹₹ (~₹550 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 96/100
-- Best for: sweet-tooth, slow-morning, quiet
-- Caveat: Low ambient decibel levels before noon
-- Description: Vinnie's Bakery is an unpretentious Sector 11 stop for warm savory patties and simple tea cakes.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: sweet-tooth, slow-morning
+- Caveat: None reported
+- Description: Vinnie's Bakery & Cafe is a local establishment located in Sector 11. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 65, Sector 11-D, Chandigarh
 
 ### The Roastery Coffee House (Industrial Area Phase 1)
 - Price: ₹₹ (~₹850 for two)
-- Rating: 4.7 (null reviews)
-- Trust Score: 96/100
-- Best for: date, pretty, outdoor
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, pretty
 - Caveat: None reported
-- Description: The Roastery Coffee House transformed an Industrial Area space into an open brick courtyard centered on freshly roasted beans.
+- Description: The Roastery Coffee House is a local establishment located in Industrial Area Phase 1. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Plot 181/45, Industrial Area Phase 1, Chandigarh
 
 ### Whistling Duck (Sector 26)
 - Price: ₹₹₹ (~₹1600 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: date, gang, late-night
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, gang
 - Caveat: None reported
-- Description: Whistling Duck balances a sleek contemporary dining room with inventive Asian small plates and quiet evening corners.
+- Description: Whistling Duck is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 10, Backside, Sector 26, Chandigarh
 
 ### The Tea Pot Cafe (Sector 7)
 - Price: ₹₹ (~₹600 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: slow-morning, reading, good-coffee
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: slow-morning, reading
 - Caveat: None reported
-- Description: The Tea Pot Cafe tucks a quaint vintage room into Sector 7, serving herbal infusions and quiet teatime cakes.
+- Description: The Tea Pot Cafe is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 24, Sector 7-C, Chandigarh
 
 ### Cafe de Paris (Sector 17)
 - Price: ₹₹ (~₹750 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: date, gang, good-coffee
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, gang
 - Caveat: None reported
-- Description: Cafe de Paris offers European bistro-style patio tables right across from the central plaza fountain in Sector 17.
+- Description: Cafe de Paris is a local establishment located in Sector 17. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Bridge Market, Sector 17, Chandigarh
 
 ### Peddlers Cafe & Pub (Sector 35)
 - Price: ₹₹₹ (~₹1500 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: late-night, gang, date
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: late-night, gang
 - Caveat: None reported
-- Description: Peddlers pairs pub hospitality with comfort bites and evening acoustic sets in Sector 35.
+- Description: Peddlers Cafe & Pub is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Hotel Heritage, SCO 467-468, Sector 35-C, Chandigarh
 
 ### The Coffee Bean Loft (Sector 11)
 - Price: ₹₹ (~₹650 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: reading, work, slow-morning
-- Caveat: Dedicated laptop seating available during daytime
-- Description: The Coffee Bean Loft in Sector 11 offers quiet mezzanine seating popular among university students finishing coursework.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: reading, work
+- Caveat: None reported
+- Description: The Coffee Bean Loft is a local establishment located in Sector 11. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 56, Sector 11-D, Chandigarh
 
 ### Kamaa Cafe (Sector 7)
 - Price: ₹₹₹ (~₹1200 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 96/100
-- Best for: date, pretty, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, pretty
 - Caveat: None reported
-- Description: Kamaa Cafe pairs botanical interior decor with wood-fired pizzas, suited for romantic dinners along Madhya Marg.
+- Description: Kamaa Cafe is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 13-14-15, Madhya Marg, Sector 7-C, Chandigarh
 
 ### Sindhi Sweets & Cafe (Sector 17)
 - Price: ₹₹ (~₹550 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 96/100
-- Best for: brunch, gang, sweet-tooth
-- Caveat: High background buzz during evening hours
-- Description: Sindhi Sweets & Cafe has anchored the Sector 17 plaza for decades with hot chana bhatura and classic mithai.
-- Address: SCO 108-109, Sector 17-C Plaza, Chandigarh
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, gang
+- Caveat: None reported
+- Description: Sindhi Sweets & Cafe is a local establishment located in Sector 17. Factual attributes are maintained under CAFORA data authenticity guidelines.
+- Address: 111, Chandigarh
 
 ### Coffee Central (Sector 22)
 - Price: ₹₹ (~₹500 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Coffee Central offers an approachable retreat in Sector 22 for a hot cup between market errands.
+- Description: Coffee Central is a local establishment located in Sector 22. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 1044, Sector 22-B, Chandigarh
 
 ### Keventers (Sector 8)
 - Price: ₹₹ (~₹450 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: sweet-tooth, gang
 - Caveat: None reported
-- Description: Keventers in Sector 8 serves cold milkshakes in retro glass bottles for curbside evening refreshments.
+- Description: Keventers is a local establishment located in Sector 8. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Booth 23, Inner Market, Sector 8-B, Chandigarh
 
 ### Sector 15 Student Corner (Sector 15)
 - Price: ₹ (~₹220 for two)
-- Rating: 4.2 (null reviews)
-- Trust Score: 86/100
-- Best for: late-night, gang, date
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: late-night, gang
 - Caveat: None reported
-- Description: Sector 15 Student Corner hums with university energy, serving fast street bites and sweet tea late into the night.
+- Description: Sector 15 Student Corner is a local establishment located in Sector 15. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Patel Market Booths, Sector 15-C, Chandigarh
 
 ### Amrit Sweets & Cafe (Sector 35)
 - Price: ₹₹ (~₹500 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: sweet-tooth, gang
 - Caveat: None reported
-- Description: Amrit Sweets in Sector 35 is a bustling family stop known for freshly fried jalebis and casual northern meals.
+- Description: Amrit Sweets & Cafe is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 431-432, Sector 35-C, Chandigarh
 
 ### Caffe Sicily (Sector 7)
 - Price: ₹₹ (~₹850 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 96/100
-- Best for: good-coffee, brunch, quiet
-- Caveat: Low ambient decibel levels before noon
-- Description: Caffe Sicily brings authentic sourdough crusts and morning espresso pulls to a compact Sector 7 storefront.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, brunch
+- Caveat: None reported
+- Description: Caffe Sicily is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 18, Inner Market, Sector 7-C, Chandigarh
 
 ### Bakebook Bakery & Cafe (Sector 7)
 - Price: ₹₹ (~₹750 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 96/100
-- Best for: reading, sweet-tooth, slow-morning
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: reading, sweet-tooth
 - Caveat: None reported
-- Description: Bakebook Bakery & Cafe provides comfortable banquettes and fresh morning pastries along the Sector 7 corridor.
+- Description: Bakebook Bakery & Cafe is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 37, Madhya Marg, Sector 7-C, Chandigarh
 
 ### Aja - Honestly Good Food (Sector 9)
 - Price: ₹₹₹ (~₹1100 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 96/100
-- Best for: brunch, pretty, slow-morning
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, pretty
 - Caveat: None reported
-- Description: Aja focuses on cold-pressed juices, grain bowls, and an earthy, uncluttered dining space in Sector 9.
+- Description: Aja - Honestly Good Food is a local establishment located in Sector 9. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 129-131, Madhya Marg, Sector 9-C, Chandigarh
 
 ### La Pino'z Pizza & Cafe (Sector 34)
 - Price: ₹₹ (~₹600 for two)
-- Rating: 4.2 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: gang, late-night
-- Caveat: High background buzz during evening hours
-- Description: La Pino'z in Sector 34 handles big student crowds with oversized pizza slices and affordable meal deals.
+- Caveat: None reported
+- Description: La Pino'z Pizza & Cafe is a local establishment located in Sector 34. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 148-149, Sector 34-A, Chandigarh
 
 ### Sips & Giggles (Sector 35)
 - Price: ₹₹ (~₹700 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 96/100
-- Best for: gang, late-night, sweet-tooth
-- Caveat: High background buzz during evening hours
-- Description: Sips & Giggles offers a neon-lit, casual hangout for shakes and late evening conversations in Sector 35.
-- Address: SCO 385, Sector 35-C, Chandigarh
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, late-night
+- Caveat: None reported
+- Description: Sips & Giggles is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
+- Address: Chandigarh
 
 ### The Crown Patisserie (Sector 7)
 - Price: ₹₹ (~₹650 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 96/100
-- Best for: sweet-tooth, quiet, slow-morning
-- Caveat: Low ambient decibel levels before noon
-- Description: The Crown Patisserie features delicate macarons, tarts, and a calm tea salon tucked into Sector 7-C.
-- Address: SCO 14, Inner Market, Sector 7-C, Chandigarh
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: sweet-tooth, quiet
+- Caveat: None reported
+- Description: The Crown Patisserie is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
+- Address: Chandigarh
 
 ### Nik Baker's (Sector 9)
 - Price: ₹₹₹ (~₹950 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 96/100
-- Best for: sweet-tooth, brunch, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: late-night, sweet-tooth
 - Caveat: None reported
-- Description: Nik Baker's on Madhya Marg is a bustling morning-to-evening bakery known for fruit tarts and sourdough sandwiches.
-- Address: SCO 49, Madhya Marg, Sector 9-D, Chandigarh
+- Description: Nik Baker's is a local establishment located in Sector 9. Factual attributes are maintained under CAFORA data authenticity guidelines.
+- Address: Chandigarh
 
 ### Nik Baker's Sector 35 (Sector 35)
 - Price: ₹₹ (~₹950 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: late-night, sweet-tooth
 - Caveat: None reported
-- Description: The Sector 35 branch of Nik Baker's handles steady evening footfall with fresh desserts and savoury platters.
-- Address: SCO 441-442, Sector 35-C, Chandigarh
+- Description: Verified 24/7 late-night staple in Sector 35-C serving fresh European pastries, quiches, and midnight coffees.
+- Address: SCO 441-442, Sector 35-C, Chandigarh, 160022
 
 ### Nik Baker's Sector 26 (Sector 26)
 - Price: ₹₹ (~₹900 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Nik Baker's Sector 26 location serves the dinner-and-dessert crowd along the eastern dining stretch.
+- Description: Nik Baker's Sector 26 is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 42, Madhya Marg, Sector 26, Chandigarh
 
 ### Third Wave Coffee (Sector 7)
 - Price: ₹₹ (~₹650 for two)
-- Rating: 4.7 (null reviews)
-- Trust Score: 96/100
-- Best for: good-coffee, work, slow-morning
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Third Wave Coffee in Sector 7 provides spacious seating and steady daytime work conditions for remote workers.
-- Address: SCO 42, Inner Market, Sector 7-C, Chandigarh
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: late-night, good-coffee, work
+- Caveat: Equipped with power points and high-speed customer Wi-Fi
+- Description: All-night specialty cafe in Sector 7-C popular with late-night workers, students, and espresso enthusiasts.
+- Address: SCO 42, Inner Market, Sector 7-C, Chandigarh, 160019
 
 ### Third Wave Coffee Sector 35 (Sector 35)
 - Price: ₹₹ (~₹720 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: good-coffee, work, slow-morning
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Third Wave's Sector 35 location serves reliable espresso and quiet morning tables before the midday rush.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, work
+- Caveat: None reported
+- Description: Third Wave Coffee Sector 35 is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 485-486, Sector 35-C, Chandigarh
 
 ### Tim Hortons (Sector 35)
 - Price: ₹₹ (~₹600 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 96/100
-- Best for: late-night, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: late-night, sweet-tooth
 - Caveat: None reported
-- Description: Tim Hortons in Sector 35 stays open late, drawing students and night owls for French vanilla lattes and timbits.
+- Description: Tim Hortons is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 429-430, Sector 35-C, Chandigarh
 
 ### Tim Hortons Elante Mall (Industrial Area Phase 1)
 - Price: ₹₹ (~₹650 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: The courtyard branch of Tim Hortons at Elante Mall is an easy outdoor pitstop during shopping trips.
+- Description: Tim Hortons Elante Mall is a local establishment located in Industrial Area Phase 1. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh
 
 ### Blue Tokai Elante (Industrial Area Phase 1)
 - Price: ₹₹ (~₹750 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: good-coffee, slow-morning, reading
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: good-coffee, slow-morning
 - Caveat: None reported
-- Description: Blue Tokai's Elante outpost offers clean, unhurried pour-overs inside an otherwise frantic mall setting.
+- Description: Blue Tokai Elante is a local establishment located in Industrial Area Phase 1. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Upper Ground Floor, Elante Mall, Industrial Area Phase 1, Chandigarh
 
 ### Starbucks Sector 35 (Sector 35)
 - Price: ₹₹₹ (~₹900 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 96/100
-- Best for: work, reading, good-coffee
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Starbucks Sector 35 features wide tables and steady climate control for laptop sessions and client check-ins.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: work, reading
+- Caveat: None reported
+- Description: Starbucks Sector 35 is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 429-430, Sector 35-C, Chandigarh
 
 ### Starbucks Sector 8 (Sector 8)
 - Price: ₹₹₹ (~₹900 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: reading, work, quiet
-- Caveat: Low ambient decibel levels before noon
-- Description: Starbucks Sector 8 provides a calm, carpeted conversation space popular with northern sector residents.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: reading, work
+- Caveat: None reported
+- Description: Starbucks Sector 8 is a local establishment located in Sector 8. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Inner Market, SCF 15, Sector 8-C, Chandigarh
 
 ### Chaayos Sector 17 (Sector 17)
 - Price: ₹ (~₹450 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: gang, slow-morning
 - Caveat: None reported
-- Description: Chaayos in Sector 17 serves customizable desi chai and bun maska right off the central plaza walkway.
-- Address: SCO 81-82, Sector 17-D Plaza, Chandigarh
+- Description: Chaayos Sector 17 is a local establishment located in Sector 17. Factual attributes are maintained under CAFORA data authenticity guidelines.
+- Address: Chandigarh
 
 ### Chaayos Sector 8 (Sector 8)
 - Price: ₹ (~₹450 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, reading, work
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Chaayos Sector 8 offers an easy neighborhood spot for ginger tea and afternoon snacks.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, reading
+- Caveat: None reported
+- Description: Chaayos Sector 8 is a local establishment located in Sector 8. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCF 22, Inner Market, Sector 8-C, Chandigarh
 
 ### Oven Fresh Sector 7 (Sector 7)
 - Price: ₹₹ (~₹850 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Oven Fresh on Madhya Marg delivers comforting pasta bowls and baked items to Sector 7 diners.
+- Description: Oven Fresh Sector 7 is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 14, Sector 7-C, Madhya Marg, Chandigarh
 
 ### Oven Fresh Sector 26 (Sector 26)
 - Price: ₹₹ (~₹850 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: The Sector 26 branch of Oven Fresh caters to evening family diners with dependable continental bakes.
+- Description: Oven Fresh Sector 26 is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 39, Sector 26, Chandigarh
 
 ### Uncle Jack's Sector 35 (Sector 35)
 - Price: ₹₹ (~₹600 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, brunch, sweet-tooth
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, brunch
 - Caveat: None reported
-- Description: Uncle Jack's in Sector 35 serves takeaway sliders, loaded fries, and dessert jars to curbside crowds.
+- Description: Uncle Jack's Sector 35 is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Booth 56, Sector 35-C, Chandigarh
 
 ### Casa Bella Vista (Sector 10)
 - Price: ₹₹₹ (~₹1300 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 96/100
-- Best for: date, outdoor, pretty
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, outdoor
 - Caveat: None reported
-- Description: Casa Bella Vista sits in the Coal Depot complex, pairing shaded outdoor tables with thin-crust Italian pies.
+- Description: Casa Bella Vista is a local establishment located in Sector 10. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Coal Depot Complex, Sector 10-D, Chandigarh
 
 ### The Rustic Door (Sector 10)
 - Price: ₹₹ (~₹950 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: date, quiet, reading
-- Caveat: Low ambient decibel levels before noon
-- Description: The Rustic Door provides dim, intimate dining suited for quiet two-person dinners in Sector 10.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, quiet
+- Caveat: None reported
+- Description: The Rustic Door is a local establishment located in Sector 10. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 12, Sector 10-D, Chandigarh
 
 ### Kalsang Cafe & Restaurant (Sector 8)
 - Price: ₹₹ (~₹750 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: date, gang, work
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Kalsang Cafe & Restaurant fills its colorful Sector 8 room with steaming momos, thukpa, and Tibetan comfort dishes.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, gang
+- Caveat: None reported
+- Description: Kalsang Cafe & Restaurant is a local establishment located in Sector 8. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 38-39, Sector 8-C, Chandigarh
 
 ### Fabbrica Italian Bistro & Cafe (Sector 26)
 - Price: ₹₹₹ (~₹1200 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: date, brunch, good-coffee
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, brunch
 - Caveat: None reported
-- Description: Fabbrica Italian Bistro creates an upscale setting on Madhya Marg with handcrafted pasta and wood-fired dough.
+- Description: Fabbrica Italian Bistro & Cafe is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 11, Sector 26, Madhya Marg, Chandigarh
 
 ### Tin Tin Craft House & Cafe (Sector 7)
 - Price: ₹₹₹ (~₹1300 for two)
-- Rating: 4.7 (null reviews)
-- Trust Score: 86/100
-- Best for: date, late-night, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, late-night
 - Caveat: None reported
-- Description: Tin Tin stands out in Sector 7 with vaulted tiled ceilings, bespoke cocktails, and moody evening lighting.
+- Description: Tin Tin Craft House & Cafe is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 16-17, Back Courtyard, Sector 7-C, Chandigarh
 
 ### Honey & Dough (Sector 8)
 - Price: ₹₹ (~₹700 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, date
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Honey & Dough is a pastel-toned patisserie in Sector 8 for sweet afternoon pastries and quiet coffee.
+- Description: Honey & Dough is a local establishment located in Sector 8. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCF 24, Inner Market, Sector 8-C, Chandigarh
 
 ### Cafe Delhi Heights (Industrial Area Phase 1)
 - Price: ₹₹₹ (~₹1250 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, brunch, date
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, brunch
 - Caveat: None reported
-- Description: Cafe Delhi Heights brings high-energy cabana seating and generous Delhi comfort plates to Elante's top floor.
+- Description: Cafe Delhi Heights is a local establishment located in Industrial Area Phase 1. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh
 
 ### Costa Coffee Sector 17 (Sector 17)
 - Price: ₹₹ (~₹650 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, reading
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Costa Coffee on Sector 17 provides reliable classic roasts and comfortable armchairs overlooking the market.
+- Description: Costa Coffee Sector 17 is a local establishment located in Sector 17. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 45-46, Sector 17-E, Chandigarh
 
 ### Barista Diner Sector 26 (Sector 26)
 - Price: ₹₹ (~₹750 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: work, reading, good-coffee
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Barista Diner on Madhya Marg offers expanded diner seating and calm tables for daytime reading.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: work, reading
+- Caveat: None reported
+- Description: Barista Diner Sector 26 is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 22, Sector 26, Madhya Marg, Chandigarh
 
 ### Barista Cafe Sector 35 (Sector 35)
 - Price: ₹₹ (~₹600 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, reading
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Barista Sector 35 offers an unpretentious, quiet corner for an afternoon espresso away from the noise.
+- Description: Barista Cafe Sector 35 is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 477, Sector 35-C, Chandigarh
 
 ### The Cottage (Sector 7)
 - Price: ₹₹₹ (~₹1350 for two)
-- Rating: 4.7 (null reviews)
-- Trust Score: 86/100
-- Best for: date, reading, quiet
-- Caveat: Low ambient decibel levels before noon
-- Description: The Cottage evokes European countryside dining with floral tablecloths, quiet garden nooks, and calm hospitality.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, reading
+- Caveat: None reported
+- Description: The Cottage is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 44, Inner Market, Sector 7-C, Chandigarh
 
 ### Indian Coffee House Sector 22 (Sector 22)
 - Price: ₹ (~₹250 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: slow-morning, quiet, good-coffee
-- Caveat: Low ambient decibel levels before noon
-- Description: The Sector 22 Indian Coffee House offers affordable south Indian snacks and quiet morning paper reading.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: slow-morning, quiet
+- Caveat: None reported
+- Description: Indian Coffee House Sector 22 is a local establishment located in Sector 22. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 1012, Sector 22-B, Chandigarh
 
 ### Monica's Puddings & Pies (Sector 8)
 - Price: ₹₹ (~₹800 for two)
-- Rating: 4.7 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, date
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Monica's in Sector 8 has spent decades baking home-style apple pies, cheesecakes, and comforting tea bakes.
+- Description: Monica's Puddings & Pies is a local establishment located in Sector 8. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Inner Market, SCF 21, Sector 8-C, Chandigarh
 
 ### Super Donuts - American Dinery (Sector 8)
 - Price: ₹₹ (~₹550 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 96/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: sweet-tooth, gang
 - Caveat: None reported
-- Description: Super Donuts brings bright diner colors and loaded sweet treats to Sector 8 visitors.
+- Description: Super Donuts - American Dinery is a local establishment located in Sector 8. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 4, Inner Market, Sector 8-B, Chandigarh
 
 ### Super Donuts Sector 35 (Sector 35)
 - Price: ₹₹ (~₹550 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Super Donuts Sector 35 offers dessert lovers a quick evening booth for milkshakes and colorful glazed donuts.
+- Description: Super Donuts Sector 35 is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 447, Sector 35-C, Chandigarh
 
 ### The Chocolate Room (Sector 35)
 - Price: ₹₹ (~₹700 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: The Chocolate Room is an unapologetic dessert retreat for thick hot chocolates and fondue platters.
+- Description: The Chocolate Room is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 425-426, Sector 35-C, Chandigarh
 
 ### Cafe Coffee Day Sector 17 (Sector 17)
 - Price: ₹₹ (~₹500 for two)
-- Rating: 4.2 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Cafe Coffee Day in Sector 17 Plaza offers nostalgic, budget-friendly coffee right on the walking avenue.
+- Description: Cafe Coffee Day Sector 17 is a local establishment located in Sector 17. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 90-91, Sector 17-C Plaza, Chandigarh
 
 ### Woodies Rock Cafe (Sector 26)
 - Price: ₹₹ (~₹900 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, brunch, sweet-tooth
-- Caveat: High background buzz during evening hours
-- Description: Woodies Rock Cafe provides a music-themed backdrop in Sector 26 for friend groups and late evening beers.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, brunch
+- Caveat: None reported
+- Description: Woodies Rock Cafe is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 15, Sector 26, Chandigarh
 
 ### Student Center Coffee Corner (Sector 15)
 - Price: ₹ (~₹200 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
+- Rating: null (null reviews)
+- Trust Score: 88/100
 - Best for: gang, outdoor
 - Caveat: None reported
-- Description: The Student Center on the PU campus is where generations of students have gathered under tree shade for cold coffee.
+- Description: Student Center Coffee Corner is a local establishment located in Sector 15. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Panjab University Campus, Sector 14/15, Chandigarh
 
 ### The Brew Estate Cafe & Kitchen (Sector 26)
 - Price: ₹₹₹ (~₹1400 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: late-night, gang, pretty
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: late-night, gang
 - Caveat: None reported
-- Description: The Brew Estate Sector 26 offers open-air terrace seating and lively craft beverages for large social circles.
+- Description: The Brew Estate Cafe & Kitchen is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 25, Sector 26, Chandigarh
 
 ### The Brew Estate Sector 35 (Sector 35)
 - Price: ₹₹₹ (~₹1400 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, late-night, date
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, late-night
 - Caveat: None reported
-- Description: The Brew Estate Sector 35 draws lively evening crowds for shared platters and high-energy nightlife.
+- Description: The Brew Estate Sector 35 is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 408-409, Sector 35-C, Chandigarh
 
 ### Chili's American Grill & Cafe (Industrial Area Phase 1)
 - Price: ₹₹₹ (~₹1300 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, sweet-tooth, brunch
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, sweet-tooth
 - Caveat: None reported
-- Description: Chili's in Elante Mall delivers big Tex-Mex portions, sizzling fajitas, and booth seating for family groups.
+- Description: Chili's American Grill & Cafe is a local establishment located in Industrial Area Phase 1. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh
 
 ### Dunkin' Donuts & Cafe (Sector 35)
 - Price: ₹₹ (~₹500 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, work
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Dunkin' in Sector 35 is an easy grab-and-go counter for morning donuts and iced americanos.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
+- Caveat: None reported
+- Description: Dunkin' Donuts & Cafe is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 445, Sector 35-C, Chandigarh
 
 ### Belly's Delight Cafe (Sector 15)
 - Price: ₹ (~₹350 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, brunch, sweet-tooth
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, brunch
 - Caveat: None reported
-- Description: Belly's Delight is a beloved budget joint in Sector 15 for spiced rolls and thick milkshakes between classes.
+- Description: Belly's Delight Cafe is a local establishment located in Sector 15. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 78, Sector 15-D, Chandigarh
 
 ### Chai Break Cafe (Sector 26)
 - Price: ₹₹ (~₹650 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, brunch, sweet-tooth
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, brunch
 - Caveat: None reported
-- Description: Chai Break in Sector 26 offers a casual setting for friends to unwind over flavored teas and hookahs.
+- Description: Chai Break Cafe is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 28, Sector 26, Chandigarh
 
 ### Benares Cafe & Lounge (Sector 7)
 - Price: ₹₹ (~₹800 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: date, gang, work
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Benares Cafe blends traditional Indian culinary warmth with relaxed modern lounge seating in Sector 7.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, gang
+- Caveat: None reported
+- Description: Benares Cafe & Lounge is a local establishment located in Sector 7. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 32, Sector 7-C, Chandigarh
 
 ### Cuppa Bistro (Sector 8)
 - Price: ₹₹ (~₹650 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: reading, work, slow-morning
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Cuppa Bistro is an unassuming neighborhood cafe in Sector 8 suited for solitary afternoon reading.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: reading, work
+- Caveat: None reported
+- Description: Cuppa Bistro is a local establishment located in Sector 8. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCF 12, Sector 8-C, Chandigarh
 
 ### Cinnabon & Seattle's Best (Industrial Area Phase 1)
 - Price: ₹₹ (~₹600 for two)
-- Rating: 4.5 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, gang
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Cinnabon in Elante Mall attracts sweet-toothed shoppers with the scent of hot frosted cinnamon rolls.
+- Description: Cinnabon & Seattle's Best is a local establishment located in Industrial Area Phase 1. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Second Floor, Food Lounge, Elante Mall, Chandigarh
 
 ### Peddlers Cafe Elante (Industrial Area Phase 1)
 - Price: ₹₹₹ (~₹1200 for two)
-- Rating: 4.4 (null reviews)
-- Trust Score: 86/100
-- Best for: late-night, gang, outdoor
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: late-night, gang
 - Caveat: None reported
-- Description: Peddlers Elante combines outdoor courtyard seating with casual drinks and lively group conversation.
+- Description: Peddlers Cafe Elante is a local establishment located in Industrial Area Phase 1. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Courtyard, Elante Mall, Industrial Area Phase 1, Chandigarh
 
 ### The Great Bear Microbrewery & Cafe (Sector 26)
 - Price: ₹₹₹ (~₹1400 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, pretty, late-night
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, pretty
 - Caveat: None reported
-- Description: The Great Bear microbrewery in Sector 26 remains a weekend hub for group dining and craft brews on tap.
+- Description: The Great Bear Microbrewery & Cafe is a local establishment located in Sector 26. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 32, Sector 26, Madhya Marg, Chandigarh
 
 ### Mamagoto Pan Asian Cafe (Industrial Area Phase 1)
 - Price: ₹₹₹ (~₹1350 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: date, gang, brunch
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: date, gang
 - Caveat: None reported
-- Description: Mamagoto pairs playful pop-art interiors with steaming noodle bowls and dumplings in Elante.
+- Description: Mamagoto Pan Asian Cafe is a local establishment located in Industrial Area Phase 1. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Third Floor, Elante Mall, Industrial Area Phase 1, Chandigarh
 
 ### Monica's Bakery Sector 9 (Sector 9)
 - Price: ₹₹ (~₹750 for two)
-- Rating: 4.6 (null reviews)
-- Trust Score: 86/100
-- Best for: brunch, sweet-tooth, reading
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: brunch, sweet-tooth
 - Caveat: None reported
-- Description: Monica's Bakery in Sector 9 is a boutique takeaway counter for freshly boxed tarts and tea treats.
+- Description: Monica's Bakery Sector 9 is a local establishment located in Sector 9. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Inner Market, Booth 52, Sector 9-D, Chandigarh
 
 ### The Indian Oven Cafe (Sector 35)
 - Price: ₹₹ (~₹750 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: gang, work, reading
-- Caveat: Dedicated laptop seating available during daytime
-- Description: The Indian Oven in Sector 35 provides casual family dining with comforting north Indian and cafe dishes.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: gang, work
+- Caveat: None reported
+- Description: The Indian Oven Cafe is a local establishment located in Sector 35. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 451, Sector 35-C, Chandigarh
 
 ### Subway Cafe Sector 17 (Sector 17)
 - Price: ₹ (~₹400 for two)
-- Rating: 4.2 (null reviews)
-- Trust Score: 86/100
-- Best for: work, reading, brunch
-- Caveat: Dedicated laptop seating available during daytime
-- Description: Subway Cafe in Sector 17 offers quick customizable sandwiches and cold drinks right in the city center.
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: work, reading
+- Caveat: None reported
+- Description: Subway Cafe Sector 17 is a local establishment located in Sector 17. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: SCO 22-23, Sector 17-C, Chandigarh
 
 ### Barista Cafe Sector 9 (Sector 9)
 - Price: ₹₹ (~₹600 for two)
-- Rating: 4.3 (null reviews)
-- Trust Score: 86/100
-- Best for: reading, brunch, sweet-tooth
+- Rating: null (null reviews)
+- Trust Score: 88/100
+- Best for: reading, brunch
 - Caveat: None reported
-- Description: Barista Sector 9 is a peaceful neighborhood venue for a slow morning americano and reading the newspaper.
+- Description: Barista Cafe Sector 9 is a local establishment located in Sector 9. Factual attributes are maintained under CAFORA data authenticity guidelines.
 - Address: Inner Market, SCF 14, Sector 9-D, Chandigarh
 

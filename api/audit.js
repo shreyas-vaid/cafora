@@ -1,4 +1,5 @@
 import { CAFES_DATA } from '../src/data/cafesData.js';
+import { calculateTrustScore } from '../src/utils/trustScore.js';
 
 export function calculateAuditReport(cafes = CAFES_DATA) {
   const total = cafes.length;
@@ -18,7 +19,6 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
   let uniform120Count = 0;
   let badAICopyCount = 0;
 
-  let totalTrustScore = 0;
   let totalEvidenceSources = 0;
   let lowConfidenceCharacteristicsCount = 0;
   let conflictingSourcesCount = 0;
@@ -26,6 +26,17 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
   const duplicateCheck = new Map();
   const duplicateNames = [];
   const moodFrequencies = {};
+  const trustScores = [];
+
+  const buckets = {
+    "0-19": 0,
+    "20-39": 0,
+    "40-59": 0,
+    "60-69": 0,
+    "70-79": 0,
+    "80-89": 0,
+    "90-100": 0
+  };
 
   cafes.forEach((cafe) => {
     const id = cafe.id || cafe.identity?.id;
@@ -37,9 +48,20 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
     const cafora = cafe.cafora || {};
     const moods = cafora.moods || cafe.moods || [];
     const status = cafora.verificationStatus || cafe.verificationStatus || 'unverified';
-    const trust = (typeof cafora.trustScore === 'number') ? cafora.trustScore : ((typeof cafe.trustScore === 'number') ? cafe.trustScore : 0);
 
-    totalTrustScore += trust;
+    // Calculate deterministic trust score from evidence
+    const trustResult = calculateTrustScore(cafe);
+    const trust = trustResult.score;
+    trustScores.push(trust);
+
+    // Distribution Bucketing
+    if (trust < 20) buckets["0-19"]++;
+    else if (trust < 40) buckets["20-39"]++;
+    else if (trust < 60) buckets["40-59"]++;
+    else if (trust < 70) buckets["60-69"]++;
+    else if (trust < 80) buckets["70-79"]++;
+    else if (trust < 90) buckets["80-89"]++;
+    else buckets["90-100"]++;
 
     if (status === 'verified') verifiedCount++;
     else if (status === 'partially_verified') partiallyVerifiedCount++;
@@ -50,11 +72,14 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
     if (reviewCount === null || reviewCount === undefined) missingReviewCount++;
     if (!hours) missingHoursCount++;
 
-    const sources = cafe.evidence?.sources || [];
+    const sources = [
+      ...(cafe.evidence?.sources || []),
+      ...(cafe.facts?.provenance || [])
+    ];
     if (!sources || sources.length === 0) missingEvidenceCount++;
     totalEvidenceSources += sources.length;
 
-    if (cafe.evidence?.conflict) conflictingSourcesCount++;
+    if (cafe.evidence?.conflict || cafe.facts?.conflict) conflictingSourcesCount++;
 
     if (moods.length > 4) overMoodsCount++;
     if (moods.length < 2) underMoodsCount++;
@@ -79,6 +104,24 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
       }
     }
   });
+
+  // Calculate Trust Statistics
+  const sortedScores = [...trustScores].sort((a, b) => a - b);
+  const minTrust = sortedScores.length > 0 ? sortedScores[0] : 0;
+  const maxTrust = sortedScores.length > 0 ? sortedScores[sortedScores.length - 1] : 0;
+  const meanTrust = sortedScores.length > 0 
+    ? Math.round((sortedScores.reduce((a, b) => a + b, 0) / sortedScores.length) * 10) / 10 
+    : 0;
+  
+  const mid = Math.floor(sortedScores.length / 2);
+  const medianTrust = sortedScores.length % 2 !== 0 
+    ? sortedScores[mid] 
+    : Math.round(((sortedScores[mid - 1] + sortedScores[mid]) / 2) * 10) / 10;
+  
+  const variance = sortedScores.length > 0
+    ? sortedScores.reduce((acc, val) => acc + Math.pow(val - meanTrust, 2), 0) / sortedScores.length
+    : 0;
+  const stdDevTrust = Math.round(Math.sqrt(variance) * 10) / 10;
 
   const avgEvidenceCoverage = total > 0 
     ? Math.round(cafes.reduce((acc, c) => {
@@ -114,8 +157,26 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
       moodComplianceRate: total > 0 ? `${Math.round(((total - overMoodsCount - underMoodsCount) / total) * 100)}%` : '0%',
       distribution: moodFrequencies
     },
+    trustEngine: {
+      model: "Evidence-Derived Weighted Formulation",
+      weights: {
+        sourceQuality: "25%",
+        sourceAgreement: "20%",
+        evidenceCoverage: "20%",
+        freshness: "15%",
+        identityConfidence: "20%"
+      },
+      distribution: {
+        minimum: minTrust,
+        maximum: maxTrust,
+        mean: meanTrust,
+        median: medianTrust,
+        standardDeviation: stdDevTrust,
+        buckets
+      }
+    },
     qualityScores: {
-      averageTrustScore: total > 0 ? Math.round((totalTrustScore / total) * 10) / 10 : 0,
+      averageTrustScore: meanTrust,
       averageEvidenceSourcesPerCafe: total > 0 ? Math.round((totalEvidenceSources / total) * 10) / 10 : 0,
       averageEvidenceCoverage: `${avgEvidenceCoverage}%`,
       lowConfidenceCharacteristicsTotal: lowConfidenceCharacteristicsCount
@@ -132,6 +193,23 @@ export default async function handler(req, res) {
 
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
+  }
+
+  const { id } = req.query || {};
+  if (id) {
+    const cafe = CAFES_DATA.find(c => (c.id === id || c.identity?.id === id));
+    if (!cafe) {
+      return res.status(404).json({ error: 'Cafe not found', id });
+    }
+    const trustResult = calculateTrustScore(cafe);
+    return res.status(200).json({
+      status: 'success',
+      cafeId: id,
+      cafeName: cafe.name || cafe.identity?.name,
+      trustScore: trustResult.score,
+      components: trustResult.components,
+      explanation: trustResult.explanation
+    });
   }
 
   const report = calculateAuditReport(CAFES_DATA);
