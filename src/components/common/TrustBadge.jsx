@@ -10,19 +10,22 @@ import { calculateTrustScore } from "../../utils/trustScore";
  */
 export default function TrustBadge({ cafe, scoreOverride, size = "normal" }) {
   const trust = scoreOverride !== undefined 
-    ? {
+    ? (scoreOverride !== null ? {
         score: scoreOverride,
         badgeClass: scoreOverride >= 90 ? "trust-badge-high" : scoreOverride >= 80 ? "trust-badge-good" : scoreOverride >= 65 ? "trust-badge-mixed" : "trust-badge-low",
         label: scoreOverride >= 90 ? "VERY TRUSTED" : scoreOverride >= 80 ? "TRUSTED" : scoreOverride >= 65 ? "MIXED" : "THINK TWICE",
         confidence: "High"
-      }
+      } : null)
     : calculateTrustScore(cafe);
+
+  const isCalculable = trust && trust.score !== null && trust.score !== undefined;
 
   const [displayScore, setDisplayScore] = useState(0);
   const [showTooltip, setShowTooltip] = useState(false);
   const tooltipRef = useRef(null);
 
   useEffect(() => {
+    if (!isCalculable) return;
     let start = 0;
     const end = trust.score;
     if (end === 0) return;
@@ -40,7 +43,7 @@ export default function TrustBadge({ cafe, scoreOverride, size = "normal" }) {
     }, stepTime);
 
     return () => clearInterval(timer);
-  }, [trust.score]);
+  }, [isCalculable, trust?.score]);
 
   // Close tooltip on outside click
   useEffect(() => {
@@ -54,6 +57,11 @@ export default function TrustBadge({ cafe, scoreOverride, size = "normal" }) {
     }
     return () => document.removeEventListener("mousedown", handleOutsideClick);
   }, [showTooltip]);
+
+  // Case B & C: When evidence is insufficient or no trust score, omit badge completely
+  if (!isCalculable) {
+    return null;
+  }
 
   const isSmall = size === "small";
   const isLarge = size === "large";

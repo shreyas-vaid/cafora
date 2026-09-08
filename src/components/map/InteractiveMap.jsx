@@ -111,14 +111,18 @@ export default function InteractiveMap({ cafes = [], selectedSector, activeCafeI
       if (!coords) return;
 
       const trust = calculateTrustScore(cafe);
+      const hasTrust = trust && trust.score !== null;
 
-      // Accent color based on trust tier
-      let markerColor = "#2da473"; // high trust
-      if (trust.score < 65 || cafe.isLowTrust) markerColor = "#c93b3b";
-      else if (trust.score < 80) markerColor = "#d9622b";
-      else if (trust.score < 90) markerColor = "#e09422";
+      // Accent color based on trust tier (or warm neutral if unverified)
+      let markerColor = "#d97706";
+      if (hasTrust) {
+        if (trust.score >= 80) markerColor = "#2da473";
+        else if (trust.score >= 65) markerColor = "#e09422";
+        else markerColor = "#d9622b";
+      }
 
-      // Distinctive Cafe Finder branded marker: Bean badge with Trust score
+      // Distinctive Cafe Finder branded marker: Bean badge with Trust score (or rating if unverified)
+      const badgeText = hasTrust ? trust.score : (cafe.rating || "★");
       const customIcon = L.divIcon({
         className: "custom-cafe-marker",
         html: `
@@ -139,7 +143,7 @@ export default function InteractiveMap({ cafes = [], selectedSector, activeCafeI
             transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
           ">
             <span style="color: #e07a38; font-size: 12px;">✦</span>
-            <span>${trust.score}</span>
+            <span>${badgeText}</span>
           </div>
         `,
         iconSize: [52, 28],
@@ -163,7 +167,7 @@ export default function InteractiveMap({ cafes = [], selectedSector, activeCafeI
           
           <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
             <h4 style="font-size: 15px; font-weight: 700; color: #fcf8f2; margin: 0; font-family: 'Playfair Display', serif;">${cafe.name}</h4>
-            <span style="color: ${markerColor}; font-weight: 800; font-size: 11.5px;">${trust.score} TRUST</span>
+            ${hasTrust ? `<span style="color: ${markerColor}; font-weight: 800; font-size: 11.5px;">${trust.score} TRUST</span>` : ""}
           </div>
 
           <div style="font-size: 11px; color: #dcd0bf; margin-bottom: 8px;">

@@ -11,7 +11,7 @@
  */
 
 import { calculateTrustScore } from "./trustScore.js";
-import { getRecommendationScore, LOW_TRUST_THRESHOLD } from "./recommendation.js";
+import { getRecommendationScore } from "./recommendation.js";
 import { extractVibesFromSearch, getCharacteristicScore } from "./vibeEngine.js";
 
 export function filterAndSortCafes(cafes, {
@@ -28,11 +28,6 @@ export function filterAndSortCafes(cafes, {
   // 1. Filter Cafes
   let results = cafes.filter((cafe) => {
     const trust = calculateTrustScore(cafe);
-
-    // Rule: Low trust cafes are hidden from normal discovery unless explicitly searched by name/sector/tag
-    if (!isExplicitSearch && trust.score < LOW_TRUST_THRESHOLD) {
-      return false;
-    }
 
     // Category / Vibe Filter
     if (selectedCategory !== "all") {
@@ -55,11 +50,11 @@ export function filterAndSortCafes(cafes, {
       }
     }
 
-    // Trust Filter
+    // Explicit User Trust Filter
     if (minTrust === "90") {
-      if (trust.score < 90) return false;
+      if (trust.score === null || trust.score < 90) return false;
     } else if (minTrust === "80") {
-      if (trust.score < 80) return false;
+      if (trust.score === null || trust.score < 80) return false;
     }
 
     // Search Query Matching
@@ -122,7 +117,7 @@ export function filterAndSortCafes(cafes, {
 
     switch (sortBy) {
       case "trust":
-        return trustB.score - trustA.score;
+        return (trustB.score ?? -1) - (trustA.score ?? -1);
       case "rating":
         return Number(b.rating) - Number(a.rating);
       case "reviews":

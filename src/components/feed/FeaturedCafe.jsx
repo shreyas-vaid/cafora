@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import TrustBadge from "../common/TrustBadge";
+import { calculateTrustScore } from "../../utils/trustScore";
 import { isCafeSaved, toggleSaveCafe } from "../../utils/storage";
 import {
   calculateMatchPercentage,
@@ -273,7 +274,9 @@ export default function FeaturedCafe({
               >
                 ★ {cafe.rating}
               </div>
-              <TrustBadge cafe={cafe} size="normal" />
+              {calculateTrustScore(cafe).score !== null && (
+                <TrustBadge cafe={cafe} size="normal" />
+              )}
               <span style={{ fontSize: "12px", color: "var(--cream-faint)" }}>
                 {cafe.priceRange} · ₹{cafe.approxCostForTwo} for 2
               </span>

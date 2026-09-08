@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import CafeCard from "./CafeCard";
 import FeaturedCafe from "./FeaturedCafe";
-import { calculateTrustScore } from "../../utils/trustScore";
-import { LOW_TRUST_THRESHOLD } from "../../utils/recommendation";
 import {
   getCategorizedRecommendations,
   getMoodResponseCopy
@@ -120,11 +118,8 @@ export default function EditorialGrid({
     );
   }
 
-  // Filter low-trust unless direct search
-  const eligibleCafes = cafes.filter((c) => {
-    const t = calculateTrustScore(c);
-    return t.score >= LOW_TRUST_THRESHOLD && !c.isLowTrust;
-  });
+  // All legitimate cafes in the catalogue remain discoverable
+  const eligibleCafes = cafes;
 
   const isVibeActive = activeMoods.length > 0 || (searchQuery && searchQuery.trim().length > 0);
 

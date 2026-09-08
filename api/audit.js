@@ -52,16 +52,17 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
     // Calculate deterministic trust score from evidence
     const trustResult = calculateTrustScore(cafe);
     const trust = trustResult.score;
-    trustScores.push(trust);
-
-    // Distribution Bucketing
-    if (trust < 20) buckets["0-19"]++;
-    else if (trust < 40) buckets["20-39"]++;
-    else if (trust < 60) buckets["40-59"]++;
-    else if (trust < 70) buckets["60-69"]++;
-    else if (trust < 80) buckets["70-79"]++;
-    else if (trust < 90) buckets["80-89"]++;
-    else buckets["90-100"]++;
+    if (trust !== null) {
+      trustScores.push(trust);
+      // Distribution Bucketing
+      if (trust < 20) buckets["0-19"]++;
+      else if (trust < 40) buckets["20-39"]++;
+      else if (trust < 60) buckets["40-59"]++;
+      else if (trust < 70) buckets["60-69"]++;
+      else if (trust < 80) buckets["70-79"]++;
+      else if (trust < 90) buckets["80-89"]++;
+      else buckets["90-100"]++;
+    }
 
     if (status === 'verified') verifiedCount++;
     else if (status === 'partially_verified') partiallyVerifiedCount++;
@@ -80,6 +81,15 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
     totalEvidenceSources += sources.length;
 
     if (cafe.evidence?.conflict || cafe.facts?.conflict) conflictingSourcesCount++;
+
+    // Calculate low-confidence characteristic counts
+    const chars = cafe.characteristics || {};
+    Object.keys(chars).forEach((k) => {
+      const charObj = chars[k];
+      if (charObj && (charObj.confidence === 'low' || charObj.confidence === 'unknown' || charObj.score === null)) {
+        lowConfidenceCharacteristicsCount++;
+      }
+    });
 
     if (moods.length > 4) overMoodsCount++;
     if (moods.length < 2) underMoodsCount++;
@@ -172,6 +182,8 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
         mean: meanTrust,
         median: medianTrust,
         standardDeviation: stdDevTrust,
+        scoredCafesCount: sortedScores.length,
+        unscoredCafesCount: total - sortedScores.length,
         buckets
       }
     },

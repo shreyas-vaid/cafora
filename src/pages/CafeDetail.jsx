@@ -12,6 +12,7 @@ import {
 } from "../utils/vibeEngine";
 import Navbar from "../components/common/Navbar";
 import TrustBadge from "../components/common/TrustBadge";
+import { calculateTrustScore } from "../utils/trustScore";
 import VibeScoreBar from "../components/common/VibeScoreBar";
 import WhyThisCafe from "../components/feed/WhyThisCafe";
 import VerdictCard from "../components/detail/VerdictCard";
@@ -365,9 +366,14 @@ export default function CafeDetail() {
                     marginBottom: "20px"
                   }}
                 >
-                  <TrustBadge cafe={cafe} size="large" />
+                  {calculateTrustScore(cafe).score !== null && (
+                    <TrustBadge cafe={cafe} size="large" />
+                  )}
 
-                  <div style={{ borderLeft: "1px solid var(--border-medium)", paddingLeft: "16px" }}>
+                  <div style={{
+                    borderLeft: calculateTrustScore(cafe).score !== null ? "1px solid var(--border-medium)" : "none",
+                    paddingLeft: calculateTrustScore(cafe).score !== null ? "16px" : "0"
+                  }}>
                     <div style={{ fontSize: "11px", color: "var(--cream-faint)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
                       Rating
                     </div>

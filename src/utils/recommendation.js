@@ -8,23 +8,21 @@
 
 import { calculateTrustScore } from "./trustScore.js";
 
-export const LOW_TRUST_THRESHOLD = 65;
 export const HIGH_TRUST_THRESHOLD = 90;
 
 /**
  * Calculates a composite recommendation score.
- * Combines Trust Score (60%), Review Quality (20%), and Engagement/Recency (20%).
- * Low Trust cafes receive severe penalties in normal discovery feeds.
+ * Combines Trust Score (where available as a confidence boost),
+ * Review Quality, and Engagement/Recency.
+ * 
+ * Rule: Trust is an optional confidence signal, NOT an eligibility filter.
+ * Cafes with uncalculated trust remain discoverable without being penalized to zero.
  */
 export function getRecommendationScore(cafe, userPreferences = {}) {
   const trust = calculateTrustScore(cafe);
   
-  // If trust is below threshold, penalize severely for discovery
-  if (trust.score < LOW_TRUST_THRESHOLD) {
-    return trust.score * 0.4;
-  }
-
-  let score = trust.score * 0.65;
+  // Base confidence contribution: verified trust score if available, or neutral baseline if uncalculated
+  let score = trust.score !== null ? (trust.score * 0.60) : 35;
 
   // Add rating confidence
   const ratingWeight = ((Number(cafe.rating) || 4.0) / 5.0) * 20;
@@ -47,9 +45,9 @@ export function getRecommendationScore(cafe, userPreferences = {}) {
 }
 
 /**
- * Filter out low-trust cafes from standard discovery unless explicit search matches them.
+ * All legitimate cafes in CAFORA remain eligible for discovery.
+ * Trust is a confidence signal, NOT an eligibility filter.
  */
 export function isEligibleForDiscovery(cafe) {
-  const trust = calculateTrustScore(cafe);
-  return trust.score >= LOW_TRUST_THRESHOLD && !cafe.isLowTrust;
+  return true;
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import TrustBadge from "../common/TrustBadge";
+import { calculateTrustScore } from "../../utils/trustScore";
 
 export default function VerdictCard({ cafe }) {
   const verdict = cafe.verdict || {
@@ -61,7 +62,9 @@ export default function VerdictCard({ cafe }) {
           </h2>
         </div>
 
-        <TrustBadge cafe={cafe} size="large" />
+        {calculateTrustScore(cafe).score !== null && (
+          <TrustBadge cafe={cafe} size="large" />
+        )}
       </div>
 
       {/* Editorial Headline Quote */}

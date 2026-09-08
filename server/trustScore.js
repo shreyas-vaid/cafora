@@ -36,23 +36,49 @@ const FRESHNESS_HALF_LIFE_DAYS = 180;
 const ANCHOR_DATE = new Date('2026-09-08T00:00:00.000Z').getTime();
 
 /**
+ * Evaluates whether a cafe has sufficient trustworthy evidence to calculate a meaningful Trust Score.
+ * 
+ * Rules (Sections 2 & 10):
+ * - Must have at least one verified external source (e.g. openstreetmap, official_website, official_menu, reputable_editorial, independent_directory, google_places).
+ * - Must not be purely internal_unverified catalog listings.
+ * - If sufficient: returns true -> calculate real deterministic trust score (0-100).
+ * - If insufficient: returns false -> trustScore = null (hide Trust badge, NO fake number).
+ */
+function hasSufficientEvidence(cafe) {
+  if (!cafe) return false;
+  const sources = [
+    ...(cafe.evidence?.sources || []),
+    ...(cafe.facts?.provenance || [])
+  ];
+  if (!sources || sources.length === 0) return false;
+
+  const hasTrustworthySource = sources.some((s) => {
+    const type = s.sourceType || s.type;
+    return type && type !== 'internal_unverified' && (SOURCE_QUALITY[type] ?? 0) >= 0.60;
+  });
+
+  return hasTrustworthySource;
+}
+
+/**
  * Calculates deterministic trust score and component breakdown for a cafe
  * @param {Object} cafe - Cafe entity with facts, evidence, and characteristics
- * @returns {Object} { score: 0-100, components: {...}, explanation: [...] }
+ * @returns {Object} { score: 0-100|null, components: {...}, explanation: [...], hasSufficientEvidence }
  */
 function calculateTrustScore(cafe) {
-  if (!cafe) {
+  if (!cafe || !hasSufficientEvidence(cafe)) {
     return {
-      score: 0,
+      score: null,
+      hasSufficientEvidence: false,
       components: {
-        sourceQuality: 0,
-        sourceAgreement: 0,
-        evidenceCoverage: 0,
-        freshness: 0,
-        identityConfidence: 0,
+        sourceQuality: null,
+        sourceAgreement: null,
+        evidenceCoverage: null,
+        freshness: null,
+        identityConfidence: null,
         conflictPenalty: 0
       },
-      explanation: ["No cafe record provided"]
+      explanation: ["Insufficient verifiable evidence to calculate a reliable trust score"]
     };
   }
 
@@ -219,12 +245,14 @@ function calculateTrustScore(cafe) {
       identityConfidence,
       conflictPenalty
     },
-    explanation: explanations
+    explanation: explanations,
+    hasSufficientEvidence: true
   };
 }
 
 module.exports = {
   calculateTrustScore,
+  hasSufficientEvidence,
   SOURCE_QUALITY,
   FRESHNESS_HALF_LIFE_DAYS
 };

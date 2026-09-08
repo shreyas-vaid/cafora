@@ -33,6 +33,7 @@ export function generateAuditReport(cafes = CAFES_DATA) {
   let badAICopyCount = 0;
 
   let totalTrustScore = 0;
+  let scoredCafesCount = 0;
   let totalEvidenceSources = 0;
   let lowConfidenceCharacteristicsCount = 0;
   let conflictingSourcesCount = 0;
@@ -110,7 +111,10 @@ export function generateAuditReport(cafes = CAFES_DATA) {
       badAICopyCount++;
     }
 
-    totalTrustScore += trust;
+    if (trust !== null) {
+      totalTrustScore += trust;
+      scoredCafesCount++;
+    }
   });
 
   const avgEvidenceCoverage = total > 0 
@@ -149,7 +153,9 @@ export function generateAuditReport(cafes = CAFES_DATA) {
       distribution: moodFrequencies
     },
     qualityScores: {
-      averageTrustScore: Math.round((totalTrustScore / total) * 10) / 10,
+      averageTrustScore: scoredCafesCount > 0 ? Math.round((totalTrustScore / scoredCafesCount) * 10) / 10 : 0,
+      scoredCafesCount,
+      unscoredCafesCount: total - scoredCafesCount,
       averageEvidenceSourcesPerCafe: Math.round((totalEvidenceSources / total) * 10) / 10,
       averageEvidenceCoverage: `${avgEvidenceCoverage}%`,
       lowConfidenceCharacteristicsTotal: lowConfidenceCharacteristicsCount

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import TrustBadge from "../common/TrustBadge";
+import { calculateTrustScore } from "../../utils/trustScore";
 import { isCafeSaved, toggleSaveCafe } from "../../utils/storage";
 import {
   getCafePersonalityTagline,
@@ -333,7 +334,9 @@ export default function CafeCard({
               </div>
 
               {/* Trust Badge with Info Icon */}
-              <TrustBadge cafe={cafe} size="small" />
+              {calculateTrustScore(cafe).score !== null && (
+                <TrustBadge cafe={cafe} size="small" />
+              )}
 
               {/* CAFORA MATCH % (Highlighted when vibe active) */}
               {isVibeActive && (
