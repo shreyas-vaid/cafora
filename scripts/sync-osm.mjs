@@ -35,17 +35,23 @@ export async function fetchOSMCafes(options = {}) {
     }
   }
 
-  // 2. Query Overpass API
+  // 2. Query Overpass API (Expanded to include cafes, bakeries, and dining spots)
   const query = `
-    [out:json][timeout:25];
+    [out:json][timeout:35];
     (
       node["amenity"="cafe"](${CHANDIGARH_BBOX});
       way["amenity"="cafe"](${CHANDIGARH_BBOX});
+      node["amenity"="restaurant"](${CHANDIGARH_BBOX});
+      way["amenity"="restaurant"](${CHANDIGARH_BBOX});
+      node["shop"="bakery"](${CHANDIGARH_BBOX});
+      way["shop"="bakery"](${CHANDIGARH_BBOX});
+      node["shop"="coffee"](${CHANDIGARH_BBOX});
+      way["shop"="coffee"](${CHANDIGARH_BBOX});
     );
     out center tags;
   `;
 
-  console.log('[OSM] Querying Overpass API for Chandigarh cafes...');
+  console.log('[OSM] Querying Overpass API for Chandigarh cafes and venues...');
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeout);
@@ -136,6 +142,33 @@ export async function fetchOSMCafes(options = {}) {
       cafes: []
     };
   }
+}
+
+export function safeMatchOSMCafe(cafe, osmCafes = []) {
+  if (!cafe || !osmCafes.length) return null;
+  const normName = (cafe.name || cafe.identity?.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const cafeSector = (cafe.sector || cafe.identity?.sector || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+  for (const osm of osmCafes) {
+    const normOsm = (osm.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    if (!normOsm) continue;
+
+    // Strict exact match
+    if (normOsm === normName) {
+      if (!cafeSector || (osm.address && osm.address.toLowerCase().replace(/[^a-z0-9]/g, '').includes(cafeSector))) {
+        return osm;
+      }
+    }
+
+    // Substring match with mandatory sector validation
+    if (normName.includes(normOsm) || normOsm.includes(normName)) {
+      if (cafeSector && osm.address && osm.address.toLowerCase().replace(/[^a-z0-9]/g, '').includes(cafeSector)) {
+        return osm;
+      }
+    }
+  }
+
+  return null;
 }
 
 // Run directly if invoked from CLI

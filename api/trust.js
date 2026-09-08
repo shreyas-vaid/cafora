@@ -21,9 +21,11 @@ export default async function handler(req, res) {
     return res.status(404).json({ error: 'Cafe not found', id });
   }
 
-  const trustScore = cafe.cafora?.trustScore || cafe.trustScore || 85;
+  const trustScore = (typeof cafe.cafora?.trustScore === 'number')
+    ? cafe.cafora.trustScore
+    : ((typeof cafe.trustScore === 'number') ? cafe.trustScore : null);
   const sources = cafe.evidence?.sources || [];
-  const verificationStatus = cafe.cafora?.verificationStatus || 'partially_verified';
+  const verificationStatus = cafe.cafora?.verificationStatus || cafe.verificationStatus || 'unverified';
 
   return res.status(200).json({
     status: 'success',
@@ -34,10 +36,10 @@ export default async function handler(req, res) {
     sourcesCount: sources.length,
     sourcesSummary: sources.map(s => ({
       sourceType: s.sourceType || s.type,
-      sourceName: s.sourceName || s.name || 'Verified Local Feedback',
+      sourceName: s.sourceName || s.name || 'Local Record',
       note: s.note
     })),
-    confidence: cafe.evidence?.confidence || 'high',
-    lastVerified: cafe.cafora?.lastVerified || '2026-08-20'
+    confidence: cafe.evidence?.confidence || (sources.length > 0 ? 'medium' : 'unknown'),
+    lastVerified: cafe.cafora?.lastVerified || cafe.lastVerified || null
   });
 }

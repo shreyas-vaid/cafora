@@ -56,7 +56,7 @@ export function generateAuditReport(cafes = CAFES_DATA) {
     const cafora = cafe.cafora || {};
     const moods = cafora.moods || cafe.moods || [];
     const status = cafora.verificationStatus || cafe.verificationStatus || 'unverified';
-    const trust = cafora.trustScore || cafe.trustScore || 80;
+    const trust = (typeof cafora.trustScore === 'number') ? cafora.trustScore : ((typeof cafe.trustScore === 'number') ? cafe.trustScore : 0);
 
     // Duplicates check
     const normalizedName = (name || '').toLowerCase().trim();
@@ -109,7 +109,12 @@ export function generateAuditReport(cafes = CAFES_DATA) {
     totalTrustScore += trust;
   });
 
-  const avgEvidenceCoverage = Math.round(cafes.reduce((acc, c) => acc + parseInt(c.evidenceCoverage || '85'), 0) / total);
+  const avgEvidenceCoverage = total > 0 
+    ? Math.round(cafes.reduce((acc, c) => {
+        const cov = c.evidenceCoverage || c.cafora?.evidenceCoverage;
+        return acc + (cov ? parseInt(cov, 10) || 0 : 0);
+      }, 0) / total)
+    : 0;
 
   return {
     generatedAt: new Date().toISOString(),
@@ -118,7 +123,7 @@ export function generateAuditReport(cafes = CAFES_DATA) {
       verified: verifiedCount,
       partiallyVerified: partiallyVerifiedCount,
       unverified: unverifiedCount,
-      removed: 12, // 12 placeholder/fictional entries purged and replaced with authentic venues
+      removed: 0,
       verificationRate: `${Math.round(((verifiedCount + partiallyVerifiedCount) / total) * 100)}%`,
       averageEvidenceCoverage: `${avgEvidenceCoverage}%`
     },

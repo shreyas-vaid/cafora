@@ -74,7 +74,7 @@ export async function enrichWithGooglePlaces(cafeList = [], options = {}) {
       if (searchRes.ok) {
         const data = await searchRes.json();
         const place = data.places?.[0];
-        if (place) {
+        if (place && isStrongMatch(cafe, place)) {
           const entry = {
             placeId: place.id,
             googleRating: place.rating || null,
@@ -82,6 +82,7 @@ export async function enrichWithGooglePlaces(cafeList = [], options = {}) {
             googleWebsite: place.websiteUri || null,
             googlePhone: place.nationalPhoneNumber || null,
             googleHours: place.regularOpeningHours?.weekdayDescriptions || null,
+            googleMatchStatus: 'matched',
             fetchedAt: new Date().toISOString(),
             source: 'Google Places API (New)'
           };
@@ -89,15 +90,18 @@ export async function enrichWithGooglePlaces(cafeList = [], options = {}) {
           cache[cafeId] = entry;
           enrichedCount++;
           enrichedCafes.push(mergeGoogleData(cafe, entry));
-          console.log(`[Google Places] Enriched ${cafeName}: ★ ${entry.googleRating} (${entry.googleReviewCount} reviews)`);
+          console.log(`[Google Places] Safely matched ${cafeName}: ★ ${entry.googleRating} (${entry.googleReviewCount} reviews)`);
         } else {
+          cafe.googleMatchStatus = 'unmatched';
           enrichedCafes.push(cafe);
         }
       } else {
+        cafe.googleMatchStatus = 'unmatched';
         enrichedCafes.push(cafe);
       }
     } catch (err) {
       console.warn(`[Google Places] Failed to enrich ${cafeName}:`, err.message);
+      cafe.googleMatchStatus = 'unmatched';
       enrichedCafes.push(cafe);
     }
   }
@@ -136,6 +140,18 @@ function mergeGoogleData(cafe, googleEntry) {
   merged.lastVerified = googleEntry.fetchedAt ? googleEntry.fetchedAt.split('T')[0] : merged.lastVerified;
 
   return merged;
+}
+
+function isStrongMatch(cafe, place) {
+  const normCafe = (cafe.name || cafe.identity?.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const normPlace = (place.displayName?.text || place.displayName || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  const addr = (place.formattedAddress || '').toLowerCase();
+  const sector = (cafe.sector || cafe.identity?.sector || '').toLowerCase();
+  
+  const nameMatch = normCafe.includes(normPlace) || normPlace.includes(normCafe) || (normCafe.slice(0, 8) === normPlace.slice(0, 8));
+  const sectorMatch = sector ? addr.includes(sector) : addr.includes('chandigarh');
+  
+  return nameMatch && sectorMatch;
 }
 
 // CLI execution test

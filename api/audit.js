@@ -37,7 +37,7 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
     const cafora = cafe.cafora || {};
     const moods = cafora.moods || cafe.moods || [];
     const status = cafora.verificationStatus || cafe.verificationStatus || 'unverified';
-    const trust = cafora.trustScore || cafe.trustScore || 80;
+    const trust = (typeof cafora.trustScore === 'number') ? cafora.trustScore : ((typeof cafe.trustScore === 'number') ? cafe.trustScore : 0);
 
     totalTrustScore += trust;
 
@@ -80,7 +80,12 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
     }
   });
 
-  const avgEvidenceCoverage = Math.round(cafes.reduce((acc, c) => acc + parseInt(c.evidenceCoverage || '85'), 0) / total);
+  const avgEvidenceCoverage = total > 0 
+    ? Math.round(cafes.reduce((acc, c) => {
+        const cov = c.evidenceCoverage || c.cafora?.evidenceCoverage;
+        return acc + (cov ? parseInt(cov, 10) || 0 : 0);
+      }, 0) / total)
+    : 0;
 
   return {
     dataset: {
@@ -88,8 +93,8 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
       verified: verifiedCount,
       partiallyVerified: partiallyVerifiedCount,
       unverified: unverifiedCount,
-      removed: 12,
-      verificationCoverage: `${Math.round(((verifiedCount + partiallyVerifiedCount) / total) * 100)}%`,
+      removed: 0,
+      verificationCoverage: total > 0 ? `${Math.round(((verifiedCount + partiallyVerifiedCount) / total) * 100)}%` : '0%',
       averageEvidenceCoverage: `${avgEvidenceCoverage}%`
     },
     provenanceAndIntegrity: {
@@ -106,12 +111,12 @@ export function calculateAuditReport(cafes = CAFES_DATA) {
     moodIntegrity: {
       cafesWithOver4Moods: overMoodsCount,
       cafesWithUnder2Moods: underMoodsCount,
-      moodComplianceRate: `${Math.round(((total - overMoodsCount - underMoodsCount) / total) * 100)}%`,
+      moodComplianceRate: total > 0 ? `${Math.round(((total - overMoodsCount - underMoodsCount) / total) * 100)}%` : '0%',
       distribution: moodFrequencies
     },
     qualityScores: {
-      averageTrustScore: Math.round((totalTrustScore / total) * 10) / 10,
-      averageEvidenceSourcesPerCafe: Math.round((totalEvidenceSources / total) * 10) / 10,
+      averageTrustScore: total > 0 ? Math.round((totalTrustScore / total) * 10) / 10 : 0,
+      averageEvidenceSourcesPerCafe: total > 0 ? Math.round((totalEvidenceSources / total) * 10) / 10 : 0,
       averageEvidenceCoverage: `${avgEvidenceCoverage}%`,
       lowConfidenceCharacteristicsTotal: lowConfidenceCharacteristicsCount
     },

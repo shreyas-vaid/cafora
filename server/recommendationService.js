@@ -218,10 +218,13 @@ function getCharacteristicScore(cafe, key) {
  */
 function calculateMatchScore(cafe, activeMoodIds = [], searchQuery = "") {
   if (!activeMoodIds || activeMoodIds.length === 0) {
-    // Return curated baseline if no mood selected
-    const trust = cafe.cafora?.trustScore || cafe.trustScore || 85;
-    const rating = cafe.facts?.rating || cafe.rating || 4.5;
-    return Math.min(96, Math.max(78, Math.round((rating / 5) * 45 + (trust / 100) * 50)));
+    // Return baseline if no mood selected
+    const trust = (typeof cafe.cafora?.trustScore === 'number')
+      ? cafe.cafora.trustScore
+      : ((typeof cafe.trustScore === 'number') ? cafe.trustScore : 50);
+    const rating = cafe.facts?.rating ?? cafe.rating;
+    const ratingFactor = (typeof rating === 'number') ? (rating / 5) * 45 : 36;
+    return Math.min(96, Math.max(50, Math.round(ratingFactor + (trust / 100) * 50)));
   }
 
   const normalizedMoodIds = activeMoodIds.map(m => MOOD_ID_MAP[m] || m);
@@ -394,7 +397,9 @@ function getRecommendations(allCafes, options = {}) {
   // 2. Score every cafe
   const scoredCafes = pool.map(cafe => {
     const matchPercentage = calculateMatchScore(cafe, activeMoods, query);
-    const trustScore = cafe.cafora?.trustScore || cafe.trustScore || 85;
+    const trustScore = (typeof cafe.cafora?.trustScore === 'number')
+      ? cafe.cafora.trustScore
+      : ((typeof cafe.trustScore === 'number') ? cafe.trustScore : null);
     const reasons = getMatchReasons(cafe, activeMoods);
     const caveats = getCafeCaveats(cafe);
 
