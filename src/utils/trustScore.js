@@ -64,6 +64,35 @@ export function hasSufficientEvidence(cafe) {
 }
 
 /**
+ * Validates whether an OSM identifier corresponds to a legitimate OpenStreetMap identity.
+ * Valid:
+ *   - Real numeric OSM element ID as number: e.g. 4214699191
+ *   - Real numeric OSM element ID as string: e.g. "4214699191"
+ *   - Genuine Overpass element ID with element type: e.g. "osm-node-4214699191", "osm-way-129774086", "node/4214699191"
+ * Invalid:
+ *   - Synthetic "osm-..." IDs without element type: e.g. "osm-123", "osm-4214699191"
+ *   - Empty string, null, undefined, arbitrary text
+ */
+export function isValidOsmId(osmId) {
+  if (typeof osmId === 'number') {
+    return Number.isInteger(osmId) && osmId > 0;
+  }
+  if (typeof osmId === 'string') {
+    const trimmed = osmId.trim();
+    if (!trimmed) return false;
+    // Pure numeric OSM element ID
+    if (/^\d+$/.test(trimmed)) {
+      return true;
+    }
+    // Genuine Overpass element ID with element type or standard OSM entity reference
+    if (/^(?:osm-(?:node|way|relation)-|(?:node|way|relation)\/)\d+$/i.test(trimmed)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Calculates deterministic trust score and component breakdown for a cafe
  * @param {Object} cafe - Cafe entity with facts, evidence, and characteristics
  * @returns {Object} { score, components, explanation, tier, label, badgeClass, confidence, hasSufficientEvidence }
@@ -207,7 +236,7 @@ export function calculateTrustScore(cafe) {
   const name = cafe.name || cafe.identity?.name;
   const sector = cafe.sector || cafe.identity?.sector;
 
-  if (osmId && typeof osmId === 'string' && osmId.startsWith('osm-')) {
+  if (isValidOsmId(osmId)) {
     identityConfidence += 0.45;
   }
   if (website && typeof website === 'string' && website.startsWith('http')) {
@@ -269,6 +298,7 @@ export function calculateTrustScore(cafe) {
 const trustScoreEngine = {
   calculateTrustScore,
   hasSufficientEvidence,
+  isValidOsmId,
   SOURCE_QUALITY,
   FRESHNESS_HALF_LIFE_DAYS,
   TRUST_TIERS
