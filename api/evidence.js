@@ -27,6 +27,6 @@ export default async function handler(req, res) {
     cafeName: cafe.name || cafe.identity?.name,
     evidence: cafe.evidence || { sources: [], confidence: 'unknown' },
     characteristics: cafe.characteristics || {},
-    lastVerified: cafe.cafora?.lastVerified || cafe.evidence?.lastVerified || '2026-08-20'
+    lastVerified: cafe.cafora?.lastVerified || cafe.evidence?.lastVerified || null
   });
 }

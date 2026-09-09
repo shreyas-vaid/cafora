@@ -2,6 +2,7 @@
  * Test Suite for CAFORA Backend API Endpoints & Section 31 Test Cases
  */
 
+import fs from 'fs';
 import cafesHandler from '../api/cafes.js';
 import recommendationsHandler from '../api/recommendations.js';
 import moodsHandler from '../api/moods.js';
@@ -9,6 +10,7 @@ import searchHandler from '../api/search.js';
 import evidenceHandler from '../api/evidence.js';
 import trustHandler from '../api/trust.js';
 import auditHandler from '../api/audit.js';
+import { CAFES_DATA } from '../src/data/cafesData.js';
 import recPkg from '../server/recommendationService.js';
 const { extractIntentFromQuery } = recPkg;
 
@@ -155,6 +157,25 @@ async function runTests() {
     assert(data.cafeId === 'blue-tokai-sec8', 'Returns correct cafeId');
     assert(data.evidence && data.evidence.sources.length > 0, 'Returns structured sources array');
     assert(data.characteristics && typeof data.characteristics === 'object', 'Returns characteristic scores');
+
+    // 1. A cafe with a real lastVerified value returns that value
+    assert(data.lastVerified === '2026-09-08', 'Cafe with real lastVerified returns that value ("2026-09-08")');
+
+    // 2. A cafe without a lastVerified value returns null
+    CAFES_DATA.push({ id: 'test-cafe-no-verification', name: 'Test Cafe Without Verification' });
+    try {
+      const { req: reqNull, res: resNull, getData: getNullData } = createMockReqRes({ id: 'test-cafe-no-verification' });
+      await evidenceHandler(reqNull, resNull);
+      const nullData = getNullData();
+      assert(nullData.lastVerified === null, 'Cafe without a lastVerified value returns null');
+    } finally {
+      CAFES_DATA.pop();
+    }
+
+    // 3. No hardcoded fallback date remains in api/evidence.js
+    const evidenceCode = fs.readFileSync(new URL('../api/evidence.js', import.meta.url), 'utf8');
+    assert(!evidenceCode.includes('2026-08-20'), 'No hardcoded fallback date ("2026-08-20") remains in api/evidence.js');
+    assert(evidenceCode.includes('null'), 'api/evidence.js falls back to null');
   }
 
   // TEST 6: GET /api/trust
