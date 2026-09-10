@@ -24,9 +24,9 @@ export default async function handler(req, res) {
   return res.status(200).json({
     status: 'success',
     cafeId: id,
-    cafeName: cafe.name || cafe.identity?.name,
-    evidence: cafe.evidence || { sources: [], confidence: 'unknown' },
-    characteristics: cafe.characteristics || {},
+    cafeName: cafe.name || cafe.identity?.name || null,
+    evidence: cafe.evidence || null,
+    characteristics: cafe.characteristics || null,
     lastVerified: cafe.cafora?.lastVerified || cafe.evidence?.lastVerified || null
   });
 }

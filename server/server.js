@@ -123,10 +123,10 @@ app.get("/api/cafes/:id/evidence", (req, res) => {
   res.json({
     status: "success",
     cafeId: cafe.id,
-    cafeName: cafe.name,
-    evidence: cafe.evidence || { sources: [] },
-    characteristics: cafe.characteristics || {},
-    lastVerified: cafe.cafora?.lastVerified || "2026-08-20"
+    cafeName: cafe.name || cafe.identity?.name || null,
+    evidence: cafe.evidence || null,
+    characteristics: cafe.characteristics || null,
+    lastVerified: cafe.cafora?.lastVerified || cafe.evidence?.lastVerified || null
   });
 });
 

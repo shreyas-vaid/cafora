@@ -161,20 +161,23 @@ async function runTests() {
     // 1. A cafe with a real lastVerified value returns that value
     assert(data.lastVerified === '2026-09-08', 'Cafe with real lastVerified returns that value ("2026-09-08")');
 
-    // 2. A cafe without a lastVerified value returns null
+    // 2. A cafe without evidence, characteristics, or lastVerified returns null for each
     CAFES_DATA.push({ id: 'test-cafe-no-verification', name: 'Test Cafe Without Verification' });
     try {
       const { req: reqNull, res: resNull, getData: getNullData } = createMockReqRes({ id: 'test-cafe-no-verification' });
       await evidenceHandler(reqNull, resNull);
       const nullData = getNullData();
       assert(nullData.lastVerified === null, 'Cafe without a lastVerified value returns null');
+      assert(nullData.evidence === null, 'Cafe without evidence returns null instead of synthetic fallback object');
+      assert(nullData.characteristics === null, 'Cafe without characteristics returns null');
     } finally {
       CAFES_DATA.pop();
     }
 
-    // 3. No hardcoded fallback date remains in api/evidence.js
+    // 3. No hardcoded fallback date or synthetic confidence remains in api/evidence.js
     const evidenceCode = fs.readFileSync(new URL('../api/evidence.js', import.meta.url), 'utf8');
     assert(!evidenceCode.includes('2026-08-20'), 'No hardcoded fallback date ("2026-08-20") remains in api/evidence.js');
+    assert(!evidenceCode.includes("'unknown'"), 'No fabricated confidence fallback ("unknown") remains in api/evidence.js');
     assert(evidenceCode.includes('null'), 'api/evidence.js falls back to null');
   }
 
