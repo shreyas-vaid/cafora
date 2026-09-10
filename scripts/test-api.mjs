@@ -205,6 +205,66 @@ async function runTests() {
     assert(data.report.moodIntegrity.cafesWithOver4Moods === 0, 'Zero cafes exceed 4 moods');
   }
 
+  // TEST 8: INPUT VALIDATION & QUERY PARAMETER ROBUSTNESS
+  console.log('\n--- 8. Testing Input Validation & Query Robustness ---');
+  {
+    // 1. Valid limit works
+    const { req: reqLim, res: resLim, getData: getLimData, getStatus: getLimStatus } = createMockReqRes({ limit: '5' });
+    await cafesHandler(reqLim, resLim);
+    assert(getLimStatus() === 200, 'Valid limit returns HTTP 200');
+    assert(getLimData().cafes.length === 5, 'Valid limit ("5") returns exactly 5 cafes');
+
+    // 2. Invalid limit returns 400
+    for (const badLimit of ['0', '-5', '2.5', 'abc', '']) {
+      const { req, res, getStatus } = createMockReqRes({ limit: badLimit });
+      await cafesHandler(req, res);
+      assert(getStatus() === 400, `Invalid limit ("${badLimit}") returns HTTP 400`);
+    }
+
+    // 3. Empty ID returns 400 where ID is required / provided
+    const { req: rEvEmpty, res: resEvEmpty, getStatus: sEvEmpty } = createMockReqRes({ id: '' });
+    await evidenceHandler(rEvEmpty, resEvEmpty);
+    assert(sEvEmpty() === 400, 'Evidence endpoint rejects empty id with HTTP 400');
+
+    const { req: rEvWs, res: resEvWs, getStatus: sEvWs } = createMockReqRes({ id: '   ' });
+    await evidenceHandler(rEvWs, resEvWs);
+    assert(sEvWs() === 400, 'Evidence endpoint rejects whitespace-only id with HTTP 400');
+
+    const { req: rTrEmpty, res: resTrEmpty, getStatus: sTrEmpty } = createMockReqRes({ id: '' });
+    await trustHandler(rTrEmpty, resTrEmpty);
+    assert(sTrEmpty() === 400, 'Trust endpoint rejects empty id with HTTP 400');
+
+    const { req: rTrWs, res: resTrWs, getStatus: sTrWs } = createMockReqRes({ id: '   ' });
+    await trustHandler(rTrWs, resTrWs);
+    assert(sTrWs() === 400, 'Trust endpoint rejects whitespace-only id with HTTP 400');
+
+    const { req: rCafesWs, res: resCafesWs, getStatus: sCafesWs } = createMockReqRes({ id: '   ' });
+    await cafesHandler(rCafesWs, resCafesWs);
+    assert(sCafesWs() === 400, 'Cafes endpoint rejects whitespace-only id with HTTP 400');
+
+    // 4. Whitespace is handled correctly
+    const { req: rSingleWs, res: resSingleWs, getData: dSingleWs, getStatus: sSingleWs } = createMockReqRes({ id: '  blue-tokai-sec8  ' });
+    await cafesHandler(rSingleWs, resSingleWs);
+    assert(sSingleWs() === 200 && dSingleWs().cafe.id === 'blue-tokai-sec8', 'ID with padding whitespace is trimmed and resolves');
+
+    const { req: rSecWs, res: resSecWs, getData: dSecWs, getStatus: sSecWs } = createMockReqRes({ sector: '  Sector 8  ' });
+    await cafesHandler(rSecWs, resSecWs);
+    assert(sSecWs() === 200 && dSecWs().cafes.length > 0 && dSecWs().cafes.every(c => c.sector.includes('8')), 'Sector with whitespace is trimmed and matches correctly');
+
+    const { req: rQWs, res: resQWs, getData: dQWs, getStatus: sQWs } = createMockReqRes({ q: '   ' });
+    await searchHandler(rQWs, resQWs);
+    assert(sQWs() === 200 && dQWs().detectedIntents.length === 0, 'Whitespace search query is trimmed and produces no spurious intents');
+
+    // 5. Empty mood tokens don't create invalid moods
+    const { req: rMoodsEmpty, res: resMoodsEmpty, getData: dMoodsEmpty } = createMockReqRes({ moods: 'work,,quiet' });
+    await recommendationsHandler(rMoodsEmpty, resMoodsEmpty);
+    assert(dMoodsEmpty().activeMoods.length === 2 && !dMoodsEmpty().activeMoods.includes(''), 'Empty mood tokens ("work,,quiet") are stripped from activeMoods');
+
+    const { req: rMoodsOnlyCommas, res: resMoodsOnlyCommas, getData: dMoodsOnlyCommas } = createMockReqRes({ moods: ' ,  ' });
+    await recommendationsHandler(rMoodsOnlyCommas, resMoodsOnlyCommas);
+    assert(dMoodsOnlyCommas().activeMoods.length === 0, 'Whitespace/comma-only moods (" , ") resolves to empty activeMoods');
+  }
+
   console.log(`\n========================================`);
   console.log(`🏁 API TEST SUITE FINISHED: ${passed}/${total} assertions passed (${Math.round((passed / total) * 100)}%)`);
   console.log(`========================================\n`);

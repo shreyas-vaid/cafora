@@ -11,19 +11,20 @@ export default async function handler(req, res) {
   }
 
   const { id } = req.query || {};
+  const cleanId = typeof id === 'string' ? id.trim() : id;
 
-  if (!id) {
+  if (!cleanId) {
     return res.status(400).json({ error: 'Missing cafe id query parameter' });
   }
 
-  const cafe = CAFES_DATA.find(c => (c.id === id || c.identity?.id === id));
+  const cafe = CAFES_DATA.find(c => (c.id === cleanId || c.identity?.id === cleanId));
   if (!cafe) {
-    return res.status(404).json({ error: 'Cafe not found', id });
+    return res.status(404).json({ error: 'Cafe not found', id: cleanId });
   }
 
   return res.status(200).json({
     status: 'success',
-    cafeId: id,
+    cafeId: cleanId,
     cafeName: cafe.name || cafe.identity?.name || null,
     evidence: cafe.evidence || null,
     characteristics: cafe.characteristics || null,

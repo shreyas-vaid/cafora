@@ -14,13 +14,20 @@ export default async function handler(req, res) {
 
   const { moods, q, sector, sort } = req.query || {};
 
-  const activeMoods = moods ? (Array.isArray(moods) ? moods : moods.split(',').map(s => s.trim())) : [];
+  const rawMoods = moods ? (Array.isArray(moods) ? moods : String(moods).split(',')) : [];
+  const activeMoods = rawMoods
+    .map(s => (typeof s === 'string' ? s.trim() : String(s).trim()))
+    .filter(Boolean);
+
+  const cleanQuery = typeof q === 'string' ? q.trim() : '';
+  const cleanSector = typeof sector === 'string' ? sector.trim() : '';
+  const cleanSort = typeof sort === 'string' ? sort.trim() : '';
   
   const recommendations = getRecommendations(CAFES_DATA, {
     moods: activeMoods,
-    query: q || '',
-    sector: sector || 'All Chandigarh',
-    sort: sort || 'recommended'
+    query: cleanQuery,
+    sector: cleanSector || 'All Chandigarh',
+    sort: cleanSort || 'recommended'
   });
 
   return res.status(200).json({
