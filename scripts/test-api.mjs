@@ -295,6 +295,58 @@ async function runTests() {
     }
   }
 
+  // TEST 10: SAFE READ-ONLY CACHE HEADERS (public, s-maxage=300, stale-while-revalidate=60)
+  console.log('\n--- 10. Testing Cache-Control Headers ---');
+  {
+    const expectedCache = 'public, s-maxage=300, stale-while-revalidate=60';
+
+    // 1. GET /api/moods contains expected Cache-Control
+    const { req: rMoods, res: resMoods, getStatus: sMoods, getHeaders: hMoods } = createMockReqRes();
+    await moodsHandler(rMoods, resMoods);
+    assert(sMoods() === 200 && hMoods()['Cache-Control'] === expectedCache, 'GET /api/moods contains public s-maxage=300 cache header');
+
+    // 2. GET /api/cafes contains expected Cache-Control
+    const { req: rCafes, res: resCafes, getStatus: sCafes, getHeaders: hCafes } = createMockReqRes();
+    await cafesHandler(rCafes, resCafes);
+    assert(sCafes() === 200 && hCafes()['Cache-Control'] === expectedCache, 'GET /api/cafes (list) contains public s-maxage=300 cache header');
+
+    // 3. GET /api/cafes?id=... contains expected Cache-Control
+    const { req: rCafeSingle, res: resCafeSingle, getStatus: sCafeSingle, getHeaders: hCafeSingle } = createMockReqRes({ id: 'blue-tokai-sec8' });
+    await cafesHandler(rCafeSingle, resCafeSingle);
+    assert(sCafeSingle() === 200 && hCafeSingle()['Cache-Control'] === expectedCache, 'GET /api/cafes (single) contains public s-maxage=300 cache header');
+
+    // 4. GET /api/evidence?id=... contains expected Cache-Control
+    const { req: rEvidence, res: resEvidence, getStatus: sEvidence, getHeaders: hEvidence } = createMockReqRes({ id: 'blue-tokai-sec8' });
+    await evidenceHandler(rEvidence, resEvidence);
+    assert(sEvidence() === 200 && hEvidence()['Cache-Control'] === expectedCache, 'GET /api/evidence contains public s-maxage=300 cache header');
+
+    // 5. Error responses (400, 404) do not set the public cache header
+    const { req: r404, res: res404, getStatus: s404, getHeaders: h404 } = createMockReqRes({ id: 'non-existent-cafe-999' });
+    await cafesHandler(r404, res404);
+    assert(s404() === 404 && !h404()['Cache-Control'], '404 Cafe not found response does not set Cache-Control');
+
+    const { req: r400, res: res400, getStatus: s400, getHeaders: h400 } = createMockReqRes({ limit: 'invalid' });
+    await cafesHandler(r400, res400);
+    assert(s400() === 400 && !h400()['Cache-Control'], '400 Invalid limit response does not set Cache-Control');
+
+    // 6. Dynamic endpoints remain uncached
+    const { req: rSearch, res: resSearch, getHeaders: hSearch } = createMockReqRes({ q: 'coffee' });
+    await searchHandler(rSearch, resSearch);
+    assert(!hSearch()['Cache-Control'], 'GET /api/search remains uncached');
+
+    const { req: rRec, res: resRec, getHeaders: hRec } = createMockReqRes({ moods: 'work' });
+    await recommendationsHandler(rRec, resRec);
+    assert(!hRec()['Cache-Control'], 'GET /api/recommendations remains uncached');
+
+    const { req: rTrust, res: resTrust, getHeaders: hTrust } = createMockReqRes({ id: 'blue-tokai-sec8' });
+    await trustHandler(rTrust, resTrust);
+    assert(!hTrust()['Cache-Control'], 'GET /api/trust remains uncached');
+
+    const { req: rAudit, res: resAudit, getHeaders: hAudit } = createMockReqRes();
+    await auditHandler(rAudit, resAudit);
+    assert(!hAudit()['Cache-Control'], 'GET /api/audit remains uncached');
+  }
+
   console.log(`\n========================================`);
   console.log(`🏁 API TEST SUITE FINISHED: ${passed}/${total} assertions passed (${Math.round((passed / total) * 100)}%)`);
   console.log(`========================================\n`);

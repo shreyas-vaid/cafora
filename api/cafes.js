@@ -28,6 +28,7 @@ export default async function handler(req, res) {
     if (!cafe) {
       return res.status(404).json({ error: 'Cafe not found', id: cleanId });
     }
+    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
     return res.status(200).json({ status: 'success', cafe });
   }
 
@@ -62,6 +63,7 @@ export default async function handler(req, res) {
     results = results.slice(0, num);
   }
 
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
   return res.status(200).json({
     status: 'success',
     count: results.length,
