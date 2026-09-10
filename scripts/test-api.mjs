@@ -10,6 +10,7 @@ import searchHandler from '../api/search.js';
 import evidenceHandler from '../api/evidence.js';
 import trustHandler from '../api/trust.js';
 import auditHandler from '../api/audit.js';
+import healthHandler from '../api/health.js';
 import { CAFES_DATA } from '../src/data/cafesData.js';
 import recPkg from '../server/recommendationService.js';
 const { extractIntentFromQuery } = recPkg;
@@ -345,6 +346,49 @@ async function runTests() {
     const { req: rAudit, res: resAudit, getHeaders: hAudit } = createMockReqRes();
     await auditHandler(rAudit, resAudit);
     assert(!hAudit()['Cache-Control'], 'GET /api/audit remains uncached');
+  }
+
+  // TEST 11: HEALTH ENDPOINT (/api/health)
+  console.log('\n--- 11. Testing GET /api/health ---');
+  {
+    // 1. GET /api/health returns HTTP 200
+    const { req: rGet, res: resGet, getStatus: sGet, getData: dGet, getHeaders: hGet } = createMockReqRes();
+    await healthHandler(rGet, resGet);
+    assert(sGet() === 200, 'GET /api/health returns HTTP 200');
+
+    // 2. Response status === "ok"
+    assert(dGet() && dGet().status === 'ok', 'Response status === "ok"');
+
+    // 3. Response service === "cafora-api"
+    assert(dGet() && dGet().service === 'cafora-api', 'Response service === "cafora-api"');
+
+    // 4. OPTIONS works
+    const { req: rOpt, res: resOpt, getStatus: sOpt } = createMockReqRes({}, 'OPTIONS');
+    await healthHandler(rOpt, resOpt);
+    assert(sOpt() === 200, 'OPTIONS /api/health returns HTTP 200');
+
+    // 5. POST -> 405
+    const { req: rPost, res: resPost, getStatus: sPost, getData: dPost, getHeaders: hPost } = createMockReqRes({}, 'POST');
+    await healthHandler(rPost, resPost);
+    assert(sPost() === 405 && dPost()?.error === 'Method not allowed' && hPost()['Allow'] === 'GET, OPTIONS', 'POST /api/health returns HTTP 405');
+
+    // 6. PUT -> 405
+    const { req: rPut, res: resPut, getStatus: sPut, getData: dPut, getHeaders: hPut } = createMockReqRes({}, 'PUT');
+    await healthHandler(rPut, resPut);
+    assert(sPut() === 405 && dPut()?.error === 'Method not allowed' && hPut()['Allow'] === 'GET, OPTIONS', 'PUT /api/health returns HTTP 405');
+
+    // 7. PATCH -> 405
+    const { req: rPatch, res: resPatch, getStatus: sPatch, getData: dPatch, getHeaders: hPatch } = createMockReqRes({}, 'PATCH');
+    await healthHandler(rPatch, resPatch);
+    assert(sPatch() === 405 && dPatch()?.error === 'Method not allowed' && hPatch()['Allow'] === 'GET, OPTIONS', 'PATCH /api/health returns HTTP 405');
+
+    // 8. DELETE -> 405
+    const { req: rDel, res: resDel, getStatus: sDel, getData: dDel, getHeaders: hDel } = createMockReqRes({}, 'DELETE');
+    await healthHandler(rDel, resDel);
+    assert(sDel() === 405 && dDel()?.error === 'Method not allowed' && hDel()['Allow'] === 'GET, OPTIONS', 'DELETE /api/health returns HTTP 405');
+
+    // 9. No public Cache-Control header is added
+    assert(!hGet()['Cache-Control'], 'GET /api/health does not contain Cache-Control header');
   }
 
   console.log(`\n========================================`);
