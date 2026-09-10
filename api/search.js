@@ -12,18 +12,26 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET, OPTIONS');
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   const { q = '', sector } = req.query || {};
 
-  const detectedIntents = extractIntentFromQuery(q);
+  const cleanQuery = typeof q === 'string' ? q.trim() : '';
+  const cleanSector = typeof sector === 'string' ? sector.trim() : '';
+
+  const detectedIntents = extractIntentFromQuery(cleanQuery);
   const recommendations = getRecommendations(CAFES_DATA, {
     moods: detectedIntents,
-    query: q,
-    sector: sector || 'All Chandigarh'
+    query: cleanQuery,
+    sector: cleanSector || 'All Chandigarh'
   });
 
   return res.status(200).json({
     status: 'success',
-    query: q,
+    query: cleanQuery,
     detectedIntents,
     results: recommendations
   });

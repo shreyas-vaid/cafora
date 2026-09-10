@@ -52,12 +52,20 @@ app.get("/api/recommendations", (req, res) => {
   if (!recommendationService) return res.status(503).json({ error: "Service initializing" });
   const { moods, q, sector, sort } = req.query;
 
-  const activeMoods = moods ? (Array.isArray(moods) ? moods : moods.split(",").map(s => s.trim())) : [];
+  const rawMoods = moods ? (Array.isArray(moods) ? moods : String(moods).split(",")) : [];
+  const activeMoods = rawMoods
+    .map(s => (typeof s === "string" ? s.trim() : String(s).trim()))
+    .filter(Boolean);
+
+  const cleanQuery = typeof q === "string" ? q.trim() : "";
+  const cleanSector = typeof sector === "string" ? sector.trim() : "";
+  const cleanSort = typeof sort === "string" ? sort.trim() : "";
+
   const results = recommendationService.getRecommendations(CAFES_DATA, {
     moods: activeMoods,
-    query: q || "",
-    sector: sector || "All Chandigarh",
-    sort: sort || "recommended"
+    query: cleanQuery,
+    sector: cleanSector || "All Chandigarh",
+    sort: cleanSort || "recommended"
   });
 
   res.json({ status: "success", ...results });
@@ -67,53 +75,64 @@ app.get("/api/recommendations", (req, res) => {
 app.get("/api/cafes", (req, res) => {
   const { id, sector, search, limit } = req.query;
 
-  if (id) {
-    const cafe = CAFES_DATA.find(c => c.id === id || c.identity?.id === id);
-    if (!cafe) return res.status(404).json({ error: "Cafe not found", id });
+  if (id !== undefined) {
+    const cleanId = typeof id === "string" ? id.trim() : id;
+    if (!cleanId) return res.status(400).json({ error: "Invalid cafe id query parameter" });
+    const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+    if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
     return res.json({ status: "success", cafe });
   }
 
   let results = [...CAFES_DATA];
-  if (sector && sector !== "All Chandigarh") {
+  const cleanSector = typeof sector === "string" ? sector.trim() : sector;
+  if (cleanSector && cleanSector !== "All Chandigarh") {
     results = results.filter(c => {
       const s = (c.sector || c.identity?.sector || "").toLowerCase();
-      return s.includes(sector.toLowerCase());
+      return s.includes(cleanSector.toLowerCase());
     });
   }
-  if (search && search.trim().length > 0) {
-    const q = search.toLowerCase().trim();
+  const cleanSearch = typeof search === "string" ? search.trim() : "";
+  if (cleanSearch.length > 0) {
+    const q = cleanSearch.toLowerCase();
     results = results.filter(c => {
       const name = (c.name || c.identity?.name || "").toLowerCase();
       const addr = (c.address || c.identity?.address || "").toLowerCase();
       return name.includes(q) || addr.includes(q);
     });
   }
-  if (limit) {
-    const num = parseInt(limit, 10);
-    if (!isNaN(num)) results = results.slice(0, num);
+  if (limit !== undefined) {
+    const limitStr = typeof limit === "string" ? limit.trim() : String(limit);
+    if (!/^\d+$/.test(limitStr) || parseInt(limitStr, 10) <= 0) {
+      return res.status(400).json({ error: "Invalid limit parameter: must be a positive integer" });
+    }
+    const num = parseInt(limitStr, 10);
+    results = results.slice(0, num);
   }
 
   res.json({ status: "success", count: results.length, total: CAFES_DATA.length, cafes: results });
 });
 
 app.get("/api/cafes/:id", (req, res) => {
-  const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
-  if (!cafe) return res.status(404).json({ error: "Cafe not found", id: req.params.id });
+  const cleanId = typeof req.params.id === "string" ? req.params.id.trim() : req.params.id;
+  if (!cleanId) return res.status(400).json({ error: "Missing cafe id" });
+  const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+  if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
   res.json({ status: "success", cafe });
 });
 
 /* 5. SEARCH WITH INTENT MAPPING */
 app.get("/api/search", (req, res) => {
   if (!recommendationService) return res.status(503).json({ error: "Service initializing" });
-  const q = req.query.q || "";
-  const detectedIntents = recommendationService.extractIntentFromQuery(q);
+  const cleanQuery = typeof req.query.q === "string" ? req.query.q.trim() : "";
+  const cleanSector = typeof req.query.sector === "string" ? req.query.sector.trim() : "";
+  const detectedIntents = recommendationService.extractIntentFromQuery(cleanQuery);
   const results = recommendationService.getRecommendations(CAFES_DATA, {
     moods: detectedIntents,
-    query: q,
-    sector: req.query.sector || "All Chandigarh"
+    query: cleanQuery,
+    sector: cleanSector || "All Chandigarh"
   });
 
-  res.json({ status: "success", query: q, detectedIntents, results });
+  res.json({ status: "success", query: cleanQuery, detectedIntents, results });
 });
 
 /* 6. EVIDENCE & PROVENANCE */
@@ -123,10 +142,10 @@ app.get("/api/cafes/:id/evidence", (req, res) => {
   res.json({
     status: "success",
     cafeId: cafe.id,
-    cafeName: cafe.name,
-    evidence: cafe.evidence || { sources: [] },
-    characteristics: cafe.characteristics || {},
-    lastVerified: cafe.cafora?.lastVerified || "2026-08-20"
+    cafeName: cafe.name || cafe.identity?.name || null,
+    evidence: cafe.evidence || null,
+    characteristics: cafe.characteristics || null,
+    lastVerified: cafe.cafora?.lastVerified || cafe.evidence?.lastVerified || null
   });
 });
 

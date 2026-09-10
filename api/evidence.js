@@ -10,23 +10,30 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const { id } = req.query || {};
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET, OPTIONS');
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-  if (!id) {
+  const { id } = req.query || {};
+  const cleanId = typeof id === 'string' ? id.trim() : id;
+
+  if (!cleanId) {
     return res.status(400).json({ error: 'Missing cafe id query parameter' });
   }
 
-  const cafe = CAFES_DATA.find(c => (c.id === id || c.identity?.id === id));
+  const cafe = CAFES_DATA.find(c => (c.id === cleanId || c.identity?.id === cleanId));
   if (!cafe) {
-    return res.status(404).json({ error: 'Cafe not found', id });
+    return res.status(404).json({ error: 'Cafe not found', id: cleanId });
   }
 
+  res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
   return res.status(200).json({
     status: 'success',
-    cafeId: id,
-    cafeName: cafe.name || cafe.identity?.name,
-    evidence: cafe.evidence || { sources: [], confidence: 'unknown' },
-    characteristics: cafe.characteristics || {},
-    lastVerified: cafe.cafora?.lastVerified || cafe.evidence?.lastVerified || '2026-08-20'
+    cafeId: cleanId,
+    cafeName: cafe.name || cafe.identity?.name || null,
+    evidence: cafe.evidence || null,
+    characteristics: cafe.characteristics || null,
+    lastVerified: cafe.cafora?.lastVerified || cafe.evidence?.lastVerified || null
   });
 }
