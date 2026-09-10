@@ -14,13 +14,13 @@ import { CAFES_DATA } from '../src/data/cafesData.js';
 import recPkg from '../server/recommendationService.js';
 const { extractIntentFromQuery } = recPkg;
 
-function createMockReqRes(query = {}) {
+function createMockReqRes(query = {}, method = 'GET') {
   const headers = {};
   let statusCode = 200;
   let responseData = null;
 
   const req = {
-    method: 'GET',
+    method,
     query
   };
 
@@ -37,7 +37,7 @@ function createMockReqRes(query = {}) {
     end: () => res
   };
 
-  return { req, res, getStatus: () => statusCode, getData: () => responseData };
+  return { req, res, getStatus: () => statusCode, getData: () => responseData, getHeaders: () => headers };
 }
 
 async function runTests() {
@@ -263,6 +263,36 @@ async function runTests() {
     const { req: rMoodsOnlyCommas, res: resMoodsOnlyCommas, getData: dMoodsOnlyCommas } = createMockReqRes({ moods: ' ,  ' });
     await recommendationsHandler(rMoodsOnlyCommas, resMoodsOnlyCommas);
     assert(dMoodsOnlyCommas().activeMoods.length === 0, 'Whitespace/comma-only moods (" , ") resolves to empty activeMoods');
+  }
+
+  // TEST 9: HTTP METHOD VALIDATION (GET/OPTIONS allowed, POST/PUT/PATCH/DELETE -> 405)
+  console.log('\n--- 9. Testing HTTP Method Validation (Allow: GET, OPTIONS) ---');
+  {
+    const endpoints = [
+      { name: 'GET /api/cafes', handler: cafesHandler, validQuery: {} },
+      { name: 'GET /api/evidence', handler: evidenceHandler, validQuery: { id: 'blue-tokai-sec8' } },
+      { name: 'GET /api/recommendations', handler: recommendationsHandler, validQuery: { moods: 'work' } },
+      { name: 'GET /api/search', handler: searchHandler, validQuery: { q: 'coffee' } },
+      { name: 'GET /api/trust', handler: trustHandler, validQuery: { id: 'blue-tokai-sec8' } },
+      { name: 'GET /api/audit', handler: auditHandler, validQuery: {} },
+      { name: 'GET /api/moods', handler: moodsHandler, validQuery: {} }
+    ];
+
+    for (const ep of endpoints) {
+      // 1. OPTIONS returns 200
+      const { req: rOpt, res: resOpt, getStatus: sOpt } = createMockReqRes(ep.validQuery, 'OPTIONS');
+      await ep.handler(rOpt, resOpt);
+      assert(sOpt() === 200, `${ep.name} accepts OPTIONS preflight`);
+
+      // 2. Unsupported methods return 405 with { error: "Method not allowed" } and Allow header
+      for (const m of ['POST', 'PUT', 'PATCH', 'DELETE']) {
+        const { req: rBad, res: resBad, getStatus: sBad, getData: dBad, getHeaders: hBad } = createMockReqRes(ep.validQuery, m);
+        await ep.handler(rBad, resBad);
+        assert(sBad() === 405, `${ep.name} rejects ${m} with HTTP 405`);
+        assert(dBad()?.error === 'Method not allowed', `${ep.name} ${m} returns error "Method not allowed"`);
+        assert(hBad()['Allow'] === 'GET, OPTIONS', `${ep.name} ${m} specifies Allow: GET, OPTIONS`);
+      }
+    }
   }
 
   console.log(`\n========================================`);
