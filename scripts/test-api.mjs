@@ -391,6 +391,136 @@ async function runTests() {
     assert(!hGet()['Cache-Control'], 'GET /api/health does not contain Cache-Control header');
   }
 
+  // TEST 12: NATURAL-LANGUAGE INTENT & TYPO TOLERANCE
+  console.log('\n--- 12. Testing Natural-Language Intent Detection & Typo Tolerance ---');
+  {
+    // 1. Minimum Required Typo Cases from Specification
+    assert(extractIntentFromQuery('nght cafe').includes('late-night'), 'Typo: "nght cafe" -> late-night');
+    assert(extractIntentFromQuery('cofee').includes('good-coffee'), 'Typo: "cofee" -> good-coffee');
+    assert(extractIntentFromQuery('coffe').includes('good-coffee'), 'Typo: "coffe" -> good-coffee');
+    assert(extractIntentFromQuery('romntic cafe').includes('date'), 'Typo: "romntic cafe" -> date');
+    assert(extractIntentFromQuery('quiter cafe').includes('quiet'), 'Typo: "quiter cafe" -> quiet');
+    assert(extractIntentFromQuery('brnch').includes('brunch'), 'Typo: "brnch" -> brunch');
+    assert(extractIntentFromQuery('outdor seating').includes('outdoor'), 'Typo: "outdor seating" -> outdoor');
+    assert(extractIntentFromQuery('readng cafe').includes('reading'), 'Typo: "readng cafe" -> reading');
+    assert(extractIntentFromQuery('wrk cafe').includes('work'), 'Typo: "wrk cafe" -> work');
+    assert(extractIntentFromQuery('aesthtic').includes('pretty'), 'Typo: "aesthtic" -> pretty');
+    assert(extractIntentFromQuery('dessrt').includes('sweet-tooth'), 'Typo: "dessrt" -> sweet-tooth');
+
+    // 2. All 12 Canonical Intents (Exact Keyword, Synonym, Natural Phrase, Typo)
+    // 1. good-coffee
+    assert(extractIntentFromQuery('coffee').includes('good-coffee'), 'Intent coffee: exact "coffee"');
+    assert(extractIntentFromQuery('specialty espresso latte').includes('good-coffee'), 'Intent coffee: synonym "espresso"');
+    assert(extractIntentFromQuery('pour over coffee from roastery').includes('good-coffee'), 'Intent coffee: natural phrase "pour over"');
+
+    // 2. work
+    assert(extractIntentFromQuery('work').includes('work'), 'Intent work: exact "work"');
+    assert(extractIntentFromQuery('study with laptop and wifi').includes('work'), 'Intent work: synonym "laptop" & "wifi"');
+    assert(extractIntentFromQuery('remote work with power outlets').includes('work'), 'Intent work: phrase "remote work" & "power outlets"');
+
+    // 3. date
+    assert(extractIntentFromQuery('date').includes('date'), 'Intent date: exact "date"');
+    assert(extractIntentFromQuery('romantic spot for couples').includes('date'), 'Intent date: synonym "romantic"');
+    assert(extractIntentFromQuery('candlelight date spot').includes('date'), 'Intent date: phrase "date spot"');
+
+    // 4. quiet
+    assert(extractIntentFromQuery('quiet').includes('quiet'), 'Intent quiet: exact "quiet"');
+    assert(extractIntentFromQuery('peaceful and calm corner').includes('quiet'), 'Intent quiet: synonym "peaceful"');
+    assert(extractIntentFromQuery('somewhere quiet with low noise').includes('quiet'), 'Intent quiet: phrase "low noise"');
+
+    // 5. pretty (aesthetic)
+    assert(extractIntentFromQuery('aesthetic').includes('pretty'), 'Intent aesthetic: exact "aesthetic"');
+    assert(extractIntentFromQuery('beautiful photogenic interior').includes('pretty'), 'Intent aesthetic: synonym "photogenic"');
+    assert(extractIntentFromQuery('cute cafe with natural light').includes('pretty'), 'Intent aesthetic: phrase "cute cafe"');
+
+    // 6. sweet-tooth (dessert)
+    assert(extractIntentFromQuery('dessert').includes('sweet-tooth'), 'Intent dessert: exact "dessert"');
+    assert(extractIntentFromQuery('pastry croissant and brownie').includes('sweet-tooth'), 'Intent dessert: synonym "pastry" & "brownie"');
+    assert(extractIntentFromQuery('sweet tooth with baked goods').includes('sweet-tooth'), 'Intent dessert: phrase "sweet tooth"');
+
+    // 7. gang (groups)
+    assert(extractIntentFromQuery('gang').includes('gang'), 'Intent groups: exact "gang"');
+    assert(extractIntentFromQuery('large group of friends').includes('gang'), 'Intent groups: synonym "friends"');
+    assert(extractIntentFromQuery('hang out with the gang').includes('gang'), 'Intent groups: phrase "hang out"');
+
+    // 8. late-night (lateNight)
+    assert(extractIntentFromQuery('midnight').includes('late-night'), 'Intent lateNight: exact "midnight"');
+    assert(extractIntentFromQuery('open late afterhours').includes('late-night'), 'Intent lateNight: synonym "open late"');
+    assert(extractIntentFromQuery('night cafe after 11pm').includes('late-night'), 'Intent lateNight: phrase "night cafe"');
+
+    // 9. reading
+    assert(extractIntentFromQuery('reading').includes('reading'), 'Intent reading: exact "reading"');
+    assert(extractIntentFromQuery('book and novel').includes('reading'), 'Intent reading: synonym "book"');
+    assert(extractIntentFromQuery('read quietly in reading cafe').includes('reading'), 'Intent reading: phrase "read quietly"');
+
+    // 10. brunch
+    assert(extractIntentFromQuery('brunch').includes('brunch'), 'Intent brunch: exact "brunch"');
+    assert(extractIntentFromQuery('breakfast with sourdough eggs and toast').includes('brunch'), 'Intent brunch: synonym "breakfast"');
+    assert(extractIntentFromQuery('morning food at breakfast cafe').includes('brunch'), 'Intent brunch: phrase "breakfast cafe"');
+
+    // 11. outdoor
+    assert(extractIntentFromQuery('outdoor').includes('outdoor'), 'Intent outdoor: exact "outdoor"');
+    assert(extractIntentFromQuery('patio and garden terrace').includes('outdoor'), 'Intent outdoor: synonym "patio"');
+    assert(extractIntentFromQuery('open air outdoor escape').includes('outdoor'), 'Intent outdoor: phrase "open air"');
+
+    // 12. slow-morning
+    assert(extractIntentFromQuery('unrushed').includes('slow-morning'), 'Intent slowMorning: keyword "unrushed"');
+    assert(extractIntentFromQuery('relaxed morning').includes('slow-morning'), 'Intent slowMorning: synonym "relaxed morning"');
+    assert(extractIntentFromQuery('slow morning with no rush').includes('slow-morning'), 'Intent slowMorning: phrase "slow morning"');
+
+    // 3. Multi-Intent Queries (Exact + Typo Variants)
+    const m1 = extractIntentFromQuery('I want a quiet cafe where I can work');
+    assert(m1.includes('quiet') && m1.includes('work'), 'Multi-intent: "quiet cafe where I can work" -> quiet + work');
+
+    const m2 = extractIntentFromQuery('pretty cafe for a date');
+    assert(m2.includes('pretty') && m2.includes('date'), 'Multi-intent: "pretty cafe for a date" -> pretty + date');
+
+    const m3 = extractIntentFromQuery('good coffee and somewhere to read');
+    assert(m3.includes('good-coffee') && m3.includes('reading'), 'Multi-intent: "good coffee and somewhere to read" -> good-coffee + reading');
+
+    const m4 = extractIntentFromQuery('late night cafe with dessert');
+    assert(m4.includes('late-night') && m4.includes('sweet-tooth'), 'Multi-intent: "late night cafe with dessert" -> late-night + sweet-tooth');
+
+    const m5 = extractIntentFromQuery('nght cafe with cofee');
+    assert(m5.includes('late-night') && m5.includes('good-coffee'), 'Multi-intent with typos: "nght cafe with cofee" -> late-night + good-coffee');
+
+    const m6 = extractIntentFromQuery('quiter place to work');
+    assert(m6.includes('quiet') && m6.includes('work'), 'Multi-intent with typos: "quiter place to work" -> quiet + work');
+
+    const m7 = extractIntentFromQuery('romntic date night');
+    assert(m7.includes('date'), 'Multi-intent with typo: "romntic date night" -> date');
+
+    const m8 = extractIntentFromQuery('brnch and cofee');
+    assert(m8.includes('brunch') && m8.includes('good-coffee'), 'Multi-intent with typos: "brnch and cofee" -> brunch + good-coffee');
+
+    // 4. Negative Guard Tests (Fuzzy matching false-positive prevention)
+    const neg1 = extractIntentFromQuery('networking event');
+    assert(!neg1.includes('work'), 'Negative test: "networking event" must NOT trigger work');
+
+    const neg2 = extractIntentFromQuery('database');
+    assert(!neg2.includes('date'), 'Negative test: "database" must NOT trigger date');
+
+    const neg3 = extractIntentFromQuery('weekend');
+    assert(!neg3.includes('work'), 'Negative test: "weekend" must NOT trigger work');
+
+    const neg4 = extractIntentFromQuery('readable menu');
+    assert(!neg4.includes('reading'), 'Negative test: "readable menu" must NOT trigger reading');
+
+    // Short unrelated words produce zero spurious intents
+    const negShort = extractIntentFromQuery('to in on at an a is it my me we he so no up by');
+    assert(negShort.length === 0, 'Short unrelated words produce zero intents');
+
+    const negUnrelated = extractIntentFromQuery('car bus cat dog sun sea sky');
+    assert(negUnrelated.length === 0, 'Unrelated common words produce zero intents');
+
+    // End-to-end /api/search endpoint integration verification
+    const { req: rSearchTypo, res: resSearchTypo, getData: dSearchTypo } = createMockReqRes({ q: 'nght cafe with cofee' });
+    await searchHandler(rSearchTypo, resSearchTypo);
+    const searchData = dSearchTypo();
+    assert(searchData.detectedIntents.includes('late-night') && searchData.detectedIntents.includes('good-coffee'), '/api/search endpoint detects multi-intent with typos');
+    assert(searchData.results.cafes.length > 0, '/api/search returns recommended cafes based on typo-resolved intents');
+  }
+
   console.log(`\n========================================`);
   console.log(`🏁 API TEST SUITE FINISHED: ${passed}/${total} assertions passed (${Math.round((passed / total) * 100)}%)`);
   console.log(`========================================\n`);
