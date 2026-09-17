@@ -1,4 +1,6 @@
 import { CAFES_DATA } from '../src/data/cafesData.js';
+import recPkg from '../server/recommendationService.js';
+const { normalizeSector } = recPkg;
 
 export default async function handler(req, res) {
   // Enable CORS
@@ -35,11 +37,10 @@ export default async function handler(req, res) {
   // Filtered List
   let results = [...CAFES_DATA];
 
-  const cleanSector = typeof sector === 'string' ? sector.trim() : sector;
-  if (cleanSector && cleanSector !== 'All Chandigarh') {
+  const normSector = normalizeSector(sector);
+  if (normSector && normSector !== normalizeSector('All Chandigarh')) {
     results = results.filter(c => {
-      const s = (c.sector || c.identity?.sector || '').toLowerCase();
-      return s.includes(cleanSector.toLowerCase());
+      return normalizeSector(c.sector || c.identity?.sector) === normSector;
     });
   }
 

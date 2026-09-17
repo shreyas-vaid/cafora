@@ -207,6 +207,26 @@ function damerauLevenshtein(a, b) {
 }
 
 /**
+ * Normalizes a sector value for robust matching:
+ * - returns "" for null/undefined/non-string values
+ * - trims leading/trailing whitespace
+ * - converts to lowercase
+ * - normalizes harmless separators (e.g. "sector-8" -> "sector 8", "sector_8" -> "sector 8")
+ * - normalizes repeated whitespace
+ */
+function normalizeSector(value) {
+  if (value == null || typeof value !== 'string') {
+    return '';
+  }
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
  * Normalizes query string internally for intent detection
  */
 function normalizeForIntent(query = "") {
@@ -634,10 +654,10 @@ function getRecommendations(allCafes, options = {}) {
 
   // 1. Sector filtering
   let pool = allCafes;
-  if (sector && sector !== "All Chandigarh") {
+  const normSector = normalizeSector(sector);
+  if (normSector && normSector !== normalizeSector("All Chandigarh")) {
     pool = pool.filter(c => {
-      const s = (c.sector || c.identity?.sector || "").toLowerCase();
-      return s.includes(sector.toLowerCase());
+      return normalizeSector(c.sector || c.identity?.sector) === normSector;
     });
   }
 
@@ -749,5 +769,6 @@ module.exports = {
   calculateMatchScore,
   getMatchReasons,
   getCafeCaveats,
-  getRecommendations
+  getRecommendations,
+  normalizeSector
 };

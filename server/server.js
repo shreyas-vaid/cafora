@@ -84,11 +84,10 @@ app.get("/api/cafes", (req, res) => {
   }
 
   let results = [...CAFES_DATA];
-  const cleanSector = typeof sector === "string" ? sector.trim() : sector;
-  if (cleanSector && cleanSector !== "All Chandigarh") {
+  const normSector = recommendationService.normalizeSector(sector);
+  if (normSector && normSector !== recommendationService.normalizeSector("All Chandigarh")) {
     results = results.filter(c => {
-      const s = (c.sector || c.identity?.sector || "").toLowerCase();
-      return s.includes(cleanSector.toLowerCase());
+      return recommendationService.normalizeSector(c.sector || c.identity?.sector) === normSector;
     });
   }
   const cleanSearch = typeof search === "string" ? search.trim() : "";

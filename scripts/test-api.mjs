@@ -13,7 +13,7 @@ import auditHandler from '../api/audit.js';
 import healthHandler from '../api/health.js';
 import { CAFES_DATA } from '../src/data/cafesData.js';
 import recPkg from '../server/recommendationService.js';
-const { extractIntentFromQuery } = recPkg;
+const { extractIntentFromQuery, normalizeSector, getRecommendations } = recPkg;
 
 function createMockReqRes(query = {}, method = 'GET') {
   const headers = {};
@@ -519,6 +519,168 @@ async function runTests() {
     const searchData = dSearchTypo();
     assert(searchData.detectedIntents.includes('late-night') && searchData.detectedIntents.includes('good-coffee'), '/api/search endpoint detects multi-intent with typos');
     assert(searchData.results.cafes.length > 0, '/api/search returns recommended cafes based on typo-resolved intents');
+  }
+
+  // TEST 13: NORMALIZED SECTOR FILTERING (Backend Fix #8)
+  console.log('\n--- 13. Testing Normalized Sector Filtering (Backend Fix #8) ---');
+  {
+    // A. Unit tests for normalizeSector
+    assert(normalizeSector(null) === '', 'normalizeSector(null) returns ""');
+    assert(normalizeSector(undefined) === '', 'normalizeSector(undefined) returns ""');
+    assert(normalizeSector(123) === '', 'normalizeSector(123) returns ""');
+    assert(normalizeSector({}) === '', 'normalizeSector({}) returns ""');
+    assert(normalizeSector([]) === '', 'normalizeSector([]) returns ""');
+    assert(normalizeSector(true) === '', 'normalizeSector(true) returns ""');
+    assert(normalizeSector('') === '', 'normalizeSector("") returns ""');
+    assert(normalizeSector('   ') === '', 'normalizeSector("   ") returns ""');
+    assert(normalizeSector('Sector 8') === 'sector 8', 'normalizeSector("Sector 8") -> "sector 8"');
+    assert(normalizeSector('sector 8') === 'sector 8', 'normalizeSector("sector 8") -> "sector 8"');
+    assert(normalizeSector('SECTOR 8') === 'sector 8', 'normalizeSector("SECTOR 8") -> "sector 8"');
+    assert(normalizeSector('  Sector 8  ') === 'sector 8', 'normalizeSector("  Sector 8  ") -> "sector 8"');
+    assert(normalizeSector('Sector-8') === 'sector 8', 'normalizeSector("Sector-8") -> "sector 8"');
+    assert(normalizeSector('Sector_8') === 'sector 8', 'normalizeSector("Sector_8") -> "sector 8"');
+    assert(normalizeSector('sector-8') === 'sector 8', 'normalizeSector("sector-8") -> "sector 8"');
+    assert(normalizeSector('sector_8') === 'sector 8', 'normalizeSector("sector_8") -> "sector 8"');
+    assert(normalizeSector('  Sector--8  ') === 'sector 8', 'normalizeSector("  Sector--8  ") -> "sector 8"');
+    assert(normalizeSector('Sector - 8') === 'sector 8', 'normalizeSector("Sector - 8") -> "sector 8"');
+    assert(normalizeSector('Sector   8') === 'sector 8', 'normalizeSector("Sector   8") -> "sector 8"');
+    assert(normalizeSector('Sector 18') === 'sector 18', 'normalizeSector("Sector 18") -> "sector 18"');
+    assert(normalizeSector('Sector 80') === 'sector 80', 'normalizeSector("Sector 80") -> "sector 80"');
+
+    // Baseline: exact query "Sector 8"
+    const { req: rExact, res: resExact, getData: dExact, getStatus: sExact } = createMockReqRes({ sector: 'Sector 8' });
+    await cafesHandler(rExact, resExact);
+    assert(sExact() === 200, 'Exact "Sector 8" returns HTTP 200');
+    const exactCafes = dExact().cafes;
+    const exactCount = exactCafes.length;
+    assert(exactCount > 0, `Exact "Sector 8" found ${exactCount} cafes`);
+    const exactIds = exactCafes.map(c => c.id).sort();
+    assert(exactCafes.every(c => normalizeSector(c.sector || c.identity?.sector) === 'sector 8'), 'All exact "Sector 8" cafes have normalized sector === "sector 8"');
+
+    // 1. Exact matching in recommendations
+    const recExact = getRecommendations(CAFES_DATA, { sector: 'Sector 8' });
+    assert(recExact.cafes.length === exactCount, 'getRecommendations matches exact count for "Sector 8"');
+    assert(recExact.cafes.every(c => normalizeSector(c.sector || c.identity?.sector) === 'sector 8'), 'All recommended cafes have normalized sector === "sector 8"');
+
+    // 2. Case: sector=sector 8 and sector=SECTOR 8
+    const { req: rLower, res: resLower, getData: dLower } = createMockReqRes({ sector: 'sector 8' });
+    await cafesHandler(rLower, resLower);
+    const lowerCafes = dLower().cafes;
+    assert(lowerCafes.length === exactCount, 'Lowercase "sector 8" matches identical cafe count');
+    assert(JSON.stringify(lowerCafes.map(c => c.id).sort()) === JSON.stringify(exactIds), 'Lowercase "sector 8" returns identical cafe IDs');
+
+    const { req: rUpper, res: resUpper, getData: dUpper } = createMockReqRes({ sector: 'SECTOR 8' });
+    await cafesHandler(rUpper, resUpper);
+    const upperCafes = dUpper().cafes;
+    assert(upperCafes.length === exactCount, 'Uppercase "SECTOR 8" matches identical cafe count');
+    assert(JSON.stringify(upperCafes.map(c => c.id).sort()) === JSON.stringify(exactIds), 'Uppercase "SECTOR 8" returns identical cafe IDs');
+
+    const recLower = getRecommendations(CAFES_DATA, { sector: 'sector 8' });
+    assert(recLower.cafes.length === exactCount, 'getRecommendations with "sector 8" returns identical count');
+    const recUpper = getRecommendations(CAFES_DATA, { sector: 'SECTOR 8' });
+    assert(recUpper.cafes.length === exactCount, 'getRecommendations with "SECTOR 8" returns identical count');
+
+    // 3. Whitespace: sector="  Sector 8  " and repeated whitespace "Sector   8"
+    const { req: rPad, res: resPad, getData: dPad } = createMockReqRes({ sector: '  Sector 8  ' });
+    await cafesHandler(rPad, resPad);
+    const padCafes = dPad().cafes;
+    assert(padCafes.length === exactCount, 'Padded "  Sector 8  " matches identical cafe count');
+    assert(JSON.stringify(padCafes.map(c => c.id).sort()) === JSON.stringify(exactIds), 'Padded "  Sector 8  " returns identical cafe IDs');
+
+    const { req: rMultiWs, res: resMultiWs, getData: dMultiWs } = createMockReqRes({ sector: 'Sector   8' });
+    await cafesHandler(rMultiWs, resMultiWs);
+    const multiWsCafes = dMultiWs().cafes;
+    assert(multiWsCafes.length === exactCount, 'Repeated whitespace "Sector   8" matches identical cafe count');
+    assert(JSON.stringify(multiWsCafes.map(c => c.id).sort()) === JSON.stringify(exactIds), 'Repeated whitespace "Sector   8" returns identical cafe IDs');
+
+    // 4. Separator: sector=Sector-8 and sector=Sector_8
+    const { req: rHyphen, res: resHyphen, getData: dHyphen } = createMockReqRes({ sector: 'Sector-8' });
+    await cafesHandler(rHyphen, resHyphen);
+    const hyphenCafes = dHyphen().cafes;
+    assert(hyphenCafes.length === exactCount, 'Hyphenated "Sector-8" matches identical cafe count');
+    assert(JSON.stringify(hyphenCafes.map(c => c.id).sort()) === JSON.stringify(exactIds), 'Hyphenated "Sector-8" returns identical cafe IDs');
+
+    const { req: rUnder, res: resUnder, getData: dUnder } = createMockReqRes({ sector: 'Sector_8' });
+    await cafesHandler(rUnder, resUnder);
+    const underCafes = dUnder().cafes;
+    assert(underCafes.length === exactCount, 'Underscore "Sector_8" matches identical cafe count');
+    assert(JSON.stringify(underCafes.map(c => c.id).sort()) === JSON.stringify(exactIds), 'Underscore "Sector_8" returns identical cafe IDs');
+
+    const recHyphen = getRecommendations(CAFES_DATA, { sector: 'Sector-8' });
+    assert(recHyphen.cafes.length === exactCount, 'getRecommendations with "Sector-8" returns identical count');
+    const recUnder = getRecommendations(CAFES_DATA, { sector: 'Sector_8' });
+    assert(recUnder.cafes.length === exactCount, 'getRecommendations with "Sector_8" returns identical count');
+
+    // 5. Safety: Sector 8 must NOT match Sector 18, Sector 8 must NOT match Sector 80
+    // 5a. Normalization inequalities
+    assert(normalizeSector('Sector 8') !== normalizeSector('Sector 18'), 'Safety: normalizeSector("Sector 8") !== normalizeSector("Sector 18")');
+    assert(normalizeSector('Sector 8') !== normalizeSector('Sector 80'), 'Safety: normalizeSector("Sector 8") !== normalizeSector("Sector 80")');
+
+    // 5b. Querying Sector 18 or Sector 80 returns zero Sector 8 cafes
+    const { req: r18, res: res18, getData: d18 } = createMockReqRes({ sector: 'Sector 18' });
+    await cafesHandler(r18, res18);
+    assert(d18().cafes.every(c => c.sector !== 'Sector 8'), 'Safety: Querying "Sector 18" returns 0 Sector 8 cafes');
+
+    const { req: r80, res: res80, getData: d80 } = createMockReqRes({ sector: 'Sector 80' });
+    await cafesHandler(r80, res80);
+    assert(d80().cafes.every(c => c.sector !== 'Sector 8'), 'Safety: Querying "Sector 80" returns 0 Sector 8 cafes');
+
+    // 5c. Rigorous multi-sector synthetic isolation test
+    const mockSafetyCafes = [
+      { id: 'cafe-sec-8', name: 'Cafe 8', sector: 'Sector 8' },
+      { id: 'cafe-sec-18', name: 'Cafe 18', sector: 'Sector 18' },
+      { id: 'cafe-sec-80', name: 'Cafe 80', sector: 'Sector 80' }
+    ];
+
+    const match8 = mockSafetyCafes.filter(c => normalizeSector(c.sector) === normalizeSector('Sector 8'));
+    assert(match8.length === 1 && match8[0].id === 'cafe-sec-8', 'Safety: "Sector 8" query selects only Cafe 8, excludes Cafe 18 and Cafe 80');
+
+    const match18 = mockSafetyCafes.filter(c => normalizeSector(c.sector) === normalizeSector('Sector 18'));
+    assert(match18.length === 1 && match18[0].id === 'cafe-sec-18', 'Safety: "Sector 18" query selects only Cafe 18, excludes Cafe 8 and Cafe 80');
+
+    const match80 = mockSafetyCafes.filter(c => normalizeSector(c.sector) === normalizeSector('Sector 80'));
+    assert(match80.length === 1 && match80[0].id === 'cafe-sec-80', 'Safety: "Sector 80" query selects only Cafe 80, excludes Cafe 8 and Cafe 18');
+
+    // Also verify getRecommendations isolates correctly with mock safety dataset
+    const recSafety8 = getRecommendations(mockSafetyCafes, { sector: 'Sector 8' });
+    assert(recSafety8.cafes.length === 1 && recSafety8.cafes[0].id === 'cafe-sec-8', 'Safety: getRecommendations("Sector 8") matches only Cafe 8');
+    const recSafety18 = getRecommendations(mockSafetyCafes, { sector: 'Sector 18' });
+    assert(recSafety18.cafes.length === 1 && recSafety18.cafes[0].id === 'cafe-sec-18', 'Safety: getRecommendations("Sector 18") matches only Cafe 18');
+    const recSafety80 = getRecommendations(mockSafetyCafes, { sector: 'Sector 80' });
+    assert(recSafety80.cafes.length === 1 && recSafety80.cafes[0].id === 'cafe-sec-80', 'Safety: getRecommendations("Sector 80") matches only Cafe 80');
+
+    // 6. No sector parameter: Existing behavior must remain unchanged
+    const { req: rNoSec, res: resNoSec, getData: dNoSec, getStatus: sNoSec } = createMockReqRes();
+    await cafesHandler(rNoSec, resNoSec);
+    assert(sNoSec() === 200, 'No sector param returns HTTP 200');
+    assert(dNoSec().total === 87 && dNoSec().cafes.length === 87, 'No sector param returns all 87 cafes');
+
+    const recNoSec = getRecommendations(CAFES_DATA, {});
+    assert(recNoSec.totalConsidered === 87 && recNoSec.cafes.length === 87, 'getRecommendations with no sector param considers all 87 cafes');
+
+    // 7. Empty/whitespace sector: Preserve the API's existing validation behavior
+    const { req: rEmpty, res: resEmpty, getData: dEmpty, getStatus: sEmpty } = createMockReqRes({ sector: '' });
+    await cafesHandler(rEmpty, resEmpty);
+    assert(sEmpty() === 200, 'Empty sector query returns HTTP 200');
+    assert(dEmpty().cafes.length === 87, 'Empty sector query returns all 87 cafes without filtering');
+
+    const { req: rWsOnly, res: resWsOnly, getData: dWsOnly, getStatus: sWsOnly } = createMockReqRes({ sector: '   ' });
+    await cafesHandler(rWsOnly, resWsOnly);
+    assert(sWsOnly() === 200, 'Whitespace sector query returns HTTP 200');
+    assert(dWsOnly().cafes.length === 87, 'Whitespace sector query returns all 87 cafes without filtering');
+
+    const recEmpty = getRecommendations(CAFES_DATA, { sector: '' });
+    assert(recEmpty.cafes.length === 87, 'getRecommendations with empty sector returns all 87 cafes');
+
+    const recWsOnly = getRecommendations(CAFES_DATA, { sector: '   ' });
+    assert(recWsOnly.cafes.length === 87, 'getRecommendations with whitespace sector returns all 87 cafes');
+
+    // 8. Integration with /api/search
+    const { req: rSearchSec, res: resSearchSec, getData: dSearchSec } = createMockReqRes({ q: 'coffee', sector: 'Sector-8' });
+    await searchHandler(rSearchSec, resSearchSec);
+    const searchCafes = dSearchSec().results.cafes;
+    assert(searchCafes.length === exactCount, '/api/search with sector=Sector-8 returns filtered count matching Sector 8');
+    assert(searchCafes.every(c => normalizeSector(c.sector || c.identity?.sector) === 'sector 8'), '/api/search results strictly limited to Sector 8');
   }
 
   console.log(`\n========================================`);
