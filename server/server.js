@@ -30,9 +30,10 @@ app.use(express.json());
 /* 1. HEALTH CHECK */
 app.get("/api/health", (req, res) => {
   res.json({
-    status: "healthy",
+    status: "ok",
+    service: "cafora-api",
     version: "1.0.0",
-    cafesLoaded: CAFES_DATA.length,
+    catalogSize: CAFES_DATA.length,
     timestamp: new Date().toISOString()
   });
 });
@@ -221,11 +222,11 @@ const handleTrust = (id, res) => {
     verificationStatus: cafe.cafora?.verificationStatus || cafe.verificationStatus || "unverified",
     sourcesCount: sources.length,
     sourcesSummary: sources.map(s => ({
-      sourceType: s.sourceType || s.type,
-      sourceName: s.sourceName || s.name || "Local Record",
-      note: s.note
+      sourceType: s.sourceType || s.type || null,
+      sourceName: s.sourceName || s.name || null,
+      note: s.note || null
     })),
-    confidence: cafe.evidence?.confidence || (sources.length > 0 ? "medium" : "unknown"),
+    confidence: cafe.evidence?.confidence || null,
     lastVerified: cafe.cafora?.lastVerified || cafe.lastVerified || null
   });
 };

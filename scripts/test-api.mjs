@@ -190,7 +190,31 @@ async function runTests() {
     assert(getStatus() === 200, 'Returns HTTP 200 for trust endpoint');
     const data = getData();
     assert(typeof data.trustScore === 'number' && data.trustScore >= 0 && data.trustScore <= 100, 'Valid numeric Trust Score returned');
-    assert(['high', 'medium', 'low', 'unknown'].includes(data.confidence), `Returns verified confidence status (${data.confidence})`);
+    assert(data.confidence === null, 'Missing confidence does NOT become "medium" or fabricated value (returns null)');
+    assert(data.confidence !== 'medium', 'Missing confidence is not inferred as "medium"');
+    assert(data.confidence !== 'unknown', 'Missing confidence is not inferred as "unknown"');
+
+    // Regression test: explicit evidence confidence is preserved when present
+    const testCafe = CAFES_DATA.find(c => (c.id === 'backpackers-cafe-sec9' || c.identity?.id === 'backpackers-cafe-sec9'));
+    const origConf = testCafe.evidence?.confidence;
+    testCafe.evidence = testCafe.evidence || {};
+    testCafe.evidence.confidence = 'high';
+    try {
+      const { req: reqExp, res: resExp, getData: getExpData } = createMockReqRes({ id: 'backpackers-cafe-sec9' });
+      await trustHandler(reqExp, resExp);
+      assert(getExpData().confidence === 'high', 'Explicit evidence confidence ("high") is preserved');
+    } finally {
+      if (origConf === undefined) {
+        delete testCafe.evidence.confidence;
+      } else {
+        testCafe.evidence.confidence = origConf;
+      }
+    }
+
+    // Static check: api/trust.js does not infer 'medium' or 'unknown'
+    const trustCode = fs.readFileSync(new URL('../api/trust.js', import.meta.url), 'utf8');
+    assert(!trustCode.includes("'medium'"), 'api/trust.js does not infer "medium"');
+    assert(!trustCode.includes("'unknown'"), 'api/trust.js does not infer "unknown"');
   }
 
   // TEST 7: GET /api/audit
