@@ -150,6 +150,7 @@ const CANONICAL_MOODS = [
 const MOOD_ID_MAP = {
   "coffee": "good-coffee",
   "good-coffee": "good-coffee",
+  "good coffee": "good-coffee",
   "work": "work",
   "study": "work",
   "date": "date",
@@ -158,22 +159,40 @@ const MOOD_ID_MAP = {
   "pretty": "pretty",
   "aesthetic": "pretty",
   "sweet-tooth": "sweet-tooth",
+  "sweet tooth": "sweet-tooth",
   "dessert": "sweet-tooth",
   "gang": "gang",
   "group": "gang",
+  "groups": "gang",
+  "with-the-gang": "gang",
+  "with the gang": "gang",
   "late-night": "late-night",
+  "late night": "late-night",
   "latenight": "late-night",
   "reading": "reading",
   "read": "reading",
   "read-unwind": "reading",
+  "read and unwind": "reading",
+  "read & unwind": "reading",
   "brunch": "brunch",
   "breakfast": "brunch",
   "outdoor": "outdoor",
   "outdoor-escape": "outdoor",
+  "outdoor escape": "outdoor",
   "patio": "outdoor",
   "slow-morning": "slow-morning",
+  "slow morning": "slow-morning",
   "morning": "slow-morning"
 };
+
+/**
+ * Normalizes mood string to canonical mood ID
+ */
+function normalizeMoodId(mood) {
+  if (!mood || typeof mood !== "string") return "";
+  const clean = mood.trim().toLowerCase();
+  return MOOD_ID_MAP[clean] || MOOD_ID_MAP[clean.replace(/\s+/g, '-')] || clean;
+}
 
 /**
  * Computes Damerau-Levenshtein distance between two strings
@@ -494,7 +513,7 @@ function calculateMatchScore(cafe, activeMoodIds = [], searchQuery = "") {
     return Math.min(96, Math.max(50, Math.round(ratingFactor + (trust / 100) * 50)));
   }
 
-  const normalizedMoodIds = activeMoodIds.map(m => MOOD_ID_MAP[m] || m);
+  const normalizedMoodIds = activeMoodIds.map(m => normalizeMoodId(m)).filter(Boolean);
   const moodScores = [];
 
   for (const moodId of normalizedMoodIds) {
@@ -567,7 +586,7 @@ function getMatchReasons(cafe, activeMoodIds = []) {
     return reasons;
   }
 
-  const norm = activeMoodIds.map(m => MOOD_ID_MAP[m] || m);
+  const norm = activeMoodIds.map(m => normalizeMoodId(m)).filter(Boolean);
 
   if (norm.includes("good-coffee") && (chars.coffee?.score || 0) >= 7.8) {
     reasons.push("Standout specialty coffee roasts and manual brews");
@@ -685,7 +704,9 @@ function getRecommendations(allCafes, options = {}) {
   // 3. Sorting
   scoredCafes.sort((a, b) => {
     if (sort === "trust") {
-      return (b.trustScore - a.trustScore) || (b.matchPercentage - a.matchPercentage);
+      const tA = (typeof a.trustScore === 'number' && !isNaN(a.trustScore)) ? a.trustScore : -1;
+      const tB = (typeof b.trustScore === 'number' && !isNaN(b.trustScore)) ? b.trustScore : -1;
+      return (tB - tA) || (b.matchPercentage - a.matchPercentage);
     }
     if (sort === "rating") {
       const rA = a.facts?.rating || a.rating || 0;
@@ -698,7 +719,11 @@ function getRecommendations(allCafes, options = {}) {
       return (cB - cA);
     }
     // Default: recommended (match score primary, trust score secondary)
-    return (b.matchPercentage - a.matchPercentage) || (b.trustScore - a.trustScore);
+    const matchDiff = b.matchPercentage - a.matchPercentage;
+    if (matchDiff !== 0) return matchDiff;
+    const tA = (typeof a.trustScore === 'number' && !isNaN(a.trustScore)) ? a.trustScore : -1;
+    const tB = (typeof b.trustScore === 'number' && !isNaN(b.trustScore)) ? b.trustScore : -1;
+    return tB - tA;
   });
 
   // 4. 3-Tier Fallback Hierarchy (Never 0 cafes)
@@ -726,7 +751,7 @@ function getRecommendations(allCafes, options = {}) {
   let subCopy = "Curated across Chandigarh sectors by evidence and verified diner consensus.";
 
   if (activeMoods.length === 1) {
-    const single = CANONICAL_MOODS.find(m => m.id === (MOOD_ID_MAP[activeMoods[0]] || activeMoods[0]));
+    const single = CANONICAL_MOODS.find(m => m.id === normalizeMoodId(activeMoods[0]));
     if (single?.copy) {
       leadCopy = single.copy.lead;
       subCopy = single.copy.sub;
@@ -741,6 +766,7 @@ function getRecommendations(allCafes, options = {}) {
 
   return {
     totalConsidered: allCafes.length,
+    count: scoredCafes.length,
     activeMoods,
     searchQuery: query,
     sector,
@@ -765,6 +791,7 @@ function getRecommendations(allCafes, options = {}) {
 module.exports = {
   CANONICAL_MOODS,
   MOOD_ID_MAP,
+  normalizeMoodId,
   extractIntentFromQuery,
   calculateMatchScore,
   getMatchReasons,

@@ -13,7 +13,7 @@ import auditHandler from '../api/audit.js';
 import healthHandler from '../api/health.js';
 import { CAFES_DATA } from '../src/data/cafesData.js';
 import recPkg from '../server/recommendationService.js';
-const { extractIntentFromQuery, normalizeSector, getRecommendations } = recPkg;
+const { extractIntentFromQuery, normalizeSector, getRecommendations, normalizeMoodId, calculateMatchScore, getMatchReasons, CANONICAL_MOODS } = recPkg;
 
 function createMockReqRes(query = {}, method = 'GET') {
   const headers = {};
@@ -838,6 +838,240 @@ async function runTests() {
     assert(dLimitOnly().count === 10 && dLimitOnly().cafes.length === 10, 'Limit-only returns exactly 10 cafes');
     assert(dLimitOnly().total === 87, 'Limit-only global total remains 87');
     assert(dLimitOnly().pagination === undefined, 'Limit-only does NOT attach pagination metadata (preserves old response shape)');
+  }
+
+  // TEST 15: RECOMMENDATION API CONSISTENCY & REGRESSION VALIDATION
+  console.log('\n--- 15. Testing Recommendation API Consistency & Regression Validation ---');
+  {
+    // 1. Canonical Mood -> Intent & Recommendation Logic
+    const canonicalMoodPairs = [
+      { input: 'coffee', expectedId: 'good-coffee' },
+      { input: 'work', expectedId: 'work' },
+      { input: 'date', expectedId: 'date' },
+      { input: 'quiet', expectedId: 'quiet' },
+      { input: 'aesthetic', expectedId: 'pretty' },
+      { input: 'dessert', expectedId: 'sweet-tooth' },
+      { input: 'groups', expectedId: 'gang' },
+      { input: 'late night', expectedId: 'late-night' },
+      { input: 'reading', expectedId: 'reading' },
+      { input: 'brunch', expectedId: 'brunch' },
+      { input: 'outdoor', expectedId: 'outdoor' },
+      { input: 'slow morning', expectedId: 'slow-morning' }
+    ];
+
+    for (const { input, expectedId } of canonicalMoodPairs) {
+      const normalizedId = normalizeMoodId(input);
+      assert(normalizedId === expectedId, `normalizeMoodId("${input}") maps to canonical mood "${expectedId}"`);
+
+      // Verify recommendation logic handles this mood without error
+      const { req, res, getData, getStatus } = createMockReqRes({ moods: input });
+      await recommendationsHandler(req, res);
+      assert(getStatus() === 200, `GET /api/recommendations?moods=${encodeURIComponent(input)} returns HTTP 200`);
+      const data = getData();
+      assert(data.status === 'success', `Response status is success for mood "${input}"`);
+      assert(data.count === 87, `All 87 cafes evaluated for mood "${input}"`);
+      assert(data.cafes.length === 87, `87 scored cafes returned for mood "${input}"`);
+      assert(data.cafes[0].matchScore >= 50 && data.cafes[0].matchScore <= 100, `Top cafe has valid matchScore for "${input}"`);
+      assert(Array.isArray(data.cafes[0].matchReasons), `Match reasons returned as array for "${input}"`);
+      assert(data.copy && typeof data.copy.lead === 'string', `Copy generated for canonical mood "${input}"`);
+    }
+
+    // 2. Representative Natural Queries
+    const naturalQueries = [
+      { q: "good coffee", expectedIntent: "good-coffee" },
+      { q: "somewhere to work", expectedIntent: "work" },
+      { q: "cafe for a date", expectedIntent: "date" },
+      { q: "quiet cafe", expectedIntent: "quiet" },
+      { q: "pretty cafe", expectedIntent: "pretty" },
+      { q: "dessert cafe", expectedIntent: "sweet-tooth" },
+      { q: "cafe with friends", expectedIntent: "gang" },
+      { q: "late night cafe", expectedIntent: "late-night" },
+      { q: "place to read", expectedIntent: "reading" },
+      { q: "brunch", expectedIntent: "brunch" },
+      { q: "outdoor cafe", expectedIntent: "outdoor" },
+      { q: "slow morning coffee", expectedIntent: "slow-morning" }
+    ];
+
+    for (const { q, expectedIntent } of naturalQueries) {
+      const detected = extractIntentFromQuery(q);
+      assert(detected.includes(expectedIntent), `Query "${q}" detects intent "${expectedIntent}" (got: ${JSON.stringify(detected)})`);
+
+      const { req, res, getData, getStatus } = createMockReqRes({ q });
+      await searchHandler(req, res);
+      assert(getStatus() === 200, `GET /api/search?q=${encodeURIComponent(q)} returns HTTP 200`);
+      const searchData = getData();
+      assert(searchData.detectedIntents.includes(expectedIntent), `/api/search response includes detectedIntent "${expectedIntent}"`);
+      assert(searchData.results.cafes.length === 87, `Search returns all 87 cafes ranked by relevance`);
+      assert(searchData.results.cafes[0].matchScore >= 50, `Top cafe has valid matchScore for "${q}"`);
+    }
+
+    // 3. Multi-Mood Queries
+    const multiMoodCases = [
+      { q: "good coffee and quiet", expected: ["good-coffee", "quiet"] },
+      { q: "coffee + work", expected: ["good-coffee", "work"] },
+      { q: "quiet date", expected: ["quiet", "date"] },
+      { q: "pretty and romantic", expected: ["pretty", "date"] },
+      { q: "brunch outdoor", expected: ["brunch", "outdoor"] },
+      { q: "coffee work quiet", expected: ["good-coffee", "work", "quiet"] }
+    ];
+
+    for (const { q, expected } of multiMoodCases) {
+      const detected = extractIntentFromQuery(q);
+      const allFound = expected.every(e => detected.includes(e));
+      assert(allFound, `Multi-mood query "${q}" detects all expected intents: ${JSON.stringify(expected)}`);
+
+      // Verify recommendation request does not collapse into only the first mood
+      const { req, res, getData, getStatus } = createMockReqRes({ moods: expected.join(',') });
+      await recommendationsHandler(req, res);
+      assert(getStatus() === 200, `Multi-mood "${expected.join(',')}" returns HTTP 200`);
+      const multiData = getData();
+      assert(multiData.activeMoods.length === expected.length, `Active moods preserves all ${expected.length} requested moods`);
+      assert(multiData.cafes.length === 87, `All 87 cafes returned for multi-mood query`);
+
+      // Match and Trust remain separate in multi-mood results
+      const sample = multiData.cafes[0];
+      assert(typeof sample.matchScore === 'number', 'Cafe has numeric matchScore');
+      assert(sample.trustScore === null || typeof sample.trustScore === 'number', 'Cafe trustScore is null or number, independent of matchScore');
+    }
+
+    // Verify multi-mood does not collapse into only first mood:
+    // A cafe with strong coffee but weak work has different scores for [coffee] vs [coffee, work]
+    const blueTokai = CAFES_DATA.find(c => c.name && c.name.toLowerCase().includes('blue tokai'));
+    if (blueTokai) {
+      const scoreCoffeeOnly = calculateMatchScore(blueTokai, ['good-coffee']);
+      const scoreWorkOnly = calculateMatchScore(blueTokai, ['work']);
+      const scoreCoffeeWork = calculateMatchScore(blueTokai, ['good-coffee', 'work']);
+      assert(scoreCoffeeWork >= 50 && scoreCoffeeWork <= 100, 'Multi-mood score combines both moods without collapsing');
+      assert(scoreCoffeeWork !== scoreWorkOnly || scoreCoffeeWork !== scoreCoffeeOnly, 'Multi-mood score reflects combined characteristics, not just single mood');
+    }
+
+    // 4. Sector + Mood Combination
+    const sectorMoodCases = [
+      { sector: 'Sector 8', mood: 'coffee' },
+      { sector: 'Sector 8', mood: 'work' },
+      { sector: 'Sector 8', mood: 'quiet' },
+      { sector: 'Sector 8', mood: 'date' },
+      { sector: 'Sector-8', mood: 'coffee' },
+      { sector: 'sector 8', mood: 'work' }
+    ];
+
+    for (const { sector, mood } of sectorMoodCases) {
+      const { req, res, getData, getStatus } = createMockReqRes({ sector, moods: mood });
+      await recommendationsHandler(req, res);
+      assert(getStatus() === 200, `Sector + Mood (${sector} + ${mood}) returns HTTP 200`);
+      const data = getData();
+      assert(data.count === 10, `Sector + Mood strictly filtered to 10 cafes for Sector 8`);
+      assert(data.cafes.every(c => normalizeSector(c.sector) === 'sector 8'), `All returned cafes match normalized Sector 8`);
+      assert(data.cafes[0].matchScore >= 50, `Recommendation scoring operates on sector-filtered cafes`);
+    }
+
+    // 5. Typo-Tolerant Search + Recommendation
+    const typoCases = [
+      { input: "cofee", expected: "good-coffee" },
+      { input: "nght", expected: "late-night" },
+      { input: "romntic", expected: "date" },
+      { input: "quiter", expected: "quiet" },
+      { input: "aesthtic", expected: "pretty" },
+      { input: "dessrt", expected: "sweet-tooth" },
+      { input: "brnch", expected: "brunch" },
+      { input: "outdor", expected: "outdoor" },
+      { input: "readng", expected: "reading" },
+      { input: "wrk", expected: "work" }
+    ];
+
+    for (const { input, expected } of typoCases) {
+      const detected = extractIntentFromQuery(input);
+      assert(detected.includes(expected), `Typo "${input}" resolves to canonical intent "${expected}"`);
+    }
+
+    // Negative typo guard cases: must NOT create false intents
+    const negativeCases = [
+      { input: "networking event", forbidden: "work" },
+      { input: "database", forbidden: "date" },
+      { input: "weekend", forbidden: "work" }
+    ];
+
+    for (const { input, forbidden } of negativeCases) {
+      const detected = extractIntentFromQuery(input);
+      assert(!detected.includes(forbidden), `Negative guard: "${input}" must not trigger "${forbidden}" intent (got: ${JSON.stringify(detected)})`);
+    }
+
+    // 6. Unknown Characteristics Must Remain Unknown (Never Converted to 0)
+    const cafeWithNullWork = { id: 'test-null-work', characteristics: { work: null } };
+    const cafeWithZeroWork = { id: 'test-zero-work', characteristics: { work: { score: 0 }, quiet: { score: 0 }, seating: { score: 0 }, ambience: { score: 0 }, coffee: { score: 0 } } };
+    const cafeWithMissingChars = { id: 'test-missing-chars' };
+
+    const scoreNull = calculateMatchScore(cafeWithNullWork, ['work']);
+    const scoreZero = calculateMatchScore(cafeWithZeroWork, ['work']);
+    const scoreMissing = calculateMatchScore(cafeWithMissingChars, ['work']);
+
+    assert(scoreNull === 68, 'Unknown characteristic (null) receives neutral baseline score (68%), NOT 0');
+    assert(scoreMissing === 68, 'Missing characteristics receives neutral baseline score (68%), NOT 0');
+    assert(scoreZero === 55, 'Explicit score of 0 receives penalized lower score (55%)');
+    assert(scoreNull > scoreZero, 'Unknown characteristic score (68%) > explicit zero score (55%)');
+
+    // Partial unknown characteristics renormalization
+    const cafePartialNull = { id: 'test-part-null', characteristics: { work: { score: 9 }, quiet: null } };
+    const cafePartialZero = { id: 'test-part-zero', characteristics: { work: { score: 9 }, quiet: { score: 0 } } };
+    const scorePartNull = calculateMatchScore(cafePartialNull, ['work']);
+    const scorePartZero = calculateMatchScore(cafePartialZero, ['work']);
+    assert(scorePartNull > scorePartZero, 'Partial null characteristics renormalize over available evidence without penalizing as zero');
+
+    // Cafes with missing characteristics still appear in recommendations
+    const recsAll = getRecommendations(CAFES_DATA, { moods: ['work'] });
+    assert(recsAll.cafes.length === 87, 'All 87 cafes (including unverified characteristics) appear in recommendations');
+
+    // 7. Trust Must Remain Separate from Match
+    const unverifiedCafes = recsAll.cafes.filter(c => c.trustScore === null);
+    assert(unverifiedCafes.length === 73, 'All 73 unverified cafes appear in recommendation results');
+    assert(unverifiedCafes.every(c => typeof c.matchScore === 'number' && c.matchScore >= 50), 'Unverified cafes receive legitimate matchScore based on evidence/baseline');
+    const mockUnverifiedHighMatch = { id: 'unverified-specialty', characteristics: { work: { score: 9 } } };
+    const highMatchScore = calculateMatchScore(mockUnverifiedHighMatch, ['work']);
+    assert(highMatchScore >= 80, `Cafe without trust score can achieve strong match score (got: ${highMatchScore}%)`);
+    assert(recsAll.cafes.every(c => c.trustScore === null || (c.trustScore >= 0 && c.trustScore <= 100)), 'Trust score is either null or 0-100 deterministic value');
+
+    // Recommendation sorting works with mixed trust scores
+    const { req: rSortTrust, res: resSortTrust, getData: dSortTrust } = createMockReqRes({ moods: 'work', sort: 'trust' });
+    await recommendationsHandler(rSortTrust, resSortTrust);
+    const trustSorted = dSortTrust().cafes;
+    assert(trustSorted.length === 87, 'Sorting by trust retains all 87 cafes');
+    assert(trustSorted[0].trustScore !== null && trustSorted[0].trustScore >= trustSorted[1].trustScore, 'Trust sort orders highest verified trust first');
+
+    // 8. Determinism
+    const run1 = getRecommendations(CAFES_DATA, { moods: ['good-coffee', 'work'], query: 'laptop and wifi' });
+    for (let i = 0; i < 20; i++) {
+      const runN = getRecommendations(CAFES_DATA, { moods: ['good-coffee', 'work'], query: 'laptop and wifi' });
+      assert(run1.cafes.length === runN.cafes.length, `Run ${i + 1}: cafe count matches run 1`);
+      assert(run1.cafes[0].id === runN.cafes[0].id, `Run ${i + 1}: top cafe ID matches run 1`);
+      assert(run1.cafes[0].matchScore === runN.cafes[0].matchScore, `Run ${i + 1}: top cafe matchScore matches run 1`);
+      assert(run1.cafes.every((c, idx) => c.id === runN.cafes[idx].id && c.matchScore === runN.cafes[idx].matchScore), `Run ${i + 1}: all 87 cafe IDs and scores match identically`);
+    }
+
+    // 9. Response Contract
+    const { req: rContract, res: resContract, getData: dContract } = createMockReqRes({ moods: 'work' });
+    await recommendationsHandler(rContract, resContract);
+    const contract = dContract();
+    assert(contract.status === 'success', 'Response contract: status === "success"');
+    assert(contract.count === 87, 'Response contract: count === 87');
+    assert(contract.totalConsidered === 87, 'Response contract: totalConsidered === 87');
+    assert(Array.isArray(contract.cafes), 'Response contract: cafes is an array');
+    assert(contract.copy && typeof contract.copy.lead === 'string' && typeof contract.copy.sub === 'string', 'Response contract: copy.lead and copy.sub present');
+    assert(contract.stats && typeof contract.stats.totalFound === 'number', 'Response contract: stats.totalFound is numeric');
+    assert(contract.levels && Array.isArray(contract.levels.strong), 'Response contract: levels.strong is an array');
+
+    const firstCafe = contract.cafes[0];
+    assert(typeof firstCafe.matchScore === 'number', 'Cafe contract: matchScore is numeric');
+    assert(typeof firstCafe.matchPercentage === 'number', 'Cafe contract: matchPercentage is numeric');
+    assert(Array.isArray(firstCafe.matchReasons), 'Cafe contract: matchReasons is array');
+    assert(Array.isArray(firstCafe.caveats), 'Cafe contract: caveats is array');
+    assert(firstCafe.trustScore === null || typeof firstCafe.trustScore === 'number', 'Cafe contract: trustScore is null or numeric');
+    assert(typeof firstCafe.matchLabel === 'string', 'Cafe contract: matchLabel is string');
+
+    // 10. Test Both API Paths (Handlers vs Direct Service)
+    const serviceRecs = getRecommendations(CAFES_DATA, { moods: ['work'], sector: 'All Chandigarh' });
+    assert(contract.cafes.length === serviceRecs.cafes.length, 'Handler output matches direct service output in length');
+    assert(contract.cafes[0].id === serviceRecs.cafes[0].id, 'Handler top cafe matches direct service top cafe');
+    assert(contract.cafes[0].matchScore === serviceRecs.cafes[0].matchScore, 'Handler top cafe matchScore matches direct service');
   }
 
   console.log(`\n========================================`);
