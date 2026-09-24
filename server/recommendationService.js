@@ -766,7 +766,6 @@ function getRecommendations(allCafes, options = {}) {
 
   return {
     totalConsidered: allCafes.length,
-    count: scoredCafes.length,
     activeMoods,
     searchQuery: query,
     sector,

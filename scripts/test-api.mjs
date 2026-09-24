@@ -869,7 +869,7 @@ async function runTests() {
       assert(getStatus() === 200, `GET /api/recommendations?moods=${encodeURIComponent(input)} returns HTTP 200`);
       const data = getData();
       assert(data.status === 'success', `Response status is success for mood "${input}"`);
-      assert(data.count === 87, `All 87 cafes evaluated for mood "${input}"`);
+      assert(data.stats.totalFound === 87, `All 87 cafes evaluated for mood "${input}"`);
       assert(data.cafes.length === 87, `87 scored cafes returned for mood "${input}"`);
       assert(data.cafes[0].matchScore >= 50 && data.cafes[0].matchScore <= 100, `Top cafe has valid matchScore for "${input}"`);
       assert(Array.isArray(data.cafes[0].matchReasons), `Match reasons returned as array for "${input}"`);
@@ -960,7 +960,7 @@ async function runTests() {
       await recommendationsHandler(req, res);
       assert(getStatus() === 200, `Sector + Mood (${sector} + ${mood}) returns HTTP 200`);
       const data = getData();
-      assert(data.count === 10, `Sector + Mood strictly filtered to 10 cafes for Sector 8`);
+      assert(data.stats.totalFound === 10, `Sector + Mood strictly filtered to 10 cafes for Sector 8`);
       assert(data.cafes.every(c => normalizeSector(c.sector) === 'sector 8'), `All returned cafes match normalized Sector 8`);
       assert(data.cafes[0].matchScore >= 50, `Recommendation scoring operates on sector-filtered cafes`);
     }
@@ -1052,7 +1052,7 @@ async function runTests() {
     await recommendationsHandler(rContract, resContract);
     const contract = dContract();
     assert(contract.status === 'success', 'Response contract: status === "success"');
-    assert(contract.count === 87, 'Response contract: count === 87');
+    assert(contract.cafes.length === 87, 'Response contract: cafes.length === 87');
     assert(contract.totalConsidered === 87, 'Response contract: totalConsidered === 87');
     assert(Array.isArray(contract.cafes), 'Response contract: cafes is an array');
     assert(contract.copy && typeof contract.copy.lead === 'string' && typeof contract.copy.sub === 'string', 'Response contract: copy.lead and copy.sub present');
