@@ -114,7 +114,8 @@ app.get("/api/cafes", (req, res) => {
     results = results.filter(c => {
       const name = (c.name || c.identity?.name || "").toLowerCase();
       const addr = (c.address || c.identity?.address || "").toLowerCase();
-      return name.includes(q) || addr.includes(q);
+      const tagline = (c.cafora?.tagline || c.tagline || "").toLowerCase();
+      return name.includes(q) || addr.includes(q) || tagline.includes(q);
     });
   }
 
@@ -181,48 +182,82 @@ app.get("/api/search", (req, res) => {
 });
 
 /* 6. EVIDENCE & PROVENANCE */
-app.get("/api/cafes/:id/evidence", (req, res) => {
-  const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
-  if (!cafe) return res.status(404).json({ error: "Cafe not found" });
+const handleEvidence = (id, res) => {
+  const cleanId = typeof id === "string" ? id.trim() : id;
+  if (!cleanId) return res.status(400).json({ error: "Missing cafe id query parameter" });
+  const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+  if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
   res.json({
     status: "success",
-    cafeId: cafe.id,
+    cafeId: cleanId,
     cafeName: cafe.name || cafe.identity?.name || null,
     evidence: cafe.evidence || null,
     characteristics: cafe.characteristics || null,
     lastVerified: cafe.cafora?.lastVerified || cafe.evidence?.lastVerified || null
   });
-});
+};
+
+app.get("/api/evidence", (req, res) => handleEvidence(req.query.id, res));
+app.get("/api/cafes/:id/evidence", (req, res) => handleEvidence(req.params.id, res));
 
 /* 7. TRUST SCORE DETAILS */
-app.get("/api/cafes/:id/trust", (req, res) => {
-  const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
-  if (!cafe) return res.status(404).json({ error: "Cafe not found" });
+const handleTrust = (id, res) => {
+  const cleanId = typeof id === "string" ? id.trim() : id;
+  if (!cleanId) return res.status(400).json({ error: "Missing cafe id query parameter" });
+  const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+  if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
   const sources = [
     ...(cafe.evidence?.sources || []),
     ...(cafe.facts?.provenance || [])
   ];
-  const trustResult = calculateTrustScore ? calculateTrustScore(cafe) : { score: 0, components: {}, explanation: [] };
+  const trustResult = calculateTrustScore ? calculateTrustScore(cafe) : { score: null, components: {}, explanation: [] };
   res.json({
     status: "success",
-    cafeId: cafe.id,
-    cafeName: cafe.name,
+    cafeId: cleanId,
+    cafeName: cafe.name || cafe.identity?.name,
     trustScore: trustResult.score,
     components: trustResult.components,
     explanation: trustResult.explanation,
     verificationStatus: cafe.cafora?.verificationStatus || cafe.verificationStatus || "unverified",
     sourcesCount: sources.length,
-    sources: sources,
+    sourcesSummary: sources.map(s => ({
+      sourceType: s.sourceType || s.type,
+      sourceName: s.sourceName || s.name || "Local Record",
+      note: s.note
+    })),
+    confidence: cafe.evidence?.confidence || (sources.length > 0 ? "medium" : "unknown"),
     lastVerified: cafe.cafora?.lastVerified || cafe.lastVerified || null
   });
-});
+};
+
+app.get("/api/trust", (req, res) => handleTrust(req.query.id, res));
+app.get("/api/cafes/:id/trust", (req, res) => handleTrust(req.params.id, res));
 
 /* 8. INTERNAL DATA QUALITY AUDIT REPORT (Section 30) */
-app.get("/api/admin/audit-report", (req, res) => {
+const handleAudit = (req, res) => {
   if (!auditReport) return res.status(503).json({ error: "Audit report initializing" });
+  const { id } = req.query || {};
+  if (id !== undefined) {
+    const cleanId = typeof id === "string" ? id.trim() : id;
+    if (!cleanId) return res.status(400).json({ error: "Invalid cafe id query parameter" });
+    const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+    if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
+    const trustResult = calculateTrustScore ? calculateTrustScore(cafe) : { score: null, components: {}, explanation: [] };
+    return res.json({
+      status: "success",
+      cafeId: cleanId,
+      cafeName: cafe.name || cafe.identity?.name || null,
+      trustScore: trustResult.score,
+      components: trustResult.components,
+      explanation: trustResult.explanation
+    });
+  }
   const report = auditReport(CAFES_DATA);
   res.json({ status: "success", report });
-});
+};
+
+app.get("/api/audit", handleAudit);
+app.get("/api/admin/audit-report", handleAudit);
 
 /* START SERVER */
 const PORT = process.env.PORT || 5000;

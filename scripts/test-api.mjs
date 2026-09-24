@@ -276,7 +276,8 @@ async function runTests() {
       { name: 'GET /api/search', handler: searchHandler, validQuery: { q: 'coffee' } },
       { name: 'GET /api/trust', handler: trustHandler, validQuery: { id: 'blue-tokai-sec8' } },
       { name: 'GET /api/audit', handler: auditHandler, validQuery: {} },
-      { name: 'GET /api/moods', handler: moodsHandler, validQuery: {} }
+      { name: 'GET /api/moods', handler: moodsHandler, validQuery: {} },
+      { name: 'GET /api/health', handler: healthHandler, validQuery: {} }
     ];
 
     for (const ep of endpoints) {
@@ -1072,6 +1073,82 @@ async function runTests() {
     assert(contract.cafes.length === serviceRecs.cafes.length, 'Handler output matches direct service output in length');
     assert(contract.cafes[0].id === serviceRecs.cafes[0].id, 'Handler top cafe matches direct service top cafe');
     assert(contract.cafes[0].matchScore === serviceRecs.cafes[0].matchScore, 'Handler top cafe matchScore matches direct service');
+  }
+
+  // TEST 16: FINAL BACKEND INTEGRITY AUDIT & EDGE-CASE HARDENING
+  console.log('\n--- 16. Testing Final Backend Integrity Audit & Edge Cases ---');
+  {
+    // 1. Search intent edge cases: empty, whitespace, uppercase, mixed-case, punctuation, multiple spaces, repeated words
+    assert(extractIntentFromQuery("").length === 0, 'Empty query returns empty intents array');
+    assert(extractIntentFromQuery("   ").length === 0, 'Whitespace query returns empty intents array');
+    assert(extractIntentFromQuery(null).length === 0, 'Null query returns empty intents array');
+    assert(extractIntentFromQuery(undefined).length === 0, 'Undefined query returns empty intents array');
+    assert(extractIntentFromQuery(12345).length === 0, 'Numeric query returns empty intents array safely');
+
+    const upperIntents = extractIntentFromQuery("GOOD COFFEE");
+    assert(upperIntents.includes('good-coffee'), 'Uppercase query "GOOD COFFEE" detects good-coffee');
+
+    const mixedIntents = extractIntentFromQuery("QuIeT cAfE");
+    assert(mixedIntents.includes('quiet'), 'Mixed-case query "QuIeT cAfE" detects quiet');
+
+    const punctIntents = extractIntentFromQuery("coffee!!! (study?)");
+    assert(punctIntents.includes('good-coffee') && punctIntents.includes('work'), 'Punctuation "coffee!!! (study?)" detects coffee and work');
+
+    const multiSpaceIntents = extractIntentFromQuery("coffee    work");
+    assert(multiSpaceIntents.includes('good-coffee') && multiSpaceIntents.includes('work'), 'Multiple spaces "coffee    work" detects coffee and work');
+
+    const repeatIntents = extractIntentFromQuery("coffee coffee coffee");
+    assert(repeatIntents.length === 1 && repeatIntents[0] === 'good-coffee', 'Repeated words "coffee coffee coffee" dedupes to single good-coffee intent');
+
+    // 2. Sector with no matching cafes
+    const { req: rZeroSec, res: resZeroSec, getData: dZeroSec, getStatus: sZeroSec } = createMockReqRes({ sector: 'Sector 999' });
+    await recommendationsHandler(rZeroSec, resZeroSec);
+    assert(sZeroSec() === 200, 'Non-existent sector returns HTTP 200');
+    assert(dZeroSec().stats.totalFound === 0 && dZeroSec().cafes.length === 0, 'Non-existent sector returns empty cafes array without throwing');
+
+    // 3. Search endpoint with empty/whitespace query
+    const { req: rSearchEmpty, res: resSearchEmpty, getData: dSearchEmpty, getStatus: sSearchEmpty } = createMockReqRes({ q: '   ' });
+    await searchHandler(rSearchEmpty, resSearchEmpty);
+    assert(sSearchEmpty() === 200, 'Search with whitespace query returns HTTP 200');
+    assert(dSearchEmpty().detectedIntents.length === 0, 'Search with whitespace query returns empty detectedIntents');
+    assert(dSearchEmpty().results.cafes.length === 87, 'Search with whitespace query returns baseline full catalog without crashing');
+
+    // 4. Evidence and Trust endpoints with empty/whitespace id parameter -> returns HTTP 400
+    for (const emptyId of ['', '   ']) {
+      const { req: rBadEv, res: resBadEv, getStatus: sBadEv } = createMockReqRes({ id: emptyId });
+      await evidenceHandler(rBadEv, resBadEv);
+      assert(sBadEv() === 400, `Evidence endpoint rejects empty id "${emptyId}" with HTTP 400`);
+
+      const { req: rBadTr, res: resBadTr, getStatus: sBadTr } = createMockReqRes({ id: emptyId });
+      await trustHandler(rBadTr, resBadTr);
+      assert(sBadTr() === 400, `Trust endpoint rejects empty id "${emptyId}" with HTTP 400`);
+    }
+
+    // 5. Evidence and Trust endpoints with non-existent id -> returns HTTP 404
+    const { req: rNoEv, res: resNoEv, getStatus: sNoEv } = createMockReqRes({ id: 'non-existent-cafe-id' });
+    await evidenceHandler(rNoEv, resNoEv);
+    assert(sNoEv() === 404, 'Evidence endpoint returns HTTP 404 for non-existent cafe');
+
+    const { req: rNoTr, res: resNoTr, getStatus: sNoTr } = createMockReqRes({ id: 'non-existent-cafe-id' });
+    await trustHandler(rNoTr, resNoTr);
+    assert(sNoTr() === 404, 'Trust endpoint returns HTTP 404 for non-existent cafe');
+
+    // 6. Cafes endpoint with whitespace id query param -> returns HTTP 400
+    const { req: rBadCafeId, res: resBadCafeId, getStatus: sBadCafeId } = createMockReqRes({ id: '   ' });
+    await cafesHandler(rBadCafeId, resBadCafeId);
+    assert(sBadCafeId() === 400, 'Cafes endpoint rejects whitespace id query param with HTTP 400');
+
+    // 7. Recommendation with unknown mood -> handles gracefully without crashing
+    const { req: rUnkMood, res: resUnkMood, getData: dUnkMood, getStatus: sUnkMood } = createMockReqRes({ moods: 'non-existent-vibe-xyz' });
+    await recommendationsHandler(rUnkMood, resUnkMood);
+    assert(sUnkMood() === 200, 'Recommendation with unknown mood returns HTTP 200');
+    assert(dUnkMood().cafes.length === 87, 'Recommendation with unknown mood returns all 87 cafes with safe fallback baseline');
+
+    // 8. Health endpoint GET returns HTTP 200 with status ok
+    const { req: rHealth, res: resHealth, getData: dHealth, getStatus: sHealth } = createMockReqRes();
+    await healthHandler(rHealth, resHealth);
+    assert(sHealth() === 200, 'GET /api/health returns HTTP 200');
+    assert(dHealth().status === 'ok', 'Health endpoint reports status "ok"');
   }
 
   console.log(`\n========================================`);
