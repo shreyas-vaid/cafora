@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { id, sector, search, limit } = req.query || {};
+  const { id, sector, search, limit, page } = req.query || {};
 
   // Single Cafe by ID
   if (id !== undefined) {
@@ -32,6 +32,25 @@ export default async function handler(req, res) {
     }
     res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
     return res.status(200).json({ status: 'success', cafe });
+  }
+
+  // Parameter validation
+  let parsedPage = null;
+  if (page !== undefined) {
+    const pageStr = typeof page === 'string' ? page.trim() : String(page);
+    if (!/^\d+$/.test(pageStr) || parseInt(pageStr, 10) <= 0) {
+      return res.status(400).json({ error: 'Invalid page parameter: must be a positive integer' });
+    }
+    parsedPage = parseInt(pageStr, 10);
+  }
+
+  let parsedLimit = null;
+  if (limit !== undefined) {
+    const limitStr = typeof limit === 'string' ? limit.trim() : String(limit);
+    if (!/^\d+$/.test(limitStr) || parseInt(limitStr, 10) <= 0) {
+      return res.status(400).json({ error: 'Invalid limit parameter: must be a positive integer' });
+    }
+    parsedLimit = parseInt(limitStr, 10);
   }
 
   // Filtered List
@@ -55,20 +74,44 @@ export default async function handler(req, res) {
     });
   }
 
-  if (limit !== undefined) {
-    const limitStr = typeof limit === 'string' ? limit.trim() : String(limit);
-    if (!/^\d+$/.test(limitStr) || parseInt(limitStr, 10) <= 0) {
-      return res.status(400).json({ error: 'Invalid limit parameter: must be a positive integer' });
-    }
-    const num = parseInt(limitStr, 10);
-    results = results.slice(0, num);
+  // Pagination & Limit handling
+  const isPaginated = parsedPage !== null;
+  let paginationMeta = null;
+
+  if (isPaginated) {
+    const activeLimit = parsedLimit !== null ? parsedLimit : 20;
+    const totalItems = results.length;
+    const totalPages = Math.ceil(totalItems / activeLimit);
+    const hasNextPage = parsedPage < totalPages;
+    const hasPreviousPage = parsedPage > 1 && totalPages > 0;
+
+    const startIndex = (parsedPage - 1) * activeLimit;
+    results = (startIndex >= totalItems) ? [] : results.slice(startIndex, startIndex + activeLimit);
+
+    paginationMeta = {
+      page: parsedPage,
+      limit: activeLimit,
+      totalItems,
+      totalPages,
+      hasNextPage,
+      hasPreviousPage
+    };
+  } else if (parsedLimit !== null) {
+    // Backward-compatible limit-only behavior without pagination metadata
+    results = results.slice(0, parsedLimit);
   }
 
   res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
-  return res.status(200).json({
+  const responseData = {
     status: 'success',
     count: results.length,
     total: CAFES_DATA.length,
     cafes: results
-  });
+  };
+
+  if (paginationMeta) {
+    responseData.pagination = paginationMeta;
+  }
+
+  return res.status(200).json(responseData);
 }

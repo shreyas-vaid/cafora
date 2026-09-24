@@ -73,7 +73,7 @@ app.get("/api/recommendations", (req, res) => {
 
 /* 4. CAFES LIST & DETAIL */
 app.get("/api/cafes", (req, res) => {
-  const { id, sector, search, limit } = req.query;
+  const { id, sector, search, limit, page } = req.query;
 
   if (id !== undefined) {
     const cleanId = typeof id === "string" ? id.trim() : id;
@@ -81,6 +81,24 @@ app.get("/api/cafes", (req, res) => {
     const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
     if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
     return res.json({ status: "success", cafe });
+  }
+
+  let parsedPage = null;
+  if (page !== undefined) {
+    const pageStr = typeof page === "string" ? page.trim() : String(page);
+    if (!/^\d+$/.test(pageStr) || parseInt(pageStr, 10) <= 0) {
+      return res.status(400).json({ error: "Invalid page parameter: must be a positive integer" });
+    }
+    parsedPage = parseInt(pageStr, 10);
+  }
+
+  let parsedLimit = null;
+  if (limit !== undefined) {
+    const limitStr = typeof limit === "string" ? limit.trim() : String(limit);
+    if (!/^\d+$/.test(limitStr) || parseInt(limitStr, 10) <= 0) {
+      return res.status(400).json({ error: "Invalid limit parameter: must be a positive integer" });
+    }
+    parsedLimit = parseInt(limitStr, 10);
   }
 
   let results = [...CAFES_DATA];
@@ -99,16 +117,44 @@ app.get("/api/cafes", (req, res) => {
       return name.includes(q) || addr.includes(q);
     });
   }
-  if (limit !== undefined) {
-    const limitStr = typeof limit === "string" ? limit.trim() : String(limit);
-    if (!/^\d+$/.test(limitStr) || parseInt(limitStr, 10) <= 0) {
-      return res.status(400).json({ error: "Invalid limit parameter: must be a positive integer" });
-    }
-    const num = parseInt(limitStr, 10);
-    results = results.slice(0, num);
+
+  const isPaginated = parsedPage !== null;
+  let paginationMeta = null;
+
+  if (isPaginated) {
+    const activeLimit = parsedLimit !== null ? parsedLimit : 20;
+    const totalItems = results.length;
+    const totalPages = Math.ceil(totalItems / activeLimit);
+    const hasNextPage = parsedPage < totalPages;
+    const hasPreviousPage = parsedPage > 1 && totalPages > 0;
+
+    const startIndex = (parsedPage - 1) * activeLimit;
+    results = (startIndex >= totalItems) ? [] : results.slice(startIndex, startIndex + activeLimit);
+
+    paginationMeta = {
+      page: parsedPage,
+      limit: activeLimit,
+      totalItems,
+      totalPages,
+      hasNextPage,
+      hasPreviousPage
+    };
+  } else if (parsedLimit !== null) {
+    results = results.slice(0, parsedLimit);
   }
 
-  res.json({ status: "success", count: results.length, total: CAFES_DATA.length, cafes: results });
+  const responseData = {
+    status: "success",
+    count: results.length,
+    total: CAFES_DATA.length,
+    cafes: results
+  };
+
+  if (paginationMeta) {
+    responseData.pagination = paginationMeta;
+  }
+
+  res.json(responseData);
 });
 
 app.get("/api/cafes/:id", (req, res) => {

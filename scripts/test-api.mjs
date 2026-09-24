@@ -683,6 +683,163 @@ async function runTests() {
     assert(searchCafes.every(c => normalizeSector(c.sector || c.identity?.sector) === 'sector 8'), '/api/search results strictly limited to Sector 8');
   }
 
+  // TEST 14: BACKWARD-COMPATIBLE PAGINATION (Backend Fix #9)
+  console.log('\n--- 14. Testing Backward-Compatible Pagination (Backend Fix #9) ---');
+  {
+    // 1. /api/cafes without pagination: existing behavior unchanged, all 87 cafes returned, no pagination metadata
+    const { req: rNoPag, res: resNoPag, getData: dNoPag, getStatus: sNoPag } = createMockReqRes();
+    await cafesHandler(rNoPag, resNoPag);
+    assert(sNoPag() === 200, 'Unpaginated /api/cafes returns HTTP 200');
+    assert(dNoPag().count === 87 && dNoPag().total === 87 && dNoPag().cafes.length === 87, 'Unpaginated /api/cafes returns all 87 cafes');
+    assert(dNoPag().pagination === undefined, 'Pagination metadata is absent when no pagination parameters provided');
+
+    // 2. page=1&limit=10: correct first page
+    const { req: rP1, res: resP1, getData: dP1, getStatus: sP1 } = createMockReqRes({ page: '1', limit: '10' });
+    await cafesHandler(rP1, resP1);
+    assert(sP1() === 200, 'page=1&limit=10 returns HTTP 200');
+    const p1 = dP1();
+    assert(p1.count === 10 && p1.cafes.length === 10, 'page=1&limit=10 returns exactly 10 cafes');
+    assert(p1.pagination && p1.pagination.page === 1, 'Pagination page === 1');
+    assert(p1.pagination.limit === 10, 'Pagination limit === 10');
+    assert(p1.pagination.totalItems === 87, 'Pagination totalItems === 87');
+    assert(p1.pagination.totalPages === 9, 'Pagination totalPages === 9 (Math.ceil(87/10))');
+    assert(p1.pagination.hasNextPage === true, 'page=1 hasNextPage === true');
+    assert(p1.pagination.hasPreviousPage === false, 'page=1 hasPreviousPage === false');
+    assert(p1.cafes[0].id === CAFES_DATA[0].id, 'page=1 starts with first cafe');
+
+    // 3. page=2&limit=10: correct second page, no duplicate IDs between page 1 and page 2
+    const { req: rP2, res: resP2, getData: dP2, getStatus: sP2 } = createMockReqRes({ page: '2', limit: '10' });
+    await cafesHandler(rP2, resP2);
+    assert(sP2() === 200, 'page=2&limit=10 returns HTTP 200');
+    const p2 = dP2();
+    assert(p2.count === 10 && p2.cafes.length === 10, 'page=2&limit=10 returns exactly 10 cafes');
+    assert(p2.pagination.page === 2, 'Pagination page === 2');
+    assert(p2.pagination.hasNextPage === true, 'page=2 hasNextPage === true');
+    assert(p2.pagination.hasPreviousPage === true, 'page=2 hasPreviousPage === true');
+    assert(p2.cafes[0].id === CAFES_DATA[10].id, 'page=2 starts with 11th cafe (index 10)');
+
+    const p1Ids = new Set(p1.cafes.map(c => c.id));
+    assert(p2.cafes.every(c => !p1Ids.has(c.id)), 'No duplicate IDs between page 1 and page 2');
+
+    // 4. Final partial page
+    const { req: rLast, res: resLast, getData: dLast, getStatus: sLast } = createMockReqRes({ page: '9', limit: '10' });
+    await cafesHandler(rLast, resLast);
+    assert(sLast() === 200, 'Final page returns HTTP 200');
+    const pLast = dLast();
+    assert(pLast.count === 7 && pLast.cafes.length === 7, 'Final partial page returns remaining 7 cafes (87 - 80)');
+    assert(pLast.pagination.page === 9, 'Final page === 9');
+    assert(pLast.pagination.hasNextPage === false, 'Final page hasNextPage === false');
+    assert(pLast.pagination.hasPreviousPage === true, 'Final page hasPreviousPage === true');
+
+    // 5. Page beyond totalPages returns HTTP 200, cafes = [], correct metadata
+    const { req: rBeyond, res: resBeyond, getData: dBeyond, getStatus: sBeyond } = createMockReqRes({ page: '10', limit: '10' });
+    await cafesHandler(rBeyond, resBeyond);
+    assert(sBeyond() === 200, 'Out-of-range page returns HTTP 200 (not 404)');
+    const pBeyond = dBeyond();
+    assert(pBeyond.count === 0 && pBeyond.cafes.length === 0, 'Out-of-range page returns cafes === []');
+    assert(pBeyond.pagination.page === 10, 'Out-of-range pagination page is preserved');
+    assert(pBeyond.pagination.totalItems === 87, 'Out-of-range pagination totalItems is correct');
+    assert(pBeyond.pagination.totalPages === 9, 'Out-of-range pagination totalPages is correct');
+    assert(pBeyond.pagination.hasNextPage === false, 'Out-of-range hasNextPage === false');
+    assert(pBeyond.pagination.hasPreviousPage === true, 'Out-of-range hasPreviousPage === true');
+
+    // 6. Invalid page parameter validation: 0, negative, decimal, alphabetic, empty, whitespace
+    for (const badPage of ['0', '-1', '1.5', 'abc', '', '   ']) {
+      const { req, res, getStatus, getData } = createMockReqRes({ page: badPage, limit: '10' });
+      await cafesHandler(req, res);
+      assert(getStatus() === 400, `Invalid page "${badPage}" returns HTTP 400`);
+      assert(getData()?.error?.includes('Invalid page parameter'), `Invalid page "${badPage}" returns descriptive error`);
+    }
+
+    // 7. Invalid limit parameter validation: 0, negative, decimal, alphabetic, empty, whitespace
+    for (const badLimit of ['0', '-1', '1.5', 'abc', '', '   ']) {
+      const { req, res, getStatus, getData } = createMockReqRes({ page: '1', limit: badLimit });
+      await cafesHandler(req, res);
+      assert(getStatus() === 400, `Invalid limit "${badLimit}" returns HTTP 400`);
+      assert(getData()?.error?.includes('Invalid limit parameter'), `Invalid limit "${badLimit}" returns descriptive error`);
+    }
+
+    // 8. Sector + pagination: verify pagination occurs AFTER sector filtering
+    const { req: rSecPag, res: resSecPag, getData: dSecPag, getStatus: sSecPag } = createMockReqRes({
+      sector: 'Sector 8',
+      page: '1',
+      limit: '5'
+    });
+    await cafesHandler(rSecPag, resSecPag);
+    assert(sSecPag() === 200, 'Sector + pagination returns HTTP 200');
+    const pSec = dSecPag();
+    assert(pSec.count === 5 && pSec.cafes.length === 5, 'Sector + pagination returns page limit of 5');
+    assert(pSec.pagination.totalItems === 10, 'Sector + pagination totalItems === 10 (filtered Sector 8 count, NOT 87)');
+    assert(pSec.pagination.totalPages === 2, 'Sector + pagination totalPages === 2');
+    assert(pSec.pagination.hasNextPage === true, 'Sector + pagination page 1 hasNextPage === true');
+    assert(pSec.pagination.hasPreviousPage === false, 'Sector + pagination page 1 hasPreviousPage === false');
+    assert(pSec.cafes.every(c => normalizeSector(c.sector) === 'sector 8'), 'All returned paginated cafes are from Sector 8');
+
+    // Page 2 of Sector 8
+    const { req: rSecPag2, res: resSecPag2, getData: dSecPag2 } = createMockReqRes({
+      sector: 'Sector 8',
+      page: '2',
+      limit: '5'
+    });
+    await cafesHandler(rSecPag2, resSecPag2);
+    const pSec2 = dSecPag2();
+    assert(pSec2.count === 5 && pSec2.cafes.length === 5, 'Sector + pagination page 2 returns 5 cafes');
+    assert(pSec2.pagination.hasNextPage === false, 'Sector + pagination page 2 hasNextPage === false');
+    assert(pSec2.pagination.hasPreviousPage === true, 'Sector + pagination page 2 hasPreviousPage === true');
+    const secP1Ids = new Set(pSec.cafes.map(c => c.id));
+    assert(pSec2.cafes.every(c => !secP1Ids.has(c.id)), 'No overlap between Sector 8 page 1 and page 2');
+
+    // 9. Search + pagination: verify pagination occurs AFTER search filtering
+    const { req: rSearchFull, res: resSearchFull, getData: dSearchFull } = createMockReqRes({ search: 'coffee' });
+    await cafesHandler(rSearchFull, resSearchFull);
+    const fullSearchCount = dSearchFull().cafes.length;
+
+    const { req: rSearchPag, res: resSearchPag, getData: dSearchPag } = createMockReqRes({
+      search: 'coffee',
+      page: '1',
+      limit: '5'
+    });
+    await cafesHandler(rSearchPag, resSearchPag);
+    const pSearch = dSearchPag();
+    assert(pSearch.count === 5 && pSearch.cafes.length === 5, 'Search + pagination returns limit 5');
+    assert(pSearch.pagination.totalItems === fullSearchCount, 'Search + pagination totalItems matches full search filtered count');
+    assert(pSearch.pagination.totalPages === Math.ceil(fullSearchCount / 5), 'Search + pagination totalPages matches filtered calculation');
+
+    // 10. Sector + search + pagination together
+    const { req: rBoth, res: resBoth, getData: dBoth } = createMockReqRes({
+      sector: 'Sector 8',
+      search: 'roasters',
+      page: '1',
+      limit: '2'
+    });
+    await cafesHandler(rBoth, resBoth);
+    const pBoth = dBoth();
+    assert(pBoth.cafes.length <= 2, 'Sector + search + pagination respects page limit of 2');
+    assert(pBoth.cafes.every(c => normalizeSector(c.sector) === 'sector 8'), 'All returned cafes match sector filter');
+
+    // 11. Verify totalItems is filtered count, NOT global cafe count
+    assert(pSec.pagination.totalItems !== pSec.total, 'totalItems (10) !== global total (87) when sector filter is active');
+    assert(pSec.pagination.totalItems === 10, 'totalItems is strictly the filtered count (10)');
+    assert(pSec.total === 87, 'global total remains 87');
+
+    // 12. Verify pagination metadata is absent when page/limit are not supplied
+    const { req: rSecNoPag, res: resSecNoPag, getData: dSecNoPag } = createMockReqRes({ sector: 'Sector 8' });
+    await cafesHandler(rSecNoPag, resSecNoPag);
+    assert(dSecNoPag().pagination === undefined, 'Pagination metadata is absent for sector-only request without page/limit');
+
+    const { req: rSearchNoPag, res: resSearchNoPag, getData: dSearchNoPag } = createMockReqRes({ search: 'coffee' });
+    await cafesHandler(rSearchNoPag, resSearchNoPag);
+    assert(dSearchNoPag().pagination === undefined, 'Pagination metadata is absent for search-only request without page/limit');
+
+    // 13. Verify existing limit-only behavior remains backward compatible
+    const { req: rLimitOnly, res: resLimitOnly, getData: dLimitOnly, getStatus: sLimitOnly } = createMockReqRes({ limit: '10' });
+    await cafesHandler(rLimitOnly, resLimitOnly);
+    assert(sLimitOnly() === 200, 'Limit-only returns HTTP 200');
+    assert(dLimitOnly().count === 10 && dLimitOnly().cafes.length === 10, 'Limit-only returns exactly 10 cafes');
+    assert(dLimitOnly().total === 87, 'Limit-only global total remains 87');
+    assert(dLimitOnly().pagination === undefined, 'Limit-only does NOT attach pagination metadata (preserves old response shape)');
+  }
+
   console.log(`\n========================================`);
   console.log(`🏁 API TEST SUITE FINISHED: ${passed}/${total} assertions passed (${Math.round((passed / total) * 100)}%)`);
   console.log(`========================================\n`);
