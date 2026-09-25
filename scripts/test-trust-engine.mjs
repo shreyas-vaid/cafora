@@ -1,5 +1,5 @@
 import { CAFES_DATA } from '../src/data/cafesData.js';
-import { calculateTrustScore, hasSufficientEvidence, SOURCE_QUALITY } from '../src/utils/trustScore.js';
+import { calculateTrustScore, hasSufficientEvidence, isValidOsmId, SOURCE_QUALITY } from '../src/utils/trustScore.js';
 import { filterAndSortCafes } from '../src/utils/searchFilter.js';
 import { getCategorizedRecommendations, rankCafesByVibeAndSearch } from '../src/utils/vibeEngine.js';
 
@@ -193,6 +193,118 @@ const baseTrust = calculateTrustScore(sampleCafe);
   const totalConsidered = recs.spotlight.length + recs.morePlaces.length;
   assert(totalConsidered === CAFES_DATA.length,
     `TEST 13: Recommendation engine considers all ${totalConsidered} / ${CAFES_DATA.length} cafes without trust filtering`);
+}
+
+// ----------------------------------------------------
+// SECTION 22: OSM IDENTITY EVIDENCE & REAL ELEMENT ID TESTS
+// ----------------------------------------------------
+console.log('\n--- 2b. OSM IDENTITY DETECTION INTEGRITY TESTS ---\n');
+
+const baseVenueWithoutOsm = {
+  name: "Sample Test Cafe",
+  sector: "Sector 17",
+  evidence: {
+    sources: [
+      {
+        sourceType: "openstreetmap",
+        sourceName: "OpenStreetMap",
+        retrievedAt: "2026-09-08T00:00:00.000Z"
+      }
+    ]
+  },
+  facts: {
+    rating: 4.5,
+    reviewCount: 50
+  }
+};
+
+// 1. Numeric real OSM ID is recognized (e.g. 4214699191) and contributes OSM identity confidence (+0.45)
+{
+  const cafeNumericOsm = JSON.parse(JSON.stringify(baseVenueWithoutOsm));
+  cafeNumericOsm.osmId = 4214699191;
+  const noOsmScore = calculateTrustScore(baseVenueWithoutOsm);
+  const numericOsmScore = calculateTrustScore(cafeNumericOsm);
+
+  const diff = Number((numericOsmScore.components.identityConfidence - noOsmScore.components.identityConfidence).toFixed(3));
+  assert(
+    diff === 0.45 && isValidOsmId(4214699191),
+    `OSM TEST 1: Numeric real OSM ID (4214699191) contributes +0.45 identity confidence (${noOsmScore.components.identityConfidence} -> ${numericOsmScore.components.identityConfidence})`
+  );
+}
+
+// 2. String numeric real OSM ID is recognized (e.g. "4214699191") and contributes OSM identity confidence (+0.45)
+{
+  const cafeStringOsm = JSON.parse(JSON.stringify(baseVenueWithoutOsm));
+  cafeStringOsm.osmId = "4214699191";
+  const noOsmScore = calculateTrustScore(baseVenueWithoutOsm);
+  const stringOsmScore = calculateTrustScore(cafeStringOsm);
+
+  const diff = Number((stringOsmScore.components.identityConfidence - noOsmScore.components.identityConfidence).toFixed(3));
+  assert(
+    diff === 0.45 && isValidOsmId("4214699191"),
+    `OSM TEST 2: String numeric real OSM ID ("4214699191") contributes +0.45 identity confidence (${noOsmScore.components.identityConfidence} -> ${stringOsmScore.components.identityConfidence})`
+  );
+}
+
+// 3. Synthetic OSM ID is NOT recognized (e.g. "osm-4214699191", "osm-123") and does NOT receive OSM identity contribution
+{
+  const cafeSynthetic1 = JSON.parse(JSON.stringify(baseVenueWithoutOsm));
+  cafeSynthetic1.osmId = "osm-4214699191";
+  const cafeSynthetic2 = JSON.parse(JSON.stringify(baseVenueWithoutOsm));
+  cafeSynthetic2.osmId = "osm-123";
+
+  const noOsmScore = calculateTrustScore(baseVenueWithoutOsm);
+  const synScore1 = calculateTrustScore(cafeSynthetic1);
+  const synScore2 = calculateTrustScore(cafeSynthetic2);
+
+  assert(
+    synScore1.components.identityConfidence === noOsmScore.components.identityConfidence &&
+    synScore2.components.identityConfidence === noOsmScore.components.identityConfidence &&
+    !isValidOsmId("osm-4214699191") &&
+    !isValidOsmId("osm-123"),
+    `OSM TEST 3: Synthetic OSM IDs ("osm-4214699191", "osm-123") do NOT receive identity contribution`
+  );
+}
+
+// 4. Missing OSM ID does not receive the OSM identity contribution
+{
+  const cafeNullOsm = JSON.parse(JSON.stringify(baseVenueWithoutOsm));
+  cafeNullOsm.osmId = null;
+  const cafeUndefinedOsm = JSON.parse(JSON.stringify(baseVenueWithoutOsm));
+  cafeUndefinedOsm.osmId = undefined;
+  const cafeEmptyOsm = JSON.parse(JSON.stringify(baseVenueWithoutOsm));
+  cafeEmptyOsm.osmId = "";
+
+  const noOsmScore = calculateTrustScore(baseVenueWithoutOsm);
+  const nullScore = calculateTrustScore(cafeNullOsm);
+  const undScore = calculateTrustScore(cafeUndefinedOsm);
+  const emptyScore = calculateTrustScore(cafeEmptyOsm);
+
+  assert(
+    nullScore.components.identityConfidence === noOsmScore.components.identityConfidence &&
+    undScore.components.identityConfidence === noOsmScore.components.identityConfidence &&
+    emptyScore.components.identityConfidence === noOsmScore.components.identityConfidence &&
+    !isValidOsmId(null) && !isValidOsmId(undefined) && !isValidOsmId(""),
+    `OSM TEST 4: Missing, null, undefined, or empty OSM ID receives no identity contribution`
+  );
+}
+
+// 5. Existing Trust Score formula produces same result except where corrected OSM identity evidence legitimately changes identityConfidence
+{
+  const virgin = CAFES_DATA.find(c => c.id === 'virgin-courtyard-sec7');
+  const hedgehog = CAFES_DATA.find(c => c.id === 'the-hedgehog-cafe-sec7');
+  const nikBakers = CAFES_DATA.find(c => c.id === 'nik-bakers-sec35');
+
+  const virginTrust = calculateTrustScore(virgin);
+  const hedgehogTrust = calculateTrustScore(hedgehog);
+  const nikTrust = calculateTrustScore(nikBakers);
+
+  assert(
+    virginTrust.score === 78 && virginTrust.components.identityConfidence === 0.75 &&
+    hedgehogTrust.score === 76 && hedgehogTrust.components.identityConfidence === 0.75 &&
+    nikTrust.score === 85 && nikTrust.components.identityConfidence === 1.00,
+    `OSM TEST 5: Known real OSM records (Virgin Courtyard, Hedgehog Cafe, Nik Baker's 24/7) recognized with deterministic trust`
+  );
 }
 
 // ----------------------------------------------------

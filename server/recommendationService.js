@@ -150,6 +150,7 @@ const CANONICAL_MOODS = [
 const MOOD_ID_MAP = {
   "coffee": "good-coffee",
   "good-coffee": "good-coffee",
+  "good coffee": "good-coffee",
   "work": "work",
   "study": "work",
   "date": "date",
@@ -158,43 +159,329 @@ const MOOD_ID_MAP = {
   "pretty": "pretty",
   "aesthetic": "pretty",
   "sweet-tooth": "sweet-tooth",
+  "sweet tooth": "sweet-tooth",
   "dessert": "sweet-tooth",
   "gang": "gang",
   "group": "gang",
+  "groups": "gang",
+  "with-the-gang": "gang",
+  "with the gang": "gang",
   "late-night": "late-night",
+  "late night": "late-night",
   "latenight": "late-night",
   "reading": "reading",
   "read": "reading",
   "read-unwind": "reading",
+  "read and unwind": "reading",
+  "read & unwind": "reading",
   "brunch": "brunch",
   "breakfast": "brunch",
   "outdoor": "outdoor",
   "outdoor-escape": "outdoor",
+  "outdoor escape": "outdoor",
   "patio": "outdoor",
   "slow-morning": "slow-morning",
+  "slow morning": "slow-morning",
   "morning": "slow-morning"
 };
 
 /**
- * Maps search query intent into recognized moods
+ * Normalizes mood string to canonical mood ID
+ */
+function normalizeMoodId(mood) {
+  if (!mood || typeof mood !== "string") return "";
+  const clean = mood.trim().toLowerCase();
+  return MOOD_ID_MAP[clean] || MOOD_ID_MAP[clean.replace(/\s+/g, '-')] || clean;
+}
+
+/**
+ * Computes Damerau-Levenshtein distance between two strings
+ * Handles insertions, deletions, substitutions, and adjacent transpositions
+ */
+function damerauLevenshtein(a, b) {
+  const la = a.length;
+  const lb = b.length;
+  if (la === 0) return lb;
+  if (lb === 0) return la;
+
+  const d = Array.from({ length: la + 1 }, () => new Array(lb + 1).fill(0));
+
+  for (let i = 0; i <= la; i++) d[i][0] = i;
+  for (let j = 0; j <= lb; j++) d[0][j] = j;
+
+  for (let i = 1; i <= la; i++) {
+    for (let j = 1; j <= lb; j++) {
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(
+        d[i - 1][j] + 1,       // deletion
+        d[i][j - 1] + 1,       // insertion
+        d[i - 1][j - 1] + cost // substitution
+      );
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
+        d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1); // transposition
+      }
+    }
+  }
+  return d[la][lb];
+}
+
+/**
+ * Normalizes a sector value for robust matching:
+ * - returns "" for null/undefined/non-string values
+ * - trims leading/trailing whitespace
+ * - converts to lowercase
+ * - normalizes harmless separators (e.g. "sector-8" -> "sector 8", "sector_8" -> "sector 8")
+ * - normalizes repeated whitespace
+ */
+function normalizeSector(value) {
+  if (value == null || typeof value !== 'string') {
+    return '';
+  }
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * Normalizes query string internally for intent detection
+ */
+function normalizeForIntent(query = "") {
+  if (!query || typeof query !== "string") return "";
+  let s = query.toLowerCase().trim();
+  s = s.replace(/\bwi-fi\b/g, 'wifi')
+       .replace(/\blate-night\b/g, 'late night')
+       .replace(/\bpour-over\b/g, 'pour over')
+       .replace(/\bopen-air\b/g, 'open air')
+       .replace(/\bhang-out\b/g, 'hang out')
+       .replace(/\bflat-white\b/g, 'flat white')
+       .replace(/\bcold-brew\b/g, 'cold brew')
+       .replace(/\bdate-night\b/g, 'date night')
+       .replace(/\bslow-morning\b/g, 'slow morning');
+  s = s.replace(/\s+/g, ' ');
+  return s;
+}
+
+/**
+ * Stopwords and non-intent guard words that must never trigger fuzzy matches
+ */
+const EXCLUDED_WORDS = new Set([
+  'networking', 'network', 'database', 'weekend', 'weekends', 'weekday', 'weekdays',
+  'readable', 'reader', 'event', 'events', 'menu', 'menus', 'food', 'drink', 'drinks',
+  'the', 'and', 'for', 'with', 'cafe', 'cafes', 'coffee', 'place', 'places',
+  'spot', 'spots', 'bar', 'bars', 'shop', 'shops', 'area', 'areas', 'room', 'rooms',
+  'near', 'best', 'good', 'some', 'any', 'find', 'show', 'give', 'want', 'wants',
+  'need', 'needs', 'like', 'likes', 'love', 'loves', 'have', 'here', 'where', 'when',
+  'what', 'which', 'who', 'how', 'can', 'cant', 'cannot', 'could', 'should', 'would',
+  'will', 'just', 'more', 'most', 'very', 'really', 'much', 'many', 'from', 'into',
+  'about', 'than', 'then', 'that', 'this', 'they', 'them', 'their', 'there', 'you',
+  'your', 'our', 'all', 'both', 'each', 'few', 'other', 'another', 'same', 'such',
+  'only', 'own', 'too', 'also', 'table', 'tables', 'seat', 'seats', 'seating',
+  'quite', 'somewhere', 'something', 'someone'
+]);
+
+/**
+ * Controlled vocabulary and phrase patterns for the 12 canonical intents
+ */
+const CANONICAL_INTENT_CONFIG = [
+  {
+    id: "good-coffee",
+    phrases: [
+      /\b(good coffee|specialty coffee|pour over|flat white|cold brew|single origin)\b/i
+    ],
+    keywords: [
+      'coffee', 'espresso', 'pourover', 'roast', 'roastery', 'roaster', 'roasting',
+      'specialty', 'cappuccino', 'latte', 'barista', 'beans', 'brew', 'brews', 'brewed',
+      'brewing', 'macchiato', 'americano', 'mocha', 'aeropress'
+    ]
+  },
+  {
+    id: "work",
+    phrases: [
+      /\b(remote work|work from cafe|work from home|power outlets?|plug points?|charging points?|get work done)\b/i
+    ],
+    keywords: [
+      'work', 'working', 'study', 'studying', 'laptop', 'laptops', 'wifi', 'desk',
+      'desks', 'plug', 'plugs', 'socket', 'sockets', 'focus', 'productive',
+      'productivity', 'coworking'
+    ]
+  },
+  {
+    id: "date",
+    phrases: [
+      /\b(date night|date spot|romantic cafe|candle light|candlelight)\b/i
+    ],
+    keywords: [
+      'date', 'dates', 'romantic', 'romance', 'couple', 'couples', 'candle', 'candles',
+      'anniversary', 'intimate', 'girlfriend', 'boyfriend'
+    ]
+  },
+  {
+    id: "quiet",
+    phrases: [
+      /\b(low noise|somewhere quiet|quiet corner|peace and quiet|no noise)\b/i
+    ],
+    keywords: [
+      'quiet', 'quieter', 'quietest', 'peaceful', 'calm', 'silent', 'silence',
+      'secluded', 'alone', 'serene', 'serenity', 'tranquil', 'tranquility'
+    ]
+  },
+  {
+    id: "pretty",
+    phrases: [
+      /\b(cute cafe|somewhere pretty|natural light)\b/i
+    ],
+    keywords: [
+      'pretty', 'aesthetic', 'aesthetics', 'beautiful', 'instagrammable', 'photogenic',
+      'photo', 'photos', 'picture', 'pictures', 'interior', 'interiors', 'decor',
+      'picturesque', 'ambience', 'ambiance'
+    ]
+  },
+  {
+    id: "sweet-tooth",
+    phrases: [
+      /\b(sweet tooth|baked goods)\b/i
+    ],
+    keywords: [
+      'dessert', 'desserts', 'cake', 'cakes', 'pastry', 'pastries', 'sweet', 'sweets',
+      'brownie', 'brownies', 'bakery', 'bakeries', 'croissant', 'croissants', 'waffle',
+      'waffles', 'cheesecake', 'cheesecakes', 'donut', 'donuts', 'doughnut', 'doughnuts',
+      'tart', 'tarts', 'muffin', 'muffins', 'cupcake', 'cupcakes'
+    ]
+  },
+  {
+    id: "gang",
+    phrases: [
+      /\b(with friends|large group|big group|with the gang|hang out|hangout)\b/i
+    ],
+    keywords: [
+      'friends', 'friend', 'group', 'groups', 'gang', 'gangs', 'crowd', 'gather',
+      'gathering', 'party', 'reunion', 'everyone'
+    ]
+  },
+  {
+    id: "late-night",
+    phrases: [
+      /\b(late night|open late|night cafe|after midnight|after hours|afterhours|after 10|after 10pm|after 11|after 11pm|1am|2am|past midnight)\b/i
+    ],
+    keywords: [
+      'midnight', 'midnights', 'night', 'nights', 'late'
+    ]
+  },
+  {
+    id: "reading",
+    phrases: [
+      /\b(read quietly|reading cafe|read and unwind|good book)\b/i
+    ],
+    keywords: [
+      'read', 'reading', 'book', 'books', 'novel', 'novels', 'unwind', 'literature',
+      'magazine', 'magazines'
+    ]
+  },
+  {
+    id: "brunch",
+    phrases: [
+      /\b(breakfast cafe|morning food)\b/i
+    ],
+    keywords: [
+      'brunch', 'brunches', 'breakfast', 'breakfasts', 'egg', 'eggs', 'pancake',
+      'pancakes', 'toast', 'toasts', 'bacon', 'sourdough'
+    ]
+  },
+  {
+    id: "outdoor",
+    phrases: [
+      /\b(open air|fresh air|outdoor escape|outdoor seating)\b/i
+    ],
+    keywords: [
+      'outdoor', 'outdoors', 'outside', 'patio', 'patios', 'terrace', 'terraces',
+      'garden', 'gardens', 'rooftop', 'rooftops', 'courtyard', 'courtyards', 'alfresco'
+    ]
+  },
+  {
+    id: "slow-morning",
+    phrases: [
+      /\b(slow morning|relaxed morning|lazy morning|leisurely morning|morning coffee|no rush|early morning|calm morning|easy morning|unrushed morning)\b/i
+    ],
+    keywords: [
+      'unrushed', 'sunrise'
+    ]
+  }
+];
+
+/**
+ * Maps search query intent into recognized moods with controlled typo tolerance
  */
 function extractIntentFromQuery(query = "") {
   if (!query || typeof query !== "string") return [];
-  const q = query.toLowerCase().trim();
+  const normalized = normalizeForIntent(query);
+  if (!normalized) return [];
+
   const detected = new Set();
 
-  if (/(work|study|laptop|wifi|desk|plug|socket|focus|productive)/i.test(q)) detected.add("work");
-  if (/(quiet|peaceful|silent|calm|secluded|alone|serene)/i.test(q)) detected.add("quiet");
-  if (/(date|romantic|couple|candle|anniversary|intimate|girlfriend|boyfriend)/i.test(q)) detected.add("date");
-  if (/(pretty|aesthetic|photo|instagram|beautiful|interior|decor|picturesque|ambience|ambiance)/i.test(q)) detected.add("pretty");
-  if (/(coffee|espresso|pourover|pour over|roast|specialty|flat white|cappuccino)/i.test(q)) detected.add("good-coffee");
-  if (/(sweet|dessert|cake|pastry|bakery|croissant|waffle|cheesecake|donut)/i.test(q)) detected.add("sweet-tooth");
-  if (/(gang|friends|group|crowd|gather|party|reunion|everyone)/i.test(q)) detected.add("gang");
-  if (/(late|night|midnight|afterhours|after 10|after 11|1am)/i.test(q)) detected.add("late-night");
-  if (/(read|book|novel|unwind|literature|magazine)/i.test(q)) detected.add("reading");
-  if (/(brunch|breakfast|morning food|eggs|pancake|toast|bacon)/i.test(q)) detected.add("brunch");
-  if (/(outdoor|garden|terrace|rooftop|courtyard|open air|patio|alfresco)/i.test(q)) detected.add("outdoor");
-  if (/(slow morning|early morning|calm morning|unrushed|sunrise|easy morning)/i.test(q)) detected.add("slow-morning");
+  // 1. Phrase / multi-word match (Exact & Synonym Phrases)
+  for (const config of CANONICAL_INTENT_CONFIG) {
+    if (config.phrases) {
+      for (const phraseRegex of config.phrases) {
+        if (phraseRegex.test(normalized)) {
+          detected.add(config.id);
+          break;
+        }
+      }
+    }
+  }
+
+  // 2. Tokenize normalized string for word matching
+  const cleanTokensStr = normalized.replace(/[^\w\s]/g, ' ');
+  const tokens = cleanTokensStr.split(/\s+/).filter(Boolean);
+
+  const matchedTokenIndices = new Set();
+
+  // 3. Exact & Synonym Word Match
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    for (const config of CANONICAL_INTENT_CONFIG) {
+      if (config.keywords.includes(token)) {
+        detected.add(config.id);
+        matchedTokenIndices.add(i);
+      }
+    }
+  }
+
+  // 4. Controlled Typo Match
+  for (let i = 0; i < tokens.length; i++) {
+    if (matchedTokenIndices.has(i)) continue;
+    const token = tokens[i];
+
+    // Precision guards: do not fuzzy match very short words or excluded words
+    if (token.length < 3) continue;
+    if (EXCLUDED_WORDS.has(token)) continue;
+
+    for (const config of CANONICAL_INTENT_CONFIG) {
+      if (detected.has(config.id)) continue; // already matched
+
+      for (const keyword of config.keywords) {
+        // Enforce same initial character
+        if (token[0] !== keyword[0]) continue;
+
+        // Length 3 tokens (e.g. wrk -> work): require length 4 keyword, matching last char, edit distance 1
+        if (token.length === 3) {
+          if (keyword.length === 4 && token[2] === keyword[3] && damerauLevenshtein(token, keyword) === 1) {
+            detected.add(config.id);
+            break;
+          }
+        } else {
+          // Length >= 4 tokens (e.g. nght, cofee, romntic, quiter, aesthtic, dessrt, brnch, outdor, readng)
+          if (Math.abs(token.length - keyword.length) <= 1 && damerauLevenshtein(token, keyword) === 1) {
+            detected.add(config.id);
+            break;
+          }
+        }
+      }
+    }
+  }
 
   return Array.from(detected);
 }
@@ -226,7 +513,7 @@ function calculateMatchScore(cafe, activeMoodIds = [], searchQuery = "") {
     return Math.min(96, Math.max(50, Math.round(ratingFactor + (trust / 100) * 50)));
   }
 
-  const normalizedMoodIds = activeMoodIds.map(m => MOOD_ID_MAP[m] || m);
+  const normalizedMoodIds = activeMoodIds.map(m => normalizeMoodId(m)).filter(Boolean);
   const moodScores = [];
 
   for (const moodId of normalizedMoodIds) {
@@ -299,7 +586,7 @@ function getMatchReasons(cafe, activeMoodIds = []) {
     return reasons;
   }
 
-  const norm = activeMoodIds.map(m => MOOD_ID_MAP[m] || m);
+  const norm = activeMoodIds.map(m => normalizeMoodId(m)).filter(Boolean);
 
   if (norm.includes("good-coffee") && (chars.coffee?.score || 0) >= 7.8) {
     reasons.push("Standout specialty coffee roasts and manual brews");
@@ -386,10 +673,10 @@ function getRecommendations(allCafes, options = {}) {
 
   // 1. Sector filtering
   let pool = allCafes;
-  if (sector && sector !== "All Chandigarh") {
+  const normSector = normalizeSector(sector);
+  if (normSector && normSector !== normalizeSector("All Chandigarh")) {
     pool = pool.filter(c => {
-      const s = (c.sector || c.identity?.sector || "").toLowerCase();
-      return s.includes(sector.toLowerCase());
+      return normalizeSector(c.sector || c.identity?.sector) === normSector;
     });
   }
 
@@ -417,7 +704,9 @@ function getRecommendations(allCafes, options = {}) {
   // 3. Sorting
   scoredCafes.sort((a, b) => {
     if (sort === "trust") {
-      return (b.trustScore - a.trustScore) || (b.matchPercentage - a.matchPercentage);
+      const tA = (typeof a.trustScore === 'number' && !isNaN(a.trustScore)) ? a.trustScore : -1;
+      const tB = (typeof b.trustScore === 'number' && !isNaN(b.trustScore)) ? b.trustScore : -1;
+      return (tB - tA) || (b.matchPercentage - a.matchPercentage);
     }
     if (sort === "rating") {
       const rA = a.facts?.rating || a.rating || 0;
@@ -430,7 +719,11 @@ function getRecommendations(allCafes, options = {}) {
       return (cB - cA);
     }
     // Default: recommended (match score primary, trust score secondary)
-    return (b.matchPercentage - a.matchPercentage) || (b.trustScore - a.trustScore);
+    const matchDiff = b.matchPercentage - a.matchPercentage;
+    if (matchDiff !== 0) return matchDiff;
+    const tA = (typeof a.trustScore === 'number' && !isNaN(a.trustScore)) ? a.trustScore : -1;
+    const tB = (typeof b.trustScore === 'number' && !isNaN(b.trustScore)) ? b.trustScore : -1;
+    return tB - tA;
   });
 
   // 4. 3-Tier Fallback Hierarchy (Never 0 cafes)
@@ -458,7 +751,7 @@ function getRecommendations(allCafes, options = {}) {
   let subCopy = "Curated across Chandigarh sectors by evidence and verified diner consensus.";
 
   if (activeMoods.length === 1) {
-    const single = CANONICAL_MOODS.find(m => m.id === (MOOD_ID_MAP[activeMoods[0]] || activeMoods[0]));
+    const single = CANONICAL_MOODS.find(m => m.id === normalizeMoodId(activeMoods[0]));
     if (single?.copy) {
       leadCopy = single.copy.lead;
       subCopy = single.copy.sub;
@@ -497,9 +790,11 @@ function getRecommendations(allCafes, options = {}) {
 module.exports = {
   CANONICAL_MOODS,
   MOOD_ID_MAP,
+  normalizeMoodId,
   extractIntentFromQuery,
   calculateMatchScore,
   getMatchReasons,
   getCafeCaveats,
-  getRecommendations
+  getRecommendations,
+  normalizeSector
 };

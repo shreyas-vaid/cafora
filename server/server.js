@@ -30,9 +30,10 @@ app.use(express.json());
 /* 1. HEALTH CHECK */
 app.get("/api/health", (req, res) => {
   res.json({
-    status: "healthy",
+    status: "ok",
+    service: "cafora-api",
     version: "1.0.0",
-    cafesLoaded: CAFES_DATA.length,
+    catalogSize: CAFES_DATA.length,
     timestamp: new Date().toISOString()
   });
 });
@@ -52,12 +53,20 @@ app.get("/api/recommendations", (req, res) => {
   if (!recommendationService) return res.status(503).json({ error: "Service initializing" });
   const { moods, q, sector, sort } = req.query;
 
-  const activeMoods = moods ? (Array.isArray(moods) ? moods : moods.split(",").map(s => s.trim())) : [];
+  const rawMoods = moods ? (Array.isArray(moods) ? moods : String(moods).split(",")) : [];
+  const activeMoods = rawMoods
+    .map(s => (typeof s === "string" ? s.trim() : String(s).trim()))
+    .filter(Boolean);
+
+  const cleanQuery = typeof q === "string" ? q.trim() : "";
+  const cleanSector = typeof sector === "string" ? sector.trim() : "";
+  const cleanSort = typeof sort === "string" ? sort.trim() : "";
+
   const results = recommendationService.getRecommendations(CAFES_DATA, {
     moods: activeMoods,
-    query: q || "",
-    sector: sector || "All Chandigarh",
-    sort: sort || "recommended"
+    query: cleanQuery,
+    sector: cleanSector || "All Chandigarh",
+    sort: cleanSort || "recommended"
   });
 
   res.json({ status: "success", ...results });
@@ -65,100 +74,191 @@ app.get("/api/recommendations", (req, res) => {
 
 /* 4. CAFES LIST & DETAIL */
 app.get("/api/cafes", (req, res) => {
-  const { id, sector, search, limit } = req.query;
+  const { id, sector, search, limit, page } = req.query;
 
-  if (id) {
-    const cafe = CAFES_DATA.find(c => c.id === id || c.identity?.id === id);
-    if (!cafe) return res.status(404).json({ error: "Cafe not found", id });
+  if (id !== undefined) {
+    const cleanId = typeof id === "string" ? id.trim() : id;
+    if (!cleanId) return res.status(400).json({ error: "Invalid cafe id query parameter" });
+    const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+    if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
     return res.json({ status: "success", cafe });
   }
 
+  let parsedPage = null;
+  if (page !== undefined) {
+    const pageStr = typeof page === "string" ? page.trim() : String(page);
+    if (!/^\d+$/.test(pageStr) || parseInt(pageStr, 10) <= 0) {
+      return res.status(400).json({ error: "Invalid page parameter: must be a positive integer" });
+    }
+    parsedPage = parseInt(pageStr, 10);
+  }
+
+  let parsedLimit = null;
+  if (limit !== undefined) {
+    const limitStr = typeof limit === "string" ? limit.trim() : String(limit);
+    if (!/^\d+$/.test(limitStr) || parseInt(limitStr, 10) <= 0) {
+      return res.status(400).json({ error: "Invalid limit parameter: must be a positive integer" });
+    }
+    parsedLimit = parseInt(limitStr, 10);
+  }
+
   let results = [...CAFES_DATA];
-  if (sector && sector !== "All Chandigarh") {
+  const normSector = recommendationService.normalizeSector(sector);
+  if (normSector && normSector !== recommendationService.normalizeSector("All Chandigarh")) {
     results = results.filter(c => {
-      const s = (c.sector || c.identity?.sector || "").toLowerCase();
-      return s.includes(sector.toLowerCase());
+      return recommendationService.normalizeSector(c.sector || c.identity?.sector) === normSector;
     });
   }
-  if (search && search.trim().length > 0) {
-    const q = search.toLowerCase().trim();
+  const cleanSearch = typeof search === "string" ? search.trim() : "";
+  if (cleanSearch.length > 0) {
+    const q = cleanSearch.toLowerCase();
     results = results.filter(c => {
       const name = (c.name || c.identity?.name || "").toLowerCase();
       const addr = (c.address || c.identity?.address || "").toLowerCase();
-      return name.includes(q) || addr.includes(q);
+      const tagline = (c.cafora?.tagline || c.tagline || "").toLowerCase();
+      return name.includes(q) || addr.includes(q) || tagline.includes(q);
     });
   }
-  if (limit) {
-    const num = parseInt(limit, 10);
-    if (!isNaN(num)) results = results.slice(0, num);
+
+  const isPaginated = parsedPage !== null;
+  let paginationMeta = null;
+
+  if (isPaginated) {
+    const activeLimit = parsedLimit !== null ? parsedLimit : 20;
+    const totalItems = results.length;
+    const totalPages = Math.ceil(totalItems / activeLimit);
+    const hasNextPage = parsedPage < totalPages;
+    const hasPreviousPage = parsedPage > 1 && totalPages > 0;
+
+    const startIndex = (parsedPage - 1) * activeLimit;
+    results = (startIndex >= totalItems) ? [] : results.slice(startIndex, startIndex + activeLimit);
+
+    paginationMeta = {
+      page: parsedPage,
+      limit: activeLimit,
+      totalItems,
+      totalPages,
+      hasNextPage,
+      hasPreviousPage
+    };
+  } else if (parsedLimit !== null) {
+    results = results.slice(0, parsedLimit);
   }
 
-  res.json({ status: "success", count: results.length, total: CAFES_DATA.length, cafes: results });
+  const responseData = {
+    status: "success",
+    count: results.length,
+    total: CAFES_DATA.length,
+    cafes: results
+  };
+
+  if (paginationMeta) {
+    responseData.pagination = paginationMeta;
+  }
+
+  res.json(responseData);
 });
 
 app.get("/api/cafes/:id", (req, res) => {
-  const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
-  if (!cafe) return res.status(404).json({ error: "Cafe not found", id: req.params.id });
+  const cleanId = typeof req.params.id === "string" ? req.params.id.trim() : req.params.id;
+  if (!cleanId) return res.status(400).json({ error: "Missing cafe id" });
+  const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+  if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
   res.json({ status: "success", cafe });
 });
 
 /* 5. SEARCH WITH INTENT MAPPING */
 app.get("/api/search", (req, res) => {
   if (!recommendationService) return res.status(503).json({ error: "Service initializing" });
-  const q = req.query.q || "";
-  const detectedIntents = recommendationService.extractIntentFromQuery(q);
+  const cleanQuery = typeof req.query.q === "string" ? req.query.q.trim() : "";
+  const cleanSector = typeof req.query.sector === "string" ? req.query.sector.trim() : "";
+  const detectedIntents = recommendationService.extractIntentFromQuery(cleanQuery);
   const results = recommendationService.getRecommendations(CAFES_DATA, {
     moods: detectedIntents,
-    query: q,
-    sector: req.query.sector || "All Chandigarh"
+    query: cleanQuery,
+    sector: cleanSector || "All Chandigarh"
   });
 
-  res.json({ status: "success", query: q, detectedIntents, results });
+  res.json({ status: "success", query: cleanQuery, detectedIntents, results });
 });
 
 /* 6. EVIDENCE & PROVENANCE */
-app.get("/api/cafes/:id/evidence", (req, res) => {
-  const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
-  if (!cafe) return res.status(404).json({ error: "Cafe not found" });
+const handleEvidence = (id, res) => {
+  const cleanId = typeof id === "string" ? id.trim() : id;
+  if (!cleanId) return res.status(400).json({ error: "Missing cafe id query parameter" });
+  const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+  if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
   res.json({
     status: "success",
-    cafeId: cafe.id,
-    cafeName: cafe.name,
-    evidence: cafe.evidence || { sources: [] },
-    characteristics: cafe.characteristics || {},
-    lastVerified: cafe.cafora?.lastVerified || "2026-08-20"
+    cafeId: cleanId,
+    cafeName: cafe.name || cafe.identity?.name || null,
+    evidence: cafe.evidence || null,
+    characteristics: cafe.characteristics || null,
+    lastVerified: cafe.cafora?.lastVerified || cafe.evidence?.lastVerified || null
   });
-});
+};
+
+app.get("/api/evidence", (req, res) => handleEvidence(req.query.id, res));
+app.get("/api/cafes/:id/evidence", (req, res) => handleEvidence(req.params.id, res));
 
 /* 7. TRUST SCORE DETAILS */
-app.get("/api/cafes/:id/trust", (req, res) => {
-  const cafe = CAFES_DATA.find(c => c.id === req.params.id || c.identity?.id === req.params.id);
-  if (!cafe) return res.status(404).json({ error: "Cafe not found" });
+const handleTrust = (id, res) => {
+  const cleanId = typeof id === "string" ? id.trim() : id;
+  if (!cleanId) return res.status(400).json({ error: "Missing cafe id query parameter" });
+  const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+  if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
   const sources = [
     ...(cafe.evidence?.sources || []),
     ...(cafe.facts?.provenance || [])
   ];
-  const trustResult = calculateTrustScore ? calculateTrustScore(cafe) : { score: 0, components: {}, explanation: [] };
+  const trustResult = calculateTrustScore ? calculateTrustScore(cafe) : { score: null, components: {}, explanation: [] };
   res.json({
     status: "success",
-    cafeId: cafe.id,
-    cafeName: cafe.name,
+    cafeId: cleanId,
+    cafeName: cafe.name || cafe.identity?.name,
     trustScore: trustResult.score,
     components: trustResult.components,
     explanation: trustResult.explanation,
     verificationStatus: cafe.cafora?.verificationStatus || cafe.verificationStatus || "unverified",
     sourcesCount: sources.length,
-    sources: sources,
+    sourcesSummary: sources.map(s => ({
+      sourceType: s.sourceType || s.type || null,
+      sourceName: s.sourceName || s.name || null,
+      note: s.note || null
+    })),
+    confidence: cafe.evidence?.confidence || null,
     lastVerified: cafe.cafora?.lastVerified || cafe.lastVerified || null
   });
-});
+};
+
+app.get("/api/trust", (req, res) => handleTrust(req.query.id, res));
+app.get("/api/cafes/:id/trust", (req, res) => handleTrust(req.params.id, res));
 
 /* 8. INTERNAL DATA QUALITY AUDIT REPORT (Section 30) */
-app.get("/api/admin/audit-report", (req, res) => {
+const handleAudit = (req, res) => {
   if (!auditReport) return res.status(503).json({ error: "Audit report initializing" });
+  const { id } = req.query || {};
+  if (id !== undefined) {
+    const cleanId = typeof id === "string" ? id.trim() : id;
+    if (!cleanId) return res.status(400).json({ error: "Invalid cafe id query parameter" });
+    const cafe = CAFES_DATA.find(c => c.id === cleanId || c.identity?.id === cleanId);
+    if (!cafe) return res.status(404).json({ error: "Cafe not found", id: cleanId });
+    const trustResult = calculateTrustScore ? calculateTrustScore(cafe) : { score: null, components: {}, explanation: [] };
+    return res.json({
+      status: "success",
+      cafeId: cleanId,
+      cafeName: cafe.name || cafe.identity?.name || null,
+      trustScore: trustResult.score,
+      components: trustResult.components,
+      explanation: trustResult.explanation
+    });
+  }
   const report = auditReport(CAFES_DATA);
   res.json({ status: "success", report });
-});
+};
+
+app.get("/api/audit", handleAudit);
+app.get("/api/admin/audit-report", handleAudit);
 
 /* START SERVER */
 const PORT = process.env.PORT || 5000;

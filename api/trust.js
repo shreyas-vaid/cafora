@@ -11,15 +11,21 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  const { id } = req.query || {};
+  if (req.method !== 'GET') {
+    res.setHeader('Allow', 'GET, OPTIONS');
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
 
-  if (!id) {
+  const { id } = req.query || {};
+  const cleanId = typeof id === 'string' ? id.trim() : id;
+
+  if (!cleanId) {
     return res.status(400).json({ error: 'Missing cafe id query parameter' });
   }
 
-  const cafe = CAFES_DATA.find(c => (c.id === id || c.identity?.id === id));
+  const cafe = CAFES_DATA.find(c => (c.id === cleanId || c.identity?.id === cleanId));
   if (!cafe) {
-    return res.status(404).json({ error: 'Cafe not found', id });
+    return res.status(404).json({ error: 'Cafe not found', id: cleanId });
   }
 
   const trustResult = calculateTrustScore(cafe);
@@ -31,7 +37,7 @@ export default async function handler(req, res) {
 
   return res.status(200).json({
     status: 'success',
-    cafeId: id,
+    cafeId: cleanId,
     cafeName: cafe.name || cafe.identity?.name,
     trustScore: trustResult.score,
     components: trustResult.components,
@@ -39,11 +45,11 @@ export default async function handler(req, res) {
     verificationStatus,
     sourcesCount: sources.length,
     sourcesSummary: sources.map(s => ({
-      sourceType: s.sourceType || s.type,
-      sourceName: s.sourceName || s.name || 'Local Record',
-      note: s.note
+      sourceType: s.sourceType || s.type || null,
+      sourceName: s.sourceName || s.name || null,
+      note: s.note || null
     })),
-    confidence: cafe.evidence?.confidence || (sources.length > 0 ? 'medium' : 'unknown'),
+    confidence: cafe.evidence?.confidence || null,
     lastVerified: cafe.cafora?.lastVerified || cafe.lastVerified || null
   });
 }
