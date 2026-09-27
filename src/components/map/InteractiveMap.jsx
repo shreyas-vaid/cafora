@@ -89,30 +89,9 @@ export default function InteractiveMap({ cafes = [], selectedSector, activeCafeI
         scrollWheelZoom: true
       });
 
-      // CARTO Basemaps API key from environment variable
-      const cartoApiKey = (
-        (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_CARTO_API_KEY) ||
-        process.env.VITE_CARTO_API_KEY ||
-        process.env.REACT_APP_CARTO_API_KEY ||
-        ""
-      ).trim();
-
-      if (!cartoApiKey) {
-        console.warn(
-          "[CAFORA Map] VITE_CARTO_API_KEY is missing. Basemap may show CARTO watermarks. Set VITE_CARTO_API_KEY in your environment."
-        );
-      }
-
-      const cartoTileUrl = (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_CARTO_API_KEY)
-        ? `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(import.meta.env.VITE_CARTO_API_KEY)}`
-        : cartoApiKey
-          ? `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoApiKey)}`
-          : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
-
-      // Dark / Voyager basemap for high-contrast dark cafe theme
-      L.tileLayer(cartoTileUrl, {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: "abcd",
+      // Official OpenStreetMap raster basemap
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19
       }).addTo(map);
 
