@@ -103,9 +103,11 @@ export default function InteractiveMap({ cafes = [], selectedSector, activeCafeI
         );
       }
 
-      const cartoTileUrl = cartoApiKey
-        ? `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoApiKey)}`
-        : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+      const cartoTileUrl = (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_CARTO_API_KEY)
+        ? `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(import.meta.env.VITE_CARTO_API_KEY)}`
+        : cartoApiKey
+          ? `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoApiKey)}`
+          : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
 
       // Dark / Voyager basemap for high-contrast dark cafe theme
       L.tileLayer(cartoTileUrl, {
