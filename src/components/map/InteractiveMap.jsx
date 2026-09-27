@@ -89,8 +89,20 @@ export default function InteractiveMap({ cafes = [], selectedSector, activeCafeI
         scrollWheelZoom: true
       });
 
+      // CARTO Basemaps API key from environment variables (CRA / Vite / Vercel)
+      const cartoApiKey = (
+        process.env.REACT_APP_CARTO_API_KEY ||
+        process.env.VITE_CARTO_API_KEY ||
+        (typeof window !== "undefined" && window.__CARTO_API_KEY__) ||
+        ""
+      ).trim();
+
+      const cartoTileUrl = cartoApiKey
+        ? `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoApiKey)}`
+        : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+
       // Dark / Voyager basemap for high-contrast dark cafe theme
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
+      L.tileLayer(cartoTileUrl, {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: "abcd",
         maxZoom: 19
