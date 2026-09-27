@@ -89,13 +89,19 @@ export default function InteractiveMap({ cafes = [], selectedSector, activeCafeI
         scrollWheelZoom: true
       });
 
-      // CARTO Basemaps API key from environment variables (CRA / Vite / Vercel)
+      // CARTO Basemaps API key from environment variable
       const cartoApiKey = (
-        process.env.REACT_APP_CARTO_API_KEY ||
+        (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_CARTO_API_KEY) ||
         process.env.VITE_CARTO_API_KEY ||
-        (typeof window !== "undefined" && window.__CARTO_API_KEY__) ||
+        process.env.REACT_APP_CARTO_API_KEY ||
         ""
       ).trim();
+
+      if (!cartoApiKey) {
+        console.warn(
+          "[CAFORA Map] VITE_CARTO_API_KEY is missing. Basemap may show CARTO watermarks. Set VITE_CARTO_API_KEY in your environment."
+        );
+      }
 
       const cartoTileUrl = cartoApiKey
         ? `https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(cartoApiKey)}`
